@@ -6,7 +6,6 @@ import 'package:gpu_vector_tile_renderer/_spec.dart' as spec;
 import 'package:gpu_vector_tile_renderer/_utils.dart';
 import 'package:gpu_vector_tile_renderer/_vector_tile.dart' as vt;
 import 'package:gpu_vector_tile_renderer/src/shaders/bindings/shader_bindings.dart';
-import 'package:gpu_vector_tile_renderer/src/spec/spec.dart';
 import 'package:vector_math/vector_math_64.dart';
 
 abstract class FillLayerRenderer extends SingleTileLayerRenderer<spec.LayerFill> {
@@ -19,7 +18,7 @@ abstract class FillLayerRenderer extends SingleTileLayerRenderer<spec.LayerFill>
 
   RenderPipelineBindings get pipeline;
 
-  int setFeatureVertices(EvaluationContext eval, vt.PolygonFeature feature, int vertexIndex);
+  int setFeatureVertices(spec.EvaluationContext eval, vt.PolygonFeature feature, int index);
   void setUniforms(
     RenderContext context,
     Matrix4 cameraWorldToGl,
@@ -52,7 +51,7 @@ abstract class FillLayerRenderer extends SingleTileLayerRenderer<spec.LayerFill>
 
       for (final polygon in polygons) {
         final indices = Tessellator.tessellatePolygon(polygon);
-        indicesList.addAll(indices);
+        indicesList.addAll(indices.map((i) => i + vertexIndex));
       }
 
       vertexIndex = setFeatureVertices(featureEval, feature, vertexIndex);
@@ -77,10 +76,10 @@ abstract class FillLayerRenderer extends SingleTileLayerRenderer<spec.LayerFill>
       tileLocalToWorld,
       tileSize,
       vtLayer.extent.toDouble(),
-      container.opacityAnimation.value,
+      1.0,
     );
 
-    context.setTileScissor(context.pass, coordinates);
+    // context.setTileScissor(context.pass, coordinates);
     pipeline.bind(gpuContext, context.pass);
 
     context.pass.draw();

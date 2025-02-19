@@ -2,6 +2,7 @@ import 'package:flutter/animation.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_map/flutter_map.dart' as fm;
 import 'package:gpu_vector_tile_renderer/_controller.dart';
+import 'package:gpu_vector_tile_renderer/_renderer.dart';
 import 'package:gpu_vector_tile_renderer/_spec.dart' as spec;
 import 'package:gpu_vector_tile_renderer/src/utils/flutter_map/tile_bounds/tile_bounds.dart';
 import 'package:gpu_vector_tile_renderer/src/utils/flutter_map/tile_range_calculator.dart';
@@ -38,6 +39,14 @@ class VectorTileLayerController with ChangeNotifier {
 
   /// A ticker provider for internal animations.
   final TickerProvider tickerProvider;
+
+  /// A render orchestrator for this controller.
+  VectorTileLayerRenderOrchestrator? _renderOrchestrator;
+  VectorTileLayerRenderOrchestrator get renderOrchestrator => _renderOrchestrator!;
+
+  void setRenderOrchestrator(VectorTileLayerRenderOrchestrator orchestrator) {
+    _renderOrchestrator = orchestrator;
+  }
 
   spec.Style? _style;
   spec.Style get style => _style!;

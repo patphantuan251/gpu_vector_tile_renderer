@@ -72,9 +72,11 @@ class TileContainer with ChangeNotifier {
 
     _vectorTiles = result;
     notifyListeners();
+
+    _setupRenderers();
   }
 
-  Future<void> setupRenderers() async {
+  Future<void> _setupRenderers() async {
     final result = <Object, SingleTileLayerRenderer>{};
 
     final prepareFutures = <Future>[];
@@ -98,10 +100,13 @@ class TileContainer with ChangeNotifier {
       if (vtLayer == null) continue;
 
       // Create the renderer
-      // final renderer = createSingleTileLayerRenderer(coordinates, this, layer, vtLayer);
-      // result[layer.id] = renderer;
+      final renderer = controller.renderOrchestrator.createSingleTileLayerRenderer(coordinates, this, layer, vtLayer);
+      if (renderer == null) continue;
+      print('tile got renderer for layer ${layer.id}');
 
-      // prepareFutures.add(renderer.prepare(PrepareContext(eval: spec.EvaluationContext.empty())));
+      result[layer.id] = renderer;
+      final futureOr = renderer.prepare(PrepareContext(eval: spec.EvaluationContext.empty()));
+      if (futureOr is Future) prepareFutures.add(futureOr);
     }
 
     await prepareFutures.wait;

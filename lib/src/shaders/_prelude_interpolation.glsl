@@ -3,7 +3,7 @@
 #define data_step(start_value, end_value, start_stop, end_stop) \
   mix(start_value, end_value, step(end_stop, camera.zoom))
 
-#define data_interpolate_linear(start_value, end_value, start_stop, end_stop) \
+#define data_interpolate(start_value, end_value, start_stop, end_stop) \
   mix(start_value, end_value, data_interpolate_factor(1.0, start_stop, end_stop, camera.zoom))
 
 #define data_interpolate_exponential(base, start_value, end_value, start_stop, end_stop) \
@@ -13,7 +13,7 @@ float data_interpolate_factor(
   float base,
   float start_stop,
   float end_stop,
-  float t,
+  float t
 ) {
   float difference = end_stop - start_stop;
   float progress = t - start_stop;

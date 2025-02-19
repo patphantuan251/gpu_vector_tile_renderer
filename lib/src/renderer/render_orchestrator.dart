@@ -5,18 +5,48 @@ import 'package:flutter_gpu/gpu.dart' as gpu;
 import 'package:flutter_map/flutter_map.dart' as fm;
 import 'package:gpu_vector_tile_renderer/_controller.dart';
 import 'package:gpu_vector_tile_renderer/_renderer.dart';
-import 'package:gpu_vector_tile_renderer/_spec.dart';
+import 'package:gpu_vector_tile_renderer/_spec.dart' as spec;
+import 'package:gpu_vector_tile_renderer/_vector_tile.dart' as vt;
 import 'package:gpu_vector_tile_renderer/src/utils/flutter_map/tile_scale_calculator.dart';
 import 'package:vector_math/vector_math.dart' as vm32;
 
+typedef CreateSingleTileLayerRendererFn =
+    SingleTileLayerRenderer? Function(
+      gpu.ShaderLibrary shaderLibrary,
+      fm.TileCoordinates coordinates,
+      TileContainer container,
+      spec.Layer specLayer,
+      vt.Layer vtLayer,
+    );
+
 class VectorTileLayerRenderOrchestrator with ChangeNotifier {
-  VectorTileLayerRenderOrchestrator({required this.controller}) {
+  VectorTileLayerRenderOrchestrator({
+    required this.controller,
+    required this.shaderLibrary,
+    required CreateSingleTileLayerRendererFn createSingleTileLayerRenderer,
+  }) : _createSingleTileLayerRenderer = createSingleTileLayerRenderer {
+    controller.setRenderOrchestrator(this);
     controller.addListener(_onControllerChanged);
     controller.addTileUpdateListener(_onTilesChanged);
   }
 
   /// The controller that this renderer is attached to.
   final VectorTileLayerController controller;
+
+  /// Shader library to use
+  final gpu.ShaderLibrary shaderLibrary;
+
+  /// The function that creates a single tile layer renderer. Should be created by `compile_style.dart` executable.
+  final CreateSingleTileLayerRendererFn _createSingleTileLayerRenderer;
+
+  SingleTileLayerRenderer? createSingleTileLayerRenderer(
+    fm.TileCoordinates coordinates,
+    TileContainer container,
+    spec.Layer specLayer,
+    vt.Layer vtLayer,
+  ) {
+    return _createSingleTileLayerRenderer(shaderLibrary, coordinates, container, specLayer, vtLayer);
+  }
 
   List<LayerRenderer>? _layers;
 
@@ -27,7 +57,7 @@ class VectorTileLayerRenderOrchestrator with ChangeNotifier {
     _layers = createLayerRenderers(this, controller.style);
 
     for (final layer in _layers!) {
-      layer.prepare(PrepareContext(eval: EvaluationContext.empty()));
+      layer.prepare(PrepareContext(eval: spec.EvaluationContext.empty()));
     }
   }
 
@@ -35,7 +65,7 @@ class VectorTileLayerRenderOrchestrator with ChangeNotifier {
     if (_layers == null) return;
 
     for (final layer in _layers!) {
-      final result = layer.prepare(PrepareContext(eval: EvaluationContext.empty()));
+      final result = layer.prepare(PrepareContext(eval: spec.EvaluationContext.empty()));
 
       if (result is Future) {
         result.then((_) => notifyListeners());
@@ -138,7 +168,7 @@ class VectorTileLayerRenderOrchestrator with ChangeNotifier {
       camera: camera,
       unscaledTileSize: tileSize,
       tileScaleCalculator: _tileScaleCalculator!,
-      eval: EvaluationContext(geometryType: '', zoom: camera.zoom, locale: Locale(languageCode: 'en')),
+      eval: spec.EvaluationContext(geometryType: '', zoom: camera.zoom, locale: spec.Locale(languageCode: 'en')),
     );
 
     final zoom = camera.zoom;
@@ -151,7 +181,7 @@ class VectorTileLayerRenderOrchestrator with ChangeNotifier {
       layer.draw(renderContext);
     }
 
-    commandBuffer.submit();
+    commandBuffer.submit(completionCallback: (v) => print(v));
     return (_resolveTexture ?? _texture)!.asImage();
   }
 }

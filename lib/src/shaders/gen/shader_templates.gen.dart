@@ -8,7 +8,7 @@ const preludeShaders = <String, String>{
 #define data_step(start_value, end_value, start_stop, end_stop) \\
   mix(start_value, end_value, step(end_stop, camera.zoom))
 
-#define data_interpolate_linear(start_value, end_value, start_stop, end_stop) \\
+#define data_interpolate(start_value, end_value, start_stop, end_stop) \\
   mix(start_value, end_value, data_interpolate_factor(1.0, start_stop, end_stop, camera.zoom))
 
 #define data_interpolate_exponential(base, start_value, end_value, start_stop, end_stop) \\
@@ -18,7 +18,7 @@ float data_interpolate_factor(
   float base,
   float start_stop,
   float end_stop,
-  float t,
+  float t
 ) {
   float difference = end_stop - start_stop;
   float progress = t - start_stop;
@@ -67,9 +67,37 @@ void main() {
   gl_Position = project_tile_position(position + translate);
 }
 ''',
+'background': '''
+#version 320 es
+
+uniform BackgroundUbo {
+  highp vec4 color;
+  highp float opacity;
+} background_ubo;
+
+in vec2 position;
+
+void main() {
+  gl_Position = vec4(position, 0.0, 1.0);
+}
+''',
 };
 
 const fragmentShaderTemplates = <String, String>{
+'background': '''
+#version 320 es
+
+uniform BackgroundUbo {
+  highp vec4 color;
+  highp float opacity;
+} background_ubo;
+
+out vec4 f_color;
+
+void main() {
+  f_color = background_ubo.color * background_ubo.opacity;
+}
+''',
 'fill': '''
 #version 320 es
 #pragma prelude: interpolation
@@ -84,7 +112,7 @@ out highp vec4 f_color;
 
 void main() {
   #pragma prop: resolve(...)
-  f_color = color * opacity * tile.opacity;
+  f_color = vec4(1.0, 1.0, 0.0, 1.0);
 }
 ''',
 };

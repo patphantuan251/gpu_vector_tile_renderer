@@ -1,0 +1,62 @@
+#include <metal_stdlib>
+#include <simd/simd.h>
+
+using namespace metal;
+
+struct Camera
+{
+    float4x4 world_to_gl;
+    float zoom;
+};
+
+struct Tile
+{
+    float4x4 local_to_world;
+    float size;
+    float extent;
+    float opacity;
+};
+
+struct MeadowUbo
+{
+    float opacity_start_stop;
+    float opacity_end_stop;
+};
+
+struct meadow_vertex_main_out
+{
+    float v_opacity [[user(locn0)]];
+    float4 gl_Position [[position]];
+};
+
+struct meadow_vertex_main_in
+{
+    float2 position [[attribute(0)]];
+    float opacity_start_value [[attribute(1)]];
+    float opacity_end_value [[attribute(2)]];
+};
+
+vertex meadow_vertex_main_out meadow_vertex_main(meadow_vertex_main_in in [[stage_in]], constant Camera& camera [[buffer(0)]], constant Tile& tile [[buffer(1)]], constant MeadowUbo& meadow_ubo [[buffer(2)]])
+{
+    meadow_vertex_main_out out = {};
+    float _202;
+    do
+    {
+        float _155 = meadow_ubo.opacity_end_stop - meadow_ubo.opacity_start_stop;
+        if (_155 == 0.0)
+        {
+            _202 = 0.0;
+            break;
+        }
+        else
+        {
+            _202 = (camera.zoom - meadow_ubo.opacity_start_stop) / _155;
+            break;
+        }
+        break; // unreachable workaround
+    } while(false);
+    out.v_opacity = mix(in.opacity_start_value, in.opacity_end_value, _202);
+    out.gl_Position = (camera.world_to_gl * tile.local_to_world) * float4(in.position * (tile.size / tile.extent), 0.0, 1.0);
+    return out;
+}
+

@@ -109,6 +109,20 @@ class EvaluationContext {
     );
   }
 
+  /// Creates a copy of this evaluation context with a given zoom.
+  EvaluationContext copyWithZoom(double zoom) {
+    return EvaluationContext(
+      id: id,
+      geometryType: geometryType,
+      lineProgress: lineProgress,
+      locale: locale,
+      zoom: zoom,
+      bindings: bindings,
+      properties: properties,
+      featureState: featureState,
+    );
+  }
+
   /// Returns the variable binding with the provided name.
   ///
   /// Returns `null` if the variable binding doesn't exist.

@@ -119,7 +119,6 @@ class ShaderVariable with EquatableMixin {
   List<Object?> get props => [qualifier, precision, typeGlsl, arrayLength, name, value];
 }
 
-
 /// Represents a Uniform Buffer Object (UBO) used by a shader.
 class ShaderUbo with EquatableMixin {
   const ShaderUbo({required this.name, required this.instanceName, required this.variables});
@@ -133,7 +132,7 @@ class ShaderUbo with EquatableMixin {
   /// Name of the instance of the UBO.
   final String instanceName;
 
-  String get dartClassName => '${nameToDartClassName(name)}Ubo';
+  String get dartClassName => name.endsWith('Ubo') ? nameToDartClassName(name) : '${nameToDartClassName(name)}Ubo';
 
   @override
   List<Object?> get props => [name, variables];

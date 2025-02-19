@@ -2,16 +2,16 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:gpu_vector_tile_renderer/_spec.dart';
-import 'package:gpu_vector_tile_renderer/_style_compiler.dart';
 import 'package:gpu_vector_tile_renderer/src/shaders/bindings/shader_bindings_generator.dart';
 import 'package:gpu_vector_tile_renderer/src/shaders/serializer/parsed_shader.dart';
 import 'package:gpu_vector_tile_renderer/src/shaders/serializer/shader_writer.dart';
 import 'package:gpu_vector_tile_renderer/src/style_precompiler/layer_renderer_generator.dart';
+import 'package:gpu_vector_tile_renderer/src/style_precompiler_2/style_precompiler.dart';
 import 'package:gpu_vector_tile_renderer/src/utils/string_utils.dart';
 
 void main(List<String> args) {
   final styleFilePath = 'scratchpad/maptiler-streets-v2.json';
-  final outDirectoryPath = 'scratchpad';
+  final outDirectoryPath = 'example/lib/compiled_style';
   final styleFile = File(styleFilePath);
   final outDirectory = Directory(outDirectoryPath);
   final shadersOutDir = Directory('${outDirectory.path}/shaders');
@@ -21,28 +21,24 @@ void main(List<String> args) {
   if (!shadersOutDir.existsSync()) shadersOutDir.createSync(recursive: true);
 
   final style = Style.fromJson(jsonDecode(styleFile.readAsStringSync()));
-  final compiledLayerShaders = precompileStyle(style);
+  final shaderBundleOutFile = File('${outDirectory.path}/${style.name}.shaderbundle.json');
+  final (shaders, shaderBindingsCode, layerRenderersCode, shaderBundleCode) = precompileStyle(style);
+  
+  for (final shader in shaders) {
+    final File file;
 
-  final shaders = <ParsedShader>[];
+    if (shader is ParsedShaderVertex) {
+      file = File('${shadersOutDir.path}/${shader.name}.vert');
+    } else {
+      file = File('${shadersOutDir.path}/${shader.name}.frag');
+    }
 
-  for (final entry in compiledLayerShaders.entries) {
-    final layerName = entry.key;
-    final shaderName = toSnakeCase(layerName);
-    final (vertexShader, fragmentShader) = entry.value;
-    shaders.addAll([vertexShader, fragmentShader]);
-
-    final vertexShaderFile = File('${shadersOutDir.path}/$shaderName.vert');
-    final fragmentShaderFile = File('${shadersOutDir.path}/$shaderName.frag');
-
-    vertexShaderFile.writeAsStringSync(writeShader(vertexShader));
-    fragmentShaderFile.writeAsStringSync(writeShader(fragmentShader));
+    file.writeAsStringSync(writeShader(shader));
   }
 
-  final bindings = generateShaderBindings(shaders);
-  shaderBindingOutFile.writeAsStringSync(bindings);
-
-  final layerRenderers = generateLayerRenderers(style.layers, shaders);
-  layerRenderersOutFile.writeAsStringSync(layerRenderers);
+  shaderBindingOutFile.writeAsStringSync(shaderBindingsCode);
+  layerRenderersOutFile.writeAsStringSync(layerRenderersCode);
+  shaderBundleOutFile.writeAsStringSync(shaderBundleCode);
 
   // Dart format
   Process.runSync('dart', ['format', shaderBindingOutFile.path]);
