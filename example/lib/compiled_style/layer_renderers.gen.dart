@@ -217,11 +217,12 @@ class MeadowLayerRenderer extends FillLayerRenderer {
     for (final polygon in feature.polygons) {
       for (final vertex in polygon.vertices) {
         pipeline.vertex.setVertex(
-          index++,
+          index,
           position: vertex.vec2,
           opacityStartValue: opacity_start_value,
           opacityEndValue: opacity_end_value,
         );
+        index += 1;
       }
     }
 
@@ -290,11 +291,12 @@ class ScrubLayerRenderer extends FillLayerRenderer {
     for (final polygon in feature.polygons) {
       for (final vertex in polygon.vertices) {
         pipeline.vertex.setVertex(
-          index++,
+          index,
           position: vertex.vec2,
           opacityStartValue: opacity_start_value,
           opacityEndValue: opacity_end_value,
         );
+        index += 1;
       }
     }
 
@@ -363,11 +365,12 @@ class CropLayerRenderer extends FillLayerRenderer {
     for (final polygon in feature.polygons) {
       for (final vertex in polygon.vertices) {
         pipeline.vertex.setVertex(
-          index++,
+          index,
           position: vertex.vec2,
           opacityStartValue: opacity_start_value,
           opacityEndValue: opacity_end_value,
         );
+        index += 1;
       }
     }
 
@@ -436,11 +439,12 @@ class GlacierLayerRenderer extends FillLayerRenderer {
     for (final polygon in feature.polygons) {
       for (final vertex in polygon.vertices) {
         pipeline.vertex.setVertex(
-          index++,
+          index,
           position: vertex.vec2,
           opacityStartValue: opacity_start_value,
           opacityEndValue: opacity_end_value,
         );
+        index += 1;
       }
     }
 
@@ -509,11 +513,12 @@ class ForestLayerRenderer extends FillLayerRenderer {
     for (final polygon in feature.polygons) {
       for (final vertex in polygon.vertices) {
         pipeline.vertex.setVertex(
-          index++,
+          index,
           position: vertex.vec2,
           opacityStartValue: opacity_start_value,
           opacityEndValue: opacity_end_value,
         );
+        index += 1;
       }
     }
 
@@ -569,7 +574,8 @@ class SandLayerRenderer extends FillLayerRenderer {
 
     for (final polygon in feature.polygons) {
       for (final vertex in polygon.vertices) {
-        pipeline.vertex.setVertex(index++, position: vertex.vec2);
+        pipeline.vertex.setVertex(index, position: vertex.vec2);
+        index += 1;
       }
     }
 
@@ -621,7 +627,8 @@ class WoodLayerRenderer extends FillLayerRenderer {
 
     for (final polygon in feature.polygons) {
       for (final vertex in polygon.vertices) {
-        pipeline.vertex.setVertex(index++, position: vertex.vec2);
+        pipeline.vertex.setVertex(index, position: vertex.vec2);
+        index += 1;
       }
     }
 
@@ -686,11 +693,12 @@ class ResidentialLayerRenderer extends FillLayerRenderer {
     for (final polygon in feature.polygons) {
       for (final vertex in polygon.vertices) {
         pipeline.vertex.setVertex(
-          index++,
+          index,
           position: vertex.vec2,
           colorStartValue: color_start_value,
           colorEndValue: color_end_value,
         );
+        index += 1;
       }
     }
 
@@ -771,13 +779,14 @@ class IndustrialLayerRenderer extends FillLayerRenderer {
     for (final polygon in feature.polygons) {
       for (final vertex in polygon.vertices) {
         pipeline.vertex.setVertex(
-          index++,
+          index,
           position: vertex.vec2,
           opacityStartValue: opacity_start_value,
           opacityEndValue: opacity_end_value,
           colorStartValue: color_start_value,
           colorEndValue: color_end_value,
         );
+        index += 1;
       }
     }
 
@@ -837,7 +846,8 @@ class GrassLayerRenderer extends FillLayerRenderer {
 
     for (final polygon in feature.polygons) {
       for (final vertex in polygon.vertices) {
-        pipeline.vertex.setVertex(index++, position: vertex.vec2);
+        pipeline.vertex.setVertex(index, position: vertex.vec2);
+        index += 1;
       }
     }
 
@@ -889,7 +899,8 @@ class AirportZoneLayerRenderer extends FillLayerRenderer {
 
     for (final polygon in feature.polygons) {
       for (final vertex in polygon.vertices) {
-        pipeline.vertex.setVertex(index++, position: vertex.vec2);
+        pipeline.vertex.setVertex(index, position: vertex.vec2);
+        index += 1;
       }
     }
 
@@ -941,7 +952,8 @@ class PedestrianLayerRenderer extends FillLayerRenderer {
 
     for (final polygon in feature.polygons) {
       for (final vertex in polygon.vertices) {
-        pipeline.vertex.setVertex(index++, position: vertex.vec2);
+        pipeline.vertex.setVertex(index, position: vertex.vec2);
+        index += 1;
       }
     }
 
@@ -1006,11 +1018,12 @@ class CemeteryLayerRenderer extends FillLayerRenderer {
     for (final polygon in feature.polygons) {
       for (final vertex in polygon.vertices) {
         pipeline.vertex.setVertex(
-          index++,
+          index,
           position: vertex.vec2,
           opacityStartValue: opacity_start_value,
           opacityEndValue: opacity_end_value,
         );
+        index += 1;
       }
     }
 
@@ -1079,11 +1092,12 @@ class HospitalLayerRenderer extends FillLayerRenderer {
     for (final polygon in feature.polygons) {
       for (final vertex in polygon.vertices) {
         pipeline.vertex.setVertex(
-          index++,
+          index,
           position: vertex.vec2,
           opacityStartValue: opacity_start_value,
           opacityEndValue: opacity_end_value,
         );
+        index += 1;
       }
     }
 
@@ -1152,11 +1166,12 @@ class StadiumLayerRenderer extends FillLayerRenderer {
     for (final polygon in feature.polygons) {
       for (final vertex in polygon.vertices) {
         pipeline.vertex.setVertex(
-          index++,
+          index,
           position: vertex.vec2,
           opacityStartValue: opacity_start_value,
           opacityEndValue: opacity_end_value,
         );
+        index += 1;
       }
     }
 
@@ -1225,11 +1240,12 @@ class SchoolLayerRenderer extends FillLayerRenderer {
     for (final polygon in feature.polygons) {
       for (final vertex in polygon.vertices) {
         pipeline.vertex.setVertex(
-          index++,
+          index,
           position: vertex.vec2,
           opacityStartValue: opacity_start_value,
           opacityEndValue: opacity_end_value,
         );
+        index += 1;
       }
     }
 
@@ -1285,7 +1301,8 @@ class WaterIntermittentLayerRenderer extends FillLayerRenderer {
 
     for (final polygon in feature.polygons) {
       for (final vertex in polygon.vertices) {
-        pipeline.vertex.setVertex(index++, position: vertex.vec2);
+        pipeline.vertex.setVertex(index, position: vertex.vec2);
+        index += 1;
       }
     }
 
@@ -1339,10 +1356,11 @@ class WaterLayerRenderer extends FillLayerRenderer {
     for (final polygon in feature.polygons) {
       for (final vertex in polygon.vertices) {
         pipeline.vertex.setVertex(
-          index++,
+          index,
           position: vertex.vec2,
           opacity: opacity,
         );
+        index += 1;
       }
     }
 
@@ -1394,7 +1412,8 @@ class HeliportLayerRenderer extends FillLayerRenderer {
 
     for (final polygon in feature.polygons) {
       for (final vertex in polygon.vertices) {
-        pipeline.vertex.setVertex(index++, position: vertex.vec2);
+        pipeline.vertex.setVertex(index, position: vertex.vec2);
+        index += 1;
       }
     }
 
@@ -1446,7 +1465,8 @@ class PierLayerRenderer extends FillLayerRenderer {
 
     for (final polygon in feature.polygons) {
       for (final vertex in polygon.vertices) {
-        pipeline.vertex.setVertex(index++, position: vertex.vec2);
+        pipeline.vertex.setVertex(index, position: vertex.vec2);
+        index += 1;
       }
     }
 
@@ -1498,7 +1518,8 @@ class BridgeLayerRenderer extends FillLayerRenderer {
 
     for (final polygon in feature.polygons) {
       for (final vertex in polygon.vertices) {
-        pipeline.vertex.setVertex(index++, position: vertex.vec2);
+        pipeline.vertex.setVertex(index, position: vertex.vec2);
+        index += 1;
       }
     }
 
@@ -1550,7 +1571,8 @@ class BuildingLayerRenderer extends FillLayerRenderer {
 
     for (final polygon in feature.polygons) {
       for (final vertex in polygon.vertices) {
-        pipeline.vertex.setVertex(index++, position: vertex.vec2);
+        pipeline.vertex.setVertex(index, position: vertex.vec2);
+        index += 1;
       }
     }
 

@@ -2,12 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:gpu_vector_tile_renderer/_spec.dart';
-import 'package:gpu_vector_tile_renderer/src/shaders/bindings/shader_bindings_generator.dart';
 import 'package:gpu_vector_tile_renderer/src/shaders/serializer/parsed_shader.dart';
 import 'package:gpu_vector_tile_renderer/src/shaders/serializer/shader_writer.dart';
-import 'package:gpu_vector_tile_renderer/src/style_precompiler/layer_renderer_generator.dart';
 import 'package:gpu_vector_tile_renderer/src/style_precompiler_2/style_precompiler.dart';
-import 'package:gpu_vector_tile_renderer/src/utils/string_utils.dart';
 
 void main(List<String> args) {
   final styleFilePath = 'scratchpad/maptiler-streets-v2.json';

@@ -218,6 +218,9 @@ abstract class RenderPipelineBindings<TVertex extends VertexShaderBindings, TFra
 
         final slot = ubo.slot;
         pass.bindUniform(slot, _uboBufferViews![slot]!);
+        if (slot.uniformName == 'Tile') {
+          pass.bindUniform(fragment.shader.getUniformSlot(slot.uniformName), _uboBufferViews![slot]!);
+        }
       });
 
       // Flush the UBO buffer if necessary

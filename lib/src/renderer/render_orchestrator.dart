@@ -181,7 +181,7 @@ class VectorTileLayerRenderOrchestrator with ChangeNotifier {
       layer.draw(renderContext);
     }
 
-    commandBuffer.submit(completionCallback: (v) => print(v));
+    commandBuffer.submit();
     return (_resolveTexture ?? _texture)!.asImage();
   }
 }

@@ -11,5 +11,5 @@ out highp vec4 f_color;
 
 void main() {
   #pragma prop: resolve(...)
-  f_color = vec4(1.0, 1.0, 0.0, 1.0);
+  f_color = color * (opacity * tile.opacity);
 }

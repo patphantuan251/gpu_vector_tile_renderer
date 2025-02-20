@@ -5,6 +5,7 @@ uniform BackgroundUbo {
   highp float opacity;
 } background_ubo;
 
+
 in vec2 position;
 
 out vec4 v_color;
@@ -16,3 +17,4 @@ void main() {
 
   gl_Position = vec4(position, 0.0, 1.0);
 }
+

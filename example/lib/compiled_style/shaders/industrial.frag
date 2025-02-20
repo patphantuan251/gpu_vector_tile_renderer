@@ -63,7 +63,7 @@ out highp vec4 f_color;
 void main() {
 highp float opacity = v_opacity;
 highp vec4 color = v_color;
-  f_color = vec4(1.0, 1.0, 0.0, 1.0);
+  f_color = color * (opacity * tile.opacity);
 }
 
 

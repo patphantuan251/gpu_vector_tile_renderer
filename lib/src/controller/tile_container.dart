@@ -102,10 +102,11 @@ class TileContainer with ChangeNotifier {
       // Create the renderer
       final renderer = controller.renderOrchestrator.createSingleTileLayerRenderer(coordinates, this, layer, vtLayer);
       if (renderer == null) continue;
-      print('tile got renderer for layer ${layer.id}');
 
       result[layer.id] = renderer;
-      final futureOr = renderer.prepare(PrepareContext(eval: spec.EvaluationContext.empty()));
+      final futureOr = renderer.prepare(
+        PrepareContext(eval: spec.EvaluationContext.empty().copyWithZoom(coordinates.z.toDouble())),
+      );
       if (futureOr is Future) prepareFutures.add(futureOr);
     }
 

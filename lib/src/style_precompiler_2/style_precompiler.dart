@@ -18,6 +18,18 @@ import 'package:gpu_vector_tile_renderer/src/utils/string_utils.dart';
   final shaderBindings = <String>[];
   final layerRenderers = <String>[];
 
+  // temporary!
+  vertexShaders.add(
+    readShader(vertexShaderTemplates['background']!, name: 'background', type: ShaderType.vertex) as ParsedShaderVertex,
+  );
+
+  fragmentShaders.add(
+    readShader(fragmentShaderTemplates['background']!, name: 'background', type: ShaderType.fragment)
+        as ParsedShaderFragment,
+  );
+
+  shaderBindings.add(generateShaderBindings(vertexShaders.first, fragmentShaders.first));
+
   // For each layer, precompile the shaders
   for (final layer in style.layers) {
     final result = switch (layer.type) {
@@ -35,6 +47,7 @@ import 'package:gpu_vector_tile_renderer/src/utils/string_utils.dart';
       supportedLayerNames.add(layer.id);
     }
   }
+
 
   shaderBindings.insert(0, generateCommonShaderUboBindings([...vertexShaders, ...fragmentShaders]));
   shaderBindings.insert(0, generateShaderBindingsHeader());

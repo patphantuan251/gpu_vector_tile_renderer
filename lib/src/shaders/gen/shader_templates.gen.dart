@@ -77,7 +77,13 @@ uniform BackgroundUbo {
 
 in vec2 position;
 
+out vec4 v_color;
+out float v_opacity;
+
 void main() {
+  v_color = background_ubo.color;
+  v_opacity = background_ubo.opacity;
+
   gl_Position = vec4(position, 0.0, 1.0);
 }
 ''',
@@ -92,10 +98,13 @@ uniform BackgroundUbo {
   highp float opacity;
 } background_ubo;
 
+in vec4 v_color;
+in float v_opacity;
+
 out vec4 f_color;
 
 void main() {
-  f_color = background_ubo.color * background_ubo.opacity;
+  f_color = v_color * v_opacity;
 }
 ''',
 'fill': '''
@@ -112,7 +121,7 @@ out highp vec4 f_color;
 
 void main() {
   #pragma prop: resolve(...)
-  f_color = vec4(1.0, 1.0, 0.0, 1.0);
+  f_color = color * (opacity * tile.opacity);
 }
 ''',
 };

@@ -30,7 +30,7 @@ abstract class FillLayerRenderer extends SingleTileLayerRenderer<spec.LayerFill>
   );
 
   @override
-  void prepare(PrepareContext context) {
+  Future<void> prepare(PrepareContext context) async {
     final features = filterFeatures<vt.PolygonFeature>(vtLayer, specLayer, context.eval);
     if (features.isEmpty) return;
 
@@ -43,15 +43,18 @@ abstract class FillLayerRenderer extends SingleTileLayerRenderer<spec.LayerFill>
 
     // Allocate vertices
     pipeline.vertex.allocateVertices(gpuContext, vertexCount);
-
+    
+    // temporary!
     var vertexIndex = 0;
+    var indicesVertexIndex = 0;
     for (final feature in features) {
       final featureEval = context.eval.extendWith(properties: feature.attributes);
       final polygons = feature.polygons;
 
       for (final polygon in polygons) {
         final indices = Tessellator.tessellatePolygon(polygon);
-        indicesList.addAll(indices.map((i) => i + vertexIndex));
+        indicesList.addAll(indices.map((i) => i + indicesVertexIndex));
+        indicesVertexIndex += polygon.vertexCount;
       }
 
       vertexIndex = setFeatureVertices(featureEval, feature, vertexIndex);
@@ -76,10 +79,10 @@ abstract class FillLayerRenderer extends SingleTileLayerRenderer<spec.LayerFill>
       tileLocalToWorld,
       tileSize,
       vtLayer.extent.toDouble(),
-      1.0,
+      container.opacityAnimation.value,
     );
 
-    // context.setTileScissor(context.pass, coordinates);
+    context.setTileScissor(context.pass, coordinates);
     pipeline.bind(gpuContext, context.pass);
 
     context.pass.draw();

@@ -90,7 +90,7 @@ class _DemoPageState extends State<VectorTileLayerDemo> {
             children: [
               FlutterGpuVectorTileLayer(
                 styleProvider: jsonStyleProvider(
-                  jsonDecode(maptilerStreetsDarkStyle),
+                  jsonDecode(maptilerStreetsStyle),
                 ),
                 createSingleTileLayerRenderer: createSingleTileLayerRenderer,
                 shaderLibrary: ShaderLibrary.fromAsset('build/shaderbundles/Streets.shaderbundle')!,
