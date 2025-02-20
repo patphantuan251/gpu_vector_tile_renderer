@@ -26,6 +26,10 @@ List<LayerRenderer> createLayerRenderers(VectorTileLayerRenderOrchestrator orche
             orchestrator: orchestrator,
             specLayer: layer as spec.LayerFill,
           ),
+          spec.Layer$Type.line => TiledLayerRenderer<spec.LayerLine>(
+            orchestrator: orchestrator,
+            specLayer: layer as spec.LayerLine,
+          ),
           _ => throw UnimplementedError('Unsupported layer type: ${layer.type}'),
         },
       )

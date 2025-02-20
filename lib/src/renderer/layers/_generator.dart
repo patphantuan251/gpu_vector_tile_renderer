@@ -1,4 +1,5 @@
-/// A template method used by `style_precompiler.dart` for generating the [setFeatureVertices] code.
+/// A template method used by `style_precompiler.dart` for generating the [setFeatureVertices] code for a
+/// [FillLayerRenderer].
 List<String> fillLayerRendererSetFeatureVerticesGenerator(List<String> vertexEval, List<String> vertexSetters) {
   return [
     'int setFeatureVertices(spec.EvaluationContext eval, vt.PolygonFeature feature, int index) {',
@@ -22,7 +23,7 @@ List<String> fillLayerRendererSetFeatureVerticesGenerator(List<String> vertexEva
 }
 
 /// A template method used by `style_precompiler.dart` for generating the `setUniforms` code.
-List<String> fillLayerRendererSetUniformsGenerator(List<String> uniformEval, List<String> uniformSetters) {
+List<String> setUniformsGenerator(List<String> uniformEval, List<String> uniformSetters) {
   return [
     'void setUniforms(',
     '  RenderContext context,',
@@ -45,6 +46,32 @@ List<String> fillLayerRendererSetUniformsGenerator(List<String> uniformEval, Lis
     '    tileOpacity: tileOpacity,',
     ...uniformSetters.map((v) => '        $v,'),
     '  );',
+    '}',
+  ];
+}
+
+List<String> lineLayerRendererSetFeatureVerticesGenerator(List<String> vertexEval, List<String> vertexSetters) {
+  return [
+    'int setFeatureVertices(',
+    '  spec.EvaluationContext eval,',
+    '  vt.LineStringFeature feature,',
+    '  int index,',
+    '  List<(Vector2 position, Vector2 normal)> vertexData,',
+    ') {',
+    '  final paint = specLayer.paint;',
+    ...vertexEval.map((v) => '      $v'),
+    '',
+    '  for (var i = 0; i < vertexData.length; i++) {',
+    '    final vertex = vertexData[i];',
+    '    pipeline.vertex.setVertex(',
+    '      index + i,',
+    '      position: vertex.\$1,',
+    '      normal: vertex.\$2,',
+    ...vertexSetters.map((v) => '      $v,'),
+    '    );',
+    '  }',
+    '',
+    '  return index + vertexData.length;',
     '}',
   ];
 }

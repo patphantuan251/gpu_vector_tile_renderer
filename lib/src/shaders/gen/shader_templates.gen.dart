@@ -67,6 +67,25 @@ void main() {
   gl_Position = project_tile_position(position + translate);
 }
 ''',
+'line': '''
+#version 320 es
+#pragma prelude: interpolation
+#pragma prelude: tile
+
+in highp vec2 position;
+in highp vec2 normal;
+
+#pragma prop: declare(highp vec4 color)
+#pragma prop: declare(float opacity)
+#pragma prop: declare(float width)
+
+void main() {
+  #pragma prop: resolve(...)
+
+  vec2 offset = normal * width * 0.5 * 10;
+  gl_Position = project_tile_position(position + offset);
+}
+''',
 'background': '''
 #version 320 es
 
@@ -105,6 +124,22 @@ out vec4 f_color;
 
 void main() {
   f_color = v_color * v_opacity;
+}
+''',
+'line': '''
+#version 320 es
+#pragma prelude: interpolation
+#pragma prelude: tile
+
+#pragma prop: declare(highp vec4 color)
+#pragma prop: declare(float opacity)
+#pragma prop: declare(float width)
+
+out highp vec4 f_color;
+
+void main() {
+  #pragma prop: resolve(...)
+  f_color = color * (opacity * tile.opacity);
 }
 ''',
 'fill': '''

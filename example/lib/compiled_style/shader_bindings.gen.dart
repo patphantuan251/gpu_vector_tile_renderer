@@ -272,6 +272,534 @@ class SchoolUbo extends UniformBufferObjectBindings {
   }
 }
 
+/// Generated UBO bindings for `RiverTunnelUbo`
+class RiverTunnelUbo extends UniformBufferObjectBindings {
+  RiverTunnelUbo(gpu.Shader shader)
+    : super(slot: shader.getUniformSlot('RiverTunnelUbo'));
+
+  void set({required double widthStartStop, required double widthEndStop}) {
+    set_float(
+      get_member_offset(slot, 'width_start_stop'),
+      data,
+      widthStartStop,
+    );
+    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
+    needsFlush = true;
+  }
+}
+
+/// Generated UBO bindings for `RiverUbo`
+class RiverUbo extends UniformBufferObjectBindings {
+  RiverUbo(gpu.Shader shader) : super(slot: shader.getUniformSlot('RiverUbo'));
+
+  void set({required double widthStartStop, required double widthEndStop}) {
+    set_float(
+      get_member_offset(slot, 'width_start_stop'),
+      data,
+      widthStartStop,
+    );
+    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
+    needsFlush = true;
+  }
+}
+
+/// Generated UBO bindings for `AerowayUbo`
+class AerowayUbo extends UniformBufferObjectBindings {
+  AerowayUbo(gpu.Shader shader)
+    : super(slot: shader.getUniformSlot('AerowayUbo'));
+
+  void set({required double widthStartStop, required double widthEndStop}) {
+    set_float(
+      get_member_offset(slot, 'width_start_stop'),
+      data,
+      widthStartStop,
+    );
+    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
+    needsFlush = true;
+  }
+}
+
+/// Generated UBO bindings for `FerryLineUbo`
+class FerryLineUbo extends UniformBufferObjectBindings {
+  FerryLineUbo(gpu.Shader shader)
+    : super(slot: shader.getUniformSlot('FerryLineUbo'));
+
+  void set({
+    required double colorStartStop,
+    required double colorEndStop,
+    required double opacityStartStop,
+    required double opacityEndStop,
+    required double widthStartStop,
+    required double widthEndStop,
+  }) {
+    set_float(
+      get_member_offset(slot, 'color_start_stop'),
+      data,
+      colorStartStop,
+    );
+    set_float(get_member_offset(slot, 'color_end_stop'), data, colorEndStop);
+    set_float(
+      get_member_offset(slot, 'opacity_start_stop'),
+      data,
+      opacityStartStop,
+    );
+    set_float(
+      get_member_offset(slot, 'opacity_end_stop'),
+      data,
+      opacityEndStop,
+    );
+    set_float(
+      get_member_offset(slot, 'width_start_stop'),
+      data,
+      widthStartStop,
+    );
+    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
+    needsFlush = true;
+  }
+}
+
+/// Generated UBO bindings for `TunnelOutlineUbo`
+class TunnelOutlineUbo extends UniformBufferObjectBindings {
+  TunnelOutlineUbo(gpu.Shader shader)
+    : super(slot: shader.getUniformSlot('TunnelOutlineUbo'));
+
+  void set({required double widthStartStop, required double widthEndStop}) {
+    set_float(
+      get_member_offset(slot, 'width_start_stop'),
+      data,
+      widthStartStop,
+    );
+    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
+    needsFlush = true;
+  }
+}
+
+/// Generated UBO bindings for `TunnelUbo`
+class TunnelUbo extends UniformBufferObjectBindings {
+  TunnelUbo(gpu.Shader shader)
+    : super(slot: shader.getUniformSlot('TunnelUbo'));
+
+  void set({required double widthStartStop, required double widthEndStop}) {
+    set_float(
+      get_member_offset(slot, 'width_start_stop'),
+      data,
+      widthStartStop,
+    );
+    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
+    needsFlush = true;
+  }
+}
+
+/// Generated UBO bindings for `RailwayTunnelUbo`
+class RailwayTunnelUbo extends UniformBufferObjectBindings {
+  RailwayTunnelUbo(gpu.Shader shader)
+    : super(slot: shader.getUniformSlot('RailwayTunnelUbo'));
+
+  void set({required double widthStartStop, required double widthEndStop}) {
+    set_float(
+      get_member_offset(slot, 'width_start_stop'),
+      data,
+      widthStartStop,
+    );
+    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
+    needsFlush = true;
+  }
+}
+
+/// Generated UBO bindings for `RailwayTunnelHatchingUbo`
+class RailwayTunnelHatchingUbo extends UniformBufferObjectBindings {
+  RailwayTunnelHatchingUbo(gpu.Shader shader)
+    : super(slot: shader.getUniformSlot('RailwayTunnelHatchingUbo'));
+
+  void set({required double widthStartStop, required double widthEndStop}) {
+    set_float(
+      get_member_offset(slot, 'width_start_stop'),
+      data,
+      widthStartStop,
+    );
+    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
+    needsFlush = true;
+  }
+}
+
+/// Generated UBO bindings for `FootwayTunnelOutlineUbo`
+class FootwayTunnelOutlineUbo extends UniformBufferObjectBindings {
+  FootwayTunnelOutlineUbo(gpu.Shader shader)
+    : super(slot: shader.getUniformSlot('FootwayTunnelOutlineUbo'));
+
+  void set({required double widthStartStop, required double widthEndStop}) {
+    set_float(
+      get_member_offset(slot, 'width_start_stop'),
+      data,
+      widthStartStop,
+    );
+    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
+    needsFlush = true;
+  }
+}
+
+/// Generated UBO bindings for `FootwayTunnelUbo`
+class FootwayTunnelUbo extends UniformBufferObjectBindings {
+  FootwayTunnelUbo(gpu.Shader shader)
+    : super(slot: shader.getUniformSlot('FootwayTunnelUbo'));
+
+  void set({required double widthStartStop, required double widthEndStop}) {
+    set_float(
+      get_member_offset(slot, 'width_start_stop'),
+      data,
+      widthStartStop,
+    );
+    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
+    needsFlush = true;
+  }
+}
+
+/// Generated UBO bindings for `PierRoadUbo`
+class PierRoadUbo extends UniformBufferObjectBindings {
+  PierRoadUbo(gpu.Shader shader)
+    : super(slot: shader.getUniformSlot('PierRoadUbo'));
+
+  void set({required double widthStartStop, required double widthEndStop}) {
+    set_float(
+      get_member_offset(slot, 'width_start_stop'),
+      data,
+      widthStartStop,
+    );
+    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
+    needsFlush = true;
+  }
+}
+
+/// Generated UBO bindings for `MinorRoadOutlineUbo`
+class MinorRoadOutlineUbo extends UniformBufferObjectBindings {
+  MinorRoadOutlineUbo(gpu.Shader shader)
+    : super(slot: shader.getUniformSlot('MinorRoadOutlineUbo'));
+
+  void set({required double widthStartStop, required double widthEndStop}) {
+    set_float(
+      get_member_offset(slot, 'width_start_stop'),
+      data,
+      widthStartStop,
+    );
+    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
+    needsFlush = true;
+  }
+}
+
+/// Generated UBO bindings for `MajorRoadOutlineUbo`
+class MajorRoadOutlineUbo extends UniformBufferObjectBindings {
+  MajorRoadOutlineUbo(gpu.Shader shader)
+    : super(slot: shader.getUniformSlot('MajorRoadOutlineUbo'));
+
+  void set({required double widthStartStop, required double widthEndStop}) {
+    set_float(
+      get_member_offset(slot, 'width_start_stop'),
+      data,
+      widthStartStop,
+    );
+    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
+    needsFlush = true;
+  }
+}
+
+/// Generated UBO bindings for `HighwayOutlineUbo`
+class HighwayOutlineUbo extends UniformBufferObjectBindings {
+  HighwayOutlineUbo(gpu.Shader shader)
+    : super(slot: shader.getUniformSlot('HighwayOutlineUbo'));
+
+  void set({required double widthStartStop, required double widthEndStop}) {
+    set_float(
+      get_member_offset(slot, 'width_start_stop'),
+      data,
+      widthStartStop,
+    );
+    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
+    needsFlush = true;
+  }
+}
+
+/// Generated UBO bindings for `RoadUnderConstructionUbo`
+class RoadUnderConstructionUbo extends UniformBufferObjectBindings {
+  RoadUnderConstructionUbo(gpu.Shader shader)
+    : super(slot: shader.getUniformSlot('RoadUnderConstructionUbo'));
+
+  void set({required double widthStartStop, required double widthEndStop}) {
+    set_float(
+      get_member_offset(slot, 'width_start_stop'),
+      data,
+      widthStartStop,
+    );
+    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
+    needsFlush = true;
+  }
+}
+
+/// Generated UBO bindings for `MinorRoadUbo`
+class MinorRoadUbo extends UniformBufferObjectBindings {
+  MinorRoadUbo(gpu.Shader shader)
+    : super(slot: shader.getUniformSlot('MinorRoadUbo'));
+
+  void set({required double widthStartStop, required double widthEndStop}) {
+    set_float(
+      get_member_offset(slot, 'width_start_stop'),
+      data,
+      widthStartStop,
+    );
+    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
+    needsFlush = true;
+  }
+}
+
+/// Generated UBO bindings for `MajorRoadUbo`
+class MajorRoadUbo extends UniformBufferObjectBindings {
+  MajorRoadUbo(gpu.Shader shader)
+    : super(slot: shader.getUniformSlot('MajorRoadUbo'));
+
+  void set({required double widthStartStop, required double widthEndStop}) {
+    set_float(
+      get_member_offset(slot, 'width_start_stop'),
+      data,
+      widthStartStop,
+    );
+    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
+    needsFlush = true;
+  }
+}
+
+/// Generated UBO bindings for `HighwayUbo`
+class HighwayUbo extends UniformBufferObjectBindings {
+  HighwayUbo(gpu.Shader shader)
+    : super(slot: shader.getUniformSlot('HighwayUbo'));
+
+  void set({required double widthStartStop, required double widthEndStop}) {
+    set_float(
+      get_member_offset(slot, 'width_start_stop'),
+      data,
+      widthStartStop,
+    );
+    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
+    needsFlush = true;
+  }
+}
+
+/// Generated UBO bindings for `PathOutlineUbo`
+class PathOutlineUbo extends UniformBufferObjectBindings {
+  PathOutlineUbo(gpu.Shader shader)
+    : super(slot: shader.getUniformSlot('PathOutlineUbo'));
+
+  void set({required double widthStartStop, required double widthEndStop}) {
+    set_float(
+      get_member_offset(slot, 'width_start_stop'),
+      data,
+      widthStartStop,
+    );
+    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
+    needsFlush = true;
+  }
+}
+
+/// Generated UBO bindings for `PathUbo`
+class PathUbo extends UniformBufferObjectBindings {
+  PathUbo(gpu.Shader shader) : super(slot: shader.getUniformSlot('PathUbo'));
+
+  void set({required double widthStartStop, required double widthEndStop}) {
+    set_float(
+      get_member_offset(slot, 'width_start_stop'),
+      data,
+      widthStartStop,
+    );
+    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
+    needsFlush = true;
+  }
+}
+
+/// Generated UBO bindings for `MajorRailUbo`
+class MajorRailUbo extends UniformBufferObjectBindings {
+  MajorRailUbo(gpu.Shader shader)
+    : super(slot: shader.getUniformSlot('MajorRailUbo'));
+
+  void set({
+    required double colorStartStop,
+    required double colorEndStop,
+    required double widthStartStop,
+    required double widthEndStop,
+  }) {
+    set_float(
+      get_member_offset(slot, 'color_start_stop'),
+      data,
+      colorStartStop,
+    );
+    set_float(get_member_offset(slot, 'color_end_stop'), data, colorEndStop);
+    set_float(
+      get_member_offset(slot, 'width_start_stop'),
+      data,
+      widthStartStop,
+    );
+    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
+    needsFlush = true;
+  }
+}
+
+/// Generated UBO bindings for `MajorRailHatchingUbo`
+class MajorRailHatchingUbo extends UniformBufferObjectBindings {
+  MajorRailHatchingUbo(gpu.Shader shader)
+    : super(slot: shader.getUniformSlot('MajorRailHatchingUbo'));
+
+  void set({required double widthStartStop, required double widthEndStop}) {
+    set_float(
+      get_member_offset(slot, 'width_start_stop'),
+      data,
+      widthStartStop,
+    );
+    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
+    needsFlush = true;
+  }
+}
+
+/// Generated UBO bindings for `MinorRailUbo`
+class MinorRailUbo extends UniformBufferObjectBindings {
+  MinorRailUbo(gpu.Shader shader)
+    : super(slot: shader.getUniformSlot('MinorRailUbo'));
+
+  void set({required double widthStartStop, required double widthEndStop}) {
+    set_float(
+      get_member_offset(slot, 'width_start_stop'),
+      data,
+      widthStartStop,
+    );
+    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
+    needsFlush = true;
+  }
+}
+
+/// Generated UBO bindings for `MinorRailHatchingUbo`
+class MinorRailHatchingUbo extends UniformBufferObjectBindings {
+  MinorRailHatchingUbo(gpu.Shader shader)
+    : super(slot: shader.getUniformSlot('MinorRailHatchingUbo'));
+
+  void set({required double widthStartStop, required double widthEndStop}) {
+    set_float(
+      get_member_offset(slot, 'width_start_stop'),
+      data,
+      widthStartStop,
+    );
+    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
+    needsFlush = true;
+  }
+}
+
+/// Generated UBO bindings for `AqueductOutlineUbo`
+class AqueductOutlineUbo extends UniformBufferObjectBindings {
+  AqueductOutlineUbo(gpu.Shader shader)
+    : super(slot: shader.getUniformSlot('AqueductOutlineUbo'));
+
+  void set({required double widthStartStop, required double widthEndStop}) {
+    set_float(
+      get_member_offset(slot, 'width_start_stop'),
+      data,
+      widthStartStop,
+    );
+    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
+    needsFlush = true;
+  }
+}
+
+/// Generated UBO bindings for `AqueductUbo`
+class AqueductUbo extends UniformBufferObjectBindings {
+  AqueductUbo(gpu.Shader shader)
+    : super(slot: shader.getUniformSlot('AqueductUbo'));
+
+  void set({required double widthStartStop, required double widthEndStop}) {
+    set_float(
+      get_member_offset(slot, 'width_start_stop'),
+      data,
+      widthStartStop,
+    );
+    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
+    needsFlush = true;
+  }
+}
+
+/// Generated UBO bindings for `CablecarUbo`
+class CablecarUbo extends UniformBufferObjectBindings {
+  CablecarUbo(gpu.Shader shader)
+    : super(slot: shader.getUniformSlot('CablecarUbo'));
+
+  void set({required double widthStartStop, required double widthEndStop}) {
+    set_float(
+      get_member_offset(slot, 'width_start_stop'),
+      data,
+      widthStartStop,
+    );
+    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
+    needsFlush = true;
+  }
+}
+
+/// Generated UBO bindings for `CablecarDashUbo`
+class CablecarDashUbo extends UniformBufferObjectBindings {
+  CablecarDashUbo(gpu.Shader shader)
+    : super(slot: shader.getUniformSlot('CablecarDashUbo'));
+
+  void set({required double widthStartStop, required double widthEndStop}) {
+    set_float(
+      get_member_offset(slot, 'width_start_stop'),
+      data,
+      widthStartStop,
+    );
+    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
+    needsFlush = true;
+  }
+}
+
+/// Generated UBO bindings for `OtherBorderUbo`
+class OtherBorderUbo extends UniformBufferObjectBindings {
+  OtherBorderUbo(gpu.Shader shader)
+    : super(slot: shader.getUniformSlot('OtherBorderUbo'));
+
+  void set({required double widthStartStop, required double widthEndStop}) {
+    set_float(
+      get_member_offset(slot, 'width_start_stop'),
+      data,
+      widthStartStop,
+    );
+    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
+    needsFlush = true;
+  }
+}
+
+/// Generated UBO bindings for `DisputedBorderUbo`
+class DisputedBorderUbo extends UniformBufferObjectBindings {
+  DisputedBorderUbo(gpu.Shader shader)
+    : super(slot: shader.getUniformSlot('DisputedBorderUbo'));
+
+  void set({required double widthStartStop, required double widthEndStop}) {
+    set_float(
+      get_member_offset(slot, 'width_start_stop'),
+      data,
+      widthStartStop,
+    );
+    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
+    needsFlush = true;
+  }
+}
+
+/// Generated UBO bindings for `CountryBorderUbo`
+class CountryBorderUbo extends UniformBufferObjectBindings {
+  CountryBorderUbo(gpu.Shader shader)
+    : super(slot: shader.getUniformSlot('CountryBorderUbo'));
+
+  void set({required double widthStartStop, required double widthEndStop}) {
+    set_float(
+      get_member_offset(slot, 'width_start_stop'),
+      data,
+      widthStartStop,
+    );
+    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
+    needsFlush = true;
+  }
+}
+
 /// Generated bindings for the vertex shader `background`
 class BackgroundVertexShaderBindings extends VertexShaderBindings {
   BackgroundVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
@@ -1451,6 +1979,160 @@ class SchoolRenderPipelineBindings
   }
 }
 
+/// Generated bindings for the vertex shader `river_tunnel`
+class RiverTunnelVertexShaderBindings extends VertexShaderBindings {
+  RiverTunnelVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(bytesPerVertex: 24, shader: shaderLibrary['river_tunnel_vert']!);
+
+  /// Sets attributes for a vertex at [index].
+  ///
+  /// Ensure that [allocateVertices] has been called before calling this method.
+  void setVertex(
+    int index, {
+    required Vector2 position,
+    required Vector2 normal,
+    required double widthStartValue,
+    required double widthEndValue,
+  }) {
+    final offset = index * bytesPerVertex;
+
+    set_vec2(offset + 0, vertexData!, position);
+    set_vec2(offset + 8, vertexData!, normal);
+    set_float(offset + 16, vertexData!, widthStartValue);
+    set_float(offset + 20, vertexData!, widthEndValue);
+  }
+}
+
+/// Generated bindings for the fragment shader `river_tunnel`
+class RiverTunnelFragmentShaderBindings extends FragmentShaderBindings {
+  RiverTunnelFragmentShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(shader: shaderLibrary['river_tunnel_frag']!);
+}
+
+/// Generated bindings for the render pipeline `river_tunnel`
+class RiverTunnelRenderPipelineBindings
+    extends
+        RenderPipelineBindings<
+          RiverTunnelVertexShaderBindings,
+          RiverTunnelFragmentShaderBindings
+        > {
+  RiverTunnelRenderPipelineBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(
+        vertex: RiverTunnelVertexShaderBindings(shaderLibrary),
+        fragment: RiverTunnelFragmentShaderBindings(shaderLibrary),
+        ubos: [
+          RiverTunnelUbo(shaderLibrary['river_tunnel_vert']!),
+          TileUbo(shaderLibrary['river_tunnel_vert']!),
+          CameraUbo(shaderLibrary['river_tunnel_vert']!),
+        ],
+      );
+
+  late final RiverTunnelUbo riverTunnelUbo = ubos[0] as RiverTunnelUbo;
+  late final TileUbo tileUbo = ubos[1] as TileUbo;
+  late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
+
+  /// Sets the UBOs for this shader.
+  void setUbos({
+    required double riverTunnelUboWidthStartStop,
+    required double riverTunnelUboWidthEndStop,
+    required Matrix4 tileLocalToWorld,
+    required double tileSize,
+    required double tileExtent,
+    required double tileOpacity,
+    required Matrix4 cameraWorldToGl,
+    required double cameraZoom,
+  }) {
+    riverTunnelUbo.set(
+      widthStartStop: riverTunnelUboWidthStartStop,
+      widthEndStop: riverTunnelUboWidthEndStop,
+    );
+    tileUbo.set(
+      localToWorld: tileLocalToWorld,
+      size: tileSize,
+      extent: tileExtent,
+      opacity: tileOpacity,
+    );
+    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+  }
+}
+
+/// Generated bindings for the vertex shader `river`
+class RiverVertexShaderBindings extends VertexShaderBindings {
+  RiverVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(bytesPerVertex: 24, shader: shaderLibrary['river_vert']!);
+
+  /// Sets attributes for a vertex at [index].
+  ///
+  /// Ensure that [allocateVertices] has been called before calling this method.
+  void setVertex(
+    int index, {
+    required Vector2 position,
+    required Vector2 normal,
+    required double widthStartValue,
+    required double widthEndValue,
+  }) {
+    final offset = index * bytesPerVertex;
+
+    set_vec2(offset + 0, vertexData!, position);
+    set_vec2(offset + 8, vertexData!, normal);
+    set_float(offset + 16, vertexData!, widthStartValue);
+    set_float(offset + 20, vertexData!, widthEndValue);
+  }
+}
+
+/// Generated bindings for the fragment shader `river`
+class RiverFragmentShaderBindings extends FragmentShaderBindings {
+  RiverFragmentShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(shader: shaderLibrary['river_frag']!);
+}
+
+/// Generated bindings for the render pipeline `river`
+class RiverRenderPipelineBindings
+    extends
+        RenderPipelineBindings<
+          RiverVertexShaderBindings,
+          RiverFragmentShaderBindings
+        > {
+  RiverRenderPipelineBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(
+        vertex: RiverVertexShaderBindings(shaderLibrary),
+        fragment: RiverFragmentShaderBindings(shaderLibrary),
+        ubos: [
+          RiverUbo(shaderLibrary['river_vert']!),
+          TileUbo(shaderLibrary['river_vert']!),
+          CameraUbo(shaderLibrary['river_vert']!),
+        ],
+      );
+
+  late final RiverUbo riverUbo = ubos[0] as RiverUbo;
+  late final TileUbo tileUbo = ubos[1] as TileUbo;
+  late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
+
+  /// Sets the UBOs for this shader.
+  void setUbos({
+    required double riverUboWidthStartStop,
+    required double riverUboWidthEndStop,
+    required Matrix4 tileLocalToWorld,
+    required double tileSize,
+    required double tileExtent,
+    required double tileOpacity,
+    required Matrix4 cameraWorldToGl,
+    required double cameraZoom,
+  }) {
+    riverUbo.set(
+      widthStartStop: riverUboWidthStartStop,
+      widthEndStop: riverUboWidthEndStop,
+    );
+    tileUbo.set(
+      localToWorld: tileLocalToWorld,
+      size: tileSize,
+      extent: tileExtent,
+      opacity: tileOpacity,
+    );
+    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+  }
+}
+
 /// Generated bindings for the vertex shader `water_intermittent`
 class WaterIntermittentVertexShaderBindings extends VertexShaderBindings {
   WaterIntermittentVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
@@ -1579,6 +2261,83 @@ class WaterRenderPipelineBindings
   }
 }
 
+/// Generated bindings for the vertex shader `aeroway`
+class AerowayVertexShaderBindings extends VertexShaderBindings {
+  AerowayVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(bytesPerVertex: 24, shader: shaderLibrary['aeroway_vert']!);
+
+  /// Sets attributes for a vertex at [index].
+  ///
+  /// Ensure that [allocateVertices] has been called before calling this method.
+  void setVertex(
+    int index, {
+    required Vector2 position,
+    required Vector2 normal,
+    required double widthStartValue,
+    required double widthEndValue,
+  }) {
+    final offset = index * bytesPerVertex;
+
+    set_vec2(offset + 0, vertexData!, position);
+    set_vec2(offset + 8, vertexData!, normal);
+    set_float(offset + 16, vertexData!, widthStartValue);
+    set_float(offset + 20, vertexData!, widthEndValue);
+  }
+}
+
+/// Generated bindings for the fragment shader `aeroway`
+class AerowayFragmentShaderBindings extends FragmentShaderBindings {
+  AerowayFragmentShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(shader: shaderLibrary['aeroway_frag']!);
+}
+
+/// Generated bindings for the render pipeline `aeroway`
+class AerowayRenderPipelineBindings
+    extends
+        RenderPipelineBindings<
+          AerowayVertexShaderBindings,
+          AerowayFragmentShaderBindings
+        > {
+  AerowayRenderPipelineBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(
+        vertex: AerowayVertexShaderBindings(shaderLibrary),
+        fragment: AerowayFragmentShaderBindings(shaderLibrary),
+        ubos: [
+          AerowayUbo(shaderLibrary['aeroway_vert']!),
+          TileUbo(shaderLibrary['aeroway_vert']!),
+          CameraUbo(shaderLibrary['aeroway_vert']!),
+        ],
+      );
+
+  late final AerowayUbo aerowayUbo = ubos[0] as AerowayUbo;
+  late final TileUbo tileUbo = ubos[1] as TileUbo;
+  late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
+
+  /// Sets the UBOs for this shader.
+  void setUbos({
+    required double aerowayUboWidthStartStop,
+    required double aerowayUboWidthEndStop,
+    required Matrix4 tileLocalToWorld,
+    required double tileSize,
+    required double tileExtent,
+    required double tileOpacity,
+    required Matrix4 cameraWorldToGl,
+    required double cameraZoom,
+  }) {
+    aerowayUbo.set(
+      widthStartStop: aerowayUboWidthStartStop,
+      widthEndStop: aerowayUboWidthEndStop,
+    );
+    tileUbo.set(
+      localToWorld: tileLocalToWorld,
+      size: tileSize,
+      extent: tileExtent,
+      opacity: tileOpacity,
+    );
+    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+  }
+}
+
 /// Generated bindings for the vertex shader `heliport`
 class HeliportVertexShaderBindings extends VertexShaderBindings {
   HeliportVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
@@ -1629,6 +2388,579 @@ class HeliportRenderPipelineBindings
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
   }) {
+    tileUbo.set(
+      localToWorld: tileLocalToWorld,
+      size: tileSize,
+      extent: tileExtent,
+      opacity: tileOpacity,
+    );
+    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+  }
+}
+
+/// Generated bindings for the vertex shader `ferry_line`
+class FerryLineVertexShaderBindings extends VertexShaderBindings {
+  FerryLineVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(bytesPerVertex: 64, shader: shaderLibrary['ferry_line_vert']!);
+
+  /// Sets attributes for a vertex at [index].
+  ///
+  /// Ensure that [allocateVertices] has been called before calling this method.
+  void setVertex(
+    int index, {
+    required Vector2 position,
+    required Vector2 normal,
+    required Vector4 colorStartValue,
+    required Vector4 colorEndValue,
+    required double opacityStartValue,
+    required double opacityEndValue,
+    required double widthStartValue,
+    required double widthEndValue,
+  }) {
+    final offset = index * bytesPerVertex;
+
+    set_vec2(offset + 0, vertexData!, position);
+    set_vec2(offset + 8, vertexData!, normal);
+    set_vec4(offset + 16, vertexData!, colorStartValue);
+    set_vec4(offset + 32, vertexData!, colorEndValue);
+    set_float(offset + 48, vertexData!, opacityStartValue);
+    set_float(offset + 52, vertexData!, opacityEndValue);
+    set_float(offset + 56, vertexData!, widthStartValue);
+    set_float(offset + 60, vertexData!, widthEndValue);
+  }
+}
+
+/// Generated bindings for the fragment shader `ferry_line`
+class FerryLineFragmentShaderBindings extends FragmentShaderBindings {
+  FerryLineFragmentShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(shader: shaderLibrary['ferry_line_frag']!);
+}
+
+/// Generated bindings for the render pipeline `ferry_line`
+class FerryLineRenderPipelineBindings
+    extends
+        RenderPipelineBindings<
+          FerryLineVertexShaderBindings,
+          FerryLineFragmentShaderBindings
+        > {
+  FerryLineRenderPipelineBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(
+        vertex: FerryLineVertexShaderBindings(shaderLibrary),
+        fragment: FerryLineFragmentShaderBindings(shaderLibrary),
+        ubos: [
+          FerryLineUbo(shaderLibrary['ferry_line_vert']!),
+          TileUbo(shaderLibrary['ferry_line_vert']!),
+          CameraUbo(shaderLibrary['ferry_line_vert']!),
+        ],
+      );
+
+  late final FerryLineUbo ferryLineUbo = ubos[0] as FerryLineUbo;
+  late final TileUbo tileUbo = ubos[1] as TileUbo;
+  late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
+
+  /// Sets the UBOs for this shader.
+  void setUbos({
+    required double ferryLineUboColorStartStop,
+    required double ferryLineUboColorEndStop,
+    required double ferryLineUboOpacityStartStop,
+    required double ferryLineUboOpacityEndStop,
+    required double ferryLineUboWidthStartStop,
+    required double ferryLineUboWidthEndStop,
+    required Matrix4 tileLocalToWorld,
+    required double tileSize,
+    required double tileExtent,
+    required double tileOpacity,
+    required Matrix4 cameraWorldToGl,
+    required double cameraZoom,
+  }) {
+    ferryLineUbo.set(
+      colorStartStop: ferryLineUboColorStartStop,
+      colorEndStop: ferryLineUboColorEndStop,
+      opacityStartStop: ferryLineUboOpacityStartStop,
+      opacityEndStop: ferryLineUboOpacityEndStop,
+      widthStartStop: ferryLineUboWidthStartStop,
+      widthEndStop: ferryLineUboWidthEndStop,
+    );
+    tileUbo.set(
+      localToWorld: tileLocalToWorld,
+      size: tileSize,
+      extent: tileExtent,
+      opacity: tileOpacity,
+    );
+    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+  }
+}
+
+/// Generated bindings for the vertex shader `tunnel_outline`
+class TunnelOutlineVertexShaderBindings extends VertexShaderBindings {
+  TunnelOutlineVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(bytesPerVertex: 40, shader: shaderLibrary['tunnel_outline_vert']!);
+
+  /// Sets attributes for a vertex at [index].
+  ///
+  /// Ensure that [allocateVertices] has been called before calling this method.
+  void setVertex(
+    int index, {
+    required Vector2 position,
+    required Vector2 normal,
+    required Vector4 color,
+    required double widthStartValue,
+    required double widthEndValue,
+  }) {
+    final offset = index * bytesPerVertex;
+
+    set_vec2(offset + 0, vertexData!, position);
+    set_vec2(offset + 8, vertexData!, normal);
+    set_vec4(offset + 16, vertexData!, color);
+    set_float(offset + 32, vertexData!, widthStartValue);
+    set_float(offset + 36, vertexData!, widthEndValue);
+  }
+}
+
+/// Generated bindings for the fragment shader `tunnel_outline`
+class TunnelOutlineFragmentShaderBindings extends FragmentShaderBindings {
+  TunnelOutlineFragmentShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(shader: shaderLibrary['tunnel_outline_frag']!);
+}
+
+/// Generated bindings for the render pipeline `tunnel_outline`
+class TunnelOutlineRenderPipelineBindings
+    extends
+        RenderPipelineBindings<
+          TunnelOutlineVertexShaderBindings,
+          TunnelOutlineFragmentShaderBindings
+        > {
+  TunnelOutlineRenderPipelineBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(
+        vertex: TunnelOutlineVertexShaderBindings(shaderLibrary),
+        fragment: TunnelOutlineFragmentShaderBindings(shaderLibrary),
+        ubos: [
+          TunnelOutlineUbo(shaderLibrary['tunnel_outline_vert']!),
+          TileUbo(shaderLibrary['tunnel_outline_vert']!),
+          CameraUbo(shaderLibrary['tunnel_outline_vert']!),
+        ],
+      );
+
+  late final TunnelOutlineUbo tunnelOutlineUbo = ubos[0] as TunnelOutlineUbo;
+  late final TileUbo tileUbo = ubos[1] as TileUbo;
+  late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
+
+  /// Sets the UBOs for this shader.
+  void setUbos({
+    required double tunnelOutlineUboWidthStartStop,
+    required double tunnelOutlineUboWidthEndStop,
+    required Matrix4 tileLocalToWorld,
+    required double tileSize,
+    required double tileExtent,
+    required double tileOpacity,
+    required Matrix4 cameraWorldToGl,
+    required double cameraZoom,
+  }) {
+    tunnelOutlineUbo.set(
+      widthStartStop: tunnelOutlineUboWidthStartStop,
+      widthEndStop: tunnelOutlineUboWidthEndStop,
+    );
+    tileUbo.set(
+      localToWorld: tileLocalToWorld,
+      size: tileSize,
+      extent: tileExtent,
+      opacity: tileOpacity,
+    );
+    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+  }
+}
+
+/// Generated bindings for the vertex shader `tunnel`
+class TunnelVertexShaderBindings extends VertexShaderBindings {
+  TunnelVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(bytesPerVertex: 40, shader: shaderLibrary['tunnel_vert']!);
+
+  /// Sets attributes for a vertex at [index].
+  ///
+  /// Ensure that [allocateVertices] has been called before calling this method.
+  void setVertex(
+    int index, {
+    required Vector2 position,
+    required Vector2 normal,
+    required Vector4 color,
+    required double widthStartValue,
+    required double widthEndValue,
+  }) {
+    final offset = index * bytesPerVertex;
+
+    set_vec2(offset + 0, vertexData!, position);
+    set_vec2(offset + 8, vertexData!, normal);
+    set_vec4(offset + 16, vertexData!, color);
+    set_float(offset + 32, vertexData!, widthStartValue);
+    set_float(offset + 36, vertexData!, widthEndValue);
+  }
+}
+
+/// Generated bindings for the fragment shader `tunnel`
+class TunnelFragmentShaderBindings extends FragmentShaderBindings {
+  TunnelFragmentShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(shader: shaderLibrary['tunnel_frag']!);
+}
+
+/// Generated bindings for the render pipeline `tunnel`
+class TunnelRenderPipelineBindings
+    extends
+        RenderPipelineBindings<
+          TunnelVertexShaderBindings,
+          TunnelFragmentShaderBindings
+        > {
+  TunnelRenderPipelineBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(
+        vertex: TunnelVertexShaderBindings(shaderLibrary),
+        fragment: TunnelFragmentShaderBindings(shaderLibrary),
+        ubos: [
+          TunnelUbo(shaderLibrary['tunnel_vert']!),
+          TileUbo(shaderLibrary['tunnel_vert']!),
+          CameraUbo(shaderLibrary['tunnel_vert']!),
+        ],
+      );
+
+  late final TunnelUbo tunnelUbo = ubos[0] as TunnelUbo;
+  late final TileUbo tileUbo = ubos[1] as TileUbo;
+  late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
+
+  /// Sets the UBOs for this shader.
+  void setUbos({
+    required double tunnelUboWidthStartStop,
+    required double tunnelUboWidthEndStop,
+    required Matrix4 tileLocalToWorld,
+    required double tileSize,
+    required double tileExtent,
+    required double tileOpacity,
+    required Matrix4 cameraWorldToGl,
+    required double cameraZoom,
+  }) {
+    tunnelUbo.set(
+      widthStartStop: tunnelUboWidthStartStop,
+      widthEndStop: tunnelUboWidthEndStop,
+    );
+    tileUbo.set(
+      localToWorld: tileLocalToWorld,
+      size: tileSize,
+      extent: tileExtent,
+      opacity: tileOpacity,
+    );
+    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+  }
+}
+
+/// Generated bindings for the vertex shader `railway_tunnel`
+class RailwayTunnelVertexShaderBindings extends VertexShaderBindings {
+  RailwayTunnelVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(bytesPerVertex: 24, shader: shaderLibrary['railway_tunnel_vert']!);
+
+  /// Sets attributes for a vertex at [index].
+  ///
+  /// Ensure that [allocateVertices] has been called before calling this method.
+  void setVertex(
+    int index, {
+    required Vector2 position,
+    required Vector2 normal,
+    required double widthStartValue,
+    required double widthEndValue,
+  }) {
+    final offset = index * bytesPerVertex;
+
+    set_vec2(offset + 0, vertexData!, position);
+    set_vec2(offset + 8, vertexData!, normal);
+    set_float(offset + 16, vertexData!, widthStartValue);
+    set_float(offset + 20, vertexData!, widthEndValue);
+  }
+}
+
+/// Generated bindings for the fragment shader `railway_tunnel`
+class RailwayTunnelFragmentShaderBindings extends FragmentShaderBindings {
+  RailwayTunnelFragmentShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(shader: shaderLibrary['railway_tunnel_frag']!);
+}
+
+/// Generated bindings for the render pipeline `railway_tunnel`
+class RailwayTunnelRenderPipelineBindings
+    extends
+        RenderPipelineBindings<
+          RailwayTunnelVertexShaderBindings,
+          RailwayTunnelFragmentShaderBindings
+        > {
+  RailwayTunnelRenderPipelineBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(
+        vertex: RailwayTunnelVertexShaderBindings(shaderLibrary),
+        fragment: RailwayTunnelFragmentShaderBindings(shaderLibrary),
+        ubos: [
+          RailwayTunnelUbo(shaderLibrary['railway_tunnel_vert']!),
+          TileUbo(shaderLibrary['railway_tunnel_vert']!),
+          CameraUbo(shaderLibrary['railway_tunnel_vert']!),
+        ],
+      );
+
+  late final RailwayTunnelUbo railwayTunnelUbo = ubos[0] as RailwayTunnelUbo;
+  late final TileUbo tileUbo = ubos[1] as TileUbo;
+  late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
+
+  /// Sets the UBOs for this shader.
+  void setUbos({
+    required double railwayTunnelUboWidthStartStop,
+    required double railwayTunnelUboWidthEndStop,
+    required Matrix4 tileLocalToWorld,
+    required double tileSize,
+    required double tileExtent,
+    required double tileOpacity,
+    required Matrix4 cameraWorldToGl,
+    required double cameraZoom,
+  }) {
+    railwayTunnelUbo.set(
+      widthStartStop: railwayTunnelUboWidthStartStop,
+      widthEndStop: railwayTunnelUboWidthEndStop,
+    );
+    tileUbo.set(
+      localToWorld: tileLocalToWorld,
+      size: tileSize,
+      extent: tileExtent,
+      opacity: tileOpacity,
+    );
+    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+  }
+}
+
+/// Generated bindings for the vertex shader `railway_tunnel_hatching`
+class RailwayTunnelHatchingVertexShaderBindings extends VertexShaderBindings {
+  RailwayTunnelHatchingVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(
+        bytesPerVertex: 24,
+        shader: shaderLibrary['railway_tunnel_hatching_vert']!,
+      );
+
+  /// Sets attributes for a vertex at [index].
+  ///
+  /// Ensure that [allocateVertices] has been called before calling this method.
+  void setVertex(
+    int index, {
+    required Vector2 position,
+    required Vector2 normal,
+    required double widthStartValue,
+    required double widthEndValue,
+  }) {
+    final offset = index * bytesPerVertex;
+
+    set_vec2(offset + 0, vertexData!, position);
+    set_vec2(offset + 8, vertexData!, normal);
+    set_float(offset + 16, vertexData!, widthStartValue);
+    set_float(offset + 20, vertexData!, widthEndValue);
+  }
+}
+
+/// Generated bindings for the fragment shader `railway_tunnel_hatching`
+class RailwayTunnelHatchingFragmentShaderBindings
+    extends FragmentShaderBindings {
+  RailwayTunnelHatchingFragmentShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(shader: shaderLibrary['railway_tunnel_hatching_frag']!);
+}
+
+/// Generated bindings for the render pipeline `railway_tunnel_hatching`
+class RailwayTunnelHatchingRenderPipelineBindings
+    extends
+        RenderPipelineBindings<
+          RailwayTunnelHatchingVertexShaderBindings,
+          RailwayTunnelHatchingFragmentShaderBindings
+        > {
+  RailwayTunnelHatchingRenderPipelineBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(
+        vertex: RailwayTunnelHatchingVertexShaderBindings(shaderLibrary),
+        fragment: RailwayTunnelHatchingFragmentShaderBindings(shaderLibrary),
+        ubos: [
+          RailwayTunnelHatchingUbo(
+            shaderLibrary['railway_tunnel_hatching_vert']!,
+          ),
+          TileUbo(shaderLibrary['railway_tunnel_hatching_vert']!),
+          CameraUbo(shaderLibrary['railway_tunnel_hatching_vert']!),
+        ],
+      );
+
+  late final RailwayTunnelHatchingUbo railwayTunnelHatchingUbo =
+      ubos[0] as RailwayTunnelHatchingUbo;
+  late final TileUbo tileUbo = ubos[1] as TileUbo;
+  late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
+
+  /// Sets the UBOs for this shader.
+  void setUbos({
+    required double railwayTunnelHatchingUboWidthStartStop,
+    required double railwayTunnelHatchingUboWidthEndStop,
+    required Matrix4 tileLocalToWorld,
+    required double tileSize,
+    required double tileExtent,
+    required double tileOpacity,
+    required Matrix4 cameraWorldToGl,
+    required double cameraZoom,
+  }) {
+    railwayTunnelHatchingUbo.set(
+      widthStartStop: railwayTunnelHatchingUboWidthStartStop,
+      widthEndStop: railwayTunnelHatchingUboWidthEndStop,
+    );
+    tileUbo.set(
+      localToWorld: tileLocalToWorld,
+      size: tileSize,
+      extent: tileExtent,
+      opacity: tileOpacity,
+    );
+    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+  }
+}
+
+/// Generated bindings for the vertex shader `footway_tunnel_outline`
+class FootwayTunnelOutlineVertexShaderBindings extends VertexShaderBindings {
+  FootwayTunnelOutlineVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(
+        bytesPerVertex: 24,
+        shader: shaderLibrary['footway_tunnel_outline_vert']!,
+      );
+
+  /// Sets attributes for a vertex at [index].
+  ///
+  /// Ensure that [allocateVertices] has been called before calling this method.
+  void setVertex(
+    int index, {
+    required Vector2 position,
+    required Vector2 normal,
+    required double widthStartValue,
+    required double widthEndValue,
+  }) {
+    final offset = index * bytesPerVertex;
+
+    set_vec2(offset + 0, vertexData!, position);
+    set_vec2(offset + 8, vertexData!, normal);
+    set_float(offset + 16, vertexData!, widthStartValue);
+    set_float(offset + 20, vertexData!, widthEndValue);
+  }
+}
+
+/// Generated bindings for the fragment shader `footway_tunnel_outline`
+class FootwayTunnelOutlineFragmentShaderBindings
+    extends FragmentShaderBindings {
+  FootwayTunnelOutlineFragmentShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(shader: shaderLibrary['footway_tunnel_outline_frag']!);
+}
+
+/// Generated bindings for the render pipeline `footway_tunnel_outline`
+class FootwayTunnelOutlineRenderPipelineBindings
+    extends
+        RenderPipelineBindings<
+          FootwayTunnelOutlineVertexShaderBindings,
+          FootwayTunnelOutlineFragmentShaderBindings
+        > {
+  FootwayTunnelOutlineRenderPipelineBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(
+        vertex: FootwayTunnelOutlineVertexShaderBindings(shaderLibrary),
+        fragment: FootwayTunnelOutlineFragmentShaderBindings(shaderLibrary),
+        ubos: [
+          FootwayTunnelOutlineUbo(
+            shaderLibrary['footway_tunnel_outline_vert']!,
+          ),
+          TileUbo(shaderLibrary['footway_tunnel_outline_vert']!),
+          CameraUbo(shaderLibrary['footway_tunnel_outline_vert']!),
+        ],
+      );
+
+  late final FootwayTunnelOutlineUbo footwayTunnelOutlineUbo =
+      ubos[0] as FootwayTunnelOutlineUbo;
+  late final TileUbo tileUbo = ubos[1] as TileUbo;
+  late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
+
+  /// Sets the UBOs for this shader.
+  void setUbos({
+    required double footwayTunnelOutlineUboWidthStartStop,
+    required double footwayTunnelOutlineUboWidthEndStop,
+    required Matrix4 tileLocalToWorld,
+    required double tileSize,
+    required double tileExtent,
+    required double tileOpacity,
+    required Matrix4 cameraWorldToGl,
+    required double cameraZoom,
+  }) {
+    footwayTunnelOutlineUbo.set(
+      widthStartStop: footwayTunnelOutlineUboWidthStartStop,
+      widthEndStop: footwayTunnelOutlineUboWidthEndStop,
+    );
+    tileUbo.set(
+      localToWorld: tileLocalToWorld,
+      size: tileSize,
+      extent: tileExtent,
+      opacity: tileOpacity,
+    );
+    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+  }
+}
+
+/// Generated bindings for the vertex shader `footway_tunnel`
+class FootwayTunnelVertexShaderBindings extends VertexShaderBindings {
+  FootwayTunnelVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(bytesPerVertex: 24, shader: shaderLibrary['footway_tunnel_vert']!);
+
+  /// Sets attributes for a vertex at [index].
+  ///
+  /// Ensure that [allocateVertices] has been called before calling this method.
+  void setVertex(
+    int index, {
+    required Vector2 position,
+    required Vector2 normal,
+    required double widthStartValue,
+    required double widthEndValue,
+  }) {
+    final offset = index * bytesPerVertex;
+
+    set_vec2(offset + 0, vertexData!, position);
+    set_vec2(offset + 8, vertexData!, normal);
+    set_float(offset + 16, vertexData!, widthStartValue);
+    set_float(offset + 20, vertexData!, widthEndValue);
+  }
+}
+
+/// Generated bindings for the fragment shader `footway_tunnel`
+class FootwayTunnelFragmentShaderBindings extends FragmentShaderBindings {
+  FootwayTunnelFragmentShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(shader: shaderLibrary['footway_tunnel_frag']!);
+}
+
+/// Generated bindings for the render pipeline `footway_tunnel`
+class FootwayTunnelRenderPipelineBindings
+    extends
+        RenderPipelineBindings<
+          FootwayTunnelVertexShaderBindings,
+          FootwayTunnelFragmentShaderBindings
+        > {
+  FootwayTunnelRenderPipelineBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(
+        vertex: FootwayTunnelVertexShaderBindings(shaderLibrary),
+        fragment: FootwayTunnelFragmentShaderBindings(shaderLibrary),
+        ubos: [
+          FootwayTunnelUbo(shaderLibrary['footway_tunnel_vert']!),
+          TileUbo(shaderLibrary['footway_tunnel_vert']!),
+          CameraUbo(shaderLibrary['footway_tunnel_vert']!),
+        ],
+      );
+
+  late final FootwayTunnelUbo footwayTunnelUbo = ubos[0] as FootwayTunnelUbo;
+  late final TileUbo tileUbo = ubos[1] as TileUbo;
+  late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
+
+  /// Sets the UBOs for this shader.
+  void setUbos({
+    required double footwayTunnelUboWidthStartStop,
+    required double footwayTunnelUboWidthEndStop,
+    required Matrix4 tileLocalToWorld,
+    required double tileSize,
+    required double tileExtent,
+    required double tileOpacity,
+    required Matrix4 cameraWorldToGl,
+    required double cameraZoom,
+  }) {
+    footwayTunnelUbo.set(
+      widthStartStop: footwayTunnelUboWidthStartStop,
+      widthEndStop: footwayTunnelUboWidthEndStop,
+    );
     tileUbo.set(
       localToWorld: tileLocalToWorld,
       size: tileSize,
@@ -1699,6 +3031,83 @@ class PierRenderPipelineBindings
   }
 }
 
+/// Generated bindings for the vertex shader `pier_road`
+class PierRoadVertexShaderBindings extends VertexShaderBindings {
+  PierRoadVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(bytesPerVertex: 24, shader: shaderLibrary['pier_road_vert']!);
+
+  /// Sets attributes for a vertex at [index].
+  ///
+  /// Ensure that [allocateVertices] has been called before calling this method.
+  void setVertex(
+    int index, {
+    required Vector2 position,
+    required Vector2 normal,
+    required double widthStartValue,
+    required double widthEndValue,
+  }) {
+    final offset = index * bytesPerVertex;
+
+    set_vec2(offset + 0, vertexData!, position);
+    set_vec2(offset + 8, vertexData!, normal);
+    set_float(offset + 16, vertexData!, widthStartValue);
+    set_float(offset + 20, vertexData!, widthEndValue);
+  }
+}
+
+/// Generated bindings for the fragment shader `pier_road`
+class PierRoadFragmentShaderBindings extends FragmentShaderBindings {
+  PierRoadFragmentShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(shader: shaderLibrary['pier_road_frag']!);
+}
+
+/// Generated bindings for the render pipeline `pier_road`
+class PierRoadRenderPipelineBindings
+    extends
+        RenderPipelineBindings<
+          PierRoadVertexShaderBindings,
+          PierRoadFragmentShaderBindings
+        > {
+  PierRoadRenderPipelineBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(
+        vertex: PierRoadVertexShaderBindings(shaderLibrary),
+        fragment: PierRoadFragmentShaderBindings(shaderLibrary),
+        ubos: [
+          PierRoadUbo(shaderLibrary['pier_road_vert']!),
+          TileUbo(shaderLibrary['pier_road_vert']!),
+          CameraUbo(shaderLibrary['pier_road_vert']!),
+        ],
+      );
+
+  late final PierRoadUbo pierRoadUbo = ubos[0] as PierRoadUbo;
+  late final TileUbo tileUbo = ubos[1] as TileUbo;
+  late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
+
+  /// Sets the UBOs for this shader.
+  void setUbos({
+    required double pierRoadUboWidthStartStop,
+    required double pierRoadUboWidthEndStop,
+    required Matrix4 tileLocalToWorld,
+    required double tileSize,
+    required double tileExtent,
+    required double tileOpacity,
+    required Matrix4 cameraWorldToGl,
+    required double cameraZoom,
+  }) {
+    pierRoadUbo.set(
+      widthStartStop: pierRoadUboWidthStartStop,
+      widthEndStop: pierRoadUboWidthEndStop,
+    );
+    tileUbo.set(
+      localToWorld: tileLocalToWorld,
+      size: tileSize,
+      extent: tileExtent,
+      opacity: tileOpacity,
+    );
+    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+  }
+}
+
 /// Generated bindings for the vertex shader `bridge`
 class BridgeVertexShaderBindings extends VertexShaderBindings {
   BridgeVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
@@ -1759,6 +3168,1044 @@ class BridgeRenderPipelineBindings
   }
 }
 
+/// Generated bindings for the vertex shader `minor_road_outline`
+class MinorRoadOutlineVertexShaderBindings extends VertexShaderBindings {
+  MinorRoadOutlineVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(
+        bytesPerVertex: 24,
+        shader: shaderLibrary['minor_road_outline_vert']!,
+      );
+
+  /// Sets attributes for a vertex at [index].
+  ///
+  /// Ensure that [allocateVertices] has been called before calling this method.
+  void setVertex(
+    int index, {
+    required Vector2 position,
+    required Vector2 normal,
+    required double widthStartValue,
+    required double widthEndValue,
+  }) {
+    final offset = index * bytesPerVertex;
+
+    set_vec2(offset + 0, vertexData!, position);
+    set_vec2(offset + 8, vertexData!, normal);
+    set_float(offset + 16, vertexData!, widthStartValue);
+    set_float(offset + 20, vertexData!, widthEndValue);
+  }
+}
+
+/// Generated bindings for the fragment shader `minor_road_outline`
+class MinorRoadOutlineFragmentShaderBindings extends FragmentShaderBindings {
+  MinorRoadOutlineFragmentShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(shader: shaderLibrary['minor_road_outline_frag']!);
+}
+
+/// Generated bindings for the render pipeline `minor_road_outline`
+class MinorRoadOutlineRenderPipelineBindings
+    extends
+        RenderPipelineBindings<
+          MinorRoadOutlineVertexShaderBindings,
+          MinorRoadOutlineFragmentShaderBindings
+        > {
+  MinorRoadOutlineRenderPipelineBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(
+        vertex: MinorRoadOutlineVertexShaderBindings(shaderLibrary),
+        fragment: MinorRoadOutlineFragmentShaderBindings(shaderLibrary),
+        ubos: [
+          MinorRoadOutlineUbo(shaderLibrary['minor_road_outline_vert']!),
+          TileUbo(shaderLibrary['minor_road_outline_vert']!),
+          CameraUbo(shaderLibrary['minor_road_outline_vert']!),
+        ],
+      );
+
+  late final MinorRoadOutlineUbo minorRoadOutlineUbo =
+      ubos[0] as MinorRoadOutlineUbo;
+  late final TileUbo tileUbo = ubos[1] as TileUbo;
+  late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
+
+  /// Sets the UBOs for this shader.
+  void setUbos({
+    required double minorRoadOutlineUboWidthStartStop,
+    required double minorRoadOutlineUboWidthEndStop,
+    required Matrix4 tileLocalToWorld,
+    required double tileSize,
+    required double tileExtent,
+    required double tileOpacity,
+    required Matrix4 cameraWorldToGl,
+    required double cameraZoom,
+  }) {
+    minorRoadOutlineUbo.set(
+      widthStartStop: minorRoadOutlineUboWidthStartStop,
+      widthEndStop: minorRoadOutlineUboWidthEndStop,
+    );
+    tileUbo.set(
+      localToWorld: tileLocalToWorld,
+      size: tileSize,
+      extent: tileExtent,
+      opacity: tileOpacity,
+    );
+    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+  }
+}
+
+/// Generated bindings for the vertex shader `major_road_outline`
+class MajorRoadOutlineVertexShaderBindings extends VertexShaderBindings {
+  MajorRoadOutlineVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(
+        bytesPerVertex: 24,
+        shader: shaderLibrary['major_road_outline_vert']!,
+      );
+
+  /// Sets attributes for a vertex at [index].
+  ///
+  /// Ensure that [allocateVertices] has been called before calling this method.
+  void setVertex(
+    int index, {
+    required Vector2 position,
+    required Vector2 normal,
+    required double widthStartValue,
+    required double widthEndValue,
+  }) {
+    final offset = index * bytesPerVertex;
+
+    set_vec2(offset + 0, vertexData!, position);
+    set_vec2(offset + 8, vertexData!, normal);
+    set_float(offset + 16, vertexData!, widthStartValue);
+    set_float(offset + 20, vertexData!, widthEndValue);
+  }
+}
+
+/// Generated bindings for the fragment shader `major_road_outline`
+class MajorRoadOutlineFragmentShaderBindings extends FragmentShaderBindings {
+  MajorRoadOutlineFragmentShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(shader: shaderLibrary['major_road_outline_frag']!);
+}
+
+/// Generated bindings for the render pipeline `major_road_outline`
+class MajorRoadOutlineRenderPipelineBindings
+    extends
+        RenderPipelineBindings<
+          MajorRoadOutlineVertexShaderBindings,
+          MajorRoadOutlineFragmentShaderBindings
+        > {
+  MajorRoadOutlineRenderPipelineBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(
+        vertex: MajorRoadOutlineVertexShaderBindings(shaderLibrary),
+        fragment: MajorRoadOutlineFragmentShaderBindings(shaderLibrary),
+        ubos: [
+          MajorRoadOutlineUbo(shaderLibrary['major_road_outline_vert']!),
+          TileUbo(shaderLibrary['major_road_outline_vert']!),
+          CameraUbo(shaderLibrary['major_road_outline_vert']!),
+        ],
+      );
+
+  late final MajorRoadOutlineUbo majorRoadOutlineUbo =
+      ubos[0] as MajorRoadOutlineUbo;
+  late final TileUbo tileUbo = ubos[1] as TileUbo;
+  late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
+
+  /// Sets the UBOs for this shader.
+  void setUbos({
+    required double majorRoadOutlineUboWidthStartStop,
+    required double majorRoadOutlineUboWidthEndStop,
+    required Matrix4 tileLocalToWorld,
+    required double tileSize,
+    required double tileExtent,
+    required double tileOpacity,
+    required Matrix4 cameraWorldToGl,
+    required double cameraZoom,
+  }) {
+    majorRoadOutlineUbo.set(
+      widthStartStop: majorRoadOutlineUboWidthStartStop,
+      widthEndStop: majorRoadOutlineUboWidthEndStop,
+    );
+    tileUbo.set(
+      localToWorld: tileLocalToWorld,
+      size: tileSize,
+      extent: tileExtent,
+      opacity: tileOpacity,
+    );
+    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+  }
+}
+
+/// Generated bindings for the vertex shader `highway_outline`
+class HighwayOutlineVertexShaderBindings extends VertexShaderBindings {
+  HighwayOutlineVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(bytesPerVertex: 24, shader: shaderLibrary['highway_outline_vert']!);
+
+  /// Sets attributes for a vertex at [index].
+  ///
+  /// Ensure that [allocateVertices] has been called before calling this method.
+  void setVertex(
+    int index, {
+    required Vector2 position,
+    required Vector2 normal,
+    required double widthStartValue,
+    required double widthEndValue,
+  }) {
+    final offset = index * bytesPerVertex;
+
+    set_vec2(offset + 0, vertexData!, position);
+    set_vec2(offset + 8, vertexData!, normal);
+    set_float(offset + 16, vertexData!, widthStartValue);
+    set_float(offset + 20, vertexData!, widthEndValue);
+  }
+}
+
+/// Generated bindings for the fragment shader `highway_outline`
+class HighwayOutlineFragmentShaderBindings extends FragmentShaderBindings {
+  HighwayOutlineFragmentShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(shader: shaderLibrary['highway_outline_frag']!);
+}
+
+/// Generated bindings for the render pipeline `highway_outline`
+class HighwayOutlineRenderPipelineBindings
+    extends
+        RenderPipelineBindings<
+          HighwayOutlineVertexShaderBindings,
+          HighwayOutlineFragmentShaderBindings
+        > {
+  HighwayOutlineRenderPipelineBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(
+        vertex: HighwayOutlineVertexShaderBindings(shaderLibrary),
+        fragment: HighwayOutlineFragmentShaderBindings(shaderLibrary),
+        ubos: [
+          HighwayOutlineUbo(shaderLibrary['highway_outline_vert']!),
+          TileUbo(shaderLibrary['highway_outline_vert']!),
+          CameraUbo(shaderLibrary['highway_outline_vert']!),
+        ],
+      );
+
+  late final HighwayOutlineUbo highwayOutlineUbo = ubos[0] as HighwayOutlineUbo;
+  late final TileUbo tileUbo = ubos[1] as TileUbo;
+  late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
+
+  /// Sets the UBOs for this shader.
+  void setUbos({
+    required double highwayOutlineUboWidthStartStop,
+    required double highwayOutlineUboWidthEndStop,
+    required Matrix4 tileLocalToWorld,
+    required double tileSize,
+    required double tileExtent,
+    required double tileOpacity,
+    required Matrix4 cameraWorldToGl,
+    required double cameraZoom,
+  }) {
+    highwayOutlineUbo.set(
+      widthStartStop: highwayOutlineUboWidthStartStop,
+      widthEndStop: highwayOutlineUboWidthEndStop,
+    );
+    tileUbo.set(
+      localToWorld: tileLocalToWorld,
+      size: tileSize,
+      extent: tileExtent,
+      opacity: tileOpacity,
+    );
+    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+  }
+}
+
+/// Generated bindings for the vertex shader `road_under_construction`
+class RoadUnderConstructionVertexShaderBindings extends VertexShaderBindings {
+  RoadUnderConstructionVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(
+        bytesPerVertex: 40,
+        shader: shaderLibrary['road_under_construction_vert']!,
+      );
+
+  /// Sets attributes for a vertex at [index].
+  ///
+  /// Ensure that [allocateVertices] has been called before calling this method.
+  void setVertex(
+    int index, {
+    required Vector2 position,
+    required Vector2 normal,
+    required Vector4 color,
+    required double widthStartValue,
+    required double widthEndValue,
+  }) {
+    final offset = index * bytesPerVertex;
+
+    set_vec2(offset + 0, vertexData!, position);
+    set_vec2(offset + 8, vertexData!, normal);
+    set_vec4(offset + 16, vertexData!, color);
+    set_float(offset + 32, vertexData!, widthStartValue);
+    set_float(offset + 36, vertexData!, widthEndValue);
+  }
+}
+
+/// Generated bindings for the fragment shader `road_under_construction`
+class RoadUnderConstructionFragmentShaderBindings
+    extends FragmentShaderBindings {
+  RoadUnderConstructionFragmentShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(shader: shaderLibrary['road_under_construction_frag']!);
+}
+
+/// Generated bindings for the render pipeline `road_under_construction`
+class RoadUnderConstructionRenderPipelineBindings
+    extends
+        RenderPipelineBindings<
+          RoadUnderConstructionVertexShaderBindings,
+          RoadUnderConstructionFragmentShaderBindings
+        > {
+  RoadUnderConstructionRenderPipelineBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(
+        vertex: RoadUnderConstructionVertexShaderBindings(shaderLibrary),
+        fragment: RoadUnderConstructionFragmentShaderBindings(shaderLibrary),
+        ubos: [
+          RoadUnderConstructionUbo(
+            shaderLibrary['road_under_construction_vert']!,
+          ),
+          TileUbo(shaderLibrary['road_under_construction_vert']!),
+          CameraUbo(shaderLibrary['road_under_construction_vert']!),
+        ],
+      );
+
+  late final RoadUnderConstructionUbo roadUnderConstructionUbo =
+      ubos[0] as RoadUnderConstructionUbo;
+  late final TileUbo tileUbo = ubos[1] as TileUbo;
+  late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
+
+  /// Sets the UBOs for this shader.
+  void setUbos({
+    required double roadUnderConstructionUboWidthStartStop,
+    required double roadUnderConstructionUboWidthEndStop,
+    required Matrix4 tileLocalToWorld,
+    required double tileSize,
+    required double tileExtent,
+    required double tileOpacity,
+    required Matrix4 cameraWorldToGl,
+    required double cameraZoom,
+  }) {
+    roadUnderConstructionUbo.set(
+      widthStartStop: roadUnderConstructionUboWidthStartStop,
+      widthEndStop: roadUnderConstructionUboWidthEndStop,
+    );
+    tileUbo.set(
+      localToWorld: tileLocalToWorld,
+      size: tileSize,
+      extent: tileExtent,
+      opacity: tileOpacity,
+    );
+    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+  }
+}
+
+/// Generated bindings for the vertex shader `minor_road`
+class MinorRoadVertexShaderBindings extends VertexShaderBindings {
+  MinorRoadVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(bytesPerVertex: 24, shader: shaderLibrary['minor_road_vert']!);
+
+  /// Sets attributes for a vertex at [index].
+  ///
+  /// Ensure that [allocateVertices] has been called before calling this method.
+  void setVertex(
+    int index, {
+    required Vector2 position,
+    required Vector2 normal,
+    required double widthStartValue,
+    required double widthEndValue,
+  }) {
+    final offset = index * bytesPerVertex;
+
+    set_vec2(offset + 0, vertexData!, position);
+    set_vec2(offset + 8, vertexData!, normal);
+    set_float(offset + 16, vertexData!, widthStartValue);
+    set_float(offset + 20, vertexData!, widthEndValue);
+  }
+}
+
+/// Generated bindings for the fragment shader `minor_road`
+class MinorRoadFragmentShaderBindings extends FragmentShaderBindings {
+  MinorRoadFragmentShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(shader: shaderLibrary['minor_road_frag']!);
+}
+
+/// Generated bindings for the render pipeline `minor_road`
+class MinorRoadRenderPipelineBindings
+    extends
+        RenderPipelineBindings<
+          MinorRoadVertexShaderBindings,
+          MinorRoadFragmentShaderBindings
+        > {
+  MinorRoadRenderPipelineBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(
+        vertex: MinorRoadVertexShaderBindings(shaderLibrary),
+        fragment: MinorRoadFragmentShaderBindings(shaderLibrary),
+        ubos: [
+          MinorRoadUbo(shaderLibrary['minor_road_vert']!),
+          TileUbo(shaderLibrary['minor_road_vert']!),
+          CameraUbo(shaderLibrary['minor_road_vert']!),
+        ],
+      );
+
+  late final MinorRoadUbo minorRoadUbo = ubos[0] as MinorRoadUbo;
+  late final TileUbo tileUbo = ubos[1] as TileUbo;
+  late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
+
+  /// Sets the UBOs for this shader.
+  void setUbos({
+    required double minorRoadUboWidthStartStop,
+    required double minorRoadUboWidthEndStop,
+    required Matrix4 tileLocalToWorld,
+    required double tileSize,
+    required double tileExtent,
+    required double tileOpacity,
+    required Matrix4 cameraWorldToGl,
+    required double cameraZoom,
+  }) {
+    minorRoadUbo.set(
+      widthStartStop: minorRoadUboWidthStartStop,
+      widthEndStop: minorRoadUboWidthEndStop,
+    );
+    tileUbo.set(
+      localToWorld: tileLocalToWorld,
+      size: tileSize,
+      extent: tileExtent,
+      opacity: tileOpacity,
+    );
+    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+  }
+}
+
+/// Generated bindings for the vertex shader `major_road`
+class MajorRoadVertexShaderBindings extends VertexShaderBindings {
+  MajorRoadVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(bytesPerVertex: 24, shader: shaderLibrary['major_road_vert']!);
+
+  /// Sets attributes for a vertex at [index].
+  ///
+  /// Ensure that [allocateVertices] has been called before calling this method.
+  void setVertex(
+    int index, {
+    required Vector2 position,
+    required Vector2 normal,
+    required double widthStartValue,
+    required double widthEndValue,
+  }) {
+    final offset = index * bytesPerVertex;
+
+    set_vec2(offset + 0, vertexData!, position);
+    set_vec2(offset + 8, vertexData!, normal);
+    set_float(offset + 16, vertexData!, widthStartValue);
+    set_float(offset + 20, vertexData!, widthEndValue);
+  }
+}
+
+/// Generated bindings for the fragment shader `major_road`
+class MajorRoadFragmentShaderBindings extends FragmentShaderBindings {
+  MajorRoadFragmentShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(shader: shaderLibrary['major_road_frag']!);
+}
+
+/// Generated bindings for the render pipeline `major_road`
+class MajorRoadRenderPipelineBindings
+    extends
+        RenderPipelineBindings<
+          MajorRoadVertexShaderBindings,
+          MajorRoadFragmentShaderBindings
+        > {
+  MajorRoadRenderPipelineBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(
+        vertex: MajorRoadVertexShaderBindings(shaderLibrary),
+        fragment: MajorRoadFragmentShaderBindings(shaderLibrary),
+        ubos: [
+          MajorRoadUbo(shaderLibrary['major_road_vert']!),
+          TileUbo(shaderLibrary['major_road_vert']!),
+          CameraUbo(shaderLibrary['major_road_vert']!),
+        ],
+      );
+
+  late final MajorRoadUbo majorRoadUbo = ubos[0] as MajorRoadUbo;
+  late final TileUbo tileUbo = ubos[1] as TileUbo;
+  late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
+
+  /// Sets the UBOs for this shader.
+  void setUbos({
+    required double majorRoadUboWidthStartStop,
+    required double majorRoadUboWidthEndStop,
+    required Matrix4 tileLocalToWorld,
+    required double tileSize,
+    required double tileExtent,
+    required double tileOpacity,
+    required Matrix4 cameraWorldToGl,
+    required double cameraZoom,
+  }) {
+    majorRoadUbo.set(
+      widthStartStop: majorRoadUboWidthStartStop,
+      widthEndStop: majorRoadUboWidthEndStop,
+    );
+    tileUbo.set(
+      localToWorld: tileLocalToWorld,
+      size: tileSize,
+      extent: tileExtent,
+      opacity: tileOpacity,
+    );
+    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+  }
+}
+
+/// Generated bindings for the vertex shader `highway`
+class HighwayVertexShaderBindings extends VertexShaderBindings {
+  HighwayVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(bytesPerVertex: 24, shader: shaderLibrary['highway_vert']!);
+
+  /// Sets attributes for a vertex at [index].
+  ///
+  /// Ensure that [allocateVertices] has been called before calling this method.
+  void setVertex(
+    int index, {
+    required Vector2 position,
+    required Vector2 normal,
+    required double widthStartValue,
+    required double widthEndValue,
+  }) {
+    final offset = index * bytesPerVertex;
+
+    set_vec2(offset + 0, vertexData!, position);
+    set_vec2(offset + 8, vertexData!, normal);
+    set_float(offset + 16, vertexData!, widthStartValue);
+    set_float(offset + 20, vertexData!, widthEndValue);
+  }
+}
+
+/// Generated bindings for the fragment shader `highway`
+class HighwayFragmentShaderBindings extends FragmentShaderBindings {
+  HighwayFragmentShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(shader: shaderLibrary['highway_frag']!);
+}
+
+/// Generated bindings for the render pipeline `highway`
+class HighwayRenderPipelineBindings
+    extends
+        RenderPipelineBindings<
+          HighwayVertexShaderBindings,
+          HighwayFragmentShaderBindings
+        > {
+  HighwayRenderPipelineBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(
+        vertex: HighwayVertexShaderBindings(shaderLibrary),
+        fragment: HighwayFragmentShaderBindings(shaderLibrary),
+        ubos: [
+          HighwayUbo(shaderLibrary['highway_vert']!),
+          TileUbo(shaderLibrary['highway_vert']!),
+          CameraUbo(shaderLibrary['highway_vert']!),
+        ],
+      );
+
+  late final HighwayUbo highwayUbo = ubos[0] as HighwayUbo;
+  late final TileUbo tileUbo = ubos[1] as TileUbo;
+  late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
+
+  /// Sets the UBOs for this shader.
+  void setUbos({
+    required double highwayUboWidthStartStop,
+    required double highwayUboWidthEndStop,
+    required Matrix4 tileLocalToWorld,
+    required double tileSize,
+    required double tileExtent,
+    required double tileOpacity,
+    required Matrix4 cameraWorldToGl,
+    required double cameraZoom,
+  }) {
+    highwayUbo.set(
+      widthStartStop: highwayUboWidthStartStop,
+      widthEndStop: highwayUboWidthEndStop,
+    );
+    tileUbo.set(
+      localToWorld: tileLocalToWorld,
+      size: tileSize,
+      extent: tileExtent,
+      opacity: tileOpacity,
+    );
+    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+  }
+}
+
+/// Generated bindings for the vertex shader `path_outline`
+class PathOutlineVertexShaderBindings extends VertexShaderBindings {
+  PathOutlineVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(bytesPerVertex: 24, shader: shaderLibrary['path_outline_vert']!);
+
+  /// Sets attributes for a vertex at [index].
+  ///
+  /// Ensure that [allocateVertices] has been called before calling this method.
+  void setVertex(
+    int index, {
+    required Vector2 position,
+    required Vector2 normal,
+    required double widthStartValue,
+    required double widthEndValue,
+  }) {
+    final offset = index * bytesPerVertex;
+
+    set_vec2(offset + 0, vertexData!, position);
+    set_vec2(offset + 8, vertexData!, normal);
+    set_float(offset + 16, vertexData!, widthStartValue);
+    set_float(offset + 20, vertexData!, widthEndValue);
+  }
+}
+
+/// Generated bindings for the fragment shader `path_outline`
+class PathOutlineFragmentShaderBindings extends FragmentShaderBindings {
+  PathOutlineFragmentShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(shader: shaderLibrary['path_outline_frag']!);
+}
+
+/// Generated bindings for the render pipeline `path_outline`
+class PathOutlineRenderPipelineBindings
+    extends
+        RenderPipelineBindings<
+          PathOutlineVertexShaderBindings,
+          PathOutlineFragmentShaderBindings
+        > {
+  PathOutlineRenderPipelineBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(
+        vertex: PathOutlineVertexShaderBindings(shaderLibrary),
+        fragment: PathOutlineFragmentShaderBindings(shaderLibrary),
+        ubos: [
+          PathOutlineUbo(shaderLibrary['path_outline_vert']!),
+          TileUbo(shaderLibrary['path_outline_vert']!),
+          CameraUbo(shaderLibrary['path_outline_vert']!),
+        ],
+      );
+
+  late final PathOutlineUbo pathOutlineUbo = ubos[0] as PathOutlineUbo;
+  late final TileUbo tileUbo = ubos[1] as TileUbo;
+  late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
+
+  /// Sets the UBOs for this shader.
+  void setUbos({
+    required double pathOutlineUboWidthStartStop,
+    required double pathOutlineUboWidthEndStop,
+    required Matrix4 tileLocalToWorld,
+    required double tileSize,
+    required double tileExtent,
+    required double tileOpacity,
+    required Matrix4 cameraWorldToGl,
+    required double cameraZoom,
+  }) {
+    pathOutlineUbo.set(
+      widthStartStop: pathOutlineUboWidthStartStop,
+      widthEndStop: pathOutlineUboWidthEndStop,
+    );
+    tileUbo.set(
+      localToWorld: tileLocalToWorld,
+      size: tileSize,
+      extent: tileExtent,
+      opacity: tileOpacity,
+    );
+    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+  }
+}
+
+/// Generated bindings for the vertex shader `path`
+class PathVertexShaderBindings extends VertexShaderBindings {
+  PathVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(bytesPerVertex: 24, shader: shaderLibrary['path_vert']!);
+
+  /// Sets attributes for a vertex at [index].
+  ///
+  /// Ensure that [allocateVertices] has been called before calling this method.
+  void setVertex(
+    int index, {
+    required Vector2 position,
+    required Vector2 normal,
+    required double widthStartValue,
+    required double widthEndValue,
+  }) {
+    final offset = index * bytesPerVertex;
+
+    set_vec2(offset + 0, vertexData!, position);
+    set_vec2(offset + 8, vertexData!, normal);
+    set_float(offset + 16, vertexData!, widthStartValue);
+    set_float(offset + 20, vertexData!, widthEndValue);
+  }
+}
+
+/// Generated bindings for the fragment shader `path`
+class PathFragmentShaderBindings extends FragmentShaderBindings {
+  PathFragmentShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(shader: shaderLibrary['path_frag']!);
+}
+
+/// Generated bindings for the render pipeline `path`
+class PathRenderPipelineBindings
+    extends
+        RenderPipelineBindings<
+          PathVertexShaderBindings,
+          PathFragmentShaderBindings
+        > {
+  PathRenderPipelineBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(
+        vertex: PathVertexShaderBindings(shaderLibrary),
+        fragment: PathFragmentShaderBindings(shaderLibrary),
+        ubos: [
+          PathUbo(shaderLibrary['path_vert']!),
+          TileUbo(shaderLibrary['path_vert']!),
+          CameraUbo(shaderLibrary['path_vert']!),
+        ],
+      );
+
+  late final PathUbo pathUbo = ubos[0] as PathUbo;
+  late final TileUbo tileUbo = ubos[1] as TileUbo;
+  late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
+
+  /// Sets the UBOs for this shader.
+  void setUbos({
+    required double pathUboWidthStartStop,
+    required double pathUboWidthEndStop,
+    required Matrix4 tileLocalToWorld,
+    required double tileSize,
+    required double tileExtent,
+    required double tileOpacity,
+    required Matrix4 cameraWorldToGl,
+    required double cameraZoom,
+  }) {
+    pathUbo.set(
+      widthStartStop: pathUboWidthStartStop,
+      widthEndStop: pathUboWidthEndStop,
+    );
+    tileUbo.set(
+      localToWorld: tileLocalToWorld,
+      size: tileSize,
+      extent: tileExtent,
+      opacity: tileOpacity,
+    );
+    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+  }
+}
+
+/// Generated bindings for the vertex shader `major_rail`
+class MajorRailVertexShaderBindings extends VertexShaderBindings {
+  MajorRailVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(bytesPerVertex: 60, shader: shaderLibrary['major_rail_vert']!);
+
+  /// Sets attributes for a vertex at [index].
+  ///
+  /// Ensure that [allocateVertices] has been called before calling this method.
+  void setVertex(
+    int index, {
+    required Vector2 position,
+    required Vector2 normal,
+    required Vector4 colorStartValue,
+    required Vector4 colorEndValue,
+    required double opacity,
+    required double widthStartValue,
+    required double widthEndValue,
+  }) {
+    final offset = index * bytesPerVertex;
+
+    set_vec2(offset + 0, vertexData!, position);
+    set_vec2(offset + 8, vertexData!, normal);
+    set_vec4(offset + 16, vertexData!, colorStartValue);
+    set_vec4(offset + 32, vertexData!, colorEndValue);
+    set_float(offset + 48, vertexData!, opacity);
+    set_float(offset + 52, vertexData!, widthStartValue);
+    set_float(offset + 56, vertexData!, widthEndValue);
+  }
+}
+
+/// Generated bindings for the fragment shader `major_rail`
+class MajorRailFragmentShaderBindings extends FragmentShaderBindings {
+  MajorRailFragmentShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(shader: shaderLibrary['major_rail_frag']!);
+}
+
+/// Generated bindings for the render pipeline `major_rail`
+class MajorRailRenderPipelineBindings
+    extends
+        RenderPipelineBindings<
+          MajorRailVertexShaderBindings,
+          MajorRailFragmentShaderBindings
+        > {
+  MajorRailRenderPipelineBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(
+        vertex: MajorRailVertexShaderBindings(shaderLibrary),
+        fragment: MajorRailFragmentShaderBindings(shaderLibrary),
+        ubos: [
+          MajorRailUbo(shaderLibrary['major_rail_vert']!),
+          TileUbo(shaderLibrary['major_rail_vert']!),
+          CameraUbo(shaderLibrary['major_rail_vert']!),
+        ],
+      );
+
+  late final MajorRailUbo majorRailUbo = ubos[0] as MajorRailUbo;
+  late final TileUbo tileUbo = ubos[1] as TileUbo;
+  late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
+
+  /// Sets the UBOs for this shader.
+  void setUbos({
+    required double majorRailUboColorStartStop,
+    required double majorRailUboColorEndStop,
+    required double majorRailUboWidthStartStop,
+    required double majorRailUboWidthEndStop,
+    required Matrix4 tileLocalToWorld,
+    required double tileSize,
+    required double tileExtent,
+    required double tileOpacity,
+    required Matrix4 cameraWorldToGl,
+    required double cameraZoom,
+  }) {
+    majorRailUbo.set(
+      colorStartStop: majorRailUboColorStartStop,
+      colorEndStop: majorRailUboColorEndStop,
+      widthStartStop: majorRailUboWidthStartStop,
+      widthEndStop: majorRailUboWidthEndStop,
+    );
+    tileUbo.set(
+      localToWorld: tileLocalToWorld,
+      size: tileSize,
+      extent: tileExtent,
+      opacity: tileOpacity,
+    );
+    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+  }
+}
+
+/// Generated bindings for the vertex shader `major_rail_hatching`
+class MajorRailHatchingVertexShaderBindings extends VertexShaderBindings {
+  MajorRailHatchingVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(
+        bytesPerVertex: 28,
+        shader: shaderLibrary['major_rail_hatching_vert']!,
+      );
+
+  /// Sets attributes for a vertex at [index].
+  ///
+  /// Ensure that [allocateVertices] has been called before calling this method.
+  void setVertex(
+    int index, {
+    required Vector2 position,
+    required Vector2 normal,
+    required double opacity,
+    required double widthStartValue,
+    required double widthEndValue,
+  }) {
+    final offset = index * bytesPerVertex;
+
+    set_vec2(offset + 0, vertexData!, position);
+    set_vec2(offset + 8, vertexData!, normal);
+    set_float(offset + 16, vertexData!, opacity);
+    set_float(offset + 20, vertexData!, widthStartValue);
+    set_float(offset + 24, vertexData!, widthEndValue);
+  }
+}
+
+/// Generated bindings for the fragment shader `major_rail_hatching`
+class MajorRailHatchingFragmentShaderBindings extends FragmentShaderBindings {
+  MajorRailHatchingFragmentShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(shader: shaderLibrary['major_rail_hatching_frag']!);
+}
+
+/// Generated bindings for the render pipeline `major_rail_hatching`
+class MajorRailHatchingRenderPipelineBindings
+    extends
+        RenderPipelineBindings<
+          MajorRailHatchingVertexShaderBindings,
+          MajorRailHatchingFragmentShaderBindings
+        > {
+  MajorRailHatchingRenderPipelineBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(
+        vertex: MajorRailHatchingVertexShaderBindings(shaderLibrary),
+        fragment: MajorRailHatchingFragmentShaderBindings(shaderLibrary),
+        ubos: [
+          MajorRailHatchingUbo(shaderLibrary['major_rail_hatching_vert']!),
+          TileUbo(shaderLibrary['major_rail_hatching_vert']!),
+          CameraUbo(shaderLibrary['major_rail_hatching_vert']!),
+        ],
+      );
+
+  late final MajorRailHatchingUbo majorRailHatchingUbo =
+      ubos[0] as MajorRailHatchingUbo;
+  late final TileUbo tileUbo = ubos[1] as TileUbo;
+  late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
+
+  /// Sets the UBOs for this shader.
+  void setUbos({
+    required double majorRailHatchingUboWidthStartStop,
+    required double majorRailHatchingUboWidthEndStop,
+    required Matrix4 tileLocalToWorld,
+    required double tileSize,
+    required double tileExtent,
+    required double tileOpacity,
+    required Matrix4 cameraWorldToGl,
+    required double cameraZoom,
+  }) {
+    majorRailHatchingUbo.set(
+      widthStartStop: majorRailHatchingUboWidthStartStop,
+      widthEndStop: majorRailHatchingUboWidthEndStop,
+    );
+    tileUbo.set(
+      localToWorld: tileLocalToWorld,
+      size: tileSize,
+      extent: tileExtent,
+      opacity: tileOpacity,
+    );
+    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+  }
+}
+
+/// Generated bindings for the vertex shader `minor_rail`
+class MinorRailVertexShaderBindings extends VertexShaderBindings {
+  MinorRailVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(bytesPerVertex: 24, shader: shaderLibrary['minor_rail_vert']!);
+
+  /// Sets attributes for a vertex at [index].
+  ///
+  /// Ensure that [allocateVertices] has been called before calling this method.
+  void setVertex(
+    int index, {
+    required Vector2 position,
+    required Vector2 normal,
+    required double widthStartValue,
+    required double widthEndValue,
+  }) {
+    final offset = index * bytesPerVertex;
+
+    set_vec2(offset + 0, vertexData!, position);
+    set_vec2(offset + 8, vertexData!, normal);
+    set_float(offset + 16, vertexData!, widthStartValue);
+    set_float(offset + 20, vertexData!, widthEndValue);
+  }
+}
+
+/// Generated bindings for the fragment shader `minor_rail`
+class MinorRailFragmentShaderBindings extends FragmentShaderBindings {
+  MinorRailFragmentShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(shader: shaderLibrary['minor_rail_frag']!);
+}
+
+/// Generated bindings for the render pipeline `minor_rail`
+class MinorRailRenderPipelineBindings
+    extends
+        RenderPipelineBindings<
+          MinorRailVertexShaderBindings,
+          MinorRailFragmentShaderBindings
+        > {
+  MinorRailRenderPipelineBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(
+        vertex: MinorRailVertexShaderBindings(shaderLibrary),
+        fragment: MinorRailFragmentShaderBindings(shaderLibrary),
+        ubos: [
+          MinorRailUbo(shaderLibrary['minor_rail_vert']!),
+          TileUbo(shaderLibrary['minor_rail_vert']!),
+          CameraUbo(shaderLibrary['minor_rail_vert']!),
+        ],
+      );
+
+  late final MinorRailUbo minorRailUbo = ubos[0] as MinorRailUbo;
+  late final TileUbo tileUbo = ubos[1] as TileUbo;
+  late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
+
+  /// Sets the UBOs for this shader.
+  void setUbos({
+    required double minorRailUboWidthStartStop,
+    required double minorRailUboWidthEndStop,
+    required Matrix4 tileLocalToWorld,
+    required double tileSize,
+    required double tileExtent,
+    required double tileOpacity,
+    required Matrix4 cameraWorldToGl,
+    required double cameraZoom,
+  }) {
+    minorRailUbo.set(
+      widthStartStop: minorRailUboWidthStartStop,
+      widthEndStop: minorRailUboWidthEndStop,
+    );
+    tileUbo.set(
+      localToWorld: tileLocalToWorld,
+      size: tileSize,
+      extent: tileExtent,
+      opacity: tileOpacity,
+    );
+    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+  }
+}
+
+/// Generated bindings for the vertex shader `minor_rail_hatching`
+class MinorRailHatchingVertexShaderBindings extends VertexShaderBindings {
+  MinorRailHatchingVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(
+        bytesPerVertex: 24,
+        shader: shaderLibrary['minor_rail_hatching_vert']!,
+      );
+
+  /// Sets attributes for a vertex at [index].
+  ///
+  /// Ensure that [allocateVertices] has been called before calling this method.
+  void setVertex(
+    int index, {
+    required Vector2 position,
+    required Vector2 normal,
+    required double widthStartValue,
+    required double widthEndValue,
+  }) {
+    final offset = index * bytesPerVertex;
+
+    set_vec2(offset + 0, vertexData!, position);
+    set_vec2(offset + 8, vertexData!, normal);
+    set_float(offset + 16, vertexData!, widthStartValue);
+    set_float(offset + 20, vertexData!, widthEndValue);
+  }
+}
+
+/// Generated bindings for the fragment shader `minor_rail_hatching`
+class MinorRailHatchingFragmentShaderBindings extends FragmentShaderBindings {
+  MinorRailHatchingFragmentShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(shader: shaderLibrary['minor_rail_hatching_frag']!);
+}
+
+/// Generated bindings for the render pipeline `minor_rail_hatching`
+class MinorRailHatchingRenderPipelineBindings
+    extends
+        RenderPipelineBindings<
+          MinorRailHatchingVertexShaderBindings,
+          MinorRailHatchingFragmentShaderBindings
+        > {
+  MinorRailHatchingRenderPipelineBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(
+        vertex: MinorRailHatchingVertexShaderBindings(shaderLibrary),
+        fragment: MinorRailHatchingFragmentShaderBindings(shaderLibrary),
+        ubos: [
+          MinorRailHatchingUbo(shaderLibrary['minor_rail_hatching_vert']!),
+          TileUbo(shaderLibrary['minor_rail_hatching_vert']!),
+          CameraUbo(shaderLibrary['minor_rail_hatching_vert']!),
+        ],
+      );
+
+  late final MinorRailHatchingUbo minorRailHatchingUbo =
+      ubos[0] as MinorRailHatchingUbo;
+  late final TileUbo tileUbo = ubos[1] as TileUbo;
+  late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
+
+  /// Sets the UBOs for this shader.
+  void setUbos({
+    required double minorRailHatchingUboWidthStartStop,
+    required double minorRailHatchingUboWidthEndStop,
+    required Matrix4 tileLocalToWorld,
+    required double tileSize,
+    required double tileExtent,
+    required double tileOpacity,
+    required Matrix4 cameraWorldToGl,
+    required double cameraZoom,
+  }) {
+    minorRailHatchingUbo.set(
+      widthStartStop: minorRailHatchingUboWidthStartStop,
+      widthEndStop: minorRailHatchingUboWidthEndStop,
+    );
+    tileUbo.set(
+      localToWorld: tileLocalToWorld,
+      size: tileSize,
+      extent: tileExtent,
+      opacity: tileOpacity,
+    );
+    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+  }
+}
+
 /// Generated bindings for the vertex shader `building`
 class BuildingVertexShaderBindings extends VertexShaderBindings {
   BuildingVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
@@ -1809,6 +4256,549 @@ class BuildingRenderPipelineBindings
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
   }) {
+    tileUbo.set(
+      localToWorld: tileLocalToWorld,
+      size: tileSize,
+      extent: tileExtent,
+      opacity: tileOpacity,
+    );
+    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+  }
+}
+
+/// Generated bindings for the vertex shader `aqueduct_outline`
+class AqueductOutlineVertexShaderBindings extends VertexShaderBindings {
+  AqueductOutlineVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(
+        bytesPerVertex: 24,
+        shader: shaderLibrary['aqueduct_outline_vert']!,
+      );
+
+  /// Sets attributes for a vertex at [index].
+  ///
+  /// Ensure that [allocateVertices] has been called before calling this method.
+  void setVertex(
+    int index, {
+    required Vector2 position,
+    required Vector2 normal,
+    required double widthStartValue,
+    required double widthEndValue,
+  }) {
+    final offset = index * bytesPerVertex;
+
+    set_vec2(offset + 0, vertexData!, position);
+    set_vec2(offset + 8, vertexData!, normal);
+    set_float(offset + 16, vertexData!, widthStartValue);
+    set_float(offset + 20, vertexData!, widthEndValue);
+  }
+}
+
+/// Generated bindings for the fragment shader `aqueduct_outline`
+class AqueductOutlineFragmentShaderBindings extends FragmentShaderBindings {
+  AqueductOutlineFragmentShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(shader: shaderLibrary['aqueduct_outline_frag']!);
+}
+
+/// Generated bindings for the render pipeline `aqueduct_outline`
+class AqueductOutlineRenderPipelineBindings
+    extends
+        RenderPipelineBindings<
+          AqueductOutlineVertexShaderBindings,
+          AqueductOutlineFragmentShaderBindings
+        > {
+  AqueductOutlineRenderPipelineBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(
+        vertex: AqueductOutlineVertexShaderBindings(shaderLibrary),
+        fragment: AqueductOutlineFragmentShaderBindings(shaderLibrary),
+        ubos: [
+          AqueductOutlineUbo(shaderLibrary['aqueduct_outline_vert']!),
+          TileUbo(shaderLibrary['aqueduct_outline_vert']!),
+          CameraUbo(shaderLibrary['aqueduct_outline_vert']!),
+        ],
+      );
+
+  late final AqueductOutlineUbo aqueductOutlineUbo =
+      ubos[0] as AqueductOutlineUbo;
+  late final TileUbo tileUbo = ubos[1] as TileUbo;
+  late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
+
+  /// Sets the UBOs for this shader.
+  void setUbos({
+    required double aqueductOutlineUboWidthStartStop,
+    required double aqueductOutlineUboWidthEndStop,
+    required Matrix4 tileLocalToWorld,
+    required double tileSize,
+    required double tileExtent,
+    required double tileOpacity,
+    required Matrix4 cameraWorldToGl,
+    required double cameraZoom,
+  }) {
+    aqueductOutlineUbo.set(
+      widthStartStop: aqueductOutlineUboWidthStartStop,
+      widthEndStop: aqueductOutlineUboWidthEndStop,
+    );
+    tileUbo.set(
+      localToWorld: tileLocalToWorld,
+      size: tileSize,
+      extent: tileExtent,
+      opacity: tileOpacity,
+    );
+    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+  }
+}
+
+/// Generated bindings for the vertex shader `aqueduct`
+class AqueductVertexShaderBindings extends VertexShaderBindings {
+  AqueductVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(bytesPerVertex: 24, shader: shaderLibrary['aqueduct_vert']!);
+
+  /// Sets attributes for a vertex at [index].
+  ///
+  /// Ensure that [allocateVertices] has been called before calling this method.
+  void setVertex(
+    int index, {
+    required Vector2 position,
+    required Vector2 normal,
+    required double widthStartValue,
+    required double widthEndValue,
+  }) {
+    final offset = index * bytesPerVertex;
+
+    set_vec2(offset + 0, vertexData!, position);
+    set_vec2(offset + 8, vertexData!, normal);
+    set_float(offset + 16, vertexData!, widthStartValue);
+    set_float(offset + 20, vertexData!, widthEndValue);
+  }
+}
+
+/// Generated bindings for the fragment shader `aqueduct`
+class AqueductFragmentShaderBindings extends FragmentShaderBindings {
+  AqueductFragmentShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(shader: shaderLibrary['aqueduct_frag']!);
+}
+
+/// Generated bindings for the render pipeline `aqueduct`
+class AqueductRenderPipelineBindings
+    extends
+        RenderPipelineBindings<
+          AqueductVertexShaderBindings,
+          AqueductFragmentShaderBindings
+        > {
+  AqueductRenderPipelineBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(
+        vertex: AqueductVertexShaderBindings(shaderLibrary),
+        fragment: AqueductFragmentShaderBindings(shaderLibrary),
+        ubos: [
+          AqueductUbo(shaderLibrary['aqueduct_vert']!),
+          TileUbo(shaderLibrary['aqueduct_vert']!),
+          CameraUbo(shaderLibrary['aqueduct_vert']!),
+        ],
+      );
+
+  late final AqueductUbo aqueductUbo = ubos[0] as AqueductUbo;
+  late final TileUbo tileUbo = ubos[1] as TileUbo;
+  late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
+
+  /// Sets the UBOs for this shader.
+  void setUbos({
+    required double aqueductUboWidthStartStop,
+    required double aqueductUboWidthEndStop,
+    required Matrix4 tileLocalToWorld,
+    required double tileSize,
+    required double tileExtent,
+    required double tileOpacity,
+    required Matrix4 cameraWorldToGl,
+    required double cameraZoom,
+  }) {
+    aqueductUbo.set(
+      widthStartStop: aqueductUboWidthStartStop,
+      widthEndStop: aqueductUboWidthEndStop,
+    );
+    tileUbo.set(
+      localToWorld: tileLocalToWorld,
+      size: tileSize,
+      extent: tileExtent,
+      opacity: tileOpacity,
+    );
+    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+  }
+}
+
+/// Generated bindings for the vertex shader `cablecar`
+class CablecarVertexShaderBindings extends VertexShaderBindings {
+  CablecarVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(bytesPerVertex: 24, shader: shaderLibrary['cablecar_vert']!);
+
+  /// Sets attributes for a vertex at [index].
+  ///
+  /// Ensure that [allocateVertices] has been called before calling this method.
+  void setVertex(
+    int index, {
+    required Vector2 position,
+    required Vector2 normal,
+    required double widthStartValue,
+    required double widthEndValue,
+  }) {
+    final offset = index * bytesPerVertex;
+
+    set_vec2(offset + 0, vertexData!, position);
+    set_vec2(offset + 8, vertexData!, normal);
+    set_float(offset + 16, vertexData!, widthStartValue);
+    set_float(offset + 20, vertexData!, widthEndValue);
+  }
+}
+
+/// Generated bindings for the fragment shader `cablecar`
+class CablecarFragmentShaderBindings extends FragmentShaderBindings {
+  CablecarFragmentShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(shader: shaderLibrary['cablecar_frag']!);
+}
+
+/// Generated bindings for the render pipeline `cablecar`
+class CablecarRenderPipelineBindings
+    extends
+        RenderPipelineBindings<
+          CablecarVertexShaderBindings,
+          CablecarFragmentShaderBindings
+        > {
+  CablecarRenderPipelineBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(
+        vertex: CablecarVertexShaderBindings(shaderLibrary),
+        fragment: CablecarFragmentShaderBindings(shaderLibrary),
+        ubos: [
+          CablecarUbo(shaderLibrary['cablecar_vert']!),
+          TileUbo(shaderLibrary['cablecar_vert']!),
+          CameraUbo(shaderLibrary['cablecar_vert']!),
+        ],
+      );
+
+  late final CablecarUbo cablecarUbo = ubos[0] as CablecarUbo;
+  late final TileUbo tileUbo = ubos[1] as TileUbo;
+  late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
+
+  /// Sets the UBOs for this shader.
+  void setUbos({
+    required double cablecarUboWidthStartStop,
+    required double cablecarUboWidthEndStop,
+    required Matrix4 tileLocalToWorld,
+    required double tileSize,
+    required double tileExtent,
+    required double tileOpacity,
+    required Matrix4 cameraWorldToGl,
+    required double cameraZoom,
+  }) {
+    cablecarUbo.set(
+      widthStartStop: cablecarUboWidthStartStop,
+      widthEndStop: cablecarUboWidthEndStop,
+    );
+    tileUbo.set(
+      localToWorld: tileLocalToWorld,
+      size: tileSize,
+      extent: tileExtent,
+      opacity: tileOpacity,
+    );
+    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+  }
+}
+
+/// Generated bindings for the vertex shader `cablecar_dash`
+class CablecarDashVertexShaderBindings extends VertexShaderBindings {
+  CablecarDashVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(bytesPerVertex: 24, shader: shaderLibrary['cablecar_dash_vert']!);
+
+  /// Sets attributes for a vertex at [index].
+  ///
+  /// Ensure that [allocateVertices] has been called before calling this method.
+  void setVertex(
+    int index, {
+    required Vector2 position,
+    required Vector2 normal,
+    required double widthStartValue,
+    required double widthEndValue,
+  }) {
+    final offset = index * bytesPerVertex;
+
+    set_vec2(offset + 0, vertexData!, position);
+    set_vec2(offset + 8, vertexData!, normal);
+    set_float(offset + 16, vertexData!, widthStartValue);
+    set_float(offset + 20, vertexData!, widthEndValue);
+  }
+}
+
+/// Generated bindings for the fragment shader `cablecar_dash`
+class CablecarDashFragmentShaderBindings extends FragmentShaderBindings {
+  CablecarDashFragmentShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(shader: shaderLibrary['cablecar_dash_frag']!);
+}
+
+/// Generated bindings for the render pipeline `cablecar_dash`
+class CablecarDashRenderPipelineBindings
+    extends
+        RenderPipelineBindings<
+          CablecarDashVertexShaderBindings,
+          CablecarDashFragmentShaderBindings
+        > {
+  CablecarDashRenderPipelineBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(
+        vertex: CablecarDashVertexShaderBindings(shaderLibrary),
+        fragment: CablecarDashFragmentShaderBindings(shaderLibrary),
+        ubos: [
+          CablecarDashUbo(shaderLibrary['cablecar_dash_vert']!),
+          TileUbo(shaderLibrary['cablecar_dash_vert']!),
+          CameraUbo(shaderLibrary['cablecar_dash_vert']!),
+        ],
+      );
+
+  late final CablecarDashUbo cablecarDashUbo = ubos[0] as CablecarDashUbo;
+  late final TileUbo tileUbo = ubos[1] as TileUbo;
+  late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
+
+  /// Sets the UBOs for this shader.
+  void setUbos({
+    required double cablecarDashUboWidthStartStop,
+    required double cablecarDashUboWidthEndStop,
+    required Matrix4 tileLocalToWorld,
+    required double tileSize,
+    required double tileExtent,
+    required double tileOpacity,
+    required Matrix4 cameraWorldToGl,
+    required double cameraZoom,
+  }) {
+    cablecarDashUbo.set(
+      widthStartStop: cablecarDashUboWidthStartStop,
+      widthEndStop: cablecarDashUboWidthEndStop,
+    );
+    tileUbo.set(
+      localToWorld: tileLocalToWorld,
+      size: tileSize,
+      extent: tileExtent,
+      opacity: tileOpacity,
+    );
+    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+  }
+}
+
+/// Generated bindings for the vertex shader `other_border`
+class OtherBorderVertexShaderBindings extends VertexShaderBindings {
+  OtherBorderVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(bytesPerVertex: 24, shader: shaderLibrary['other_border_vert']!);
+
+  /// Sets attributes for a vertex at [index].
+  ///
+  /// Ensure that [allocateVertices] has been called before calling this method.
+  void setVertex(
+    int index, {
+    required Vector2 position,
+    required Vector2 normal,
+    required double widthStartValue,
+    required double widthEndValue,
+  }) {
+    final offset = index * bytesPerVertex;
+
+    set_vec2(offset + 0, vertexData!, position);
+    set_vec2(offset + 8, vertexData!, normal);
+    set_float(offset + 16, vertexData!, widthStartValue);
+    set_float(offset + 20, vertexData!, widthEndValue);
+  }
+}
+
+/// Generated bindings for the fragment shader `other_border`
+class OtherBorderFragmentShaderBindings extends FragmentShaderBindings {
+  OtherBorderFragmentShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(shader: shaderLibrary['other_border_frag']!);
+}
+
+/// Generated bindings for the render pipeline `other_border`
+class OtherBorderRenderPipelineBindings
+    extends
+        RenderPipelineBindings<
+          OtherBorderVertexShaderBindings,
+          OtherBorderFragmentShaderBindings
+        > {
+  OtherBorderRenderPipelineBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(
+        vertex: OtherBorderVertexShaderBindings(shaderLibrary),
+        fragment: OtherBorderFragmentShaderBindings(shaderLibrary),
+        ubos: [
+          OtherBorderUbo(shaderLibrary['other_border_vert']!),
+          TileUbo(shaderLibrary['other_border_vert']!),
+          CameraUbo(shaderLibrary['other_border_vert']!),
+        ],
+      );
+
+  late final OtherBorderUbo otherBorderUbo = ubos[0] as OtherBorderUbo;
+  late final TileUbo tileUbo = ubos[1] as TileUbo;
+  late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
+
+  /// Sets the UBOs for this shader.
+  void setUbos({
+    required double otherBorderUboWidthStartStop,
+    required double otherBorderUboWidthEndStop,
+    required Matrix4 tileLocalToWorld,
+    required double tileSize,
+    required double tileExtent,
+    required double tileOpacity,
+    required Matrix4 cameraWorldToGl,
+    required double cameraZoom,
+  }) {
+    otherBorderUbo.set(
+      widthStartStop: otherBorderUboWidthStartStop,
+      widthEndStop: otherBorderUboWidthEndStop,
+    );
+    tileUbo.set(
+      localToWorld: tileLocalToWorld,
+      size: tileSize,
+      extent: tileExtent,
+      opacity: tileOpacity,
+    );
+    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+  }
+}
+
+/// Generated bindings for the vertex shader `disputed_border`
+class DisputedBorderVertexShaderBindings extends VertexShaderBindings {
+  DisputedBorderVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(bytesPerVertex: 24, shader: shaderLibrary['disputed_border_vert']!);
+
+  /// Sets attributes for a vertex at [index].
+  ///
+  /// Ensure that [allocateVertices] has been called before calling this method.
+  void setVertex(
+    int index, {
+    required Vector2 position,
+    required Vector2 normal,
+    required double widthStartValue,
+    required double widthEndValue,
+  }) {
+    final offset = index * bytesPerVertex;
+
+    set_vec2(offset + 0, vertexData!, position);
+    set_vec2(offset + 8, vertexData!, normal);
+    set_float(offset + 16, vertexData!, widthStartValue);
+    set_float(offset + 20, vertexData!, widthEndValue);
+  }
+}
+
+/// Generated bindings for the fragment shader `disputed_border`
+class DisputedBorderFragmentShaderBindings extends FragmentShaderBindings {
+  DisputedBorderFragmentShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(shader: shaderLibrary['disputed_border_frag']!);
+}
+
+/// Generated bindings for the render pipeline `disputed_border`
+class DisputedBorderRenderPipelineBindings
+    extends
+        RenderPipelineBindings<
+          DisputedBorderVertexShaderBindings,
+          DisputedBorderFragmentShaderBindings
+        > {
+  DisputedBorderRenderPipelineBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(
+        vertex: DisputedBorderVertexShaderBindings(shaderLibrary),
+        fragment: DisputedBorderFragmentShaderBindings(shaderLibrary),
+        ubos: [
+          DisputedBorderUbo(shaderLibrary['disputed_border_vert']!),
+          TileUbo(shaderLibrary['disputed_border_vert']!),
+          CameraUbo(shaderLibrary['disputed_border_vert']!),
+        ],
+      );
+
+  late final DisputedBorderUbo disputedBorderUbo = ubos[0] as DisputedBorderUbo;
+  late final TileUbo tileUbo = ubos[1] as TileUbo;
+  late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
+
+  /// Sets the UBOs for this shader.
+  void setUbos({
+    required double disputedBorderUboWidthStartStop,
+    required double disputedBorderUboWidthEndStop,
+    required Matrix4 tileLocalToWorld,
+    required double tileSize,
+    required double tileExtent,
+    required double tileOpacity,
+    required Matrix4 cameraWorldToGl,
+    required double cameraZoom,
+  }) {
+    disputedBorderUbo.set(
+      widthStartStop: disputedBorderUboWidthStartStop,
+      widthEndStop: disputedBorderUboWidthEndStop,
+    );
+    tileUbo.set(
+      localToWorld: tileLocalToWorld,
+      size: tileSize,
+      extent: tileExtent,
+      opacity: tileOpacity,
+    );
+    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+  }
+}
+
+/// Generated bindings for the vertex shader `country_border`
+class CountryBorderVertexShaderBindings extends VertexShaderBindings {
+  CountryBorderVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(bytesPerVertex: 24, shader: shaderLibrary['country_border_vert']!);
+
+  /// Sets attributes for a vertex at [index].
+  ///
+  /// Ensure that [allocateVertices] has been called before calling this method.
+  void setVertex(
+    int index, {
+    required Vector2 position,
+    required Vector2 normal,
+    required double widthStartValue,
+    required double widthEndValue,
+  }) {
+    final offset = index * bytesPerVertex;
+
+    set_vec2(offset + 0, vertexData!, position);
+    set_vec2(offset + 8, vertexData!, normal);
+    set_float(offset + 16, vertexData!, widthStartValue);
+    set_float(offset + 20, vertexData!, widthEndValue);
+  }
+}
+
+/// Generated bindings for the fragment shader `country_border`
+class CountryBorderFragmentShaderBindings extends FragmentShaderBindings {
+  CountryBorderFragmentShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(shader: shaderLibrary['country_border_frag']!);
+}
+
+/// Generated bindings for the render pipeline `country_border`
+class CountryBorderRenderPipelineBindings
+    extends
+        RenderPipelineBindings<
+          CountryBorderVertexShaderBindings,
+          CountryBorderFragmentShaderBindings
+        > {
+  CountryBorderRenderPipelineBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(
+        vertex: CountryBorderVertexShaderBindings(shaderLibrary),
+        fragment: CountryBorderFragmentShaderBindings(shaderLibrary),
+        ubos: [
+          CountryBorderUbo(shaderLibrary['country_border_vert']!),
+          TileUbo(shaderLibrary['country_border_vert']!),
+          CameraUbo(shaderLibrary['country_border_vert']!),
+        ],
+      );
+
+  late final CountryBorderUbo countryBorderUbo = ubos[0] as CountryBorderUbo;
+  late final TileUbo tileUbo = ubos[1] as TileUbo;
+  late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
+
+  /// Sets the UBOs for this shader.
+  void setUbos({
+    required double countryBorderUboWidthStartStop,
+    required double countryBorderUboWidthEndStop,
+    required Matrix4 tileLocalToWorld,
+    required double tileSize,
+    required double tileExtent,
+    required double tileOpacity,
+    required Matrix4 cameraWorldToGl,
+    required double cameraZoom,
+  }) {
+    countryBorderUbo.set(
+      widthStartStop: countryBorderUboWidthStartStop,
+      widthEndStop: countryBorderUboWidthEndStop,
+    );
     tileUbo.set(
       localToWorld: tileLocalToWorld,
       size: tileSize,

@@ -34,6 +34,7 @@ import 'package:gpu_vector_tile_renderer/src/utils/string_utils.dart';
   for (final layer in style.layers) {
     final result = switch (layer.type) {
       spec.Layer$Type.fill => _precompileFillLayer(layer as spec.LayerFill),
+      spec.Layer$Type.line => _precompileLineLayer(layer as spec.LayerLine),
       _ => null,
     };
 
@@ -47,7 +48,6 @@ import 'package:gpu_vector_tile_renderer/src/utils/string_utils.dart';
       supportedLayerNames.add(layer.id);
     }
   }
-
 
   shaderBindings.insert(0, generateCommonShaderUboBindings([...vertexShaders, ...fragmentShaders]));
   shaderBindings.insert(0, generateShaderBindingsHeader());
@@ -84,7 +84,7 @@ import 'package:gpu_vector_tile_renderer/src/utils/string_utils.dart';
       '      shaderLibrary: shaderLibrary,',
       '      coordinates: coordinates,',
       '      container: container,',
-      '      specLayer: specLayer as spec.LayerFill,',
+      '      specLayer: specLayer as dynamic,',
       '      vtLayer: vtLayer,',
       '    ),',
     ],
@@ -118,12 +118,29 @@ _PrecompileLayerResult _precompileFillLayer(spec.LayerFill layer) {
     shaderTemplateName: 'fill',
     abstractLayerRendererClassName: 'FillLayerRenderer',
     setFeatureVerticesGenerator: fillLayerRendererSetFeatureVerticesGenerator,
-    setUniformsGenerator: fillLayerRendererSetUniformsGenerator,
+    setUniformsGenerator: setUniformsGenerator,
     jointPropertiesMap: {
       'antialias': (paint.fillAntialias, 'fillAntialias', 'antialias'),
       'opacity': (paint.fillOpacity, 'fillOpacity', 'opacity'),
       'color': (paint.fillColor, 'fillColor', 'color'),
       'translate': (paint.fillTranslate, 'fillTranslate', 'translate'),
+    },
+  );
+}
+
+_PrecompileLayerResult _precompileLineLayer(spec.LayerLine layer) {
+  final paint = layer.paint;
+
+  return _precompileLayer(
+    layer,
+    shaderTemplateName: 'line',
+    abstractLayerRendererClassName: 'LineLayerRenderer',
+    setFeatureVerticesGenerator: lineLayerRendererSetFeatureVerticesGenerator,
+    setUniformsGenerator: setUniformsGenerator,
+    jointPropertiesMap: {
+      'color': (paint.lineColor, 'lineColor', 'color'),
+      'opacity': (paint.lineOpacity, 'lineOpacity', 'opacity'),
+      'width': (paint.lineWidth, 'lineWidth', 'width'),
     },
   );
 }
@@ -581,7 +598,7 @@ _PrecompileLayerResult _precompileLayer(
   final layerRendererName = '${shaderClassName}LayerRenderer';
   final layerRendererO = StringBuffer();
 
-  layerRendererO.writeln('class $layerRendererName extends FillLayerRenderer {');
+  layerRendererO.writeln('class $layerRendererName extends $abstractLayerRendererClassName {');
   layerRendererO.writeln('  $layerRendererName({');
   layerRendererO.writeln('    required gpu.ShaderLibrary shaderLibrary,');
   layerRendererO.writeln('    required super.coordinates,');

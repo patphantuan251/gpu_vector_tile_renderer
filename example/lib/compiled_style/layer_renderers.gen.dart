@@ -28,154 +28,371 @@ SingleTileLayerRenderer? createSingleTileLayerRenderer(
       shaderLibrary: shaderLibrary,
       coordinates: coordinates,
       container: container,
-      specLayer: specLayer as spec.LayerFill,
+      specLayer: specLayer as dynamic,
       vtLayer: vtLayer,
     ),
     'Scrub' => ScrubLayerRenderer(
       shaderLibrary: shaderLibrary,
       coordinates: coordinates,
       container: container,
-      specLayer: specLayer as spec.LayerFill,
+      specLayer: specLayer as dynamic,
       vtLayer: vtLayer,
     ),
     'Crop' => CropLayerRenderer(
       shaderLibrary: shaderLibrary,
       coordinates: coordinates,
       container: container,
-      specLayer: specLayer as spec.LayerFill,
+      specLayer: specLayer as dynamic,
       vtLayer: vtLayer,
     ),
     'Glacier' => GlacierLayerRenderer(
       shaderLibrary: shaderLibrary,
       coordinates: coordinates,
       container: container,
-      specLayer: specLayer as spec.LayerFill,
+      specLayer: specLayer as dynamic,
       vtLayer: vtLayer,
     ),
     'Forest' => ForestLayerRenderer(
       shaderLibrary: shaderLibrary,
       coordinates: coordinates,
       container: container,
-      specLayer: specLayer as spec.LayerFill,
+      specLayer: specLayer as dynamic,
       vtLayer: vtLayer,
     ),
     'Sand' => SandLayerRenderer(
       shaderLibrary: shaderLibrary,
       coordinates: coordinates,
       container: container,
-      specLayer: specLayer as spec.LayerFill,
+      specLayer: specLayer as dynamic,
       vtLayer: vtLayer,
     ),
     'Wood' => WoodLayerRenderer(
       shaderLibrary: shaderLibrary,
       coordinates: coordinates,
       container: container,
-      specLayer: specLayer as spec.LayerFill,
+      specLayer: specLayer as dynamic,
       vtLayer: vtLayer,
     ),
     'Residential' => ResidentialLayerRenderer(
       shaderLibrary: shaderLibrary,
       coordinates: coordinates,
       container: container,
-      specLayer: specLayer as spec.LayerFill,
+      specLayer: specLayer as dynamic,
       vtLayer: vtLayer,
     ),
     'Industrial' => IndustrialLayerRenderer(
       shaderLibrary: shaderLibrary,
       coordinates: coordinates,
       container: container,
-      specLayer: specLayer as spec.LayerFill,
+      specLayer: specLayer as dynamic,
       vtLayer: vtLayer,
     ),
     'Grass' => GrassLayerRenderer(
       shaderLibrary: shaderLibrary,
       coordinates: coordinates,
       container: container,
-      specLayer: specLayer as spec.LayerFill,
+      specLayer: specLayer as dynamic,
       vtLayer: vtLayer,
     ),
     'Airport zone' => AirportZoneLayerRenderer(
       shaderLibrary: shaderLibrary,
       coordinates: coordinates,
       container: container,
-      specLayer: specLayer as spec.LayerFill,
+      specLayer: specLayer as dynamic,
       vtLayer: vtLayer,
     ),
     'Pedestrian' => PedestrianLayerRenderer(
       shaderLibrary: shaderLibrary,
       coordinates: coordinates,
       container: container,
-      specLayer: specLayer as spec.LayerFill,
+      specLayer: specLayer as dynamic,
       vtLayer: vtLayer,
     ),
     'Cemetery' => CemeteryLayerRenderer(
       shaderLibrary: shaderLibrary,
       coordinates: coordinates,
       container: container,
-      specLayer: specLayer as spec.LayerFill,
+      specLayer: specLayer as dynamic,
       vtLayer: vtLayer,
     ),
     'Hospital' => HospitalLayerRenderer(
       shaderLibrary: shaderLibrary,
       coordinates: coordinates,
       container: container,
-      specLayer: specLayer as spec.LayerFill,
+      specLayer: specLayer as dynamic,
       vtLayer: vtLayer,
     ),
     'Stadium' => StadiumLayerRenderer(
       shaderLibrary: shaderLibrary,
       coordinates: coordinates,
       container: container,
-      specLayer: specLayer as spec.LayerFill,
+      specLayer: specLayer as dynamic,
       vtLayer: vtLayer,
     ),
     'School' => SchoolLayerRenderer(
       shaderLibrary: shaderLibrary,
       coordinates: coordinates,
       container: container,
-      specLayer: specLayer as spec.LayerFill,
+      specLayer: specLayer as dynamic,
+      vtLayer: vtLayer,
+    ),
+    'River tunnel' => RiverTunnelLayerRenderer(
+      shaderLibrary: shaderLibrary,
+      coordinates: coordinates,
+      container: container,
+      specLayer: specLayer as dynamic,
+      vtLayer: vtLayer,
+    ),
+    'River' => RiverLayerRenderer(
+      shaderLibrary: shaderLibrary,
+      coordinates: coordinates,
+      container: container,
+      specLayer: specLayer as dynamic,
       vtLayer: vtLayer,
     ),
     'Water intermittent' => WaterIntermittentLayerRenderer(
       shaderLibrary: shaderLibrary,
       coordinates: coordinates,
       container: container,
-      specLayer: specLayer as spec.LayerFill,
+      specLayer: specLayer as dynamic,
       vtLayer: vtLayer,
     ),
     'Water' => WaterLayerRenderer(
       shaderLibrary: shaderLibrary,
       coordinates: coordinates,
       container: container,
-      specLayer: specLayer as spec.LayerFill,
+      specLayer: specLayer as dynamic,
+      vtLayer: vtLayer,
+    ),
+    'Aeroway' => AerowayLayerRenderer(
+      shaderLibrary: shaderLibrary,
+      coordinates: coordinates,
+      container: container,
+      specLayer: specLayer as dynamic,
       vtLayer: vtLayer,
     ),
     'Heliport' => HeliportLayerRenderer(
       shaderLibrary: shaderLibrary,
       coordinates: coordinates,
       container: container,
-      specLayer: specLayer as spec.LayerFill,
+      specLayer: specLayer as dynamic,
+      vtLayer: vtLayer,
+    ),
+    'Ferry line' => FerryLineLayerRenderer(
+      shaderLibrary: shaderLibrary,
+      coordinates: coordinates,
+      container: container,
+      specLayer: specLayer as dynamic,
+      vtLayer: vtLayer,
+    ),
+    'Tunnel outline' => TunnelOutlineLayerRenderer(
+      shaderLibrary: shaderLibrary,
+      coordinates: coordinates,
+      container: container,
+      specLayer: specLayer as dynamic,
+      vtLayer: vtLayer,
+    ),
+    'Tunnel' => TunnelLayerRenderer(
+      shaderLibrary: shaderLibrary,
+      coordinates: coordinates,
+      container: container,
+      specLayer: specLayer as dynamic,
+      vtLayer: vtLayer,
+    ),
+    'Railway tunnel' => RailwayTunnelLayerRenderer(
+      shaderLibrary: shaderLibrary,
+      coordinates: coordinates,
+      container: container,
+      specLayer: specLayer as dynamic,
+      vtLayer: vtLayer,
+    ),
+    'Railway tunnel hatching' => RailwayTunnelHatchingLayerRenderer(
+      shaderLibrary: shaderLibrary,
+      coordinates: coordinates,
+      container: container,
+      specLayer: specLayer as dynamic,
+      vtLayer: vtLayer,
+    ),
+    'Footway tunnel outline' => FootwayTunnelOutlineLayerRenderer(
+      shaderLibrary: shaderLibrary,
+      coordinates: coordinates,
+      container: container,
+      specLayer: specLayer as dynamic,
+      vtLayer: vtLayer,
+    ),
+    'Footway tunnel' => FootwayTunnelLayerRenderer(
+      shaderLibrary: shaderLibrary,
+      coordinates: coordinates,
+      container: container,
+      specLayer: specLayer as dynamic,
       vtLayer: vtLayer,
     ),
     'Pier' => PierLayerRenderer(
       shaderLibrary: shaderLibrary,
       coordinates: coordinates,
       container: container,
-      specLayer: specLayer as spec.LayerFill,
+      specLayer: specLayer as dynamic,
+      vtLayer: vtLayer,
+    ),
+    'Pier road' => PierRoadLayerRenderer(
+      shaderLibrary: shaderLibrary,
+      coordinates: coordinates,
+      container: container,
+      specLayer: specLayer as dynamic,
       vtLayer: vtLayer,
     ),
     'Bridge' => BridgeLayerRenderer(
       shaderLibrary: shaderLibrary,
       coordinates: coordinates,
       container: container,
-      specLayer: specLayer as spec.LayerFill,
+      specLayer: specLayer as dynamic,
+      vtLayer: vtLayer,
+    ),
+    'Minor road outline' => MinorRoadOutlineLayerRenderer(
+      shaderLibrary: shaderLibrary,
+      coordinates: coordinates,
+      container: container,
+      specLayer: specLayer as dynamic,
+      vtLayer: vtLayer,
+    ),
+    'Major road outline' => MajorRoadOutlineLayerRenderer(
+      shaderLibrary: shaderLibrary,
+      coordinates: coordinates,
+      container: container,
+      specLayer: specLayer as dynamic,
+      vtLayer: vtLayer,
+    ),
+    'Highway outline' => HighwayOutlineLayerRenderer(
+      shaderLibrary: shaderLibrary,
+      coordinates: coordinates,
+      container: container,
+      specLayer: specLayer as dynamic,
+      vtLayer: vtLayer,
+    ),
+    'Road under construction' => RoadUnderConstructionLayerRenderer(
+      shaderLibrary: shaderLibrary,
+      coordinates: coordinates,
+      container: container,
+      specLayer: specLayer as dynamic,
+      vtLayer: vtLayer,
+    ),
+    'Minor road' => MinorRoadLayerRenderer(
+      shaderLibrary: shaderLibrary,
+      coordinates: coordinates,
+      container: container,
+      specLayer: specLayer as dynamic,
+      vtLayer: vtLayer,
+    ),
+    'Major road' => MajorRoadLayerRenderer(
+      shaderLibrary: shaderLibrary,
+      coordinates: coordinates,
+      container: container,
+      specLayer: specLayer as dynamic,
+      vtLayer: vtLayer,
+    ),
+    'Highway' => HighwayLayerRenderer(
+      shaderLibrary: shaderLibrary,
+      coordinates: coordinates,
+      container: container,
+      specLayer: specLayer as dynamic,
+      vtLayer: vtLayer,
+    ),
+    'Path outline' => PathOutlineLayerRenderer(
+      shaderLibrary: shaderLibrary,
+      coordinates: coordinates,
+      container: container,
+      specLayer: specLayer as dynamic,
+      vtLayer: vtLayer,
+    ),
+    'Path' => PathLayerRenderer(
+      shaderLibrary: shaderLibrary,
+      coordinates: coordinates,
+      container: container,
+      specLayer: specLayer as dynamic,
+      vtLayer: vtLayer,
+    ),
+    'Major rail' => MajorRailLayerRenderer(
+      shaderLibrary: shaderLibrary,
+      coordinates: coordinates,
+      container: container,
+      specLayer: specLayer as dynamic,
+      vtLayer: vtLayer,
+    ),
+    'Major rail hatching' => MajorRailHatchingLayerRenderer(
+      shaderLibrary: shaderLibrary,
+      coordinates: coordinates,
+      container: container,
+      specLayer: specLayer as dynamic,
+      vtLayer: vtLayer,
+    ),
+    'Minor rail' => MinorRailLayerRenderer(
+      shaderLibrary: shaderLibrary,
+      coordinates: coordinates,
+      container: container,
+      specLayer: specLayer as dynamic,
+      vtLayer: vtLayer,
+    ),
+    'Minor rail hatching' => MinorRailHatchingLayerRenderer(
+      shaderLibrary: shaderLibrary,
+      coordinates: coordinates,
+      container: container,
+      specLayer: specLayer as dynamic,
       vtLayer: vtLayer,
     ),
     'Building' => BuildingLayerRenderer(
       shaderLibrary: shaderLibrary,
       coordinates: coordinates,
       container: container,
-      specLayer: specLayer as spec.LayerFill,
+      specLayer: specLayer as dynamic,
+      vtLayer: vtLayer,
+    ),
+    'Aqueduct outline' => AqueductOutlineLayerRenderer(
+      shaderLibrary: shaderLibrary,
+      coordinates: coordinates,
+      container: container,
+      specLayer: specLayer as dynamic,
+      vtLayer: vtLayer,
+    ),
+    'Aqueduct' => AqueductLayerRenderer(
+      shaderLibrary: shaderLibrary,
+      coordinates: coordinates,
+      container: container,
+      specLayer: specLayer as dynamic,
+      vtLayer: vtLayer,
+    ),
+    'Cablecar' => CablecarLayerRenderer(
+      shaderLibrary: shaderLibrary,
+      coordinates: coordinates,
+      container: container,
+      specLayer: specLayer as dynamic,
+      vtLayer: vtLayer,
+    ),
+    'Cablecar dash' => CablecarDashLayerRenderer(
+      shaderLibrary: shaderLibrary,
+      coordinates: coordinates,
+      container: container,
+      specLayer: specLayer as dynamic,
+      vtLayer: vtLayer,
+    ),
+    'Other border' => OtherBorderLayerRenderer(
+      shaderLibrary: shaderLibrary,
+      coordinates: coordinates,
+      container: container,
+      specLayer: specLayer as dynamic,
+      vtLayer: vtLayer,
+    ),
+    'Disputed border' => DisputedBorderLayerRenderer(
+      shaderLibrary: shaderLibrary,
+      coordinates: coordinates,
+      container: container,
+      specLayer: specLayer as dynamic,
+      vtLayer: vtLayer,
+    ),
+    'Country border' => CountryBorderLayerRenderer(
+      shaderLibrary: shaderLibrary,
+      coordinates: coordinates,
+      container: container,
+      specLayer: specLayer as dynamic,
       vtLayer: vtLayer,
     ),
     _ => null,
@@ -1279,6 +1496,154 @@ class SchoolLayerRenderer extends FillLayerRenderer {
   }
 }
 
+class RiverTunnelLayerRenderer extends LineLayerRenderer {
+  RiverTunnelLayerRenderer({
+    required gpu.ShaderLibrary shaderLibrary,
+    required super.coordinates,
+    required super.container,
+    required super.specLayer,
+    required super.vtLayer,
+  }) : pipeline = RiverTunnelRenderPipelineBindings(shaderLibrary);
+
+  @override
+  final RiverTunnelRenderPipelineBindings pipeline;
+
+  @override
+  int setFeatureVertices(
+    spec.EvaluationContext eval,
+    vt.LineStringFeature feature,
+    int index,
+    List<(Vector2 position, Vector2 normal)> vertexData,
+  ) {
+    final paint = specLayer.paint;
+    final width_start_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(getNearestFloorValue(eval.zoom, [12.0, 20.0])),
+            )
+            .toDouble();
+    final width_end_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(getNearestCeilValue(eval.zoom, [12.0, 20.0])),
+            )
+            .toDouble();
+
+    for (var i = 0; i < vertexData.length; i++) {
+      final vertex = vertexData[i];
+      pipeline.vertex.setVertex(
+        index + i,
+        position: vertex.$1,
+        normal: vertex.$2,
+        widthStartValue: width_start_value,
+        widthEndValue: width_end_value,
+      );
+    }
+
+    return index + vertexData.length;
+  }
+
+  @override
+  void setUniforms(
+    RenderContext context,
+    Matrix4 cameraWorldToGl,
+    double cameraZoom,
+    Matrix4 tileLocalToWorld,
+    double tileSize,
+    double tileExtent,
+    double tileOpacity,
+  ) {
+    final eval = context.eval;
+    final width_start_stop = getNearestFloorValue(eval.zoom, [12.0, 20.0]);
+    final width_end_stop = getNearestCeilValue(eval.zoom, [12.0, 20.0]);
+
+    pipeline.setUbos(
+      cameraWorldToGl: cameraWorldToGl,
+      cameraZoom: cameraZoom,
+      tileLocalToWorld: tileLocalToWorld,
+      tileSize: tileSize,
+      tileExtent: tileExtent,
+      tileOpacity: tileOpacity,
+      riverTunnelUboWidthStartStop: width_start_stop,
+      riverTunnelUboWidthEndStop: width_end_stop,
+    );
+  }
+}
+
+class RiverLayerRenderer extends LineLayerRenderer {
+  RiverLayerRenderer({
+    required gpu.ShaderLibrary shaderLibrary,
+    required super.coordinates,
+    required super.container,
+    required super.specLayer,
+    required super.vtLayer,
+  }) : pipeline = RiverRenderPipelineBindings(shaderLibrary);
+
+  @override
+  final RiverRenderPipelineBindings pipeline;
+
+  @override
+  int setFeatureVertices(
+    spec.EvaluationContext eval,
+    vt.LineStringFeature feature,
+    int index,
+    List<(Vector2 position, Vector2 normal)> vertexData,
+  ) {
+    final paint = specLayer.paint;
+    final width_start_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(getNearestFloorValue(eval.zoom, [12.0, 20.0])),
+            )
+            .toDouble();
+    final width_end_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(getNearestCeilValue(eval.zoom, [12.0, 20.0])),
+            )
+            .toDouble();
+
+    for (var i = 0; i < vertexData.length; i++) {
+      final vertex = vertexData[i];
+      pipeline.vertex.setVertex(
+        index + i,
+        position: vertex.$1,
+        normal: vertex.$2,
+        widthStartValue: width_start_value,
+        widthEndValue: width_end_value,
+      );
+    }
+
+    return index + vertexData.length;
+  }
+
+  @override
+  void setUniforms(
+    RenderContext context,
+    Matrix4 cameraWorldToGl,
+    double cameraZoom,
+    Matrix4 tileLocalToWorld,
+    double tileSize,
+    double tileExtent,
+    double tileOpacity,
+  ) {
+    final eval = context.eval;
+    final width_start_stop = getNearestFloorValue(eval.zoom, [12.0, 20.0]);
+    final width_end_stop = getNearestCeilValue(eval.zoom, [12.0, 20.0]);
+
+    pipeline.setUbos(
+      cameraWorldToGl: cameraWorldToGl,
+      cameraZoom: cameraZoom,
+      tileLocalToWorld: tileLocalToWorld,
+      tileSize: tileSize,
+      tileExtent: tileExtent,
+      tileOpacity: tileOpacity,
+      riverUboWidthStartStop: width_start_stop,
+      riverUboWidthEndStop: width_end_stop,
+    );
+  }
+}
+
 class WaterIntermittentLayerRenderer extends FillLayerRenderer {
   WaterIntermittentLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
@@ -1390,6 +1755,80 @@ class WaterLayerRenderer extends FillLayerRenderer {
   }
 }
 
+class AerowayLayerRenderer extends LineLayerRenderer {
+  AerowayLayerRenderer({
+    required gpu.ShaderLibrary shaderLibrary,
+    required super.coordinates,
+    required super.container,
+    required super.specLayer,
+    required super.vtLayer,
+  }) : pipeline = AerowayRenderPipelineBindings(shaderLibrary);
+
+  @override
+  final AerowayRenderPipelineBindings pipeline;
+
+  @override
+  int setFeatureVertices(
+    spec.EvaluationContext eval,
+    vt.LineStringFeature feature,
+    int index,
+    List<(Vector2 position, Vector2 normal)> vertexData,
+  ) {
+    final paint = specLayer.paint;
+    final width_start_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(getNearestFloorValue(eval.zoom, [11.0, 20.0])),
+            )
+            .toDouble();
+    final width_end_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(getNearestCeilValue(eval.zoom, [11.0, 20.0])),
+            )
+            .toDouble();
+
+    for (var i = 0; i < vertexData.length; i++) {
+      final vertex = vertexData[i];
+      pipeline.vertex.setVertex(
+        index + i,
+        position: vertex.$1,
+        normal: vertex.$2,
+        widthStartValue: width_start_value,
+        widthEndValue: width_end_value,
+      );
+    }
+
+    return index + vertexData.length;
+  }
+
+  @override
+  void setUniforms(
+    RenderContext context,
+    Matrix4 cameraWorldToGl,
+    double cameraZoom,
+    Matrix4 tileLocalToWorld,
+    double tileSize,
+    double tileExtent,
+    double tileOpacity,
+  ) {
+    final eval = context.eval;
+    final width_start_stop = getNearestFloorValue(eval.zoom, [11.0, 20.0]);
+    final width_end_stop = getNearestCeilValue(eval.zoom, [11.0, 20.0]);
+
+    pipeline.setUbos(
+      cameraWorldToGl: cameraWorldToGl,
+      cameraZoom: cameraZoom,
+      tileLocalToWorld: tileLocalToWorld,
+      tileSize: tileSize,
+      tileExtent: tileExtent,
+      tileOpacity: tileOpacity,
+      aerowayUboWidthStartStop: width_start_stop,
+      aerowayUboWidthEndStop: width_end_stop,
+    );
+  }
+}
+
 class HeliportLayerRenderer extends FillLayerRenderer {
   HeliportLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
@@ -1439,6 +1878,684 @@ class HeliportLayerRenderer extends FillLayerRenderer {
       tileSize: tileSize,
       tileExtent: tileExtent,
       tileOpacity: tileOpacity,
+    );
+  }
+}
+
+class FerryLineLayerRenderer extends LineLayerRenderer {
+  FerryLineLayerRenderer({
+    required gpu.ShaderLibrary shaderLibrary,
+    required super.coordinates,
+    required super.container,
+    required super.specLayer,
+    required super.vtLayer,
+  }) : pipeline = FerryLineRenderPipelineBindings(shaderLibrary);
+
+  @override
+  final FerryLineRenderPipelineBindings pipeline;
+
+  @override
+  int setFeatureVertices(
+    spec.EvaluationContext eval,
+    vt.LineStringFeature feature,
+    int index,
+    List<(Vector2 position, Vector2 normal)> vertexData,
+  ) {
+    final paint = specLayer.paint;
+    final color_start_value =
+        paint.lineColor
+            .evaluate(
+              eval.copyWithZoom(getNearestFloorValue(eval.zoom, [10.0, 16.0])),
+            )
+            .vec;
+    final color_end_value =
+        paint.lineColor
+            .evaluate(
+              eval.copyWithZoom(getNearestCeilValue(eval.zoom, [10.0, 16.0])),
+            )
+            .vec;
+    final opacity_start_value =
+        paint.lineOpacity
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, [6.0, 7.0, 8.0]),
+              ),
+            )
+            .toDouble();
+    final opacity_end_value =
+        paint.lineOpacity
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, [6.0, 7.0, 8.0]),
+              ),
+            )
+            .toDouble();
+    final width_start_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(getNearestFloorValue(eval.zoom, [10.0, 14.0])),
+            )
+            .toDouble();
+    final width_end_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(getNearestCeilValue(eval.zoom, [10.0, 14.0])),
+            )
+            .toDouble();
+
+    for (var i = 0; i < vertexData.length; i++) {
+      final vertex = vertexData[i];
+      pipeline.vertex.setVertex(
+        index + i,
+        position: vertex.$1,
+        normal: vertex.$2,
+        colorStartValue: color_start_value,
+        colorEndValue: color_end_value,
+        opacityStartValue: opacity_start_value,
+        opacityEndValue: opacity_end_value,
+        widthStartValue: width_start_value,
+        widthEndValue: width_end_value,
+      );
+    }
+
+    return index + vertexData.length;
+  }
+
+  @override
+  void setUniforms(
+    RenderContext context,
+    Matrix4 cameraWorldToGl,
+    double cameraZoom,
+    Matrix4 tileLocalToWorld,
+    double tileSize,
+    double tileExtent,
+    double tileOpacity,
+  ) {
+    final eval = context.eval;
+    final color_start_stop = getNearestFloorValue(eval.zoom, [10.0, 16.0]);
+    final color_end_stop = getNearestCeilValue(eval.zoom, [10.0, 16.0]);
+    final opacity_start_stop = getNearestFloorValue(eval.zoom, [6.0, 7.0, 8.0]);
+    final opacity_end_stop = getNearestCeilValue(eval.zoom, [6.0, 7.0, 8.0]);
+    final width_start_stop = getNearestFloorValue(eval.zoom, [10.0, 14.0]);
+    final width_end_stop = getNearestCeilValue(eval.zoom, [10.0, 14.0]);
+
+    pipeline.setUbos(
+      cameraWorldToGl: cameraWorldToGl,
+      cameraZoom: cameraZoom,
+      tileLocalToWorld: tileLocalToWorld,
+      tileSize: tileSize,
+      tileExtent: tileExtent,
+      tileOpacity: tileOpacity,
+      ferryLineUboColorStartStop: color_start_stop,
+      ferryLineUboColorEndStop: color_end_stop,
+      ferryLineUboOpacityStartStop: opacity_start_stop,
+      ferryLineUboOpacityEndStop: opacity_end_stop,
+      ferryLineUboWidthStartStop: width_start_stop,
+      ferryLineUboWidthEndStop: width_end_stop,
+    );
+  }
+}
+
+class TunnelOutlineLayerRenderer extends LineLayerRenderer {
+  TunnelOutlineLayerRenderer({
+    required gpu.ShaderLibrary shaderLibrary,
+    required super.coordinates,
+    required super.container,
+    required super.specLayer,
+    required super.vtLayer,
+  }) : pipeline = TunnelOutlineRenderPipelineBindings(shaderLibrary);
+
+  @override
+  final TunnelOutlineRenderPipelineBindings pipeline;
+
+  @override
+  int setFeatureVertices(
+    spec.EvaluationContext eval,
+    vt.LineStringFeature feature,
+    int index,
+    List<(Vector2 position, Vector2 normal)> vertexData,
+  ) {
+    final paint = specLayer.paint;
+    final color = paint.lineColor.evaluate(eval).vec;
+    final width_start_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, [
+                  6.0,
+                  7.0,
+                  10.0,
+                  12.0,
+                  14.0,
+                  16.0,
+                  20.0,
+                ]),
+              ),
+            )
+            .toDouble();
+    final width_end_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, [
+                  6.0,
+                  7.0,
+                  10.0,
+                  12.0,
+                  14.0,
+                  16.0,
+                  20.0,
+                ]),
+              ),
+            )
+            .toDouble();
+
+    for (var i = 0; i < vertexData.length; i++) {
+      final vertex = vertexData[i];
+      pipeline.vertex.setVertex(
+        index + i,
+        position: vertex.$1,
+        normal: vertex.$2,
+        color: color,
+        widthStartValue: width_start_value,
+        widthEndValue: width_end_value,
+      );
+    }
+
+    return index + vertexData.length;
+  }
+
+  @override
+  void setUniforms(
+    RenderContext context,
+    Matrix4 cameraWorldToGl,
+    double cameraZoom,
+    Matrix4 tileLocalToWorld,
+    double tileSize,
+    double tileExtent,
+    double tileOpacity,
+  ) {
+    final eval = context.eval;
+    final width_start_stop = getNearestFloorValue(eval.zoom, [
+      6.0,
+      7.0,
+      10.0,
+      12.0,
+      14.0,
+      16.0,
+      20.0,
+    ]);
+    final width_end_stop = getNearestCeilValue(eval.zoom, [
+      6.0,
+      7.0,
+      10.0,
+      12.0,
+      14.0,
+      16.0,
+      20.0,
+    ]);
+
+    pipeline.setUbos(
+      cameraWorldToGl: cameraWorldToGl,
+      cameraZoom: cameraZoom,
+      tileLocalToWorld: tileLocalToWorld,
+      tileSize: tileSize,
+      tileExtent: tileExtent,
+      tileOpacity: tileOpacity,
+      tunnelOutlineUboWidthStartStop: width_start_stop,
+      tunnelOutlineUboWidthEndStop: width_end_stop,
+    );
+  }
+}
+
+class TunnelLayerRenderer extends LineLayerRenderer {
+  TunnelLayerRenderer({
+    required gpu.ShaderLibrary shaderLibrary,
+    required super.coordinates,
+    required super.container,
+    required super.specLayer,
+    required super.vtLayer,
+  }) : pipeline = TunnelRenderPipelineBindings(shaderLibrary);
+
+  @override
+  final TunnelRenderPipelineBindings pipeline;
+
+  @override
+  int setFeatureVertices(
+    spec.EvaluationContext eval,
+    vt.LineStringFeature feature,
+    int index,
+    List<(Vector2 position, Vector2 normal)> vertexData,
+  ) {
+    final paint = specLayer.paint;
+    final color = paint.lineColor.evaluate(eval).vec;
+    final width_start_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, [
+                  5.0,
+                  6.0,
+                  10.0,
+                  12.0,
+                  14.0,
+                  16.0,
+                  20.0,
+                ]),
+              ),
+            )
+            .toDouble();
+    final width_end_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, [
+                  5.0,
+                  6.0,
+                  10.0,
+                  12.0,
+                  14.0,
+                  16.0,
+                  20.0,
+                ]),
+              ),
+            )
+            .toDouble();
+
+    for (var i = 0; i < vertexData.length; i++) {
+      final vertex = vertexData[i];
+      pipeline.vertex.setVertex(
+        index + i,
+        position: vertex.$1,
+        normal: vertex.$2,
+        color: color,
+        widthStartValue: width_start_value,
+        widthEndValue: width_end_value,
+      );
+    }
+
+    return index + vertexData.length;
+  }
+
+  @override
+  void setUniforms(
+    RenderContext context,
+    Matrix4 cameraWorldToGl,
+    double cameraZoom,
+    Matrix4 tileLocalToWorld,
+    double tileSize,
+    double tileExtent,
+    double tileOpacity,
+  ) {
+    final eval = context.eval;
+    final width_start_stop = getNearestFloorValue(eval.zoom, [
+      5.0,
+      6.0,
+      10.0,
+      12.0,
+      14.0,
+      16.0,
+      20.0,
+    ]);
+    final width_end_stop = getNearestCeilValue(eval.zoom, [
+      5.0,
+      6.0,
+      10.0,
+      12.0,
+      14.0,
+      16.0,
+      20.0,
+    ]);
+
+    pipeline.setUbos(
+      cameraWorldToGl: cameraWorldToGl,
+      cameraZoom: cameraZoom,
+      tileLocalToWorld: tileLocalToWorld,
+      tileSize: tileSize,
+      tileExtent: tileExtent,
+      tileOpacity: tileOpacity,
+      tunnelUboWidthStartStop: width_start_stop,
+      tunnelUboWidthEndStop: width_end_stop,
+    );
+  }
+}
+
+class RailwayTunnelLayerRenderer extends LineLayerRenderer {
+  RailwayTunnelLayerRenderer({
+    required gpu.ShaderLibrary shaderLibrary,
+    required super.coordinates,
+    required super.container,
+    required super.specLayer,
+    required super.vtLayer,
+  }) : pipeline = RailwayTunnelRenderPipelineBindings(shaderLibrary);
+
+  @override
+  final RailwayTunnelRenderPipelineBindings pipeline;
+
+  @override
+  int setFeatureVertices(
+    spec.EvaluationContext eval,
+    vt.LineStringFeature feature,
+    int index,
+    List<(Vector2 position, Vector2 normal)> vertexData,
+  ) {
+    final paint = specLayer.paint;
+    final width_start_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, [14.0, 15.0, 20.0]),
+              ),
+            )
+            .toDouble();
+    final width_end_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, [14.0, 15.0, 20.0]),
+              ),
+            )
+            .toDouble();
+
+    for (var i = 0; i < vertexData.length; i++) {
+      final vertex = vertexData[i];
+      pipeline.vertex.setVertex(
+        index + i,
+        position: vertex.$1,
+        normal: vertex.$2,
+        widthStartValue: width_start_value,
+        widthEndValue: width_end_value,
+      );
+    }
+
+    return index + vertexData.length;
+  }
+
+  @override
+  void setUniforms(
+    RenderContext context,
+    Matrix4 cameraWorldToGl,
+    double cameraZoom,
+    Matrix4 tileLocalToWorld,
+    double tileSize,
+    double tileExtent,
+    double tileOpacity,
+  ) {
+    final eval = context.eval;
+    final width_start_stop = getNearestFloorValue(eval.zoom, [
+      14.0,
+      15.0,
+      20.0,
+    ]);
+    final width_end_stop = getNearestCeilValue(eval.zoom, [14.0, 15.0, 20.0]);
+
+    pipeline.setUbos(
+      cameraWorldToGl: cameraWorldToGl,
+      cameraZoom: cameraZoom,
+      tileLocalToWorld: tileLocalToWorld,
+      tileSize: tileSize,
+      tileExtent: tileExtent,
+      tileOpacity: tileOpacity,
+      railwayTunnelUboWidthStartStop: width_start_stop,
+      railwayTunnelUboWidthEndStop: width_end_stop,
+    );
+  }
+}
+
+class RailwayTunnelHatchingLayerRenderer extends LineLayerRenderer {
+  RailwayTunnelHatchingLayerRenderer({
+    required gpu.ShaderLibrary shaderLibrary,
+    required super.coordinates,
+    required super.container,
+    required super.specLayer,
+    required super.vtLayer,
+  }) : pipeline = RailwayTunnelHatchingRenderPipelineBindings(shaderLibrary);
+
+  @override
+  final RailwayTunnelHatchingRenderPipelineBindings pipeline;
+
+  @override
+  int setFeatureVertices(
+    spec.EvaluationContext eval,
+    vt.LineStringFeature feature,
+    int index,
+    List<(Vector2 position, Vector2 normal)> vertexData,
+  ) {
+    final paint = specLayer.paint;
+    final width_start_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, [14.5, 15.0, 20.0]),
+              ),
+            )
+            .toDouble();
+    final width_end_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, [14.5, 15.0, 20.0]),
+              ),
+            )
+            .toDouble();
+
+    for (var i = 0; i < vertexData.length; i++) {
+      final vertex = vertexData[i];
+      pipeline.vertex.setVertex(
+        index + i,
+        position: vertex.$1,
+        normal: vertex.$2,
+        widthStartValue: width_start_value,
+        widthEndValue: width_end_value,
+      );
+    }
+
+    return index + vertexData.length;
+  }
+
+  @override
+  void setUniforms(
+    RenderContext context,
+    Matrix4 cameraWorldToGl,
+    double cameraZoom,
+    Matrix4 tileLocalToWorld,
+    double tileSize,
+    double tileExtent,
+    double tileOpacity,
+  ) {
+    final eval = context.eval;
+    final width_start_stop = getNearestFloorValue(eval.zoom, [
+      14.5,
+      15.0,
+      20.0,
+    ]);
+    final width_end_stop = getNearestCeilValue(eval.zoom, [14.5, 15.0, 20.0]);
+
+    pipeline.setUbos(
+      cameraWorldToGl: cameraWorldToGl,
+      cameraZoom: cameraZoom,
+      tileLocalToWorld: tileLocalToWorld,
+      tileSize: tileSize,
+      tileExtent: tileExtent,
+      tileOpacity: tileOpacity,
+      railwayTunnelHatchingUboWidthStartStop: width_start_stop,
+      railwayTunnelHatchingUboWidthEndStop: width_end_stop,
+    );
+  }
+}
+
+class FootwayTunnelOutlineLayerRenderer extends LineLayerRenderer {
+  FootwayTunnelOutlineLayerRenderer({
+    required gpu.ShaderLibrary shaderLibrary,
+    required super.coordinates,
+    required super.container,
+    required super.specLayer,
+    required super.vtLayer,
+  }) : pipeline = FootwayTunnelOutlineRenderPipelineBindings(shaderLibrary);
+
+  @override
+  final FootwayTunnelOutlineRenderPipelineBindings pipeline;
+
+  @override
+  int setFeatureVertices(
+    spec.EvaluationContext eval,
+    vt.LineStringFeature feature,
+    int index,
+    List<(Vector2 position, Vector2 normal)> vertexData,
+  ) {
+    final paint = specLayer.paint;
+    final width_start_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, [14.0, 16.0, 18.0, 22.0]),
+              ),
+            )
+            .toDouble();
+    final width_end_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, [14.0, 16.0, 18.0, 22.0]),
+              ),
+            )
+            .toDouble();
+
+    for (var i = 0; i < vertexData.length; i++) {
+      final vertex = vertexData[i];
+      pipeline.vertex.setVertex(
+        index + i,
+        position: vertex.$1,
+        normal: vertex.$2,
+        widthStartValue: width_start_value,
+        widthEndValue: width_end_value,
+      );
+    }
+
+    return index + vertexData.length;
+  }
+
+  @override
+  void setUniforms(
+    RenderContext context,
+    Matrix4 cameraWorldToGl,
+    double cameraZoom,
+    Matrix4 tileLocalToWorld,
+    double tileSize,
+    double tileExtent,
+    double tileOpacity,
+  ) {
+    final eval = context.eval;
+    final width_start_stop = getNearestFloorValue(eval.zoom, [
+      14.0,
+      16.0,
+      18.0,
+      22.0,
+    ]);
+    final width_end_stop = getNearestCeilValue(eval.zoom, [
+      14.0,
+      16.0,
+      18.0,
+      22.0,
+    ]);
+
+    pipeline.setUbos(
+      cameraWorldToGl: cameraWorldToGl,
+      cameraZoom: cameraZoom,
+      tileLocalToWorld: tileLocalToWorld,
+      tileSize: tileSize,
+      tileExtent: tileExtent,
+      tileOpacity: tileOpacity,
+      footwayTunnelOutlineUboWidthStartStop: width_start_stop,
+      footwayTunnelOutlineUboWidthEndStop: width_end_stop,
+    );
+  }
+}
+
+class FootwayTunnelLayerRenderer extends LineLayerRenderer {
+  FootwayTunnelLayerRenderer({
+    required gpu.ShaderLibrary shaderLibrary,
+    required super.coordinates,
+    required super.container,
+    required super.specLayer,
+    required super.vtLayer,
+  }) : pipeline = FootwayTunnelRenderPipelineBindings(shaderLibrary);
+
+  @override
+  final FootwayTunnelRenderPipelineBindings pipeline;
+
+  @override
+  int setFeatureVertices(
+    spec.EvaluationContext eval,
+    vt.LineStringFeature feature,
+    int index,
+    List<(Vector2 position, Vector2 normal)> vertexData,
+  ) {
+    final paint = specLayer.paint;
+    final width_start_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, [14.0, 16.0, 18.0, 22.0]),
+              ),
+            )
+            .toDouble();
+    final width_end_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, [14.0, 16.0, 18.0, 22.0]),
+              ),
+            )
+            .toDouble();
+
+    for (var i = 0; i < vertexData.length; i++) {
+      final vertex = vertexData[i];
+      pipeline.vertex.setVertex(
+        index + i,
+        position: vertex.$1,
+        normal: vertex.$2,
+        widthStartValue: width_start_value,
+        widthEndValue: width_end_value,
+      );
+    }
+
+    return index + vertexData.length;
+  }
+
+  @override
+  void setUniforms(
+    RenderContext context,
+    Matrix4 cameraWorldToGl,
+    double cameraZoom,
+    Matrix4 tileLocalToWorld,
+    double tileSize,
+    double tileExtent,
+    double tileOpacity,
+  ) {
+    final eval = context.eval;
+    final width_start_stop = getNearestFloorValue(eval.zoom, [
+      14.0,
+      16.0,
+      18.0,
+      22.0,
+    ]);
+    final width_end_stop = getNearestCeilValue(eval.zoom, [
+      14.0,
+      16.0,
+      18.0,
+      22.0,
+    ]);
+
+    pipeline.setUbos(
+      cameraWorldToGl: cameraWorldToGl,
+      cameraZoom: cameraZoom,
+      tileLocalToWorld: tileLocalToWorld,
+      tileSize: tileSize,
+      tileExtent: tileExtent,
+      tileOpacity: tileOpacity,
+      footwayTunnelUboWidthStartStop: width_start_stop,
+      footwayTunnelUboWidthEndStop: width_end_stop,
     );
   }
 }
@@ -1496,6 +2613,80 @@ class PierLayerRenderer extends FillLayerRenderer {
   }
 }
 
+class PierRoadLayerRenderer extends LineLayerRenderer {
+  PierRoadLayerRenderer({
+    required gpu.ShaderLibrary shaderLibrary,
+    required super.coordinates,
+    required super.container,
+    required super.specLayer,
+    required super.vtLayer,
+  }) : pipeline = PierRoadRenderPipelineBindings(shaderLibrary);
+
+  @override
+  final PierRoadRenderPipelineBindings pipeline;
+
+  @override
+  int setFeatureVertices(
+    spec.EvaluationContext eval,
+    vt.LineStringFeature feature,
+    int index,
+    List<(Vector2 position, Vector2 normal)> vertexData,
+  ) {
+    final paint = specLayer.paint;
+    final width_start_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(getNearestFloorValue(eval.zoom, [15.0, 17.0])),
+            )
+            .toDouble();
+    final width_end_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(getNearestCeilValue(eval.zoom, [15.0, 17.0])),
+            )
+            .toDouble();
+
+    for (var i = 0; i < vertexData.length; i++) {
+      final vertex = vertexData[i];
+      pipeline.vertex.setVertex(
+        index + i,
+        position: vertex.$1,
+        normal: vertex.$2,
+        widthStartValue: width_start_value,
+        widthEndValue: width_end_value,
+      );
+    }
+
+    return index + vertexData.length;
+  }
+
+  @override
+  void setUniforms(
+    RenderContext context,
+    Matrix4 cameraWorldToGl,
+    double cameraZoom,
+    Matrix4 tileLocalToWorld,
+    double tileSize,
+    double tileExtent,
+    double tileOpacity,
+  ) {
+    final eval = context.eval;
+    final width_start_stop = getNearestFloorValue(eval.zoom, [15.0, 17.0]);
+    final width_end_stop = getNearestCeilValue(eval.zoom, [15.0, 17.0]);
+
+    pipeline.setUbos(
+      cameraWorldToGl: cameraWorldToGl,
+      cameraZoom: cameraZoom,
+      tileLocalToWorld: tileLocalToWorld,
+      tileSize: tileSize,
+      tileExtent: tileExtent,
+      tileOpacity: tileOpacity,
+      pierRoadUboWidthStartStop: width_start_stop,
+      pierRoadUboWidthEndStop: width_end_stop,
+    );
+  }
+}
+
 class BridgeLayerRenderer extends FillLayerRenderer {
   BridgeLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
@@ -1549,6 +2740,1272 @@ class BridgeLayerRenderer extends FillLayerRenderer {
   }
 }
 
+class MinorRoadOutlineLayerRenderer extends LineLayerRenderer {
+  MinorRoadOutlineLayerRenderer({
+    required gpu.ShaderLibrary shaderLibrary,
+    required super.coordinates,
+    required super.container,
+    required super.specLayer,
+    required super.vtLayer,
+  }) : pipeline = MinorRoadOutlineRenderPipelineBindings(shaderLibrary);
+
+  @override
+  final MinorRoadOutlineRenderPipelineBindings pipeline;
+
+  @override
+  int setFeatureVertices(
+    spec.EvaluationContext eval,
+    vt.LineStringFeature feature,
+    int index,
+    List<(Vector2 position, Vector2 normal)> vertexData,
+  ) {
+    final paint = specLayer.paint;
+    final width_start_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, [
+                  6.0,
+                  7.0,
+                  12.0,
+                  14.0,
+                  16.0,
+                  20.0,
+                ]),
+              ),
+            )
+            .toDouble();
+    final width_end_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, [
+                  6.0,
+                  7.0,
+                  12.0,
+                  14.0,
+                  16.0,
+                  20.0,
+                ]),
+              ),
+            )
+            .toDouble();
+
+    for (var i = 0; i < vertexData.length; i++) {
+      final vertex = vertexData[i];
+      pipeline.vertex.setVertex(
+        index + i,
+        position: vertex.$1,
+        normal: vertex.$2,
+        widthStartValue: width_start_value,
+        widthEndValue: width_end_value,
+      );
+    }
+
+    return index + vertexData.length;
+  }
+
+  @override
+  void setUniforms(
+    RenderContext context,
+    Matrix4 cameraWorldToGl,
+    double cameraZoom,
+    Matrix4 tileLocalToWorld,
+    double tileSize,
+    double tileExtent,
+    double tileOpacity,
+  ) {
+    final eval = context.eval;
+    final width_start_stop = getNearestFloorValue(eval.zoom, [
+      6.0,
+      7.0,
+      12.0,
+      14.0,
+      16.0,
+      20.0,
+    ]);
+    final width_end_stop = getNearestCeilValue(eval.zoom, [
+      6.0,
+      7.0,
+      12.0,
+      14.0,
+      16.0,
+      20.0,
+    ]);
+
+    pipeline.setUbos(
+      cameraWorldToGl: cameraWorldToGl,
+      cameraZoom: cameraZoom,
+      tileLocalToWorld: tileLocalToWorld,
+      tileSize: tileSize,
+      tileExtent: tileExtent,
+      tileOpacity: tileOpacity,
+      minorRoadOutlineUboWidthStartStop: width_start_stop,
+      minorRoadOutlineUboWidthEndStop: width_end_stop,
+    );
+  }
+}
+
+class MajorRoadOutlineLayerRenderer extends LineLayerRenderer {
+  MajorRoadOutlineLayerRenderer({
+    required gpu.ShaderLibrary shaderLibrary,
+    required super.coordinates,
+    required super.container,
+    required super.specLayer,
+    required super.vtLayer,
+  }) : pipeline = MajorRoadOutlineRenderPipelineBindings(shaderLibrary);
+
+  @override
+  final MajorRoadOutlineRenderPipelineBindings pipeline;
+
+  @override
+  int setFeatureVertices(
+    spec.EvaluationContext eval,
+    vt.LineStringFeature feature,
+    int index,
+    List<(Vector2 position, Vector2 normal)> vertexData,
+  ) {
+    final paint = specLayer.paint;
+    final width_start_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, [
+                  6.0,
+                  7.0,
+                  10.0,
+                  12.0,
+                  14.0,
+                  16.0,
+                  20.0,
+                ]),
+              ),
+            )
+            .toDouble();
+    final width_end_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, [
+                  6.0,
+                  7.0,
+                  10.0,
+                  12.0,
+                  14.0,
+                  16.0,
+                  20.0,
+                ]),
+              ),
+            )
+            .toDouble();
+
+    for (var i = 0; i < vertexData.length; i++) {
+      final vertex = vertexData[i];
+      pipeline.vertex.setVertex(
+        index + i,
+        position: vertex.$1,
+        normal: vertex.$2,
+        widthStartValue: width_start_value,
+        widthEndValue: width_end_value,
+      );
+    }
+
+    return index + vertexData.length;
+  }
+
+  @override
+  void setUniforms(
+    RenderContext context,
+    Matrix4 cameraWorldToGl,
+    double cameraZoom,
+    Matrix4 tileLocalToWorld,
+    double tileSize,
+    double tileExtent,
+    double tileOpacity,
+  ) {
+    final eval = context.eval;
+    final width_start_stop = getNearestFloorValue(eval.zoom, [
+      6.0,
+      7.0,
+      10.0,
+      12.0,
+      14.0,
+      16.0,
+      20.0,
+    ]);
+    final width_end_stop = getNearestCeilValue(eval.zoom, [
+      6.0,
+      7.0,
+      10.0,
+      12.0,
+      14.0,
+      16.0,
+      20.0,
+    ]);
+
+    pipeline.setUbos(
+      cameraWorldToGl: cameraWorldToGl,
+      cameraZoom: cameraZoom,
+      tileLocalToWorld: tileLocalToWorld,
+      tileSize: tileSize,
+      tileExtent: tileExtent,
+      tileOpacity: tileOpacity,
+      majorRoadOutlineUboWidthStartStop: width_start_stop,
+      majorRoadOutlineUboWidthEndStop: width_end_stop,
+    );
+  }
+}
+
+class HighwayOutlineLayerRenderer extends LineLayerRenderer {
+  HighwayOutlineLayerRenderer({
+    required gpu.ShaderLibrary shaderLibrary,
+    required super.coordinates,
+    required super.container,
+    required super.specLayer,
+    required super.vtLayer,
+  }) : pipeline = HighwayOutlineRenderPipelineBindings(shaderLibrary);
+
+  @override
+  final HighwayOutlineRenderPipelineBindings pipeline;
+
+  @override
+  int setFeatureVertices(
+    spec.EvaluationContext eval,
+    vt.LineStringFeature feature,
+    int index,
+    List<(Vector2 position, Vector2 normal)> vertexData,
+  ) {
+    final paint = specLayer.paint;
+    final width_start_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, [
+                  6.0,
+                  7.0,
+                  10.0,
+                  12.0,
+                  14.0,
+                  16.0,
+                  20.0,
+                ]),
+              ),
+            )
+            .toDouble();
+    final width_end_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, [
+                  6.0,
+                  7.0,
+                  10.0,
+                  12.0,
+                  14.0,
+                  16.0,
+                  20.0,
+                ]),
+              ),
+            )
+            .toDouble();
+
+    for (var i = 0; i < vertexData.length; i++) {
+      final vertex = vertexData[i];
+      pipeline.vertex.setVertex(
+        index + i,
+        position: vertex.$1,
+        normal: vertex.$2,
+        widthStartValue: width_start_value,
+        widthEndValue: width_end_value,
+      );
+    }
+
+    return index + vertexData.length;
+  }
+
+  @override
+  void setUniforms(
+    RenderContext context,
+    Matrix4 cameraWorldToGl,
+    double cameraZoom,
+    Matrix4 tileLocalToWorld,
+    double tileSize,
+    double tileExtent,
+    double tileOpacity,
+  ) {
+    final eval = context.eval;
+    final width_start_stop = getNearestFloorValue(eval.zoom, [
+      6.0,
+      7.0,
+      10.0,
+      12.0,
+      14.0,
+      16.0,
+      20.0,
+    ]);
+    final width_end_stop = getNearestCeilValue(eval.zoom, [
+      6.0,
+      7.0,
+      10.0,
+      12.0,
+      14.0,
+      16.0,
+      20.0,
+    ]);
+
+    pipeline.setUbos(
+      cameraWorldToGl: cameraWorldToGl,
+      cameraZoom: cameraZoom,
+      tileLocalToWorld: tileLocalToWorld,
+      tileSize: tileSize,
+      tileExtent: tileExtent,
+      tileOpacity: tileOpacity,
+      highwayOutlineUboWidthStartStop: width_start_stop,
+      highwayOutlineUboWidthEndStop: width_end_stop,
+    );
+  }
+}
+
+class RoadUnderConstructionLayerRenderer extends LineLayerRenderer {
+  RoadUnderConstructionLayerRenderer({
+    required gpu.ShaderLibrary shaderLibrary,
+    required super.coordinates,
+    required super.container,
+    required super.specLayer,
+    required super.vtLayer,
+  }) : pipeline = RoadUnderConstructionRenderPipelineBindings(shaderLibrary);
+
+  @override
+  final RoadUnderConstructionRenderPipelineBindings pipeline;
+
+  @override
+  int setFeatureVertices(
+    spec.EvaluationContext eval,
+    vt.LineStringFeature feature,
+    int index,
+    List<(Vector2 position, Vector2 normal)> vertexData,
+  ) {
+    final paint = specLayer.paint;
+    final color = paint.lineColor.evaluate(eval).vec;
+    final width_start_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, [
+                  5.0,
+                  10.0,
+                  12.0,
+                  14.0,
+                  16.0,
+                  20.0,
+                ]),
+              ),
+            )
+            .toDouble();
+    final width_end_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, [
+                  5.0,
+                  10.0,
+                  12.0,
+                  14.0,
+                  16.0,
+                  20.0,
+                ]),
+              ),
+            )
+            .toDouble();
+
+    for (var i = 0; i < vertexData.length; i++) {
+      final vertex = vertexData[i];
+      pipeline.vertex.setVertex(
+        index + i,
+        position: vertex.$1,
+        normal: vertex.$2,
+        color: color,
+        widthStartValue: width_start_value,
+        widthEndValue: width_end_value,
+      );
+    }
+
+    return index + vertexData.length;
+  }
+
+  @override
+  void setUniforms(
+    RenderContext context,
+    Matrix4 cameraWorldToGl,
+    double cameraZoom,
+    Matrix4 tileLocalToWorld,
+    double tileSize,
+    double tileExtent,
+    double tileOpacity,
+  ) {
+    final eval = context.eval;
+    final width_start_stop = getNearestFloorValue(eval.zoom, [
+      5.0,
+      10.0,
+      12.0,
+      14.0,
+      16.0,
+      20.0,
+    ]);
+    final width_end_stop = getNearestCeilValue(eval.zoom, [
+      5.0,
+      10.0,
+      12.0,
+      14.0,
+      16.0,
+      20.0,
+    ]);
+
+    pipeline.setUbos(
+      cameraWorldToGl: cameraWorldToGl,
+      cameraZoom: cameraZoom,
+      tileLocalToWorld: tileLocalToWorld,
+      tileSize: tileSize,
+      tileExtent: tileExtent,
+      tileOpacity: tileOpacity,
+      roadUnderConstructionUboWidthStartStop: width_start_stop,
+      roadUnderConstructionUboWidthEndStop: width_end_stop,
+    );
+  }
+}
+
+class MinorRoadLayerRenderer extends LineLayerRenderer {
+  MinorRoadLayerRenderer({
+    required gpu.ShaderLibrary shaderLibrary,
+    required super.coordinates,
+    required super.container,
+    required super.specLayer,
+    required super.vtLayer,
+  }) : pipeline = MinorRoadRenderPipelineBindings(shaderLibrary);
+
+  @override
+  final MinorRoadRenderPipelineBindings pipeline;
+
+  @override
+  int setFeatureVertices(
+    spec.EvaluationContext eval,
+    vt.LineStringFeature feature,
+    int index,
+    List<(Vector2 position, Vector2 normal)> vertexData,
+  ) {
+    final paint = specLayer.paint;
+    final width_start_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, [
+                  5.0,
+                  10.0,
+                  12.0,
+                  14.0,
+                  16.0,
+                  20.0,
+                ]),
+              ),
+            )
+            .toDouble();
+    final width_end_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, [
+                  5.0,
+                  10.0,
+                  12.0,
+                  14.0,
+                  16.0,
+                  20.0,
+                ]),
+              ),
+            )
+            .toDouble();
+
+    for (var i = 0; i < vertexData.length; i++) {
+      final vertex = vertexData[i];
+      pipeline.vertex.setVertex(
+        index + i,
+        position: vertex.$1,
+        normal: vertex.$2,
+        widthStartValue: width_start_value,
+        widthEndValue: width_end_value,
+      );
+    }
+
+    return index + vertexData.length;
+  }
+
+  @override
+  void setUniforms(
+    RenderContext context,
+    Matrix4 cameraWorldToGl,
+    double cameraZoom,
+    Matrix4 tileLocalToWorld,
+    double tileSize,
+    double tileExtent,
+    double tileOpacity,
+  ) {
+    final eval = context.eval;
+    final width_start_stop = getNearestFloorValue(eval.zoom, [
+      5.0,
+      10.0,
+      12.0,
+      14.0,
+      16.0,
+      20.0,
+    ]);
+    final width_end_stop = getNearestCeilValue(eval.zoom, [
+      5.0,
+      10.0,
+      12.0,
+      14.0,
+      16.0,
+      20.0,
+    ]);
+
+    pipeline.setUbos(
+      cameraWorldToGl: cameraWorldToGl,
+      cameraZoom: cameraZoom,
+      tileLocalToWorld: tileLocalToWorld,
+      tileSize: tileSize,
+      tileExtent: tileExtent,
+      tileOpacity: tileOpacity,
+      minorRoadUboWidthStartStop: width_start_stop,
+      minorRoadUboWidthEndStop: width_end_stop,
+    );
+  }
+}
+
+class MajorRoadLayerRenderer extends LineLayerRenderer {
+  MajorRoadLayerRenderer({
+    required gpu.ShaderLibrary shaderLibrary,
+    required super.coordinates,
+    required super.container,
+    required super.specLayer,
+    required super.vtLayer,
+  }) : pipeline = MajorRoadRenderPipelineBindings(shaderLibrary);
+
+  @override
+  final MajorRoadRenderPipelineBindings pipeline;
+
+  @override
+  int setFeatureVertices(
+    spec.EvaluationContext eval,
+    vt.LineStringFeature feature,
+    int index,
+    List<(Vector2 position, Vector2 normal)> vertexData,
+  ) {
+    final paint = specLayer.paint;
+    final width_start_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, [10.0, 12.0, 14.0, 16.0, 20.0]),
+              ),
+            )
+            .toDouble();
+    final width_end_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, [10.0, 12.0, 14.0, 16.0, 20.0]),
+              ),
+            )
+            .toDouble();
+
+    for (var i = 0; i < vertexData.length; i++) {
+      final vertex = vertexData[i];
+      pipeline.vertex.setVertex(
+        index + i,
+        position: vertex.$1,
+        normal: vertex.$2,
+        widthStartValue: width_start_value,
+        widthEndValue: width_end_value,
+      );
+    }
+
+    return index + vertexData.length;
+  }
+
+  @override
+  void setUniforms(
+    RenderContext context,
+    Matrix4 cameraWorldToGl,
+    double cameraZoom,
+    Matrix4 tileLocalToWorld,
+    double tileSize,
+    double tileExtent,
+    double tileOpacity,
+  ) {
+    final eval = context.eval;
+    final width_start_stop = getNearestFloorValue(eval.zoom, [
+      10.0,
+      12.0,
+      14.0,
+      16.0,
+      20.0,
+    ]);
+    final width_end_stop = getNearestCeilValue(eval.zoom, [
+      10.0,
+      12.0,
+      14.0,
+      16.0,
+      20.0,
+    ]);
+
+    pipeline.setUbos(
+      cameraWorldToGl: cameraWorldToGl,
+      cameraZoom: cameraZoom,
+      tileLocalToWorld: tileLocalToWorld,
+      tileSize: tileSize,
+      tileExtent: tileExtent,
+      tileOpacity: tileOpacity,
+      majorRoadUboWidthStartStop: width_start_stop,
+      majorRoadUboWidthEndStop: width_end_stop,
+    );
+  }
+}
+
+class HighwayLayerRenderer extends LineLayerRenderer {
+  HighwayLayerRenderer({
+    required gpu.ShaderLibrary shaderLibrary,
+    required super.coordinates,
+    required super.container,
+    required super.specLayer,
+    required super.vtLayer,
+  }) : pipeline = HighwayRenderPipelineBindings(shaderLibrary);
+
+  @override
+  final HighwayRenderPipelineBindings pipeline;
+
+  @override
+  int setFeatureVertices(
+    spec.EvaluationContext eval,
+    vt.LineStringFeature feature,
+    int index,
+    List<(Vector2 position, Vector2 normal)> vertexData,
+  ) {
+    final paint = specLayer.paint;
+    final width_start_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, [
+                  5.0,
+                  6.0,
+                  10.0,
+                  12.0,
+                  14.0,
+                  16.0,
+                  20.0,
+                ]),
+              ),
+            )
+            .toDouble();
+    final width_end_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, [
+                  5.0,
+                  6.0,
+                  10.0,
+                  12.0,
+                  14.0,
+                  16.0,
+                  20.0,
+                ]),
+              ),
+            )
+            .toDouble();
+
+    for (var i = 0; i < vertexData.length; i++) {
+      final vertex = vertexData[i];
+      pipeline.vertex.setVertex(
+        index + i,
+        position: vertex.$1,
+        normal: vertex.$2,
+        widthStartValue: width_start_value,
+        widthEndValue: width_end_value,
+      );
+    }
+
+    return index + vertexData.length;
+  }
+
+  @override
+  void setUniforms(
+    RenderContext context,
+    Matrix4 cameraWorldToGl,
+    double cameraZoom,
+    Matrix4 tileLocalToWorld,
+    double tileSize,
+    double tileExtent,
+    double tileOpacity,
+  ) {
+    final eval = context.eval;
+    final width_start_stop = getNearestFloorValue(eval.zoom, [
+      5.0,
+      6.0,
+      10.0,
+      12.0,
+      14.0,
+      16.0,
+      20.0,
+    ]);
+    final width_end_stop = getNearestCeilValue(eval.zoom, [
+      5.0,
+      6.0,
+      10.0,
+      12.0,
+      14.0,
+      16.0,
+      20.0,
+    ]);
+
+    pipeline.setUbos(
+      cameraWorldToGl: cameraWorldToGl,
+      cameraZoom: cameraZoom,
+      tileLocalToWorld: tileLocalToWorld,
+      tileSize: tileSize,
+      tileExtent: tileExtent,
+      tileOpacity: tileOpacity,
+      highwayUboWidthStartStop: width_start_stop,
+      highwayUboWidthEndStop: width_end_stop,
+    );
+  }
+}
+
+class PathOutlineLayerRenderer extends LineLayerRenderer {
+  PathOutlineLayerRenderer({
+    required gpu.ShaderLibrary shaderLibrary,
+    required super.coordinates,
+    required super.container,
+    required super.specLayer,
+    required super.vtLayer,
+  }) : pipeline = PathOutlineRenderPipelineBindings(shaderLibrary);
+
+  @override
+  final PathOutlineRenderPipelineBindings pipeline;
+
+  @override
+  int setFeatureVertices(
+    spec.EvaluationContext eval,
+    vt.LineStringFeature feature,
+    int index,
+    List<(Vector2 position, Vector2 normal)> vertexData,
+  ) {
+    final paint = specLayer.paint;
+    final width_start_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, [14.0, 16.0, 18.0, 22.0]),
+              ),
+            )
+            .toDouble();
+    final width_end_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, [14.0, 16.0, 18.0, 22.0]),
+              ),
+            )
+            .toDouble();
+
+    for (var i = 0; i < vertexData.length; i++) {
+      final vertex = vertexData[i];
+      pipeline.vertex.setVertex(
+        index + i,
+        position: vertex.$1,
+        normal: vertex.$2,
+        widthStartValue: width_start_value,
+        widthEndValue: width_end_value,
+      );
+    }
+
+    return index + vertexData.length;
+  }
+
+  @override
+  void setUniforms(
+    RenderContext context,
+    Matrix4 cameraWorldToGl,
+    double cameraZoom,
+    Matrix4 tileLocalToWorld,
+    double tileSize,
+    double tileExtent,
+    double tileOpacity,
+  ) {
+    final eval = context.eval;
+    final width_start_stop = getNearestFloorValue(eval.zoom, [
+      14.0,
+      16.0,
+      18.0,
+      22.0,
+    ]);
+    final width_end_stop = getNearestCeilValue(eval.zoom, [
+      14.0,
+      16.0,
+      18.0,
+      22.0,
+    ]);
+
+    pipeline.setUbos(
+      cameraWorldToGl: cameraWorldToGl,
+      cameraZoom: cameraZoom,
+      tileLocalToWorld: tileLocalToWorld,
+      tileSize: tileSize,
+      tileExtent: tileExtent,
+      tileOpacity: tileOpacity,
+      pathOutlineUboWidthStartStop: width_start_stop,
+      pathOutlineUboWidthEndStop: width_end_stop,
+    );
+  }
+}
+
+class PathLayerRenderer extends LineLayerRenderer {
+  PathLayerRenderer({
+    required gpu.ShaderLibrary shaderLibrary,
+    required super.coordinates,
+    required super.container,
+    required super.specLayer,
+    required super.vtLayer,
+  }) : pipeline = PathRenderPipelineBindings(shaderLibrary);
+
+  @override
+  final PathRenderPipelineBindings pipeline;
+
+  @override
+  int setFeatureVertices(
+    spec.EvaluationContext eval,
+    vt.LineStringFeature feature,
+    int index,
+    List<(Vector2 position, Vector2 normal)> vertexData,
+  ) {
+    final paint = specLayer.paint;
+    final width_start_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, [14.0, 16.0, 18.0, 22.0]),
+              ),
+            )
+            .toDouble();
+    final width_end_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, [14.0, 16.0, 18.0, 22.0]),
+              ),
+            )
+            .toDouble();
+
+    for (var i = 0; i < vertexData.length; i++) {
+      final vertex = vertexData[i];
+      pipeline.vertex.setVertex(
+        index + i,
+        position: vertex.$1,
+        normal: vertex.$2,
+        widthStartValue: width_start_value,
+        widthEndValue: width_end_value,
+      );
+    }
+
+    return index + vertexData.length;
+  }
+
+  @override
+  void setUniforms(
+    RenderContext context,
+    Matrix4 cameraWorldToGl,
+    double cameraZoom,
+    Matrix4 tileLocalToWorld,
+    double tileSize,
+    double tileExtent,
+    double tileOpacity,
+  ) {
+    final eval = context.eval;
+    final width_start_stop = getNearestFloorValue(eval.zoom, [
+      14.0,
+      16.0,
+      18.0,
+      22.0,
+    ]);
+    final width_end_stop = getNearestCeilValue(eval.zoom, [
+      14.0,
+      16.0,
+      18.0,
+      22.0,
+    ]);
+
+    pipeline.setUbos(
+      cameraWorldToGl: cameraWorldToGl,
+      cameraZoom: cameraZoom,
+      tileLocalToWorld: tileLocalToWorld,
+      tileSize: tileSize,
+      tileExtent: tileExtent,
+      tileOpacity: tileOpacity,
+      pathUboWidthStartStop: width_start_stop,
+      pathUboWidthEndStop: width_end_stop,
+    );
+  }
+}
+
+class MajorRailLayerRenderer extends LineLayerRenderer {
+  MajorRailLayerRenderer({
+    required gpu.ShaderLibrary shaderLibrary,
+    required super.coordinates,
+    required super.container,
+    required super.specLayer,
+    required super.vtLayer,
+  }) : pipeline = MajorRailRenderPipelineBindings(shaderLibrary);
+
+  @override
+  final MajorRailRenderPipelineBindings pipeline;
+
+  @override
+  int setFeatureVertices(
+    spec.EvaluationContext eval,
+    vt.LineStringFeature feature,
+    int index,
+    List<(Vector2 position, Vector2 normal)> vertexData,
+  ) {
+    final paint = specLayer.paint;
+    final color_start_value =
+        paint.lineColor
+            .evaluate(
+              eval.copyWithZoom(getNearestFloorValue(eval.zoom, [8.0, 16.0])),
+            )
+            .vec;
+    final color_end_value =
+        paint.lineColor
+            .evaluate(
+              eval.copyWithZoom(getNearestCeilValue(eval.zoom, [8.0, 16.0])),
+            )
+            .vec;
+    final opacity = paint.lineOpacity.evaluate(eval).toDouble();
+    final width_start_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, [14.0, 15.0, 20.0]),
+              ),
+            )
+            .toDouble();
+    final width_end_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, [14.0, 15.0, 20.0]),
+              ),
+            )
+            .toDouble();
+
+    for (var i = 0; i < vertexData.length; i++) {
+      final vertex = vertexData[i];
+      pipeline.vertex.setVertex(
+        index + i,
+        position: vertex.$1,
+        normal: vertex.$2,
+        colorStartValue: color_start_value,
+        colorEndValue: color_end_value,
+        opacity: opacity,
+        widthStartValue: width_start_value,
+        widthEndValue: width_end_value,
+      );
+    }
+
+    return index + vertexData.length;
+  }
+
+  @override
+  void setUniforms(
+    RenderContext context,
+    Matrix4 cameraWorldToGl,
+    double cameraZoom,
+    Matrix4 tileLocalToWorld,
+    double tileSize,
+    double tileExtent,
+    double tileOpacity,
+  ) {
+    final eval = context.eval;
+    final color_start_stop = getNearestFloorValue(eval.zoom, [8.0, 16.0]);
+    final color_end_stop = getNearestCeilValue(eval.zoom, [8.0, 16.0]);
+    final width_start_stop = getNearestFloorValue(eval.zoom, [
+      14.0,
+      15.0,
+      20.0,
+    ]);
+    final width_end_stop = getNearestCeilValue(eval.zoom, [14.0, 15.0, 20.0]);
+
+    pipeline.setUbos(
+      cameraWorldToGl: cameraWorldToGl,
+      cameraZoom: cameraZoom,
+      tileLocalToWorld: tileLocalToWorld,
+      tileSize: tileSize,
+      tileExtent: tileExtent,
+      tileOpacity: tileOpacity,
+      majorRailUboColorStartStop: color_start_stop,
+      majorRailUboColorEndStop: color_end_stop,
+      majorRailUboWidthStartStop: width_start_stop,
+      majorRailUboWidthEndStop: width_end_stop,
+    );
+  }
+}
+
+class MajorRailHatchingLayerRenderer extends LineLayerRenderer {
+  MajorRailHatchingLayerRenderer({
+    required gpu.ShaderLibrary shaderLibrary,
+    required super.coordinates,
+    required super.container,
+    required super.specLayer,
+    required super.vtLayer,
+  }) : pipeline = MajorRailHatchingRenderPipelineBindings(shaderLibrary);
+
+  @override
+  final MajorRailHatchingRenderPipelineBindings pipeline;
+
+  @override
+  int setFeatureVertices(
+    spec.EvaluationContext eval,
+    vt.LineStringFeature feature,
+    int index,
+    List<(Vector2 position, Vector2 normal)> vertexData,
+  ) {
+    final paint = specLayer.paint;
+    final opacity = paint.lineOpacity.evaluate(eval).toDouble();
+    final width_start_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, [14.5, 15.0, 20.0]),
+              ),
+            )
+            .toDouble();
+    final width_end_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, [14.5, 15.0, 20.0]),
+              ),
+            )
+            .toDouble();
+
+    for (var i = 0; i < vertexData.length; i++) {
+      final vertex = vertexData[i];
+      pipeline.vertex.setVertex(
+        index + i,
+        position: vertex.$1,
+        normal: vertex.$2,
+        opacity: opacity,
+        widthStartValue: width_start_value,
+        widthEndValue: width_end_value,
+      );
+    }
+
+    return index + vertexData.length;
+  }
+
+  @override
+  void setUniforms(
+    RenderContext context,
+    Matrix4 cameraWorldToGl,
+    double cameraZoom,
+    Matrix4 tileLocalToWorld,
+    double tileSize,
+    double tileExtent,
+    double tileOpacity,
+  ) {
+    final eval = context.eval;
+    final width_start_stop = getNearestFloorValue(eval.zoom, [
+      14.5,
+      15.0,
+      20.0,
+    ]);
+    final width_end_stop = getNearestCeilValue(eval.zoom, [14.5, 15.0, 20.0]);
+
+    pipeline.setUbos(
+      cameraWorldToGl: cameraWorldToGl,
+      cameraZoom: cameraZoom,
+      tileLocalToWorld: tileLocalToWorld,
+      tileSize: tileSize,
+      tileExtent: tileExtent,
+      tileOpacity: tileOpacity,
+      majorRailHatchingUboWidthStartStop: width_start_stop,
+      majorRailHatchingUboWidthEndStop: width_end_stop,
+    );
+  }
+}
+
+class MinorRailLayerRenderer extends LineLayerRenderer {
+  MinorRailLayerRenderer({
+    required gpu.ShaderLibrary shaderLibrary,
+    required super.coordinates,
+    required super.container,
+    required super.specLayer,
+    required super.vtLayer,
+  }) : pipeline = MinorRailRenderPipelineBindings(shaderLibrary);
+
+  @override
+  final MinorRailRenderPipelineBindings pipeline;
+
+  @override
+  int setFeatureVertices(
+    spec.EvaluationContext eval,
+    vt.LineStringFeature feature,
+    int index,
+    List<(Vector2 position, Vector2 normal)> vertexData,
+  ) {
+    final paint = specLayer.paint;
+    final width_start_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, [14.0, 15.0, 20.0]),
+              ),
+            )
+            .toDouble();
+    final width_end_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, [14.0, 15.0, 20.0]),
+              ),
+            )
+            .toDouble();
+
+    for (var i = 0; i < vertexData.length; i++) {
+      final vertex = vertexData[i];
+      pipeline.vertex.setVertex(
+        index + i,
+        position: vertex.$1,
+        normal: vertex.$2,
+        widthStartValue: width_start_value,
+        widthEndValue: width_end_value,
+      );
+    }
+
+    return index + vertexData.length;
+  }
+
+  @override
+  void setUniforms(
+    RenderContext context,
+    Matrix4 cameraWorldToGl,
+    double cameraZoom,
+    Matrix4 tileLocalToWorld,
+    double tileSize,
+    double tileExtent,
+    double tileOpacity,
+  ) {
+    final eval = context.eval;
+    final width_start_stop = getNearestFloorValue(eval.zoom, [
+      14.0,
+      15.0,
+      20.0,
+    ]);
+    final width_end_stop = getNearestCeilValue(eval.zoom, [14.0, 15.0, 20.0]);
+
+    pipeline.setUbos(
+      cameraWorldToGl: cameraWorldToGl,
+      cameraZoom: cameraZoom,
+      tileLocalToWorld: tileLocalToWorld,
+      tileSize: tileSize,
+      tileExtent: tileExtent,
+      tileOpacity: tileOpacity,
+      minorRailUboWidthStartStop: width_start_stop,
+      minorRailUboWidthEndStop: width_end_stop,
+    );
+  }
+}
+
+class MinorRailHatchingLayerRenderer extends LineLayerRenderer {
+  MinorRailHatchingLayerRenderer({
+    required gpu.ShaderLibrary shaderLibrary,
+    required super.coordinates,
+    required super.container,
+    required super.specLayer,
+    required super.vtLayer,
+  }) : pipeline = MinorRailHatchingRenderPipelineBindings(shaderLibrary);
+
+  @override
+  final MinorRailHatchingRenderPipelineBindings pipeline;
+
+  @override
+  int setFeatureVertices(
+    spec.EvaluationContext eval,
+    vt.LineStringFeature feature,
+    int index,
+    List<(Vector2 position, Vector2 normal)> vertexData,
+  ) {
+    final paint = specLayer.paint;
+    final width_start_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, [14.5, 15.0, 20.0]),
+              ),
+            )
+            .toDouble();
+    final width_end_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, [14.5, 15.0, 20.0]),
+              ),
+            )
+            .toDouble();
+
+    for (var i = 0; i < vertexData.length; i++) {
+      final vertex = vertexData[i];
+      pipeline.vertex.setVertex(
+        index + i,
+        position: vertex.$1,
+        normal: vertex.$2,
+        widthStartValue: width_start_value,
+        widthEndValue: width_end_value,
+      );
+    }
+
+    return index + vertexData.length;
+  }
+
+  @override
+  void setUniforms(
+    RenderContext context,
+    Matrix4 cameraWorldToGl,
+    double cameraZoom,
+    Matrix4 tileLocalToWorld,
+    double tileSize,
+    double tileExtent,
+    double tileOpacity,
+  ) {
+    final eval = context.eval;
+    final width_start_stop = getNearestFloorValue(eval.zoom, [
+      14.5,
+      15.0,
+      20.0,
+    ]);
+    final width_end_stop = getNearestCeilValue(eval.zoom, [14.5, 15.0, 20.0]);
+
+    pipeline.setUbos(
+      cameraWorldToGl: cameraWorldToGl,
+      cameraZoom: cameraZoom,
+      tileLocalToWorld: tileLocalToWorld,
+      tileSize: tileSize,
+      tileExtent: tileExtent,
+      tileOpacity: tileOpacity,
+      minorRailHatchingUboWidthStartStop: width_start_stop,
+      minorRailHatchingUboWidthEndStop: width_end_stop,
+    );
+  }
+}
+
 class BuildingLayerRenderer extends FillLayerRenderer {
   BuildingLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
@@ -1598,6 +4055,566 @@ class BuildingLayerRenderer extends FillLayerRenderer {
       tileSize: tileSize,
       tileExtent: tileExtent,
       tileOpacity: tileOpacity,
+    );
+  }
+}
+
+class AqueductOutlineLayerRenderer extends LineLayerRenderer {
+  AqueductOutlineLayerRenderer({
+    required gpu.ShaderLibrary shaderLibrary,
+    required super.coordinates,
+    required super.container,
+    required super.specLayer,
+    required super.vtLayer,
+  }) : pipeline = AqueductOutlineRenderPipelineBindings(shaderLibrary);
+
+  @override
+  final AqueductOutlineRenderPipelineBindings pipeline;
+
+  @override
+  int setFeatureVertices(
+    spec.EvaluationContext eval,
+    vt.LineStringFeature feature,
+    int index,
+    List<(Vector2 position, Vector2 normal)> vertexData,
+  ) {
+    final paint = specLayer.paint;
+    final width_start_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(getNearestFloorValue(eval.zoom, [14.0, 20.0])),
+            )
+            .toDouble();
+    final width_end_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(getNearestCeilValue(eval.zoom, [14.0, 20.0])),
+            )
+            .toDouble();
+
+    for (var i = 0; i < vertexData.length; i++) {
+      final vertex = vertexData[i];
+      pipeline.vertex.setVertex(
+        index + i,
+        position: vertex.$1,
+        normal: vertex.$2,
+        widthStartValue: width_start_value,
+        widthEndValue: width_end_value,
+      );
+    }
+
+    return index + vertexData.length;
+  }
+
+  @override
+  void setUniforms(
+    RenderContext context,
+    Matrix4 cameraWorldToGl,
+    double cameraZoom,
+    Matrix4 tileLocalToWorld,
+    double tileSize,
+    double tileExtent,
+    double tileOpacity,
+  ) {
+    final eval = context.eval;
+    final width_start_stop = getNearestFloorValue(eval.zoom, [14.0, 20.0]);
+    final width_end_stop = getNearestCeilValue(eval.zoom, [14.0, 20.0]);
+
+    pipeline.setUbos(
+      cameraWorldToGl: cameraWorldToGl,
+      cameraZoom: cameraZoom,
+      tileLocalToWorld: tileLocalToWorld,
+      tileSize: tileSize,
+      tileExtent: tileExtent,
+      tileOpacity: tileOpacity,
+      aqueductOutlineUboWidthStartStop: width_start_stop,
+      aqueductOutlineUboWidthEndStop: width_end_stop,
+    );
+  }
+}
+
+class AqueductLayerRenderer extends LineLayerRenderer {
+  AqueductLayerRenderer({
+    required gpu.ShaderLibrary shaderLibrary,
+    required super.coordinates,
+    required super.container,
+    required super.specLayer,
+    required super.vtLayer,
+  }) : pipeline = AqueductRenderPipelineBindings(shaderLibrary);
+
+  @override
+  final AqueductRenderPipelineBindings pipeline;
+
+  @override
+  int setFeatureVertices(
+    spec.EvaluationContext eval,
+    vt.LineStringFeature feature,
+    int index,
+    List<(Vector2 position, Vector2 normal)> vertexData,
+  ) {
+    final paint = specLayer.paint;
+    final width_start_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(getNearestFloorValue(eval.zoom, [12.0, 20.0])),
+            )
+            .toDouble();
+    final width_end_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(getNearestCeilValue(eval.zoom, [12.0, 20.0])),
+            )
+            .toDouble();
+
+    for (var i = 0; i < vertexData.length; i++) {
+      final vertex = vertexData[i];
+      pipeline.vertex.setVertex(
+        index + i,
+        position: vertex.$1,
+        normal: vertex.$2,
+        widthStartValue: width_start_value,
+        widthEndValue: width_end_value,
+      );
+    }
+
+    return index + vertexData.length;
+  }
+
+  @override
+  void setUniforms(
+    RenderContext context,
+    Matrix4 cameraWorldToGl,
+    double cameraZoom,
+    Matrix4 tileLocalToWorld,
+    double tileSize,
+    double tileExtent,
+    double tileOpacity,
+  ) {
+    final eval = context.eval;
+    final width_start_stop = getNearestFloorValue(eval.zoom, [12.0, 20.0]);
+    final width_end_stop = getNearestCeilValue(eval.zoom, [12.0, 20.0]);
+
+    pipeline.setUbos(
+      cameraWorldToGl: cameraWorldToGl,
+      cameraZoom: cameraZoom,
+      tileLocalToWorld: tileLocalToWorld,
+      tileSize: tileSize,
+      tileExtent: tileExtent,
+      tileOpacity: tileOpacity,
+      aqueductUboWidthStartStop: width_start_stop,
+      aqueductUboWidthEndStop: width_end_stop,
+    );
+  }
+}
+
+class CablecarLayerRenderer extends LineLayerRenderer {
+  CablecarLayerRenderer({
+    required gpu.ShaderLibrary shaderLibrary,
+    required super.coordinates,
+    required super.container,
+    required super.specLayer,
+    required super.vtLayer,
+  }) : pipeline = CablecarRenderPipelineBindings(shaderLibrary);
+
+  @override
+  final CablecarRenderPipelineBindings pipeline;
+
+  @override
+  int setFeatureVertices(
+    spec.EvaluationContext eval,
+    vt.LineStringFeature feature,
+    int index,
+    List<(Vector2 position, Vector2 normal)> vertexData,
+  ) {
+    final paint = specLayer.paint;
+    final width_start_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(getNearestFloorValue(eval.zoom, [13.0, 19.0])),
+            )
+            .toDouble();
+    final width_end_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(getNearestCeilValue(eval.zoom, [13.0, 19.0])),
+            )
+            .toDouble();
+
+    for (var i = 0; i < vertexData.length; i++) {
+      final vertex = vertexData[i];
+      pipeline.vertex.setVertex(
+        index + i,
+        position: vertex.$1,
+        normal: vertex.$2,
+        widthStartValue: width_start_value,
+        widthEndValue: width_end_value,
+      );
+    }
+
+    return index + vertexData.length;
+  }
+
+  @override
+  void setUniforms(
+    RenderContext context,
+    Matrix4 cameraWorldToGl,
+    double cameraZoom,
+    Matrix4 tileLocalToWorld,
+    double tileSize,
+    double tileExtent,
+    double tileOpacity,
+  ) {
+    final eval = context.eval;
+    final width_start_stop = getNearestFloorValue(eval.zoom, [13.0, 19.0]);
+    final width_end_stop = getNearestCeilValue(eval.zoom, [13.0, 19.0]);
+
+    pipeline.setUbos(
+      cameraWorldToGl: cameraWorldToGl,
+      cameraZoom: cameraZoom,
+      tileLocalToWorld: tileLocalToWorld,
+      tileSize: tileSize,
+      tileExtent: tileExtent,
+      tileOpacity: tileOpacity,
+      cablecarUboWidthStartStop: width_start_stop,
+      cablecarUboWidthEndStop: width_end_stop,
+    );
+  }
+}
+
+class CablecarDashLayerRenderer extends LineLayerRenderer {
+  CablecarDashLayerRenderer({
+    required gpu.ShaderLibrary shaderLibrary,
+    required super.coordinates,
+    required super.container,
+    required super.specLayer,
+    required super.vtLayer,
+  }) : pipeline = CablecarDashRenderPipelineBindings(shaderLibrary);
+
+  @override
+  final CablecarDashRenderPipelineBindings pipeline;
+
+  @override
+  int setFeatureVertices(
+    spec.EvaluationContext eval,
+    vt.LineStringFeature feature,
+    int index,
+    List<(Vector2 position, Vector2 normal)> vertexData,
+  ) {
+    final paint = specLayer.paint;
+    final width_start_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(getNearestFloorValue(eval.zoom, [13.0, 19.0])),
+            )
+            .toDouble();
+    final width_end_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(getNearestCeilValue(eval.zoom, [13.0, 19.0])),
+            )
+            .toDouble();
+
+    for (var i = 0; i < vertexData.length; i++) {
+      final vertex = vertexData[i];
+      pipeline.vertex.setVertex(
+        index + i,
+        position: vertex.$1,
+        normal: vertex.$2,
+        widthStartValue: width_start_value,
+        widthEndValue: width_end_value,
+      );
+    }
+
+    return index + vertexData.length;
+  }
+
+  @override
+  void setUniforms(
+    RenderContext context,
+    Matrix4 cameraWorldToGl,
+    double cameraZoom,
+    Matrix4 tileLocalToWorld,
+    double tileSize,
+    double tileExtent,
+    double tileOpacity,
+  ) {
+    final eval = context.eval;
+    final width_start_stop = getNearestFloorValue(eval.zoom, [13.0, 19.0]);
+    final width_end_stop = getNearestCeilValue(eval.zoom, [13.0, 19.0]);
+
+    pipeline.setUbos(
+      cameraWorldToGl: cameraWorldToGl,
+      cameraZoom: cameraZoom,
+      tileLocalToWorld: tileLocalToWorld,
+      tileSize: tileSize,
+      tileExtent: tileExtent,
+      tileOpacity: tileOpacity,
+      cablecarDashUboWidthStartStop: width_start_stop,
+      cablecarDashUboWidthEndStop: width_end_stop,
+    );
+  }
+}
+
+class OtherBorderLayerRenderer extends LineLayerRenderer {
+  OtherBorderLayerRenderer({
+    required gpu.ShaderLibrary shaderLibrary,
+    required super.coordinates,
+    required super.container,
+    required super.specLayer,
+    required super.vtLayer,
+  }) : pipeline = OtherBorderRenderPipelineBindings(shaderLibrary);
+
+  @override
+  final OtherBorderRenderPipelineBindings pipeline;
+
+  @override
+  int setFeatureVertices(
+    spec.EvaluationContext eval,
+    vt.LineStringFeature feature,
+    int index,
+    List<(Vector2 position, Vector2 normal)> vertexData,
+  ) {
+    final paint = specLayer.paint;
+    final width_start_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, [3.0, 4.0, 11.0, 18.0]),
+              ),
+            )
+            .toDouble();
+    final width_end_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, [3.0, 4.0, 11.0, 18.0]),
+              ),
+            )
+            .toDouble();
+
+    for (var i = 0; i < vertexData.length; i++) {
+      final vertex = vertexData[i];
+      pipeline.vertex.setVertex(
+        index + i,
+        position: vertex.$1,
+        normal: vertex.$2,
+        widthStartValue: width_start_value,
+        widthEndValue: width_end_value,
+      );
+    }
+
+    return index + vertexData.length;
+  }
+
+  @override
+  void setUniforms(
+    RenderContext context,
+    Matrix4 cameraWorldToGl,
+    double cameraZoom,
+    Matrix4 tileLocalToWorld,
+    double tileSize,
+    double tileExtent,
+    double tileOpacity,
+  ) {
+    final eval = context.eval;
+    final width_start_stop = getNearestFloorValue(eval.zoom, [
+      3.0,
+      4.0,
+      11.0,
+      18.0,
+    ]);
+    final width_end_stop = getNearestCeilValue(eval.zoom, [
+      3.0,
+      4.0,
+      11.0,
+      18.0,
+    ]);
+
+    pipeline.setUbos(
+      cameraWorldToGl: cameraWorldToGl,
+      cameraZoom: cameraZoom,
+      tileLocalToWorld: tileLocalToWorld,
+      tileSize: tileSize,
+      tileExtent: tileExtent,
+      tileOpacity: tileOpacity,
+      otherBorderUboWidthStartStop: width_start_stop,
+      otherBorderUboWidthEndStop: width_end_stop,
+    );
+  }
+}
+
+class DisputedBorderLayerRenderer extends LineLayerRenderer {
+  DisputedBorderLayerRenderer({
+    required gpu.ShaderLibrary shaderLibrary,
+    required super.coordinates,
+    required super.container,
+    required super.specLayer,
+    required super.vtLayer,
+  }) : pipeline = DisputedBorderRenderPipelineBindings(shaderLibrary);
+
+  @override
+  final DisputedBorderRenderPipelineBindings pipeline;
+
+  @override
+  int setFeatureVertices(
+    spec.EvaluationContext eval,
+    vt.LineStringFeature feature,
+    int index,
+    List<(Vector2 position, Vector2 normal)> vertexData,
+  ) {
+    final paint = specLayer.paint;
+    final width_start_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, [1.0, 5.0, 10.0, 24.0]),
+              ),
+            )
+            .toDouble();
+    final width_end_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, [1.0, 5.0, 10.0, 24.0]),
+              ),
+            )
+            .toDouble();
+
+    for (var i = 0; i < vertexData.length; i++) {
+      final vertex = vertexData[i];
+      pipeline.vertex.setVertex(
+        index + i,
+        position: vertex.$1,
+        normal: vertex.$2,
+        widthStartValue: width_start_value,
+        widthEndValue: width_end_value,
+      );
+    }
+
+    return index + vertexData.length;
+  }
+
+  @override
+  void setUniforms(
+    RenderContext context,
+    Matrix4 cameraWorldToGl,
+    double cameraZoom,
+    Matrix4 tileLocalToWorld,
+    double tileSize,
+    double tileExtent,
+    double tileOpacity,
+  ) {
+    final eval = context.eval;
+    final width_start_stop = getNearestFloorValue(eval.zoom, [
+      1.0,
+      5.0,
+      10.0,
+      24.0,
+    ]);
+    final width_end_stop = getNearestCeilValue(eval.zoom, [
+      1.0,
+      5.0,
+      10.0,
+      24.0,
+    ]);
+
+    pipeline.setUbos(
+      cameraWorldToGl: cameraWorldToGl,
+      cameraZoom: cameraZoom,
+      tileLocalToWorld: tileLocalToWorld,
+      tileSize: tileSize,
+      tileExtent: tileExtent,
+      tileOpacity: tileOpacity,
+      disputedBorderUboWidthStartStop: width_start_stop,
+      disputedBorderUboWidthEndStop: width_end_stop,
+    );
+  }
+}
+
+class CountryBorderLayerRenderer extends LineLayerRenderer {
+  CountryBorderLayerRenderer({
+    required gpu.ShaderLibrary shaderLibrary,
+    required super.coordinates,
+    required super.container,
+    required super.specLayer,
+    required super.vtLayer,
+  }) : pipeline = CountryBorderRenderPipelineBindings(shaderLibrary);
+
+  @override
+  final CountryBorderRenderPipelineBindings pipeline;
+
+  @override
+  int setFeatureVertices(
+    spec.EvaluationContext eval,
+    vt.LineStringFeature feature,
+    int index,
+    List<(Vector2 position, Vector2 normal)> vertexData,
+  ) {
+    final paint = specLayer.paint;
+    final width_start_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, [1.0, 5.0, 10.0, 24.0]),
+              ),
+            )
+            .toDouble();
+    final width_end_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, [1.0, 5.0, 10.0, 24.0]),
+              ),
+            )
+            .toDouble();
+
+    for (var i = 0; i < vertexData.length; i++) {
+      final vertex = vertexData[i];
+      pipeline.vertex.setVertex(
+        index + i,
+        position: vertex.$1,
+        normal: vertex.$2,
+        widthStartValue: width_start_value,
+        widthEndValue: width_end_value,
+      );
+    }
+
+    return index + vertexData.length;
+  }
+
+  @override
+  void setUniforms(
+    RenderContext context,
+    Matrix4 cameraWorldToGl,
+    double cameraZoom,
+    Matrix4 tileLocalToWorld,
+    double tileSize,
+    double tileExtent,
+    double tileOpacity,
+  ) {
+    final eval = context.eval;
+    final width_start_stop = getNearestFloorValue(eval.zoom, [
+      1.0,
+      5.0,
+      10.0,
+      24.0,
+    ]);
+    final width_end_stop = getNearestCeilValue(eval.zoom, [
+      1.0,
+      5.0,
+      10.0,
+      24.0,
+    ]);
+
+    pipeline.setUbos(
+      cameraWorldToGl: cameraWorldToGl,
+      cameraZoom: cameraZoom,
+      tileLocalToWorld: tileLocalToWorld,
+      tileSize: tileSize,
+      tileExtent: tileExtent,
+      tileOpacity: tileOpacity,
+      countryBorderUboWidthStartStop: width_start_stop,
+      countryBorderUboWidthEndStop: width_end_stop,
     );
   }
 }

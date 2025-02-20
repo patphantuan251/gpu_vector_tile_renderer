@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_map/flutter_map.dart' as fm;
 import 'package:gpu_vector_tile_renderer/_controller.dart';
 import 'package:gpu_vector_tile_renderer/_renderer.dart';
@@ -77,46 +78,48 @@ class TileContainer with ChangeNotifier {
   }
 
   Future<void> _setupRenderers() async {
-    final result = <Object, SingleTileLayerRenderer>{};
+    return await SchedulerBinding.instance.scheduleTask(() async {
+      final result = <Object, SingleTileLayerRenderer>{};
 
-    final prepareFutures = <Future>[];
+      final prepareFutures = <Future>[];
 
-    for (final layer in controller.style.layers) {
-      // Check if this layer type is even supported
-      if (!supportedLayerTypes.contains(layer.type)) continue;
+      for (final layer in controller.style.layers) {
+        // Check if this layer type is even supported
+        if (!supportedLayerTypes.contains(layer.type)) continue;
 
-      // Check the source key and check if we have that source
-      final sourceKey = layer.source;
-      if (sourceKey == null) continue;
-      if (!sourceKeys.contains(sourceKey)) continue;
+        // Check the source key and check if we have that source
+        final sourceKey = layer.source;
+        if (sourceKey == null) continue;
+        if (!sourceKeys.contains(sourceKey)) continue;
 
-      // Check the source layer name
-      final sourceLayerName = layer.sourceLayer;
-      if (sourceLayerName == null) continue;
+        // Check the source layer name
+        final sourceLayerName = layer.sourceLayer;
+        if (sourceLayerName == null) continue;
 
-      // Get the vector tile layer
-      final vectorTile = _vectorTiles![sourceKey]!;
-      final vtLayer = vectorTile.layers.firstWhereOrNull((data) => data.name == sourceLayerName);
-      if (vtLayer == null) continue;
+        // Get the vector tile layer
+        final vectorTile = _vectorTiles![sourceKey]!;
+        final vtLayer = vectorTile.layers.firstWhereOrNull((data) => data.name == sourceLayerName);
+        if (vtLayer == null) continue;
 
-      // Create the renderer
-      final renderer = controller.renderOrchestrator.createSingleTileLayerRenderer(coordinates, this, layer, vtLayer);
-      if (renderer == null) continue;
+        // Create the renderer
+        final renderer = controller.renderOrchestrator.createSingleTileLayerRenderer(coordinates, this, layer, vtLayer);
+        if (renderer == null) continue;
 
-      result[layer.id] = renderer;
-      final futureOr = renderer.prepare(
-        PrepareContext(eval: spec.EvaluationContext.empty().copyWithZoom(coordinates.z.toDouble())),
-      );
-      if (futureOr is Future) prepareFutures.add(futureOr);
-    }
+        result[layer.id] = renderer;
+        final futureOr = renderer.prepare(
+          PrepareContext(eval: spec.EvaluationContext.empty().copyWithZoom(coordinates.z.toDouble())),
+        );
+        if (futureOr is Future) prepareFutures.add(futureOr);
+      }
 
-    await prepareFutures.wait;
-    if (_disposed) return;
+      await prepareFutures.wait;
+      if (_disposed) return;
 
-    _renderers = result;
-    notifyListeners();
+      _renderers = result;
+      notifyListeners();
 
-    _opacityAnimationController.forward();
+      _opacityAnimationController.forward();
+    }, Priority.animation);
   }
 
   bool _disposed = false;
