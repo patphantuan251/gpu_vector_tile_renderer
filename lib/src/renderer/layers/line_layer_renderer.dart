@@ -71,7 +71,7 @@ abstract class LineLayerRenderer extends SingleTileLayerRenderer<spec.LayerLine>
         final startAngle = math.atan2(-n.y, -n.x);
 
         vertexData.last.add((center, Vector2.zero()));
-        final centerIndex = vertexData.length - 1;
+        final centerIndex = vertexCount;
 
         for (var i = 0; i <= _kLineCapRoundSegments; i++) {
           final angle = startAngle + i / _kLineCapRoundSegments * math.pi;
@@ -170,6 +170,7 @@ abstract class LineLayerRenderer extends SingleTileLayerRenderer<spec.LayerLine>
     RenderContext context,
     Matrix4 cameraWorldToGl,
     double cameraZoom,
+    double pixelRatio,
     Matrix4 tileLocalToWorld,
     double tileSize,
     double tileExtent,
@@ -188,6 +189,7 @@ abstract class LineLayerRenderer extends SingleTileLayerRenderer<spec.LayerLine>
       context,
       context.worldToGl,
       context.camera.zoom,
+      context.pixelRatio,
       tileLocalToWorld,
       tileSize,
       vtLayer.extent.toDouble(),

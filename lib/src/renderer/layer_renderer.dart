@@ -59,7 +59,7 @@ class TiledLayerRenderer<T extends spec.Layer> extends LayerRenderer<T> {
       final renderer = tile.renderers[specLayer.id];
       if (renderer == null) continue;
 
-      final futureOr = renderer.prepare(context);
+      final futureOr = renderer.prepare(PrepareContext(eval: context.eval.copyWithZoom(tile.coordinates.z.toDouble())));
       if (futureOr is Future) futures.add(futureOr);
     }
 

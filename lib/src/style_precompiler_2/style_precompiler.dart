@@ -748,7 +748,7 @@ _PropertyAnalysis _analyzeProperty(spec.Property prop) {
           interpolationStops: interpolateExpr.stops.map((stop) => stop.$1.toDouble()).toList(),
         );
       } else {
-        throw UnimplementedError('Expression type not supported: ${prop.expression!.runtimeType}');
+        throw UnimplementedError('Expression type nтыot supported: ${prop.expression!.runtimeType}');
       }
     } else {
       return _PropertyAnalysis(type: _PropertyShaderType.attribute);

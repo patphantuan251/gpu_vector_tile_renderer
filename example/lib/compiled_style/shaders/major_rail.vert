@@ -45,6 +45,7 @@ uniform Tile {
 uniform Camera {
   highp mat4 world_to_gl;
   highp float zoom;
+  float pixel_ratio;
 } camera;
 
 
@@ -72,7 +73,9 @@ v_opacity = opacity;
 float width = data_interpolate(width_start_value, width_end_value, major_rail_ubo.width_start_stop, major_rail_ubo.width_end_stop);
 v_width = width;
 
-  vec2 offset = normal * width * 0.5 * 10;
+  // Width is defined in terms of screen pixels, so we need to convert it.
+  float local_width = width * (tile.extent / tile.size);
+  vec2 offset = normal * local_width * 0.5;
   gl_Position = project_tile_position(position + offset);
 }
 

@@ -43,6 +43,7 @@ uniform Tile {
 uniform Camera {
   highp mat4 world_to_gl;
   highp float zoom;
+  float pixel_ratio;
 } camera;
 
 

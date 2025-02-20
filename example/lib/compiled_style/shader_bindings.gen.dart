@@ -60,9 +60,14 @@ class TileUbo extends UniformBufferObjectBindings {
 class CameraUbo extends UniformBufferObjectBindings {
   CameraUbo(gpu.Shader shader) : super(slot: shader.getUniformSlot('Camera'));
 
-  void set({required Matrix4 worldToGl, required double zoom}) {
+  void set({
+    required Matrix4 worldToGl,
+    required double zoom,
+    required double pixelRatio,
+  }) {
     set_mat4(get_member_offset(slot, 'world_to_gl'), data, worldToGl);
     set_float(get_member_offset(slot, 'zoom'), data, zoom);
+    set_float(get_member_offset(slot, 'pixel_ratio'), data, pixelRatio);
     needsFlush = true;
   }
 }
@@ -906,6 +911,7 @@ class MeadowRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     meadowUbo.set(
       opacityStartStop: meadowUboOpacityStartStop,
@@ -917,7 +923,11 @@ class MeadowRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -981,6 +991,7 @@ class ScrubRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     scrubUbo.set(
       opacityStartStop: scrubUboOpacityStartStop,
@@ -992,7 +1003,11 @@ class ScrubRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -1056,6 +1071,7 @@ class CropRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     cropUbo.set(
       opacityStartStop: cropUboOpacityStartStop,
@@ -1067,7 +1083,11 @@ class CropRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -1131,6 +1151,7 @@ class GlacierRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     glacierUbo.set(
       opacityStartStop: glacierUboOpacityStartStop,
@@ -1142,7 +1163,11 @@ class GlacierRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -1206,6 +1231,7 @@ class ForestRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     forestUbo.set(
       opacityStartStop: forestUboOpacityStartStop,
@@ -1217,7 +1243,11 @@ class ForestRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -1270,6 +1300,7 @@ class SandRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     tileUbo.set(
       localToWorld: tileLocalToWorld,
@@ -1277,7 +1308,11 @@ class SandRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -1330,6 +1365,7 @@ class WoodRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     tileUbo.set(
       localToWorld: tileLocalToWorld,
@@ -1337,7 +1373,11 @@ class WoodRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -1401,6 +1441,7 @@ class ResidentialRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     residentialUbo.set(
       colorStartStop: residentialUboColorStartStop,
@@ -1412,7 +1453,11 @@ class ResidentialRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -1482,6 +1527,7 @@ class IndustrialRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     industrialUbo.set(
       opacityStartStop: industrialUboOpacityStartStop,
@@ -1495,7 +1541,11 @@ class IndustrialRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -1548,6 +1598,7 @@ class GrassRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     tileUbo.set(
       localToWorld: tileLocalToWorld,
@@ -1555,7 +1606,11 @@ class GrassRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -1608,6 +1663,7 @@ class AirportZoneRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     tileUbo.set(
       localToWorld: tileLocalToWorld,
@@ -1615,7 +1671,11 @@ class AirportZoneRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -1668,6 +1728,7 @@ class PedestrianRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     tileUbo.set(
       localToWorld: tileLocalToWorld,
@@ -1675,7 +1736,11 @@ class PedestrianRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -1739,6 +1804,7 @@ class CemeteryRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     cemeteryUbo.set(
       opacityStartStop: cemeteryUboOpacityStartStop,
@@ -1750,7 +1816,11 @@ class CemeteryRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -1814,6 +1884,7 @@ class HospitalRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     hospitalUbo.set(
       opacityStartStop: hospitalUboOpacityStartStop,
@@ -1825,7 +1896,11 @@ class HospitalRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -1889,6 +1964,7 @@ class StadiumRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     stadiumUbo.set(
       opacityStartStop: stadiumUboOpacityStartStop,
@@ -1900,7 +1976,11 @@ class StadiumRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -1964,6 +2044,7 @@ class SchoolRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     schoolUbo.set(
       opacityStartStop: schoolUboOpacityStartStop,
@@ -1975,7 +2056,11 @@ class SchoolRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -2041,6 +2126,7 @@ class RiverTunnelRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     riverTunnelUbo.set(
       widthStartStop: riverTunnelUboWidthStartStop,
@@ -2052,7 +2138,11 @@ class RiverTunnelRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -2118,6 +2208,7 @@ class RiverRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     riverUbo.set(
       widthStartStop: riverUboWidthStartStop,
@@ -2129,7 +2220,11 @@ class RiverRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -2185,6 +2280,7 @@ class WaterIntermittentRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     tileUbo.set(
       localToWorld: tileLocalToWorld,
@@ -2192,7 +2288,11 @@ class WaterIntermittentRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -2250,6 +2350,7 @@ class WaterRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     tileUbo.set(
       localToWorld: tileLocalToWorld,
@@ -2257,7 +2358,11 @@ class WaterRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -2323,6 +2428,7 @@ class AerowayRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     aerowayUbo.set(
       widthStartStop: aerowayUboWidthStartStop,
@@ -2334,7 +2440,11 @@ class AerowayRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -2387,6 +2497,7 @@ class HeliportRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     tileUbo.set(
       localToWorld: tileLocalToWorld,
@@ -2394,7 +2505,11 @@ class HeliportRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -2472,6 +2587,7 @@ class FerryLineRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     ferryLineUbo.set(
       colorStartStop: ferryLineUboColorStartStop,
@@ -2487,7 +2603,11 @@ class FerryLineRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -2555,6 +2675,7 @@ class TunnelOutlineRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     tunnelOutlineUbo.set(
       widthStartStop: tunnelOutlineUboWidthStartStop,
@@ -2566,7 +2687,11 @@ class TunnelOutlineRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -2634,6 +2759,7 @@ class TunnelRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     tunnelUbo.set(
       widthStartStop: tunnelUboWidthStartStop,
@@ -2645,7 +2771,11 @@ class TunnelRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -2711,6 +2841,7 @@ class RailwayTunnelRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     railwayTunnelUbo.set(
       widthStartStop: railwayTunnelUboWidthStartStop,
@@ -2722,7 +2853,11 @@ class RailwayTunnelRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -2795,6 +2930,7 @@ class RailwayTunnelHatchingRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     railwayTunnelHatchingUbo.set(
       widthStartStop: railwayTunnelHatchingUboWidthStartStop,
@@ -2806,7 +2942,11 @@ class RailwayTunnelHatchingRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -2879,6 +3019,7 @@ class FootwayTunnelOutlineRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     footwayTunnelOutlineUbo.set(
       widthStartStop: footwayTunnelOutlineUboWidthStartStop,
@@ -2890,7 +3031,11 @@ class FootwayTunnelOutlineRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -2956,6 +3101,7 @@ class FootwayTunnelRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     footwayTunnelUbo.set(
       widthStartStop: footwayTunnelUboWidthStartStop,
@@ -2967,7 +3113,11 @@ class FootwayTunnelRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -3020,6 +3170,7 @@ class PierRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     tileUbo.set(
       localToWorld: tileLocalToWorld,
@@ -3027,7 +3178,11 @@ class PierRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -3093,6 +3248,7 @@ class PierRoadRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     pierRoadUbo.set(
       widthStartStop: pierRoadUboWidthStartStop,
@@ -3104,7 +3260,11 @@ class PierRoadRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -3157,6 +3317,7 @@ class BridgeRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     tileUbo.set(
       localToWorld: tileLocalToWorld,
@@ -3164,7 +3325,11 @@ class BridgeRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -3234,6 +3399,7 @@ class MinorRoadOutlineRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     minorRoadOutlineUbo.set(
       widthStartStop: minorRoadOutlineUboWidthStartStop,
@@ -3245,7 +3411,11 @@ class MinorRoadOutlineRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -3315,6 +3485,7 @@ class MajorRoadOutlineRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     majorRoadOutlineUbo.set(
       widthStartStop: majorRoadOutlineUboWidthStartStop,
@@ -3326,7 +3497,11 @@ class MajorRoadOutlineRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -3392,6 +3567,7 @@ class HighwayOutlineRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     highwayOutlineUbo.set(
       widthStartStop: highwayOutlineUboWidthStartStop,
@@ -3403,7 +3579,11 @@ class HighwayOutlineRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -3478,6 +3658,7 @@ class RoadUnderConstructionRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     roadUnderConstructionUbo.set(
       widthStartStop: roadUnderConstructionUboWidthStartStop,
@@ -3489,7 +3670,11 @@ class RoadUnderConstructionRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -3555,6 +3740,7 @@ class MinorRoadRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     minorRoadUbo.set(
       widthStartStop: minorRoadUboWidthStartStop,
@@ -3566,7 +3752,11 @@ class MinorRoadRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -3632,6 +3822,7 @@ class MajorRoadRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     majorRoadUbo.set(
       widthStartStop: majorRoadUboWidthStartStop,
@@ -3643,7 +3834,11 @@ class MajorRoadRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -3709,6 +3904,7 @@ class HighwayRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     highwayUbo.set(
       widthStartStop: highwayUboWidthStartStop,
@@ -3720,7 +3916,11 @@ class HighwayRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -3786,6 +3986,7 @@ class PathOutlineRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     pathOutlineUbo.set(
       widthStartStop: pathOutlineUboWidthStartStop,
@@ -3797,7 +3998,11 @@ class PathOutlineRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -3863,6 +4068,7 @@ class PathRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     pathUbo.set(
       widthStartStop: pathUboWidthStartStop,
@@ -3874,7 +4080,11 @@ class PathRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -3948,6 +4158,7 @@ class MajorRailRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     majorRailUbo.set(
       colorStartStop: majorRailUboColorStartStop,
@@ -3961,7 +4172,11 @@ class MajorRailRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -4033,6 +4248,7 @@ class MajorRailHatchingRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     majorRailHatchingUbo.set(
       widthStartStop: majorRailHatchingUboWidthStartStop,
@@ -4044,7 +4260,11 @@ class MajorRailHatchingRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -4110,6 +4330,7 @@ class MinorRailRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     minorRailUbo.set(
       widthStartStop: minorRailUboWidthStartStop,
@@ -4121,7 +4342,11 @@ class MinorRailRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -4191,6 +4416,7 @@ class MinorRailHatchingRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     minorRailHatchingUbo.set(
       widthStartStop: minorRailHatchingUboWidthStartStop,
@@ -4202,7 +4428,11 @@ class MinorRailHatchingRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -4255,6 +4485,7 @@ class BuildingRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     tileUbo.set(
       localToWorld: tileLocalToWorld,
@@ -4262,7 +4493,11 @@ class BuildingRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -4332,6 +4567,7 @@ class AqueductOutlineRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     aqueductOutlineUbo.set(
       widthStartStop: aqueductOutlineUboWidthStartStop,
@@ -4343,7 +4579,11 @@ class AqueductOutlineRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -4409,6 +4649,7 @@ class AqueductRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     aqueductUbo.set(
       widthStartStop: aqueductUboWidthStartStop,
@@ -4420,7 +4661,11 @@ class AqueductRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -4486,6 +4731,7 @@ class CablecarRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     cablecarUbo.set(
       widthStartStop: cablecarUboWidthStartStop,
@@ -4497,7 +4743,11 @@ class CablecarRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -4563,6 +4813,7 @@ class CablecarDashRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     cablecarDashUbo.set(
       widthStartStop: cablecarDashUboWidthStartStop,
@@ -4574,7 +4825,11 @@ class CablecarDashRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -4640,6 +4895,7 @@ class OtherBorderRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     otherBorderUbo.set(
       widthStartStop: otherBorderUboWidthStartStop,
@@ -4651,7 +4907,11 @@ class OtherBorderRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -4717,6 +4977,7 @@ class DisputedBorderRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     disputedBorderUbo.set(
       widthStartStop: disputedBorderUboWidthStartStop,
@@ -4728,7 +4989,11 @@ class DisputedBorderRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -4794,6 +5059,7 @@ class CountryBorderRenderPipelineBindings
     required double tileOpacity,
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
     countryBorderUbo.set(
       widthStartStop: countryBorderUboWidthStartStop,
@@ -4805,6 +5071,10 @@ class CountryBorderRenderPipelineBindings
       extent: tileExtent,
       opacity: tileOpacity,
     );
-    cameraUbo.set(worldToGl: cameraWorldToGl, zoom: cameraZoom);
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }

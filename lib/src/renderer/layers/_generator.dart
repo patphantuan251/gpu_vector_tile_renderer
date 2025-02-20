@@ -29,6 +29,7 @@ List<String> setUniformsGenerator(List<String> uniformEval, List<String> uniform
     '  RenderContext context,',
     '  Matrix4 cameraWorldToGl,',
     '  double cameraZoom,',
+    '  double pixelRatio,',
     '  Matrix4 tileLocalToWorld,',
     '  double tileSize,',
     '  double tileExtent,',
@@ -40,6 +41,7 @@ List<String> setUniformsGenerator(List<String> uniformEval, List<String> uniform
     '  pipeline.setUbos(',
     '    cameraWorldToGl: cameraWorldToGl,',
     '    cameraZoom: cameraZoom,',
+    '    cameraPixelRatio: pixelRatio,'
     '    tileLocalToWorld: tileLocalToWorld,',
     '    tileSize: tileSize,',
     '    tileExtent: tileExtent,',
