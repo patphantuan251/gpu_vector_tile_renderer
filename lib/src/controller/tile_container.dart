@@ -119,7 +119,7 @@ class TileContainer with ChangeNotifier {
       notifyListeners();
 
       _opacityAnimationController.forward();
-    }, Priority.animation);
+    }, Priority.idle);
   }
 
   bool _disposed = false;

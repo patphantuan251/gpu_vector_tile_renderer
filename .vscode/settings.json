@@ -19,4 +19,9 @@
   "editor.rulers": [
     120
   ],
+  "files.associations": {
+    "*.arb": "json",
+    "unordered_map": "cpp",
+    "new": "cpp"
+  },
 }

@@ -1,0 +1,7 @@
+output: 'lib/src/ffi/bindings.gen.dart'
+headers:
+  entry-points:
+    - 'src/gpu_vector_tile_renderer.h'
+
+ffi-native:
+  asset-id: 'package:gpu_vector_tile_renderer/gpu_vector_tile_renderer'

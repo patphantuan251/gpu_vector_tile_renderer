@@ -4,8 +4,13 @@ import 'package:flutter/scheduler.dart';
 import 'package:dart_earcut/dart_earcut.dart' as earcut;
 import 'package:flutter_map/flutter_map.dart';
 import 'package:gpu_vector_tile_renderer/_vector_tile.dart' as vt;
+import 'package:gpu_vector_tile_renderer/src/ffi/earcut.dart';
 
 class Tessellator {
+  static List<int> tessellatePolygonFfi(vt.Polygon polygon) {
+    return ffiTessellatePolygon(polygon);
+  }
+
   static List<int> tessellatePolygon(vt.Polygon polygon) {
     final vertices = <ui.Offset>[];
     final holeIndices = <int>[];

@@ -18,7 +18,7 @@
       "request": "launch",
       "type": "dart",
       "flutterMode": "profile",
-      "program": "lib/main.demo.dart",
+      "program": "example/lib/main.dart",
       "args": [
         "--enable-impeller",
       ]
@@ -28,7 +28,7 @@
       "request": "launch",
       "type": "dart",
       "flutterMode": "release",
-      "program": "lib/main.demo.dart",
+      "program": "example/lib/main.dart",
       "args": [
         "--enable-impeller",
       ]

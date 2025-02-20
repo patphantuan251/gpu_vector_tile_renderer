@@ -7,6 +7,7 @@ import 'package:gpu_vector_tile_renderer/_controller.dart';
 import 'package:gpu_vector_tile_renderer/_renderer.dart';
 import 'package:gpu_vector_tile_renderer/_spec.dart' as spec;
 import 'package:gpu_vector_tile_renderer/_vector_tile.dart' as vt;
+import 'package:gpu_vector_tile_renderer/src/isolates/isolates.dart';
 import 'package:gpu_vector_tile_renderer/src/utils/flutter_map/tile_scale_calculator.dart';
 import 'package:vector_math/vector_math.dart' as vm32;
 
@@ -25,6 +26,8 @@ class VectorTileLayerRenderOrchestrator with ChangeNotifier {
     required this.shaderLibrary,
     required CreateSingleTileLayerRendererFn createSingleTileLayerRenderer,
   }) : _createSingleTileLayerRenderer = createSingleTileLayerRenderer {
+    Isolates.instance.spawn();
+
     controller.setRenderOrchestrator(this);
     controller.addListener(_onControllerChanged);
     controller.addTileUpdateListener(_onTilesChanged);

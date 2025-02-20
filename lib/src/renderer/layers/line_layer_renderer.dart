@@ -28,8 +28,15 @@ abstract class LineLayerRenderer extends SingleTileLayerRenderer<spec.LayerLine>
     List<(Vector2 position, Vector2 normal)> vertexData,
   );
 
+  @override
   void prepare(PrepareContext context) {
-    final features = filterFeatures<vt.LineStringFeature>(vtLayer, specLayer, context.eval);
+    final features = filterFeatures<vt.LineStringFeature>(
+      vtLayer,
+      specLayer,
+      context.eval,
+      sortKey: specLayer.layout.lineSortKey,
+    );
+
     if (features.isEmpty) return;
 
     final lineCap = specLayer.layout.lineCap.evaluate(context.eval);

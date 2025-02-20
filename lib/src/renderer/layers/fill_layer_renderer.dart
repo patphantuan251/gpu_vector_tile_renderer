@@ -1,6 +1,7 @@
 import 'dart:ui' as ui;
 
 import 'package:flutter_gpu/gpu.dart';
+import 'package:gpu_vector_tile_renderer/_isolates.dart';
 import 'package:gpu_vector_tile_renderer/_renderer.dart';
 import 'package:gpu_vector_tile_renderer/_spec.dart' as spec;
 import 'package:gpu_vector_tile_renderer/_utils.dart';
@@ -32,7 +33,13 @@ abstract class FillLayerRenderer extends SingleTileLayerRenderer<spec.LayerFill>
 
   @override
   Future<void> prepare(PrepareContext context) async {
-    final features = filterFeatures<vt.PolygonFeature>(vtLayer, specLayer, context.eval);
+    final features = filterFeatures<vt.PolygonFeature>(
+      vtLayer,
+      specLayer,
+      context.eval,
+      sortKey: specLayer.layout.fillSortKey,
+    );
+
     if (features.isEmpty) return;
 
     var vertexCount = 0;
@@ -44,7 +51,7 @@ abstract class FillLayerRenderer extends SingleTileLayerRenderer<spec.LayerFill>
 
     // Allocate vertices
     pipeline.vertex.allocateVertices(gpuContext, vertexCount);
-    
+
     // temporary!
     var vertexIndex = 0;
     var indicesVertexIndex = 0;
@@ -53,7 +60,7 @@ abstract class FillLayerRenderer extends SingleTileLayerRenderer<spec.LayerFill>
       final polygons = feature.polygons;
 
       for (final polygon in polygons) {
-        final indices = Tessellator.tessellatePolygon(polygon);
+        final indices = await Isolates.instance.tesselator.execute(polygon);
         indicesList.addAll(indices.map((i) => i + indicesVertexIndex));
         indicesVertexIndex += polygon.vertexCount;
       }

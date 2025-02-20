@@ -133,8 +133,7 @@ class VectorTileLayerController with ChangeNotifier {
     }
 
     final zoom = camera.zoom;
-    final tileZoom = (zoom.round() - 1).clamp(0, 19);
-    final tileRange = _tileRangeCalculator!.calculate(camera: camera, tileZoom: tileZoom);
+    final tileZoom = (zoom.round() - 2).clamp(0, double.infinity).toInt();
 
     // Contains the map of now visible tiles with the containing sources
     final visibleTiles = <fm.TileCoordinates, List<Object>>{};
@@ -142,9 +141,13 @@ class VectorTileLayerController with ChangeNotifier {
     // Calculate the visible tiles
     for (final entry in _tileBoundsForSources!.entries) {
       final sourceKey = entry.key;
+      final source = style.sources[sourceKey]! as spec.SourceVector;
       final bounds = entry.value;
-      final boundsAtZoom = bounds.atZoom(tileZoom);
-
+      
+      // todo: clean this up
+      final zoomForSource = tileZoom.clamp(source.minzoom, source.maxzoom).toInt();
+      final boundsAtZoom = bounds.atZoom(zoomForSource);
+      final tileRange = _tileRangeCalculator!.calculate(camera: camera, tileZoom: zoomForSource);
       final coordinates = boundsAtZoom.validCoordinatesIn(tileRange).map(boundsAtZoom.wrap).toSet();
 
       for (final coordinate in coordinates) {
@@ -161,7 +164,7 @@ class VectorTileLayerController with ChangeNotifier {
     for (final tile in tilesToRemove) {
       _tiles[tile]!.animatedDispose().then((_) {
         _tiles.remove(tile);
-        _notifyTileUpdateListeners();
+        _onTilesUpdated();
       });
     }
 
@@ -172,14 +175,14 @@ class VectorTileLayerController with ChangeNotifier {
       _tiles[tile] = container;
 
       // When the tile is updated, notify the listeners
-      container.addListener(_notifyTileUpdateListeners);
+      container.addListener(_onTilesUpdated);
     }
 
     if (tilesToRemove.isNotEmpty || tilesToAdd.isNotEmpty) {
       _logger.info('Tiles: ${_tiles.length}, removed: ${tilesToRemove.length}, added: ${tilesToAdd.length}');
     }
 
-    _notifyTileUpdateListeners();
+    _onTilesUpdated();
   }
 
   /// Currently active tiles.
@@ -193,7 +196,7 @@ class VectorTileLayerController with ChangeNotifier {
   /// List of listeners that will be called when any tile is updated, or added/removed.
   final _tileUpdateListeners = <VoidCallback>{};
 
-  void _notifyTileUpdateListeners() {
+  void _onTilesUpdated() {
     for (final listener in _tileUpdateListeners) {
       listener();
     }

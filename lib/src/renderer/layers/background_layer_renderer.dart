@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter_gpu/gpu.dart' as gpu;
 import 'package:gpu_vector_tile_renderer/_renderer.dart';
 import 'package:gpu_vector_tile_renderer/_spec.dart' as spec;
