@@ -12,7 +12,7 @@ import 'package:flutter_gpu/gpu.dart' as gpu;
 import 'package:vector_math/vector_math_64.dart';
 import 'package:flutter_map/flutter_map.dart';
 
-import 'shader_bindings.gen.dart';
+import './shader_bindings.gen.dart';
 
 const shaderBundleName = 'Streets.shaderbundle';
 

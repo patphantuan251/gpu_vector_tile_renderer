@@ -43,12 +43,12 @@ extension ForFeature on spec.EvaluationContext {
   spec.EvaluationContext forFeature(vt.Feature feature) {
     return copyWith(
       properties: feature.attributes,
-      // geometryType: switch (feature) {
-      //   vt.PointFeature _ => 'Point',
-      //   vt.LineStringFeature _ => 'LineString',
-      //   vt.PolygonFeature _ => 'Polygon',
-      //   _ => throw UnimplementedError('Unsupported feature type: ${feature.runtimeType}'),
-      // },
+      geometryType: switch (feature) {
+        vt.PointFeature _ => 'Point',
+        vt.LineStringFeature _ => 'LineString',
+        vt.PolygonFeature _ => 'Polygon',
+        _ => throw UnimplementedError('Unsupported feature type: ${feature.runtimeType}'),
+      },
     );
   }
 }

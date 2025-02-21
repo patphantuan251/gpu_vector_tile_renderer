@@ -133,7 +133,7 @@ class VectorTileLayerController with ChangeNotifier {
     }
 
     final zoom = camera.zoom;
-    final tileZoom = (zoom.round() - 2).clamp(0, double.infinity).toInt();
+    final tileZoom = (zoom.round() - 1).clamp(0, double.infinity).toInt();
 
     // Contains the map of now visible tiles with the containing sources
     final visibleTiles = <fm.TileCoordinates, List<Object>>{};

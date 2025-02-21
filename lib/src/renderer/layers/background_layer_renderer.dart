@@ -7,8 +7,8 @@ import 'package:vector_math/vector_math_64.dart';
 
 /// Generated UBO bindings for `BackgroundUbo`
 class BackgroundUbo extends UniformBufferObjectBindings {
-  BackgroundUbo(gpu.Shader shader)
-    : super(slot: shader.getUniformSlot('BackgroundUbo'));
+  BackgroundUbo({required super.vertexShader, required super.fragmentShader})
+    : super(name: 'BackgroundUbo');
 
   void set({required Vector4 color, required double opacity}) {
     set_vec4(get_member_offset(slot, 'color'), data, color);
@@ -49,7 +49,12 @@ class BackgroundRenderPipelineBindings
     : super(
         vertex: BackgroundVertexShaderBindings(shaderLibrary),
         fragment: BackgroundFragmentShaderBindings(shaderLibrary),
-        ubos: [BackgroundUbo(shaderLibrary['background_vert']!)],
+        ubos: [
+          BackgroundUbo(
+            vertexShader: shaderLibrary['background_vert']!,
+            fragmentShader: shaderLibrary['background_frag']!,
+          ),
+        ],
       );
 
   late final BackgroundUbo backgroundUbo = ubos[0] as BackgroundUbo;

@@ -8,8 +8,8 @@ import 'package:vector_math/vector_math_64.dart';
 
 /// Generated UBO bindings for `BackgroundUbo`
 class BackgroundUbo extends UniformBufferObjectBindings {
-  BackgroundUbo(gpu.Shader shader)
-    : super(slot: shader.getUniformSlot('BackgroundUbo'));
+  BackgroundUbo({required super.vertexShader, required super.fragmentShader})
+    : super(name: 'BackgroundUbo');
 
   void set({required Vector4 color, required double opacity}) {
     set_vec4(get_member_offset(slot, 'color'), data, color);
@@ -20,8 +20,8 @@ class BackgroundUbo extends UniformBufferObjectBindings {
 
 /// Generated UBO bindings for `MeadowUbo`
 class MeadowUbo extends UniformBufferObjectBindings {
-  MeadowUbo(gpu.Shader shader)
-    : super(slot: shader.getUniformSlot('MeadowUbo'));
+  MeadowUbo({required super.vertexShader, required super.fragmentShader})
+    : super(name: 'MeadowUbo');
 
   void set({required double opacityStartStop, required double opacityEndStop}) {
     set_float(
@@ -40,7 +40,8 @@ class MeadowUbo extends UniformBufferObjectBindings {
 
 /// Generated UBO bindings for `Tile`
 class TileUbo extends UniformBufferObjectBindings {
-  TileUbo(gpu.Shader shader) : super(slot: shader.getUniformSlot('Tile'));
+  TileUbo({required super.vertexShader, required super.fragmentShader})
+    : super(name: 'Tile');
 
   void set({
     required Matrix4 localToWorld,
@@ -58,7 +59,8 @@ class TileUbo extends UniformBufferObjectBindings {
 
 /// Generated UBO bindings for `Camera`
 class CameraUbo extends UniformBufferObjectBindings {
-  CameraUbo(gpu.Shader shader) : super(slot: shader.getUniformSlot('Camera'));
+  CameraUbo({required super.vertexShader, required super.fragmentShader})
+    : super(name: 'Camera');
 
   void set({
     required Matrix4 worldToGl,
@@ -74,7 +76,8 @@ class CameraUbo extends UniformBufferObjectBindings {
 
 /// Generated UBO bindings for `ScrubUbo`
 class ScrubUbo extends UniformBufferObjectBindings {
-  ScrubUbo(gpu.Shader shader) : super(slot: shader.getUniformSlot('ScrubUbo'));
+  ScrubUbo({required super.vertexShader, required super.fragmentShader})
+    : super(name: 'ScrubUbo');
 
   void set({required double opacityStartStop, required double opacityEndStop}) {
     set_float(
@@ -93,7 +96,8 @@ class ScrubUbo extends UniformBufferObjectBindings {
 
 /// Generated UBO bindings for `CropUbo`
 class CropUbo extends UniformBufferObjectBindings {
-  CropUbo(gpu.Shader shader) : super(slot: shader.getUniformSlot('CropUbo'));
+  CropUbo({required super.vertexShader, required super.fragmentShader})
+    : super(name: 'CropUbo');
 
   void set({required double opacityStartStop, required double opacityEndStop}) {
     set_float(
@@ -112,8 +116,8 @@ class CropUbo extends UniformBufferObjectBindings {
 
 /// Generated UBO bindings for `GlacierUbo`
 class GlacierUbo extends UniformBufferObjectBindings {
-  GlacierUbo(gpu.Shader shader)
-    : super(slot: shader.getUniformSlot('GlacierUbo'));
+  GlacierUbo({required super.vertexShader, required super.fragmentShader})
+    : super(name: 'GlacierUbo');
 
   void set({required double opacityStartStop, required double opacityEndStop}) {
     set_float(
@@ -132,8 +136,8 @@ class GlacierUbo extends UniformBufferObjectBindings {
 
 /// Generated UBO bindings for `ForestUbo`
 class ForestUbo extends UniformBufferObjectBindings {
-  ForestUbo(gpu.Shader shader)
-    : super(slot: shader.getUniformSlot('ForestUbo'));
+  ForestUbo({required super.vertexShader, required super.fragmentShader})
+    : super(name: 'ForestUbo');
 
   void set({required double opacityStartStop, required double opacityEndStop}) {
     set_float(
@@ -152,8 +156,8 @@ class ForestUbo extends UniformBufferObjectBindings {
 
 /// Generated UBO bindings for `ResidentialUbo`
 class ResidentialUbo extends UniformBufferObjectBindings {
-  ResidentialUbo(gpu.Shader shader)
-    : super(slot: shader.getUniformSlot('ResidentialUbo'));
+  ResidentialUbo({required super.vertexShader, required super.fragmentShader})
+    : super(name: 'ResidentialUbo');
 
   void set({required double colorStartStop, required double colorEndStop}) {
     set_float(
@@ -168,8 +172,8 @@ class ResidentialUbo extends UniformBufferObjectBindings {
 
 /// Generated UBO bindings for `IndustrialUbo`
 class IndustrialUbo extends UniformBufferObjectBindings {
-  IndustrialUbo(gpu.Shader shader)
-    : super(slot: shader.getUniformSlot('IndustrialUbo'));
+  IndustrialUbo({required super.vertexShader, required super.fragmentShader})
+    : super(name: 'IndustrialUbo');
 
   void set({
     required double opacityStartStop,
@@ -199,8 +203,8 @@ class IndustrialUbo extends UniformBufferObjectBindings {
 
 /// Generated UBO bindings for `CemeteryUbo`
 class CemeteryUbo extends UniformBufferObjectBindings {
-  CemeteryUbo(gpu.Shader shader)
-    : super(slot: shader.getUniformSlot('CemeteryUbo'));
+  CemeteryUbo({required super.vertexShader, required super.fragmentShader})
+    : super(name: 'CemeteryUbo');
 
   void set({required double opacityStartStop, required double opacityEndStop}) {
     set_float(
@@ -219,8 +223,8 @@ class CemeteryUbo extends UniformBufferObjectBindings {
 
 /// Generated UBO bindings for `HospitalUbo`
 class HospitalUbo extends UniformBufferObjectBindings {
-  HospitalUbo(gpu.Shader shader)
-    : super(slot: shader.getUniformSlot('HospitalUbo'));
+  HospitalUbo({required super.vertexShader, required super.fragmentShader})
+    : super(name: 'HospitalUbo');
 
   void set({required double opacityStartStop, required double opacityEndStop}) {
     set_float(
@@ -239,8 +243,8 @@ class HospitalUbo extends UniformBufferObjectBindings {
 
 /// Generated UBO bindings for `StadiumUbo`
 class StadiumUbo extends UniformBufferObjectBindings {
-  StadiumUbo(gpu.Shader shader)
-    : super(slot: shader.getUniformSlot('StadiumUbo'));
+  StadiumUbo({required super.vertexShader, required super.fragmentShader})
+    : super(name: 'StadiumUbo');
 
   void set({required double opacityStartStop, required double opacityEndStop}) {
     set_float(
@@ -259,8 +263,8 @@ class StadiumUbo extends UniformBufferObjectBindings {
 
 /// Generated UBO bindings for `SchoolUbo`
 class SchoolUbo extends UniformBufferObjectBindings {
-  SchoolUbo(gpu.Shader shader)
-    : super(slot: shader.getUniformSlot('SchoolUbo'));
+  SchoolUbo({required super.vertexShader, required super.fragmentShader})
+    : super(name: 'SchoolUbo');
 
   void set({required double opacityStartStop, required double opacityEndStop}) {
     set_float(
@@ -279,8 +283,8 @@ class SchoolUbo extends UniformBufferObjectBindings {
 
 /// Generated UBO bindings for `RiverTunnelUbo`
 class RiverTunnelUbo extends UniformBufferObjectBindings {
-  RiverTunnelUbo(gpu.Shader shader)
-    : super(slot: shader.getUniformSlot('RiverTunnelUbo'));
+  RiverTunnelUbo({required super.vertexShader, required super.fragmentShader})
+    : super(name: 'RiverTunnelUbo');
 
   void set({required double widthStartStop, required double widthEndStop}) {
     set_float(
@@ -295,7 +299,8 @@ class RiverTunnelUbo extends UniformBufferObjectBindings {
 
 /// Generated UBO bindings for `RiverUbo`
 class RiverUbo extends UniformBufferObjectBindings {
-  RiverUbo(gpu.Shader shader) : super(slot: shader.getUniformSlot('RiverUbo'));
+  RiverUbo({required super.vertexShader, required super.fragmentShader})
+    : super(name: 'RiverUbo');
 
   void set({required double widthStartStop, required double widthEndStop}) {
     set_float(
@@ -310,8 +315,8 @@ class RiverUbo extends UniformBufferObjectBindings {
 
 /// Generated UBO bindings for `AerowayUbo`
 class AerowayUbo extends UniformBufferObjectBindings {
-  AerowayUbo(gpu.Shader shader)
-    : super(slot: shader.getUniformSlot('AerowayUbo'));
+  AerowayUbo({required super.vertexShader, required super.fragmentShader})
+    : super(name: 'AerowayUbo');
 
   void set({required double widthStartStop, required double widthEndStop}) {
     set_float(
@@ -326,8 +331,8 @@ class AerowayUbo extends UniformBufferObjectBindings {
 
 /// Generated UBO bindings for `FerryLineUbo`
 class FerryLineUbo extends UniformBufferObjectBindings {
-  FerryLineUbo(gpu.Shader shader)
-    : super(slot: shader.getUniformSlot('FerryLineUbo'));
+  FerryLineUbo({required super.vertexShader, required super.fragmentShader})
+    : super(name: 'FerryLineUbo');
 
   void set({
     required double colorStartStop,
@@ -365,8 +370,8 @@ class FerryLineUbo extends UniformBufferObjectBindings {
 
 /// Generated UBO bindings for `TunnelOutlineUbo`
 class TunnelOutlineUbo extends UniformBufferObjectBindings {
-  TunnelOutlineUbo(gpu.Shader shader)
-    : super(slot: shader.getUniformSlot('TunnelOutlineUbo'));
+  TunnelOutlineUbo({required super.vertexShader, required super.fragmentShader})
+    : super(name: 'TunnelOutlineUbo');
 
   void set({required double widthStartStop, required double widthEndStop}) {
     set_float(
@@ -381,8 +386,8 @@ class TunnelOutlineUbo extends UniformBufferObjectBindings {
 
 /// Generated UBO bindings for `TunnelUbo`
 class TunnelUbo extends UniformBufferObjectBindings {
-  TunnelUbo(gpu.Shader shader)
-    : super(slot: shader.getUniformSlot('TunnelUbo'));
+  TunnelUbo({required super.vertexShader, required super.fragmentShader})
+    : super(name: 'TunnelUbo');
 
   void set({required double widthStartStop, required double widthEndStop}) {
     set_float(
@@ -397,8 +402,8 @@ class TunnelUbo extends UniformBufferObjectBindings {
 
 /// Generated UBO bindings for `RailwayTunnelUbo`
 class RailwayTunnelUbo extends UniformBufferObjectBindings {
-  RailwayTunnelUbo(gpu.Shader shader)
-    : super(slot: shader.getUniformSlot('RailwayTunnelUbo'));
+  RailwayTunnelUbo({required super.vertexShader, required super.fragmentShader})
+    : super(name: 'RailwayTunnelUbo');
 
   void set({required double widthStartStop, required double widthEndStop}) {
     set_float(
@@ -413,8 +418,10 @@ class RailwayTunnelUbo extends UniformBufferObjectBindings {
 
 /// Generated UBO bindings for `RailwayTunnelHatchingUbo`
 class RailwayTunnelHatchingUbo extends UniformBufferObjectBindings {
-  RailwayTunnelHatchingUbo(gpu.Shader shader)
-    : super(slot: shader.getUniformSlot('RailwayTunnelHatchingUbo'));
+  RailwayTunnelHatchingUbo({
+    required super.vertexShader,
+    required super.fragmentShader,
+  }) : super(name: 'RailwayTunnelHatchingUbo');
 
   void set({required double widthStartStop, required double widthEndStop}) {
     set_float(
@@ -429,8 +436,10 @@ class RailwayTunnelHatchingUbo extends UniformBufferObjectBindings {
 
 /// Generated UBO bindings for `FootwayTunnelOutlineUbo`
 class FootwayTunnelOutlineUbo extends UniformBufferObjectBindings {
-  FootwayTunnelOutlineUbo(gpu.Shader shader)
-    : super(slot: shader.getUniformSlot('FootwayTunnelOutlineUbo'));
+  FootwayTunnelOutlineUbo({
+    required super.vertexShader,
+    required super.fragmentShader,
+  }) : super(name: 'FootwayTunnelOutlineUbo');
 
   void set({required double widthStartStop, required double widthEndStop}) {
     set_float(
@@ -445,8 +454,8 @@ class FootwayTunnelOutlineUbo extends UniformBufferObjectBindings {
 
 /// Generated UBO bindings for `FootwayTunnelUbo`
 class FootwayTunnelUbo extends UniformBufferObjectBindings {
-  FootwayTunnelUbo(gpu.Shader shader)
-    : super(slot: shader.getUniformSlot('FootwayTunnelUbo'));
+  FootwayTunnelUbo({required super.vertexShader, required super.fragmentShader})
+    : super(name: 'FootwayTunnelUbo');
 
   void set({required double widthStartStop, required double widthEndStop}) {
     set_float(
@@ -461,8 +470,8 @@ class FootwayTunnelUbo extends UniformBufferObjectBindings {
 
 /// Generated UBO bindings for `PierRoadUbo`
 class PierRoadUbo extends UniformBufferObjectBindings {
-  PierRoadUbo(gpu.Shader shader)
-    : super(slot: shader.getUniformSlot('PierRoadUbo'));
+  PierRoadUbo({required super.vertexShader, required super.fragmentShader})
+    : super(name: 'PierRoadUbo');
 
   void set({required double widthStartStop, required double widthEndStop}) {
     set_float(
@@ -477,8 +486,10 @@ class PierRoadUbo extends UniformBufferObjectBindings {
 
 /// Generated UBO bindings for `MinorRoadOutlineUbo`
 class MinorRoadOutlineUbo extends UniformBufferObjectBindings {
-  MinorRoadOutlineUbo(gpu.Shader shader)
-    : super(slot: shader.getUniformSlot('MinorRoadOutlineUbo'));
+  MinorRoadOutlineUbo({
+    required super.vertexShader,
+    required super.fragmentShader,
+  }) : super(name: 'MinorRoadOutlineUbo');
 
   void set({required double widthStartStop, required double widthEndStop}) {
     set_float(
@@ -493,8 +504,10 @@ class MinorRoadOutlineUbo extends UniformBufferObjectBindings {
 
 /// Generated UBO bindings for `MajorRoadOutlineUbo`
 class MajorRoadOutlineUbo extends UniformBufferObjectBindings {
-  MajorRoadOutlineUbo(gpu.Shader shader)
-    : super(slot: shader.getUniformSlot('MajorRoadOutlineUbo'));
+  MajorRoadOutlineUbo({
+    required super.vertexShader,
+    required super.fragmentShader,
+  }) : super(name: 'MajorRoadOutlineUbo');
 
   void set({required double widthStartStop, required double widthEndStop}) {
     set_float(
@@ -509,8 +522,10 @@ class MajorRoadOutlineUbo extends UniformBufferObjectBindings {
 
 /// Generated UBO bindings for `HighwayOutlineUbo`
 class HighwayOutlineUbo extends UniformBufferObjectBindings {
-  HighwayOutlineUbo(gpu.Shader shader)
-    : super(slot: shader.getUniformSlot('HighwayOutlineUbo'));
+  HighwayOutlineUbo({
+    required super.vertexShader,
+    required super.fragmentShader,
+  }) : super(name: 'HighwayOutlineUbo');
 
   void set({required double widthStartStop, required double widthEndStop}) {
     set_float(
@@ -525,8 +540,10 @@ class HighwayOutlineUbo extends UniformBufferObjectBindings {
 
 /// Generated UBO bindings for `RoadUnderConstructionUbo`
 class RoadUnderConstructionUbo extends UniformBufferObjectBindings {
-  RoadUnderConstructionUbo(gpu.Shader shader)
-    : super(slot: shader.getUniformSlot('RoadUnderConstructionUbo'));
+  RoadUnderConstructionUbo({
+    required super.vertexShader,
+    required super.fragmentShader,
+  }) : super(name: 'RoadUnderConstructionUbo');
 
   void set({required double widthStartStop, required double widthEndStop}) {
     set_float(
@@ -541,8 +558,8 @@ class RoadUnderConstructionUbo extends UniformBufferObjectBindings {
 
 /// Generated UBO bindings for `MinorRoadUbo`
 class MinorRoadUbo extends UniformBufferObjectBindings {
-  MinorRoadUbo(gpu.Shader shader)
-    : super(slot: shader.getUniformSlot('MinorRoadUbo'));
+  MinorRoadUbo({required super.vertexShader, required super.fragmentShader})
+    : super(name: 'MinorRoadUbo');
 
   void set({required double widthStartStop, required double widthEndStop}) {
     set_float(
@@ -557,8 +574,8 @@ class MinorRoadUbo extends UniformBufferObjectBindings {
 
 /// Generated UBO bindings for `MajorRoadUbo`
 class MajorRoadUbo extends UniformBufferObjectBindings {
-  MajorRoadUbo(gpu.Shader shader)
-    : super(slot: shader.getUniformSlot('MajorRoadUbo'));
+  MajorRoadUbo({required super.vertexShader, required super.fragmentShader})
+    : super(name: 'MajorRoadUbo');
 
   void set({required double widthStartStop, required double widthEndStop}) {
     set_float(
@@ -573,8 +590,8 @@ class MajorRoadUbo extends UniformBufferObjectBindings {
 
 /// Generated UBO bindings for `HighwayUbo`
 class HighwayUbo extends UniformBufferObjectBindings {
-  HighwayUbo(gpu.Shader shader)
-    : super(slot: shader.getUniformSlot('HighwayUbo'));
+  HighwayUbo({required super.vertexShader, required super.fragmentShader})
+    : super(name: 'HighwayUbo');
 
   void set({required double widthStartStop, required double widthEndStop}) {
     set_float(
@@ -589,8 +606,8 @@ class HighwayUbo extends UniformBufferObjectBindings {
 
 /// Generated UBO bindings for `PathOutlineUbo`
 class PathOutlineUbo extends UniformBufferObjectBindings {
-  PathOutlineUbo(gpu.Shader shader)
-    : super(slot: shader.getUniformSlot('PathOutlineUbo'));
+  PathOutlineUbo({required super.vertexShader, required super.fragmentShader})
+    : super(name: 'PathOutlineUbo');
 
   void set({required double widthStartStop, required double widthEndStop}) {
     set_float(
@@ -605,7 +622,8 @@ class PathOutlineUbo extends UniformBufferObjectBindings {
 
 /// Generated UBO bindings for `PathUbo`
 class PathUbo extends UniformBufferObjectBindings {
-  PathUbo(gpu.Shader shader) : super(slot: shader.getUniformSlot('PathUbo'));
+  PathUbo({required super.vertexShader, required super.fragmentShader})
+    : super(name: 'PathUbo');
 
   void set({required double widthStartStop, required double widthEndStop}) {
     set_float(
@@ -620,8 +638,8 @@ class PathUbo extends UniformBufferObjectBindings {
 
 /// Generated UBO bindings for `MajorRailUbo`
 class MajorRailUbo extends UniformBufferObjectBindings {
-  MajorRailUbo(gpu.Shader shader)
-    : super(slot: shader.getUniformSlot('MajorRailUbo'));
+  MajorRailUbo({required super.vertexShader, required super.fragmentShader})
+    : super(name: 'MajorRailUbo');
 
   void set({
     required double colorStartStop,
@@ -647,8 +665,10 @@ class MajorRailUbo extends UniformBufferObjectBindings {
 
 /// Generated UBO bindings for `MajorRailHatchingUbo`
 class MajorRailHatchingUbo extends UniformBufferObjectBindings {
-  MajorRailHatchingUbo(gpu.Shader shader)
-    : super(slot: shader.getUniformSlot('MajorRailHatchingUbo'));
+  MajorRailHatchingUbo({
+    required super.vertexShader,
+    required super.fragmentShader,
+  }) : super(name: 'MajorRailHatchingUbo');
 
   void set({required double widthStartStop, required double widthEndStop}) {
     set_float(
@@ -663,8 +683,8 @@ class MajorRailHatchingUbo extends UniformBufferObjectBindings {
 
 /// Generated UBO bindings for `MinorRailUbo`
 class MinorRailUbo extends UniformBufferObjectBindings {
-  MinorRailUbo(gpu.Shader shader)
-    : super(slot: shader.getUniformSlot('MinorRailUbo'));
+  MinorRailUbo({required super.vertexShader, required super.fragmentShader})
+    : super(name: 'MinorRailUbo');
 
   void set({required double widthStartStop, required double widthEndStop}) {
     set_float(
@@ -679,8 +699,10 @@ class MinorRailUbo extends UniformBufferObjectBindings {
 
 /// Generated UBO bindings for `MinorRailHatchingUbo`
 class MinorRailHatchingUbo extends UniformBufferObjectBindings {
-  MinorRailHatchingUbo(gpu.Shader shader)
-    : super(slot: shader.getUniformSlot('MinorRailHatchingUbo'));
+  MinorRailHatchingUbo({
+    required super.vertexShader,
+    required super.fragmentShader,
+  }) : super(name: 'MinorRailHatchingUbo');
 
   void set({required double widthStartStop, required double widthEndStop}) {
     set_float(
@@ -695,8 +717,10 @@ class MinorRailHatchingUbo extends UniformBufferObjectBindings {
 
 /// Generated UBO bindings for `AqueductOutlineUbo`
 class AqueductOutlineUbo extends UniformBufferObjectBindings {
-  AqueductOutlineUbo(gpu.Shader shader)
-    : super(slot: shader.getUniformSlot('AqueductOutlineUbo'));
+  AqueductOutlineUbo({
+    required super.vertexShader,
+    required super.fragmentShader,
+  }) : super(name: 'AqueductOutlineUbo');
 
   void set({required double widthStartStop, required double widthEndStop}) {
     set_float(
@@ -711,8 +735,8 @@ class AqueductOutlineUbo extends UniformBufferObjectBindings {
 
 /// Generated UBO bindings for `AqueductUbo`
 class AqueductUbo extends UniformBufferObjectBindings {
-  AqueductUbo(gpu.Shader shader)
-    : super(slot: shader.getUniformSlot('AqueductUbo'));
+  AqueductUbo({required super.vertexShader, required super.fragmentShader})
+    : super(name: 'AqueductUbo');
 
   void set({required double widthStartStop, required double widthEndStop}) {
     set_float(
@@ -727,8 +751,8 @@ class AqueductUbo extends UniformBufferObjectBindings {
 
 /// Generated UBO bindings for `CablecarUbo`
 class CablecarUbo extends UniformBufferObjectBindings {
-  CablecarUbo(gpu.Shader shader)
-    : super(slot: shader.getUniformSlot('CablecarUbo'));
+  CablecarUbo({required super.vertexShader, required super.fragmentShader})
+    : super(name: 'CablecarUbo');
 
   void set({required double widthStartStop, required double widthEndStop}) {
     set_float(
@@ -743,8 +767,8 @@ class CablecarUbo extends UniformBufferObjectBindings {
 
 /// Generated UBO bindings for `CablecarDashUbo`
 class CablecarDashUbo extends UniformBufferObjectBindings {
-  CablecarDashUbo(gpu.Shader shader)
-    : super(slot: shader.getUniformSlot('CablecarDashUbo'));
+  CablecarDashUbo({required super.vertexShader, required super.fragmentShader})
+    : super(name: 'CablecarDashUbo');
 
   void set({required double widthStartStop, required double widthEndStop}) {
     set_float(
@@ -759,8 +783,8 @@ class CablecarDashUbo extends UniformBufferObjectBindings {
 
 /// Generated UBO bindings for `OtherBorderUbo`
 class OtherBorderUbo extends UniformBufferObjectBindings {
-  OtherBorderUbo(gpu.Shader shader)
-    : super(slot: shader.getUniformSlot('OtherBorderUbo'));
+  OtherBorderUbo({required super.vertexShader, required super.fragmentShader})
+    : super(name: 'OtherBorderUbo');
 
   void set({required double widthStartStop, required double widthEndStop}) {
     set_float(
@@ -775,8 +799,10 @@ class OtherBorderUbo extends UniformBufferObjectBindings {
 
 /// Generated UBO bindings for `DisputedBorderUbo`
 class DisputedBorderUbo extends UniformBufferObjectBindings {
-  DisputedBorderUbo(gpu.Shader shader)
-    : super(slot: shader.getUniformSlot('DisputedBorderUbo'));
+  DisputedBorderUbo({
+    required super.vertexShader,
+    required super.fragmentShader,
+  }) : super(name: 'DisputedBorderUbo');
 
   void set({required double widthStartStop, required double widthEndStop}) {
     set_float(
@@ -791,8 +817,8 @@ class DisputedBorderUbo extends UniformBufferObjectBindings {
 
 /// Generated UBO bindings for `CountryBorderUbo`
 class CountryBorderUbo extends UniformBufferObjectBindings {
-  CountryBorderUbo(gpu.Shader shader)
-    : super(slot: shader.getUniformSlot('CountryBorderUbo'));
+  CountryBorderUbo({required super.vertexShader, required super.fragmentShader})
+    : super(name: 'CountryBorderUbo');
 
   void set({required double widthStartStop, required double widthEndStop}) {
     set_float(
@@ -837,7 +863,12 @@ class BackgroundRenderPipelineBindings
     : super(
         vertex: BackgroundVertexShaderBindings(shaderLibrary),
         fragment: BackgroundFragmentShaderBindings(shaderLibrary),
-        ubos: [BackgroundUbo(shaderLibrary['background_vert']!)],
+        ubos: [
+          BackgroundUbo(
+            vertexShader: shaderLibrary['background_vert']!,
+            fragmentShader: shaderLibrary['background_frag']!,
+          ),
+        ],
       );
 
   late final BackgroundUbo backgroundUbo = ubos[0] as BackgroundUbo;
@@ -891,9 +922,18 @@ class MeadowRenderPipelineBindings
         vertex: MeadowVertexShaderBindings(shaderLibrary),
         fragment: MeadowFragmentShaderBindings(shaderLibrary),
         ubos: [
-          MeadowUbo(shaderLibrary['meadow_vert']!),
-          TileUbo(shaderLibrary['meadow_vert']!),
-          CameraUbo(shaderLibrary['meadow_vert']!),
+          MeadowUbo(
+            vertexShader: shaderLibrary['meadow_vert']!,
+            fragmentShader: shaderLibrary['meadow_frag']!,
+          ),
+          TileUbo(
+            vertexShader: shaderLibrary['meadow_vert']!,
+            fragmentShader: shaderLibrary['meadow_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['meadow_vert']!,
+            fragmentShader: shaderLibrary['meadow_frag']!,
+          ),
         ],
       );
 
@@ -971,9 +1011,18 @@ class ScrubRenderPipelineBindings
         vertex: ScrubVertexShaderBindings(shaderLibrary),
         fragment: ScrubFragmentShaderBindings(shaderLibrary),
         ubos: [
-          ScrubUbo(shaderLibrary['scrub_vert']!),
-          TileUbo(shaderLibrary['scrub_vert']!),
-          CameraUbo(shaderLibrary['scrub_vert']!),
+          ScrubUbo(
+            vertexShader: shaderLibrary['scrub_vert']!,
+            fragmentShader: shaderLibrary['scrub_frag']!,
+          ),
+          TileUbo(
+            vertexShader: shaderLibrary['scrub_vert']!,
+            fragmentShader: shaderLibrary['scrub_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['scrub_vert']!,
+            fragmentShader: shaderLibrary['scrub_frag']!,
+          ),
         ],
       );
 
@@ -1051,9 +1100,18 @@ class CropRenderPipelineBindings
         vertex: CropVertexShaderBindings(shaderLibrary),
         fragment: CropFragmentShaderBindings(shaderLibrary),
         ubos: [
-          CropUbo(shaderLibrary['crop_vert']!),
-          TileUbo(shaderLibrary['crop_vert']!),
-          CameraUbo(shaderLibrary['crop_vert']!),
+          CropUbo(
+            vertexShader: shaderLibrary['crop_vert']!,
+            fragmentShader: shaderLibrary['crop_frag']!,
+          ),
+          TileUbo(
+            vertexShader: shaderLibrary['crop_vert']!,
+            fragmentShader: shaderLibrary['crop_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['crop_vert']!,
+            fragmentShader: shaderLibrary['crop_frag']!,
+          ),
         ],
       );
 
@@ -1131,9 +1189,18 @@ class GlacierRenderPipelineBindings
         vertex: GlacierVertexShaderBindings(shaderLibrary),
         fragment: GlacierFragmentShaderBindings(shaderLibrary),
         ubos: [
-          GlacierUbo(shaderLibrary['glacier_vert']!),
-          TileUbo(shaderLibrary['glacier_vert']!),
-          CameraUbo(shaderLibrary['glacier_vert']!),
+          GlacierUbo(
+            vertexShader: shaderLibrary['glacier_vert']!,
+            fragmentShader: shaderLibrary['glacier_frag']!,
+          ),
+          TileUbo(
+            vertexShader: shaderLibrary['glacier_vert']!,
+            fragmentShader: shaderLibrary['glacier_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['glacier_vert']!,
+            fragmentShader: shaderLibrary['glacier_frag']!,
+          ),
         ],
       );
 
@@ -1211,9 +1278,18 @@ class ForestRenderPipelineBindings
         vertex: ForestVertexShaderBindings(shaderLibrary),
         fragment: ForestFragmentShaderBindings(shaderLibrary),
         ubos: [
-          ForestUbo(shaderLibrary['forest_vert']!),
-          TileUbo(shaderLibrary['forest_vert']!),
-          CameraUbo(shaderLibrary['forest_vert']!),
+          ForestUbo(
+            vertexShader: shaderLibrary['forest_vert']!,
+            fragmentShader: shaderLibrary['forest_frag']!,
+          ),
+          TileUbo(
+            vertexShader: shaderLibrary['forest_vert']!,
+            fragmentShader: shaderLibrary['forest_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['forest_vert']!,
+            fragmentShader: shaderLibrary['forest_frag']!,
+          ),
         ],
       );
 
@@ -1284,8 +1360,14 @@ class SandRenderPipelineBindings
         vertex: SandVertexShaderBindings(shaderLibrary),
         fragment: SandFragmentShaderBindings(shaderLibrary),
         ubos: [
-          TileUbo(shaderLibrary['sand_vert']!),
-          CameraUbo(shaderLibrary['sand_vert']!),
+          TileUbo(
+            vertexShader: shaderLibrary['sand_vert']!,
+            fragmentShader: shaderLibrary['sand_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['sand_vert']!,
+            fragmentShader: shaderLibrary['sand_frag']!,
+          ),
         ],
       );
 
@@ -1349,8 +1431,14 @@ class WoodRenderPipelineBindings
         vertex: WoodVertexShaderBindings(shaderLibrary),
         fragment: WoodFragmentShaderBindings(shaderLibrary),
         ubos: [
-          TileUbo(shaderLibrary['wood_vert']!),
-          CameraUbo(shaderLibrary['wood_vert']!),
+          TileUbo(
+            vertexShader: shaderLibrary['wood_vert']!,
+            fragmentShader: shaderLibrary['wood_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['wood_vert']!,
+            fragmentShader: shaderLibrary['wood_frag']!,
+          ),
         ],
       );
 
@@ -1421,9 +1509,18 @@ class ResidentialRenderPipelineBindings
         vertex: ResidentialVertexShaderBindings(shaderLibrary),
         fragment: ResidentialFragmentShaderBindings(shaderLibrary),
         ubos: [
-          ResidentialUbo(shaderLibrary['residential_vert']!),
-          TileUbo(shaderLibrary['residential_vert']!),
-          CameraUbo(shaderLibrary['residential_vert']!),
+          ResidentialUbo(
+            vertexShader: shaderLibrary['residential_vert']!,
+            fragmentShader: shaderLibrary['residential_frag']!,
+          ),
+          TileUbo(
+            vertexShader: shaderLibrary['residential_vert']!,
+            fragmentShader: shaderLibrary['residential_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['residential_vert']!,
+            fragmentShader: shaderLibrary['residential_frag']!,
+          ),
         ],
       );
 
@@ -1505,9 +1602,18 @@ class IndustrialRenderPipelineBindings
         vertex: IndustrialVertexShaderBindings(shaderLibrary),
         fragment: IndustrialFragmentShaderBindings(shaderLibrary),
         ubos: [
-          IndustrialUbo(shaderLibrary['industrial_vert']!),
-          TileUbo(shaderLibrary['industrial_vert']!),
-          CameraUbo(shaderLibrary['industrial_vert']!),
+          IndustrialUbo(
+            vertexShader: shaderLibrary['industrial_vert']!,
+            fragmentShader: shaderLibrary['industrial_frag']!,
+          ),
+          TileUbo(
+            vertexShader: shaderLibrary['industrial_vert']!,
+            fragmentShader: shaderLibrary['industrial_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['industrial_vert']!,
+            fragmentShader: shaderLibrary['industrial_frag']!,
+          ),
         ],
       );
 
@@ -1582,8 +1688,14 @@ class GrassRenderPipelineBindings
         vertex: GrassVertexShaderBindings(shaderLibrary),
         fragment: GrassFragmentShaderBindings(shaderLibrary),
         ubos: [
-          TileUbo(shaderLibrary['grass_vert']!),
-          CameraUbo(shaderLibrary['grass_vert']!),
+          TileUbo(
+            vertexShader: shaderLibrary['grass_vert']!,
+            fragmentShader: shaderLibrary['grass_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['grass_vert']!,
+            fragmentShader: shaderLibrary['grass_frag']!,
+          ),
         ],
       );
 
@@ -1647,8 +1759,14 @@ class AirportZoneRenderPipelineBindings
         vertex: AirportZoneVertexShaderBindings(shaderLibrary),
         fragment: AirportZoneFragmentShaderBindings(shaderLibrary),
         ubos: [
-          TileUbo(shaderLibrary['airport_zone_vert']!),
-          CameraUbo(shaderLibrary['airport_zone_vert']!),
+          TileUbo(
+            vertexShader: shaderLibrary['airport_zone_vert']!,
+            fragmentShader: shaderLibrary['airport_zone_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['airport_zone_vert']!,
+            fragmentShader: shaderLibrary['airport_zone_frag']!,
+          ),
         ],
       );
 
@@ -1712,8 +1830,14 @@ class PedestrianRenderPipelineBindings
         vertex: PedestrianVertexShaderBindings(shaderLibrary),
         fragment: PedestrianFragmentShaderBindings(shaderLibrary),
         ubos: [
-          TileUbo(shaderLibrary['pedestrian_vert']!),
-          CameraUbo(shaderLibrary['pedestrian_vert']!),
+          TileUbo(
+            vertexShader: shaderLibrary['pedestrian_vert']!,
+            fragmentShader: shaderLibrary['pedestrian_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['pedestrian_vert']!,
+            fragmentShader: shaderLibrary['pedestrian_frag']!,
+          ),
         ],
       );
 
@@ -1784,9 +1908,18 @@ class CemeteryRenderPipelineBindings
         vertex: CemeteryVertexShaderBindings(shaderLibrary),
         fragment: CemeteryFragmentShaderBindings(shaderLibrary),
         ubos: [
-          CemeteryUbo(shaderLibrary['cemetery_vert']!),
-          TileUbo(shaderLibrary['cemetery_vert']!),
-          CameraUbo(shaderLibrary['cemetery_vert']!),
+          CemeteryUbo(
+            vertexShader: shaderLibrary['cemetery_vert']!,
+            fragmentShader: shaderLibrary['cemetery_frag']!,
+          ),
+          TileUbo(
+            vertexShader: shaderLibrary['cemetery_vert']!,
+            fragmentShader: shaderLibrary['cemetery_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['cemetery_vert']!,
+            fragmentShader: shaderLibrary['cemetery_frag']!,
+          ),
         ],
       );
 
@@ -1864,9 +1997,18 @@ class HospitalRenderPipelineBindings
         vertex: HospitalVertexShaderBindings(shaderLibrary),
         fragment: HospitalFragmentShaderBindings(shaderLibrary),
         ubos: [
-          HospitalUbo(shaderLibrary['hospital_vert']!),
-          TileUbo(shaderLibrary['hospital_vert']!),
-          CameraUbo(shaderLibrary['hospital_vert']!),
+          HospitalUbo(
+            vertexShader: shaderLibrary['hospital_vert']!,
+            fragmentShader: shaderLibrary['hospital_frag']!,
+          ),
+          TileUbo(
+            vertexShader: shaderLibrary['hospital_vert']!,
+            fragmentShader: shaderLibrary['hospital_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['hospital_vert']!,
+            fragmentShader: shaderLibrary['hospital_frag']!,
+          ),
         ],
       );
 
@@ -1944,9 +2086,18 @@ class StadiumRenderPipelineBindings
         vertex: StadiumVertexShaderBindings(shaderLibrary),
         fragment: StadiumFragmentShaderBindings(shaderLibrary),
         ubos: [
-          StadiumUbo(shaderLibrary['stadium_vert']!),
-          TileUbo(shaderLibrary['stadium_vert']!),
-          CameraUbo(shaderLibrary['stadium_vert']!),
+          StadiumUbo(
+            vertexShader: shaderLibrary['stadium_vert']!,
+            fragmentShader: shaderLibrary['stadium_frag']!,
+          ),
+          TileUbo(
+            vertexShader: shaderLibrary['stadium_vert']!,
+            fragmentShader: shaderLibrary['stadium_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['stadium_vert']!,
+            fragmentShader: shaderLibrary['stadium_frag']!,
+          ),
         ],
       );
 
@@ -2024,9 +2175,18 @@ class SchoolRenderPipelineBindings
         vertex: SchoolVertexShaderBindings(shaderLibrary),
         fragment: SchoolFragmentShaderBindings(shaderLibrary),
         ubos: [
-          SchoolUbo(shaderLibrary['school_vert']!),
-          TileUbo(shaderLibrary['school_vert']!),
-          CameraUbo(shaderLibrary['school_vert']!),
+          SchoolUbo(
+            vertexShader: shaderLibrary['school_vert']!,
+            fragmentShader: shaderLibrary['school_frag']!,
+          ),
+          TileUbo(
+            vertexShader: shaderLibrary['school_vert']!,
+            fragmentShader: shaderLibrary['school_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['school_vert']!,
+            fragmentShader: shaderLibrary['school_frag']!,
+          ),
         ],
       );
 
@@ -2106,9 +2266,18 @@ class RiverTunnelRenderPipelineBindings
         vertex: RiverTunnelVertexShaderBindings(shaderLibrary),
         fragment: RiverTunnelFragmentShaderBindings(shaderLibrary),
         ubos: [
-          RiverTunnelUbo(shaderLibrary['river_tunnel_vert']!),
-          TileUbo(shaderLibrary['river_tunnel_vert']!),
-          CameraUbo(shaderLibrary['river_tunnel_vert']!),
+          RiverTunnelUbo(
+            vertexShader: shaderLibrary['river_tunnel_vert']!,
+            fragmentShader: shaderLibrary['river_tunnel_frag']!,
+          ),
+          TileUbo(
+            vertexShader: shaderLibrary['river_tunnel_vert']!,
+            fragmentShader: shaderLibrary['river_tunnel_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['river_tunnel_vert']!,
+            fragmentShader: shaderLibrary['river_tunnel_frag']!,
+          ),
         ],
       );
 
@@ -2188,9 +2357,18 @@ class RiverRenderPipelineBindings
         vertex: RiverVertexShaderBindings(shaderLibrary),
         fragment: RiverFragmentShaderBindings(shaderLibrary),
         ubos: [
-          RiverUbo(shaderLibrary['river_vert']!),
-          TileUbo(shaderLibrary['river_vert']!),
-          CameraUbo(shaderLibrary['river_vert']!),
+          RiverUbo(
+            vertexShader: shaderLibrary['river_vert']!,
+            fragmentShader: shaderLibrary['river_frag']!,
+          ),
+          TileUbo(
+            vertexShader: shaderLibrary['river_vert']!,
+            fragmentShader: shaderLibrary['river_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['river_vert']!,
+            fragmentShader: shaderLibrary['river_frag']!,
+          ),
         ],
       );
 
@@ -2264,8 +2442,14 @@ class WaterIntermittentRenderPipelineBindings
         vertex: WaterIntermittentVertexShaderBindings(shaderLibrary),
         fragment: WaterIntermittentFragmentShaderBindings(shaderLibrary),
         ubos: [
-          TileUbo(shaderLibrary['water_intermittent_vert']!),
-          CameraUbo(shaderLibrary['water_intermittent_vert']!),
+          TileUbo(
+            vertexShader: shaderLibrary['water_intermittent_vert']!,
+            fragmentShader: shaderLibrary['water_intermittent_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['water_intermittent_vert']!,
+            fragmentShader: shaderLibrary['water_intermittent_frag']!,
+          ),
         ],
       );
 
@@ -2334,8 +2518,14 @@ class WaterRenderPipelineBindings
         vertex: WaterVertexShaderBindings(shaderLibrary),
         fragment: WaterFragmentShaderBindings(shaderLibrary),
         ubos: [
-          TileUbo(shaderLibrary['water_vert']!),
-          CameraUbo(shaderLibrary['water_vert']!),
+          TileUbo(
+            vertexShader: shaderLibrary['water_vert']!,
+            fragmentShader: shaderLibrary['water_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['water_vert']!,
+            fragmentShader: shaderLibrary['water_frag']!,
+          ),
         ],
       );
 
@@ -2408,9 +2598,18 @@ class AerowayRenderPipelineBindings
         vertex: AerowayVertexShaderBindings(shaderLibrary),
         fragment: AerowayFragmentShaderBindings(shaderLibrary),
         ubos: [
-          AerowayUbo(shaderLibrary['aeroway_vert']!),
-          TileUbo(shaderLibrary['aeroway_vert']!),
-          CameraUbo(shaderLibrary['aeroway_vert']!),
+          AerowayUbo(
+            vertexShader: shaderLibrary['aeroway_vert']!,
+            fragmentShader: shaderLibrary['aeroway_frag']!,
+          ),
+          TileUbo(
+            vertexShader: shaderLibrary['aeroway_vert']!,
+            fragmentShader: shaderLibrary['aeroway_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['aeroway_vert']!,
+            fragmentShader: shaderLibrary['aeroway_frag']!,
+          ),
         ],
       );
 
@@ -2481,8 +2680,14 @@ class HeliportRenderPipelineBindings
         vertex: HeliportVertexShaderBindings(shaderLibrary),
         fragment: HeliportFragmentShaderBindings(shaderLibrary),
         ubos: [
-          TileUbo(shaderLibrary['heliport_vert']!),
-          CameraUbo(shaderLibrary['heliport_vert']!),
+          TileUbo(
+            vertexShader: shaderLibrary['heliport_vert']!,
+            fragmentShader: shaderLibrary['heliport_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['heliport_vert']!,
+            fragmentShader: shaderLibrary['heliport_frag']!,
+          ),
         ],
       );
 
@@ -2563,9 +2768,18 @@ class FerryLineRenderPipelineBindings
         vertex: FerryLineVertexShaderBindings(shaderLibrary),
         fragment: FerryLineFragmentShaderBindings(shaderLibrary),
         ubos: [
-          FerryLineUbo(shaderLibrary['ferry_line_vert']!),
-          TileUbo(shaderLibrary['ferry_line_vert']!),
-          CameraUbo(shaderLibrary['ferry_line_vert']!),
+          FerryLineUbo(
+            vertexShader: shaderLibrary['ferry_line_vert']!,
+            fragmentShader: shaderLibrary['ferry_line_frag']!,
+          ),
+          TileUbo(
+            vertexShader: shaderLibrary['ferry_line_vert']!,
+            fragmentShader: shaderLibrary['ferry_line_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['ferry_line_vert']!,
+            fragmentShader: shaderLibrary['ferry_line_frag']!,
+          ),
         ],
       );
 
@@ -2655,9 +2869,18 @@ class TunnelOutlineRenderPipelineBindings
         vertex: TunnelOutlineVertexShaderBindings(shaderLibrary),
         fragment: TunnelOutlineFragmentShaderBindings(shaderLibrary),
         ubos: [
-          TunnelOutlineUbo(shaderLibrary['tunnel_outline_vert']!),
-          TileUbo(shaderLibrary['tunnel_outline_vert']!),
-          CameraUbo(shaderLibrary['tunnel_outline_vert']!),
+          TunnelOutlineUbo(
+            vertexShader: shaderLibrary['tunnel_outline_vert']!,
+            fragmentShader: shaderLibrary['tunnel_outline_frag']!,
+          ),
+          TileUbo(
+            vertexShader: shaderLibrary['tunnel_outline_vert']!,
+            fragmentShader: shaderLibrary['tunnel_outline_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['tunnel_outline_vert']!,
+            fragmentShader: shaderLibrary['tunnel_outline_frag']!,
+          ),
         ],
       );
 
@@ -2739,9 +2962,18 @@ class TunnelRenderPipelineBindings
         vertex: TunnelVertexShaderBindings(shaderLibrary),
         fragment: TunnelFragmentShaderBindings(shaderLibrary),
         ubos: [
-          TunnelUbo(shaderLibrary['tunnel_vert']!),
-          TileUbo(shaderLibrary['tunnel_vert']!),
-          CameraUbo(shaderLibrary['tunnel_vert']!),
+          TunnelUbo(
+            vertexShader: shaderLibrary['tunnel_vert']!,
+            fragmentShader: shaderLibrary['tunnel_frag']!,
+          ),
+          TileUbo(
+            vertexShader: shaderLibrary['tunnel_vert']!,
+            fragmentShader: shaderLibrary['tunnel_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['tunnel_vert']!,
+            fragmentShader: shaderLibrary['tunnel_frag']!,
+          ),
         ],
       );
 
@@ -2821,9 +3053,18 @@ class RailwayTunnelRenderPipelineBindings
         vertex: RailwayTunnelVertexShaderBindings(shaderLibrary),
         fragment: RailwayTunnelFragmentShaderBindings(shaderLibrary),
         ubos: [
-          RailwayTunnelUbo(shaderLibrary['railway_tunnel_vert']!),
-          TileUbo(shaderLibrary['railway_tunnel_vert']!),
-          CameraUbo(shaderLibrary['railway_tunnel_vert']!),
+          RailwayTunnelUbo(
+            vertexShader: shaderLibrary['railway_tunnel_vert']!,
+            fragmentShader: shaderLibrary['railway_tunnel_frag']!,
+          ),
+          TileUbo(
+            vertexShader: shaderLibrary['railway_tunnel_vert']!,
+            fragmentShader: shaderLibrary['railway_tunnel_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['railway_tunnel_vert']!,
+            fragmentShader: shaderLibrary['railway_tunnel_frag']!,
+          ),
         ],
       );
 
@@ -2908,10 +3149,17 @@ class RailwayTunnelHatchingRenderPipelineBindings
         fragment: RailwayTunnelHatchingFragmentShaderBindings(shaderLibrary),
         ubos: [
           RailwayTunnelHatchingUbo(
-            shaderLibrary['railway_tunnel_hatching_vert']!,
+            vertexShader: shaderLibrary['railway_tunnel_hatching_vert']!,
+            fragmentShader: shaderLibrary['railway_tunnel_hatching_frag']!,
           ),
-          TileUbo(shaderLibrary['railway_tunnel_hatching_vert']!),
-          CameraUbo(shaderLibrary['railway_tunnel_hatching_vert']!),
+          TileUbo(
+            vertexShader: shaderLibrary['railway_tunnel_hatching_vert']!,
+            fragmentShader: shaderLibrary['railway_tunnel_hatching_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['railway_tunnel_hatching_vert']!,
+            fragmentShader: shaderLibrary['railway_tunnel_hatching_frag']!,
+          ),
         ],
       );
 
@@ -2997,10 +3245,17 @@ class FootwayTunnelOutlineRenderPipelineBindings
         fragment: FootwayTunnelOutlineFragmentShaderBindings(shaderLibrary),
         ubos: [
           FootwayTunnelOutlineUbo(
-            shaderLibrary['footway_tunnel_outline_vert']!,
+            vertexShader: shaderLibrary['footway_tunnel_outline_vert']!,
+            fragmentShader: shaderLibrary['footway_tunnel_outline_frag']!,
           ),
-          TileUbo(shaderLibrary['footway_tunnel_outline_vert']!),
-          CameraUbo(shaderLibrary['footway_tunnel_outline_vert']!),
+          TileUbo(
+            vertexShader: shaderLibrary['footway_tunnel_outline_vert']!,
+            fragmentShader: shaderLibrary['footway_tunnel_outline_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['footway_tunnel_outline_vert']!,
+            fragmentShader: shaderLibrary['footway_tunnel_outline_frag']!,
+          ),
         ],
       );
 
@@ -3081,9 +3336,18 @@ class FootwayTunnelRenderPipelineBindings
         vertex: FootwayTunnelVertexShaderBindings(shaderLibrary),
         fragment: FootwayTunnelFragmentShaderBindings(shaderLibrary),
         ubos: [
-          FootwayTunnelUbo(shaderLibrary['footway_tunnel_vert']!),
-          TileUbo(shaderLibrary['footway_tunnel_vert']!),
-          CameraUbo(shaderLibrary['footway_tunnel_vert']!),
+          FootwayTunnelUbo(
+            vertexShader: shaderLibrary['footway_tunnel_vert']!,
+            fragmentShader: shaderLibrary['footway_tunnel_frag']!,
+          ),
+          TileUbo(
+            vertexShader: shaderLibrary['footway_tunnel_vert']!,
+            fragmentShader: shaderLibrary['footway_tunnel_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['footway_tunnel_vert']!,
+            fragmentShader: shaderLibrary['footway_tunnel_frag']!,
+          ),
         ],
       );
 
@@ -3154,8 +3418,14 @@ class PierRenderPipelineBindings
         vertex: PierVertexShaderBindings(shaderLibrary),
         fragment: PierFragmentShaderBindings(shaderLibrary),
         ubos: [
-          TileUbo(shaderLibrary['pier_vert']!),
-          CameraUbo(shaderLibrary['pier_vert']!),
+          TileUbo(
+            vertexShader: shaderLibrary['pier_vert']!,
+            fragmentShader: shaderLibrary['pier_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['pier_vert']!,
+            fragmentShader: shaderLibrary['pier_frag']!,
+          ),
         ],
       );
 
@@ -3228,9 +3498,18 @@ class PierRoadRenderPipelineBindings
         vertex: PierRoadVertexShaderBindings(shaderLibrary),
         fragment: PierRoadFragmentShaderBindings(shaderLibrary),
         ubos: [
-          PierRoadUbo(shaderLibrary['pier_road_vert']!),
-          TileUbo(shaderLibrary['pier_road_vert']!),
-          CameraUbo(shaderLibrary['pier_road_vert']!),
+          PierRoadUbo(
+            vertexShader: shaderLibrary['pier_road_vert']!,
+            fragmentShader: shaderLibrary['pier_road_frag']!,
+          ),
+          TileUbo(
+            vertexShader: shaderLibrary['pier_road_vert']!,
+            fragmentShader: shaderLibrary['pier_road_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['pier_road_vert']!,
+            fragmentShader: shaderLibrary['pier_road_frag']!,
+          ),
         ],
       );
 
@@ -3301,8 +3580,14 @@ class BridgeRenderPipelineBindings
         vertex: BridgeVertexShaderBindings(shaderLibrary),
         fragment: BridgeFragmentShaderBindings(shaderLibrary),
         ubos: [
-          TileUbo(shaderLibrary['bridge_vert']!),
-          CameraUbo(shaderLibrary['bridge_vert']!),
+          TileUbo(
+            vertexShader: shaderLibrary['bridge_vert']!,
+            fragmentShader: shaderLibrary['bridge_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['bridge_vert']!,
+            fragmentShader: shaderLibrary['bridge_frag']!,
+          ),
         ],
       );
 
@@ -3378,9 +3663,18 @@ class MinorRoadOutlineRenderPipelineBindings
         vertex: MinorRoadOutlineVertexShaderBindings(shaderLibrary),
         fragment: MinorRoadOutlineFragmentShaderBindings(shaderLibrary),
         ubos: [
-          MinorRoadOutlineUbo(shaderLibrary['minor_road_outline_vert']!),
-          TileUbo(shaderLibrary['minor_road_outline_vert']!),
-          CameraUbo(shaderLibrary['minor_road_outline_vert']!),
+          MinorRoadOutlineUbo(
+            vertexShader: shaderLibrary['minor_road_outline_vert']!,
+            fragmentShader: shaderLibrary['minor_road_outline_frag']!,
+          ),
+          TileUbo(
+            vertexShader: shaderLibrary['minor_road_outline_vert']!,
+            fragmentShader: shaderLibrary['minor_road_outline_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['minor_road_outline_vert']!,
+            fragmentShader: shaderLibrary['minor_road_outline_frag']!,
+          ),
         ],
       );
 
@@ -3464,9 +3758,18 @@ class MajorRoadOutlineRenderPipelineBindings
         vertex: MajorRoadOutlineVertexShaderBindings(shaderLibrary),
         fragment: MajorRoadOutlineFragmentShaderBindings(shaderLibrary),
         ubos: [
-          MajorRoadOutlineUbo(shaderLibrary['major_road_outline_vert']!),
-          TileUbo(shaderLibrary['major_road_outline_vert']!),
-          CameraUbo(shaderLibrary['major_road_outline_vert']!),
+          MajorRoadOutlineUbo(
+            vertexShader: shaderLibrary['major_road_outline_vert']!,
+            fragmentShader: shaderLibrary['major_road_outline_frag']!,
+          ),
+          TileUbo(
+            vertexShader: shaderLibrary['major_road_outline_vert']!,
+            fragmentShader: shaderLibrary['major_road_outline_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['major_road_outline_vert']!,
+            fragmentShader: shaderLibrary['major_road_outline_frag']!,
+          ),
         ],
       );
 
@@ -3547,9 +3850,18 @@ class HighwayOutlineRenderPipelineBindings
         vertex: HighwayOutlineVertexShaderBindings(shaderLibrary),
         fragment: HighwayOutlineFragmentShaderBindings(shaderLibrary),
         ubos: [
-          HighwayOutlineUbo(shaderLibrary['highway_outline_vert']!),
-          TileUbo(shaderLibrary['highway_outline_vert']!),
-          CameraUbo(shaderLibrary['highway_outline_vert']!),
+          HighwayOutlineUbo(
+            vertexShader: shaderLibrary['highway_outline_vert']!,
+            fragmentShader: shaderLibrary['highway_outline_frag']!,
+          ),
+          TileUbo(
+            vertexShader: shaderLibrary['highway_outline_vert']!,
+            fragmentShader: shaderLibrary['highway_outline_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['highway_outline_vert']!,
+            fragmentShader: shaderLibrary['highway_outline_frag']!,
+          ),
         ],
       );
 
@@ -3636,10 +3948,17 @@ class RoadUnderConstructionRenderPipelineBindings
         fragment: RoadUnderConstructionFragmentShaderBindings(shaderLibrary),
         ubos: [
           RoadUnderConstructionUbo(
-            shaderLibrary['road_under_construction_vert']!,
+            vertexShader: shaderLibrary['road_under_construction_vert']!,
+            fragmentShader: shaderLibrary['road_under_construction_frag']!,
           ),
-          TileUbo(shaderLibrary['road_under_construction_vert']!),
-          CameraUbo(shaderLibrary['road_under_construction_vert']!),
+          TileUbo(
+            vertexShader: shaderLibrary['road_under_construction_vert']!,
+            fragmentShader: shaderLibrary['road_under_construction_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['road_under_construction_vert']!,
+            fragmentShader: shaderLibrary['road_under_construction_frag']!,
+          ),
         ],
       );
 
@@ -3720,9 +4039,18 @@ class MinorRoadRenderPipelineBindings
         vertex: MinorRoadVertexShaderBindings(shaderLibrary),
         fragment: MinorRoadFragmentShaderBindings(shaderLibrary),
         ubos: [
-          MinorRoadUbo(shaderLibrary['minor_road_vert']!),
-          TileUbo(shaderLibrary['minor_road_vert']!),
-          CameraUbo(shaderLibrary['minor_road_vert']!),
+          MinorRoadUbo(
+            vertexShader: shaderLibrary['minor_road_vert']!,
+            fragmentShader: shaderLibrary['minor_road_frag']!,
+          ),
+          TileUbo(
+            vertexShader: shaderLibrary['minor_road_vert']!,
+            fragmentShader: shaderLibrary['minor_road_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['minor_road_vert']!,
+            fragmentShader: shaderLibrary['minor_road_frag']!,
+          ),
         ],
       );
 
@@ -3802,9 +4130,18 @@ class MajorRoadRenderPipelineBindings
         vertex: MajorRoadVertexShaderBindings(shaderLibrary),
         fragment: MajorRoadFragmentShaderBindings(shaderLibrary),
         ubos: [
-          MajorRoadUbo(shaderLibrary['major_road_vert']!),
-          TileUbo(shaderLibrary['major_road_vert']!),
-          CameraUbo(shaderLibrary['major_road_vert']!),
+          MajorRoadUbo(
+            vertexShader: shaderLibrary['major_road_vert']!,
+            fragmentShader: shaderLibrary['major_road_frag']!,
+          ),
+          TileUbo(
+            vertexShader: shaderLibrary['major_road_vert']!,
+            fragmentShader: shaderLibrary['major_road_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['major_road_vert']!,
+            fragmentShader: shaderLibrary['major_road_frag']!,
+          ),
         ],
       );
 
@@ -3884,9 +4221,18 @@ class HighwayRenderPipelineBindings
         vertex: HighwayVertexShaderBindings(shaderLibrary),
         fragment: HighwayFragmentShaderBindings(shaderLibrary),
         ubos: [
-          HighwayUbo(shaderLibrary['highway_vert']!),
-          TileUbo(shaderLibrary['highway_vert']!),
-          CameraUbo(shaderLibrary['highway_vert']!),
+          HighwayUbo(
+            vertexShader: shaderLibrary['highway_vert']!,
+            fragmentShader: shaderLibrary['highway_frag']!,
+          ),
+          TileUbo(
+            vertexShader: shaderLibrary['highway_vert']!,
+            fragmentShader: shaderLibrary['highway_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['highway_vert']!,
+            fragmentShader: shaderLibrary['highway_frag']!,
+          ),
         ],
       );
 
@@ -3966,9 +4312,18 @@ class PathOutlineRenderPipelineBindings
         vertex: PathOutlineVertexShaderBindings(shaderLibrary),
         fragment: PathOutlineFragmentShaderBindings(shaderLibrary),
         ubos: [
-          PathOutlineUbo(shaderLibrary['path_outline_vert']!),
-          TileUbo(shaderLibrary['path_outline_vert']!),
-          CameraUbo(shaderLibrary['path_outline_vert']!),
+          PathOutlineUbo(
+            vertexShader: shaderLibrary['path_outline_vert']!,
+            fragmentShader: shaderLibrary['path_outline_frag']!,
+          ),
+          TileUbo(
+            vertexShader: shaderLibrary['path_outline_vert']!,
+            fragmentShader: shaderLibrary['path_outline_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['path_outline_vert']!,
+            fragmentShader: shaderLibrary['path_outline_frag']!,
+          ),
         ],
       );
 
@@ -4048,9 +4403,18 @@ class PathRenderPipelineBindings
         vertex: PathVertexShaderBindings(shaderLibrary),
         fragment: PathFragmentShaderBindings(shaderLibrary),
         ubos: [
-          PathUbo(shaderLibrary['path_vert']!),
-          TileUbo(shaderLibrary['path_vert']!),
-          CameraUbo(shaderLibrary['path_vert']!),
+          PathUbo(
+            vertexShader: shaderLibrary['path_vert']!,
+            fragmentShader: shaderLibrary['path_frag']!,
+          ),
+          TileUbo(
+            vertexShader: shaderLibrary['path_vert']!,
+            fragmentShader: shaderLibrary['path_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['path_vert']!,
+            fragmentShader: shaderLibrary['path_frag']!,
+          ),
         ],
       );
 
@@ -4136,9 +4500,18 @@ class MajorRailRenderPipelineBindings
         vertex: MajorRailVertexShaderBindings(shaderLibrary),
         fragment: MajorRailFragmentShaderBindings(shaderLibrary),
         ubos: [
-          MajorRailUbo(shaderLibrary['major_rail_vert']!),
-          TileUbo(shaderLibrary['major_rail_vert']!),
-          CameraUbo(shaderLibrary['major_rail_vert']!),
+          MajorRailUbo(
+            vertexShader: shaderLibrary['major_rail_vert']!,
+            fragmentShader: shaderLibrary['major_rail_frag']!,
+          ),
+          TileUbo(
+            vertexShader: shaderLibrary['major_rail_vert']!,
+            fragmentShader: shaderLibrary['major_rail_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['major_rail_vert']!,
+            fragmentShader: shaderLibrary['major_rail_frag']!,
+          ),
         ],
       );
 
@@ -4227,9 +4600,18 @@ class MajorRailHatchingRenderPipelineBindings
         vertex: MajorRailHatchingVertexShaderBindings(shaderLibrary),
         fragment: MajorRailHatchingFragmentShaderBindings(shaderLibrary),
         ubos: [
-          MajorRailHatchingUbo(shaderLibrary['major_rail_hatching_vert']!),
-          TileUbo(shaderLibrary['major_rail_hatching_vert']!),
-          CameraUbo(shaderLibrary['major_rail_hatching_vert']!),
+          MajorRailHatchingUbo(
+            vertexShader: shaderLibrary['major_rail_hatching_vert']!,
+            fragmentShader: shaderLibrary['major_rail_hatching_frag']!,
+          ),
+          TileUbo(
+            vertexShader: shaderLibrary['major_rail_hatching_vert']!,
+            fragmentShader: shaderLibrary['major_rail_hatching_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['major_rail_hatching_vert']!,
+            fragmentShader: shaderLibrary['major_rail_hatching_frag']!,
+          ),
         ],
       );
 
@@ -4310,9 +4692,18 @@ class MinorRailRenderPipelineBindings
         vertex: MinorRailVertexShaderBindings(shaderLibrary),
         fragment: MinorRailFragmentShaderBindings(shaderLibrary),
         ubos: [
-          MinorRailUbo(shaderLibrary['minor_rail_vert']!),
-          TileUbo(shaderLibrary['minor_rail_vert']!),
-          CameraUbo(shaderLibrary['minor_rail_vert']!),
+          MinorRailUbo(
+            vertexShader: shaderLibrary['minor_rail_vert']!,
+            fragmentShader: shaderLibrary['minor_rail_frag']!,
+          ),
+          TileUbo(
+            vertexShader: shaderLibrary['minor_rail_vert']!,
+            fragmentShader: shaderLibrary['minor_rail_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['minor_rail_vert']!,
+            fragmentShader: shaderLibrary['minor_rail_frag']!,
+          ),
         ],
       );
 
@@ -4395,9 +4786,18 @@ class MinorRailHatchingRenderPipelineBindings
         vertex: MinorRailHatchingVertexShaderBindings(shaderLibrary),
         fragment: MinorRailHatchingFragmentShaderBindings(shaderLibrary),
         ubos: [
-          MinorRailHatchingUbo(shaderLibrary['minor_rail_hatching_vert']!),
-          TileUbo(shaderLibrary['minor_rail_hatching_vert']!),
-          CameraUbo(shaderLibrary['minor_rail_hatching_vert']!),
+          MinorRailHatchingUbo(
+            vertexShader: shaderLibrary['minor_rail_hatching_vert']!,
+            fragmentShader: shaderLibrary['minor_rail_hatching_frag']!,
+          ),
+          TileUbo(
+            vertexShader: shaderLibrary['minor_rail_hatching_vert']!,
+            fragmentShader: shaderLibrary['minor_rail_hatching_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['minor_rail_hatching_vert']!,
+            fragmentShader: shaderLibrary['minor_rail_hatching_frag']!,
+          ),
         ],
       );
 
@@ -4469,8 +4869,14 @@ class BuildingRenderPipelineBindings
         vertex: BuildingVertexShaderBindings(shaderLibrary),
         fragment: BuildingFragmentShaderBindings(shaderLibrary),
         ubos: [
-          TileUbo(shaderLibrary['building_vert']!),
-          CameraUbo(shaderLibrary['building_vert']!),
+          TileUbo(
+            vertexShader: shaderLibrary['building_vert']!,
+            fragmentShader: shaderLibrary['building_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['building_vert']!,
+            fragmentShader: shaderLibrary['building_frag']!,
+          ),
         ],
       );
 
@@ -4546,9 +4952,18 @@ class AqueductOutlineRenderPipelineBindings
         vertex: AqueductOutlineVertexShaderBindings(shaderLibrary),
         fragment: AqueductOutlineFragmentShaderBindings(shaderLibrary),
         ubos: [
-          AqueductOutlineUbo(shaderLibrary['aqueduct_outline_vert']!),
-          TileUbo(shaderLibrary['aqueduct_outline_vert']!),
-          CameraUbo(shaderLibrary['aqueduct_outline_vert']!),
+          AqueductOutlineUbo(
+            vertexShader: shaderLibrary['aqueduct_outline_vert']!,
+            fragmentShader: shaderLibrary['aqueduct_outline_frag']!,
+          ),
+          TileUbo(
+            vertexShader: shaderLibrary['aqueduct_outline_vert']!,
+            fragmentShader: shaderLibrary['aqueduct_outline_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['aqueduct_outline_vert']!,
+            fragmentShader: shaderLibrary['aqueduct_outline_frag']!,
+          ),
         ],
       );
 
@@ -4629,9 +5044,18 @@ class AqueductRenderPipelineBindings
         vertex: AqueductVertexShaderBindings(shaderLibrary),
         fragment: AqueductFragmentShaderBindings(shaderLibrary),
         ubos: [
-          AqueductUbo(shaderLibrary['aqueduct_vert']!),
-          TileUbo(shaderLibrary['aqueduct_vert']!),
-          CameraUbo(shaderLibrary['aqueduct_vert']!),
+          AqueductUbo(
+            vertexShader: shaderLibrary['aqueduct_vert']!,
+            fragmentShader: shaderLibrary['aqueduct_frag']!,
+          ),
+          TileUbo(
+            vertexShader: shaderLibrary['aqueduct_vert']!,
+            fragmentShader: shaderLibrary['aqueduct_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['aqueduct_vert']!,
+            fragmentShader: shaderLibrary['aqueduct_frag']!,
+          ),
         ],
       );
 
@@ -4711,9 +5135,18 @@ class CablecarRenderPipelineBindings
         vertex: CablecarVertexShaderBindings(shaderLibrary),
         fragment: CablecarFragmentShaderBindings(shaderLibrary),
         ubos: [
-          CablecarUbo(shaderLibrary['cablecar_vert']!),
-          TileUbo(shaderLibrary['cablecar_vert']!),
-          CameraUbo(shaderLibrary['cablecar_vert']!),
+          CablecarUbo(
+            vertexShader: shaderLibrary['cablecar_vert']!,
+            fragmentShader: shaderLibrary['cablecar_frag']!,
+          ),
+          TileUbo(
+            vertexShader: shaderLibrary['cablecar_vert']!,
+            fragmentShader: shaderLibrary['cablecar_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['cablecar_vert']!,
+            fragmentShader: shaderLibrary['cablecar_frag']!,
+          ),
         ],
       );
 
@@ -4793,9 +5226,18 @@ class CablecarDashRenderPipelineBindings
         vertex: CablecarDashVertexShaderBindings(shaderLibrary),
         fragment: CablecarDashFragmentShaderBindings(shaderLibrary),
         ubos: [
-          CablecarDashUbo(shaderLibrary['cablecar_dash_vert']!),
-          TileUbo(shaderLibrary['cablecar_dash_vert']!),
-          CameraUbo(shaderLibrary['cablecar_dash_vert']!),
+          CablecarDashUbo(
+            vertexShader: shaderLibrary['cablecar_dash_vert']!,
+            fragmentShader: shaderLibrary['cablecar_dash_frag']!,
+          ),
+          TileUbo(
+            vertexShader: shaderLibrary['cablecar_dash_vert']!,
+            fragmentShader: shaderLibrary['cablecar_dash_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['cablecar_dash_vert']!,
+            fragmentShader: shaderLibrary['cablecar_dash_frag']!,
+          ),
         ],
       );
 
@@ -4875,9 +5317,18 @@ class OtherBorderRenderPipelineBindings
         vertex: OtherBorderVertexShaderBindings(shaderLibrary),
         fragment: OtherBorderFragmentShaderBindings(shaderLibrary),
         ubos: [
-          OtherBorderUbo(shaderLibrary['other_border_vert']!),
-          TileUbo(shaderLibrary['other_border_vert']!),
-          CameraUbo(shaderLibrary['other_border_vert']!),
+          OtherBorderUbo(
+            vertexShader: shaderLibrary['other_border_vert']!,
+            fragmentShader: shaderLibrary['other_border_frag']!,
+          ),
+          TileUbo(
+            vertexShader: shaderLibrary['other_border_vert']!,
+            fragmentShader: shaderLibrary['other_border_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['other_border_vert']!,
+            fragmentShader: shaderLibrary['other_border_frag']!,
+          ),
         ],
       );
 
@@ -4957,9 +5408,18 @@ class DisputedBorderRenderPipelineBindings
         vertex: DisputedBorderVertexShaderBindings(shaderLibrary),
         fragment: DisputedBorderFragmentShaderBindings(shaderLibrary),
         ubos: [
-          DisputedBorderUbo(shaderLibrary['disputed_border_vert']!),
-          TileUbo(shaderLibrary['disputed_border_vert']!),
-          CameraUbo(shaderLibrary['disputed_border_vert']!),
+          DisputedBorderUbo(
+            vertexShader: shaderLibrary['disputed_border_vert']!,
+            fragmentShader: shaderLibrary['disputed_border_frag']!,
+          ),
+          TileUbo(
+            vertexShader: shaderLibrary['disputed_border_vert']!,
+            fragmentShader: shaderLibrary['disputed_border_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['disputed_border_vert']!,
+            fragmentShader: shaderLibrary['disputed_border_frag']!,
+          ),
         ],
       );
 
@@ -5039,9 +5499,18 @@ class CountryBorderRenderPipelineBindings
         vertex: CountryBorderVertexShaderBindings(shaderLibrary),
         fragment: CountryBorderFragmentShaderBindings(shaderLibrary),
         ubos: [
-          CountryBorderUbo(shaderLibrary['country_border_vert']!),
-          TileUbo(shaderLibrary['country_border_vert']!),
-          CameraUbo(shaderLibrary['country_border_vert']!),
+          CountryBorderUbo(
+            vertexShader: shaderLibrary['country_border_vert']!,
+            fragmentShader: shaderLibrary['country_border_frag']!,
+          ),
+          TileUbo(
+            vertexShader: shaderLibrary['country_border_vert']!,
+            fragmentShader: shaderLibrary['country_border_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['country_border_vert']!,
+            fragmentShader: shaderLibrary['country_border_frag']!,
+          ),
         ],
       );
 

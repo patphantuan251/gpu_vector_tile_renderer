@@ -164,6 +164,8 @@ class VectorTileLayerRenderOrchestrator with ChangeNotifier {
       ),
     );
 
+    pass.setCullMode(gpu.CullMode.none);
+
     final renderContext = RenderContext(
       pass: pass,
       size: size,

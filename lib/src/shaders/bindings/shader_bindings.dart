@@ -18,18 +18,42 @@ abstract class ShaderBindings {
   void bind(gpu.GpuContext context, gpu.RenderPass pass);
 }
 
+gpu.UniformSlot? _getUniformSlot(gpu.Shader shader, String name) {
+  final slot = shader.getUniformSlot(name);
+  if (slot.sizeInBytes == null) return null;
+  return slot;
+}
+
 /// An abstract class that contains bindings for a uniform buffer object.
 ///
 /// The bindings are automatically generated from the shader source code using the script in
 /// `tool/generate_shaders.dart`.
 abstract class UniformBufferObjectBindings {
-  UniformBufferObjectBindings({required this.slot}) : data = ByteData(slot.sizeInBytes!);
+  UniformBufferObjectBindings({required this.name, required this.vertexShader, required this.fragmentShader}) {
+    _vertexShaderSlot = _getUniformSlot(vertexShader, name);
+    _fragmentShaderSlot = _getUniformSlot(fragmentShader, name);
 
-  /// The slot in the shader that this UBO is bound to.
-  final gpu.UniformSlot slot;
+    if (_vertexShaderSlot == null && _fragmentShaderSlot == null) {
+      throw Exception('UBO $name not found in vertex or fragment shader');
+    }
+
+    data = ByteData(_vertexShaderSlot?.sizeInBytes ?? _fragmentShaderSlot!.sizeInBytes!);
+  }
+
+  /// The name of the UBO.
+  final String name;
+  final gpu.Shader vertexShader;
+  final gpu.Shader fragmentShader;
 
   /// The data that will be uploaded to the GPU.
-  final ByteData data;
+  late final ByteData data;
+
+  gpu.UniformSlot? _vertexShaderSlot;
+  gpu.UniformSlot? _fragmentShaderSlot;
+  gpu.UniformSlot get slot => _vertexShaderSlot ?? _fragmentShaderSlot!;
+
+  gpu.DeviceBuffer? _buffer;
+  gpu.BufferView? _bufferView;
 
   /// The length of the UBO data in bytes.
   int get lengthInBytes => data.lengthInBytes;
@@ -38,6 +62,21 @@ abstract class UniformBufferObjectBindings {
   ///
   /// Do not modify this value directly. The [upload] method in the bindings will handle this automatically.
   bool needsFlush = true;
+
+  void upload(gpu.GpuContext context) {}
+
+  void bind(gpu.GpuContext context, gpu.RenderPass pass) {
+    if (needsFlush) {
+      _buffer ??= context.createDeviceBuffer(gpu.StorageMode.hostVisible, data.lengthInBytes);
+      _bufferView ??= gpu.BufferView(_buffer!, offsetInBytes: 0, lengthInBytes: data.lengthInBytes);
+      _buffer!.overwrite(data);
+      _buffer!.flush();
+      needsFlush = false;
+    }
+
+    if (_vertexShaderSlot != null) pass.bindUniform(_vertexShaderSlot!, _bufferView!);
+    if (_fragmentShaderSlot != null) pass.bindUniform(_fragmentShaderSlot!, _bufferView!);
+  }
 }
 
 /// An abstract class that contains bindings for a vertex shader.
@@ -150,48 +189,11 @@ abstract class RenderPipelineBindings<TVertex extends VertexShaderBindings, TFra
   /// The UBOs that are bound to this pipeline.
   final List<UniformBufferObjectBindings> ubos;
 
-  gpu.DeviceBuffer? _uboBuffer;
-  Map<gpu.UniformSlot, gpu.BufferView>? _uboBufferViews;
-
-  late final bool _hasUbos = ubos.isNotEmpty;
-  late final int _totalUboSizeInBytes = ubos.fold(0, (acc, ubo) => acc + ubo.lengthInBytes);
-
-  /// Iterates through all UBOs and calls the callback with the UBO and offset in [_uboBuffer].
-  void _iterateUbos(void Function(UniformBufferObjectBindings ubo, int offset) callback) {
-    var offset = 0;
-
-    for (final ubo in ubos) {
-      callback(ubo, offset);
-      offset += ubo.lengthInBytes;
-    }
-  }
-
   bool _isReady = false;
   bool get isReady => _isReady;
 
   /// Uploads the vertex and fragment shader bindings (and UBOs) to the GPU, and creates a render pipeline.
   void upload(gpu.GpuContext context) {
-    if (_hasUbos) {
-      // Create the UBO buffer if it doesn't exist
-      if (_uboBuffer == null) {
-        _uboBuffer = context.createDeviceBuffer(gpu.StorageMode.hostVisible, _totalUboSizeInBytes);
-        _uboBufferViews = {};
-
-        _iterateUbos((ubo, offset) {
-          final bufferView = gpu.BufferView(_uboBuffer!, offsetInBytes: offset, lengthInBytes: ubo.lengthInBytes);
-          _uboBufferViews![ubo.slot] = bufferView;
-        });
-      }
-
-      // Go through all UBOs and upload them
-      _iterateUbos((ubo, offset) {
-        _uboBuffer!.overwrite(ubo.data, destinationOffsetInBytes: offset);
-      });
-
-      // Flush the UBO buffer
-      _uboBuffer!.flush();
-    }
-
     vertex.upload(context);
     fragment.upload(context);
 
@@ -203,28 +205,8 @@ abstract class RenderPipelineBindings<TVertex extends VertexShaderBindings, TFra
   void bind(gpu.GpuContext context, gpu.RenderPass pass) {
     if (_pipeline == null) throw Exception('Pipeline has not been uploaded yet');
 
-    if (_hasUbos) {
-      var ubosNeededFlush = false;
-
-      // Go through all UBOS and:
-      // 1. Overwrite the UBO buffer if flush is needed (and set the flag)
-      // 2. Bind the uniform to the pass
-      _iterateUbos((ubo, offset) {
-        if (ubo.needsFlush) {
-          _uboBuffer!.overwrite(ubo.data, destinationOffsetInBytes: offset);
-          ubo.needsFlush = false;
-          ubosNeededFlush = true;
-        }
-
-        final slot = ubo.slot;
-        pass.bindUniform(slot, _uboBufferViews![slot]!);
-        if (slot.uniformName == 'Tile') {
-          pass.bindUniform(fragment.shader.getUniformSlot(slot.uniformName), _uboBufferViews![slot]!);
-        }
-      });
-
-      // Flush the UBO buffer if necessary
-      if (ubosNeededFlush) _uboBuffer!.flush();
+    for (final ubo in ubos) {
+      ubo.bind(context, pass);
     }
 
     pass.bindPipeline(_pipeline!);

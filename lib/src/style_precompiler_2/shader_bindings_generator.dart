@@ -29,7 +29,7 @@ String generateCommonShaderUboBindings(Iterable<ParsedShader> shaders) {
     // -- Class declaration and constructor --
     o.writeln('/// Generated UBO bindings for `${ubo.name}`');
     o.writeln('class $className extends UniformBufferObjectBindings {');
-    o.writeln('  $className(gpu.Shader shader): super(slot: shader.getUniformSlot(\'${ubo.name}\'));');
+    o.writeln('  $className({required super.vertexShader, required super.fragmentShader}): super(name: \'${ubo.name}\');');
     o.writeln('');
 
     // -- UBO setter --
@@ -165,8 +165,7 @@ String _generateShaderPipelineConstructorUbos(ParsedShader vertexShader, ParsedS
   final ubos = {...vertexShader.ubos, ...fragmentShader.ubos};
 
   for (final ubo in ubos) {
-    final shader = vertexShader.ubos.contains(ubo) ? vertexShader : fragmentShader;
-    o.writeln('            ${ubo.dartClassName}(${_generateShaderLibraryGetter(shader)}),');
+    o.writeln('            ${ubo.dartClassName}(vertexShader: ${_generateShaderLibraryGetter(vertexShader)}, fragmentShader: ${_generateShaderLibraryGetter(fragmentShader)}),');
   }
 
   return o.toString();
