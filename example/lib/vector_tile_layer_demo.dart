@@ -75,7 +75,7 @@ class _DemoPageState extends State<VectorTileLayerDemo> {
             options: MapOptions(
               backgroundColor: theme.colorScheme.surface,
               interactionOptions: InteractionOptions(
-                flags: InteractiveFlag.all,
+                flags: InteractiveFlag.all ^ InteractiveFlag.rotate,
               ),
               initialZoom: 0.0,
               initialCenter: const LatLng(0.0, 0.0),

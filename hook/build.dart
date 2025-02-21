@@ -17,14 +17,15 @@ void main(List<String> args) async {
         assetName: 'gpu_vector_tile_renderer',
         sources: ['src/gpu_vector_tile_renderer.cpp'],
         includes: ['src', 'src/include'],
-
         language: Language.cpp,
-        flags: ['-std=c++11', '-O3', '-Wall', '-DNDEBUG'],
+        std: 'c++11',
       ),
     );
 
     for (final builder in nativeBuilders) {
       await builder.run(config: config, output: output, logger: logger);
     }
+    
+    // TODO: Copy libc++_shared.so from NDK automatically. Currently I just bundled those under jniLibs.
   });
 }
