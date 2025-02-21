@@ -3,6 +3,7 @@ import 'package:flutter_gpu/gpu.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:gpu_vector_tile_renderer/_controller.dart';
 import 'package:gpu_vector_tile_renderer/_renderer.dart';
+import 'package:gpu_vector_tile_renderer/src/debug/debug_painter.dart';
 
 class FlutterGpuVectorTileLayer extends StatefulWidget {
   const FlutterGpuVectorTileLayer({
@@ -11,12 +12,16 @@ class FlutterGpuVectorTileLayer extends StatefulWidget {
     this.tileSize = 256.0,
     required this.shaderLibrary,
     required this.createSingleTileLayerRenderer,
+    this.enableRender = true,
+    this.debug = false,
   });
 
   final StyleProviderFn styleProvider;
   final ShaderLibrary shaderLibrary;
   final CreateSingleTileLayerRendererFn createSingleTileLayerRenderer;
   final double tileSize;
+  final bool enableRender; // Temporary!
+  final bool debug; // Temporary!
 
   @override
   State<FlutterGpuVectorTileLayer> createState() => FlutterGpuVectorTileLayerState();
@@ -69,13 +74,21 @@ class FlutterGpuVectorTileLayerState extends State<FlutterGpuVectorTileLayer> wi
     final pixelRatio = MediaQuery.devicePixelRatioOf(context);
 
     return SizedBox.expand(
-      child: CustomPaint(
-        painter: RenderOrchestratorPainter(
-          camera: camera,
-          pixelRatio: pixelRatio,
-          tileSize: widget.tileSize,
-          orchestrator: _orchestrator,
-        ),
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          if (widget.enableRender)
+            CustomPaint(
+              painter: RenderOrchestratorPainter(
+                camera: camera,
+                pixelRatio: pixelRatio,
+                tileSize: widget.tileSize,
+                orchestrator: _orchestrator,
+              ),
+            ),
+          if (widget.debug)
+            CustomPaint(painter: MapDebugPainter(camera: camera, controller: _controller, tileSize: widget.tileSize)),
+        ],
       ),
     );
   }

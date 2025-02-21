@@ -56,7 +56,7 @@ abstract class FillLayerRenderer extends SingleTileLayerRenderer<spec.LayerFill>
     var vertexIndex = 0;
     var indicesVertexIndex = 0;
     for (final feature in features) {
-      final featureEval = context.eval.extendWith(properties: feature.attributes);
+      final featureEval = context.eval.forFeature(feature);
       final polygons = feature.polygons;
 
       for (final polygon in polygons) {

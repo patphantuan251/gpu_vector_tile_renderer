@@ -21,7 +21,7 @@ List<T> filterFeatures<T extends vt.Feature>(
         if (specLayer.filter == null) return true;
 
         try {
-          return specLayer.filter!(evalContext.extendWith(properties: feature.attributes));
+          return specLayer.filter!(evalContext.forFeature(feature));
         } catch (e) {
           return false;
         }
@@ -29,15 +29,26 @@ List<T> filterFeatures<T extends vt.Feature>(
 
   if (sortKey != null) {
     filteredFeatures.sort((a, b) {
-      final evalA = evalContext.extendWith(properties: a.attributes);
-      final evalB = evalContext.extendWith(properties: b.attributes);
-
-      final sortKeyA = sortKey.evaluate(evalA);
-      final sortKeyB = sortKey.evaluate(evalB);
+      final sortKeyA = sortKey.evaluate(evalContext.forFeature(a));
+      final sortKeyB = sortKey.evaluate(evalContext.forFeature(b));
 
       return sortKeyA.compareTo(sortKeyB);
     });
   }
 
   return filteredFeatures;
+}
+
+extension ForFeature on spec.EvaluationContext {
+  spec.EvaluationContext forFeature(vt.Feature feature) {
+    return copyWith(
+      properties: feature.attributes,
+      // geometryType: switch (feature) {
+      //   vt.PointFeature _ => 'Point',
+      //   vt.LineStringFeature _ => 'LineString',
+      //   vt.PolygonFeature _ => 'Polygon',
+      //   _ => throw UnimplementedError('Unsupported feature type: ${feature.runtimeType}'),
+      // },
+    );
+  }
 }

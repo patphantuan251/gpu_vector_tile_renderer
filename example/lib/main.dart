@@ -13,6 +13,7 @@ void main() {
 
   runApp(
     MaterialApp(
+      showPerformanceOverlay: true,
       theme: ThemeData.from(
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.deepOrange,

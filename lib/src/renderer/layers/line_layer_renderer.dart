@@ -164,7 +164,7 @@ abstract class LineLayerRenderer extends SingleTileLayerRenderer<spec.LayerLine>
     var vertexIndex = 0;
     for (var i = 0; i < vertexData.length; i++) {
       final feature = features[i];
-      final featureEval = context.eval.extendWith(properties: feature.attributes);
+      final featureEval = context.eval.forFeature(feature);
 
       setFeatureVertices(featureEval, feature, vertexIndex, vertexData[i]);
       vertexIndex += vertexData[i].length;
