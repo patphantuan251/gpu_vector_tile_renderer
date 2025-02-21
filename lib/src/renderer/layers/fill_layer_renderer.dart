@@ -1,7 +1,6 @@
 import 'dart:ui' as ui;
 
 import 'package:flutter_gpu/gpu.dart';
-import 'package:gpu_vector_tile_renderer/_isolates.dart';
 import 'package:gpu_vector_tile_renderer/_renderer.dart';
 import 'package:gpu_vector_tile_renderer/_spec.dart' as spec;
 import 'package:gpu_vector_tile_renderer/_utils.dart';
@@ -60,7 +59,7 @@ abstract class FillLayerRenderer extends SingleTileLayerRenderer<spec.LayerFill>
       final polygons = feature.polygons;
 
       for (final polygon in polygons) {
-        final indices = await Isolates.instance.tesselator.execute(polygon);
+        final indices = await Tessellator.tessellatePolygonIsolate(polygon);
         indicesList.addAll(indices.map((i) => i + indicesVertexIndex));
         indicesVertexIndex += polygon.vertexCount;
       }
