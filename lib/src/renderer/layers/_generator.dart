@@ -6,7 +6,7 @@ List<String> setUniformsGenerator(List<String> uniformEval, List<String> uniform
     '  Matrix4 cameraWorldToGl,',
     '  double cameraZoom,',
     '  double pixelRatio,',
-    '  Matrix4 tileLocalToWorld,',
+    '  Matrix4 tileLocalToGl,',
     '  double tileSize,',
     '  double tileExtent,',
     '  double tileOpacity,',
@@ -20,7 +20,7 @@ List<String> setUniformsGenerator(List<String> uniformEval, List<String> uniform
     '    cameraWorldToGl: cameraWorldToGl,',
     '    cameraZoom: cameraZoom,',
     '    cameraPixelRatio: pixelRatio,'
-    '    tileLocalToWorld: tileLocalToWorld,',
+    '    tileLocalToGl: tileLocalToGl,',
     '    tileSize: tileSize,',
     '    tileExtent: tileExtent,',
     '    tileOpacity: tileOpacity,',

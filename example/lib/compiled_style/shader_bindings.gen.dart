@@ -12,7 +12,9 @@ class BackgroundUbo extends UniformBufferObjectBindings {
     : super(name: 'BackgroundUbo');
 
   void set({required Vector4 color}) {
-    set_vec4(get_member_offset(slot, 'color'), $setData, color);
+    if (slot == null) return;
+
+    set_vec4(get_member_offset(slot!, 'color'), $setData, color);
 
     setInternal();
   }
@@ -24,15 +26,17 @@ class TileUbo extends UniformBufferObjectBindings {
     : super(name: 'Tile');
 
   void set({
-    required Matrix4 localToWorld,
+    required Matrix4 localToGl,
     required double size,
     required double extent,
     required double opacity,
   }) {
-    set_mat4(get_member_offset(slot, 'local_to_world'), $setData, localToWorld);
-    set_float(get_member_offset(slot, 'size'), $setData, size);
-    set_float(get_member_offset(slot, 'extent'), $setData, extent);
-    set_float(get_member_offset(slot, 'opacity'), $setData, opacity);
+    if (slot == null) return;
+
+    set_mat4(get_member_offset(slot!, 'local_to_gl'), $setData, localToGl);
+    set_float(get_member_offset(slot!, 'size'), $setData, size);
+    set_float(get_member_offset(slot!, 'extent'), $setData, extent);
+    set_float(get_member_offset(slot!, 'opacity'), $setData, opacity);
 
     setInternal();
   }
@@ -48,9 +52,11 @@ class CameraUbo extends UniformBufferObjectBindings {
     required double zoom,
     required double pixelRatio,
   }) {
-    set_mat4(get_member_offset(slot, 'world_to_gl'), $setData, worldToGl);
-    set_float(get_member_offset(slot, 'zoom'), $setData, zoom);
-    set_float(get_member_offset(slot, 'pixel_ratio'), $setData, pixelRatio);
+    if (slot == null) return;
+
+    set_mat4(get_member_offset(slot!, 'world_to_gl'), $setData, worldToGl);
+    set_float(get_member_offset(slot!, 'zoom'), $setData, zoom);
+    set_float(get_member_offset(slot!, 'pixel_ratio'), $setData, pixelRatio);
 
     setInternal();
   }
@@ -62,7 +68,9 @@ class MeadowUbo extends UniformBufferObjectBindings {
     : super(name: 'MeadowUbo');
 
   void set({required Vector2 opacityStops}) {
-    set_vec2(get_member_offset(slot, 'opacity_stops'), $setData, opacityStops);
+    if (slot == null) return;
+
+    set_vec2(get_member_offset(slot!, 'opacity_stops'), $setData, opacityStops);
 
     setInternal();
   }
@@ -74,7 +82,9 @@ class ScrubUbo extends UniformBufferObjectBindings {
     : super(name: 'ScrubUbo');
 
   void set({required Vector2 opacityStops}) {
-    set_vec2(get_member_offset(slot, 'opacity_stops'), $setData, opacityStops);
+    if (slot == null) return;
+
+    set_vec2(get_member_offset(slot!, 'opacity_stops'), $setData, opacityStops);
 
     setInternal();
   }
@@ -86,7 +96,9 @@ class CropUbo extends UniformBufferObjectBindings {
     : super(name: 'CropUbo');
 
   void set({required Vector2 opacityStops}) {
-    set_vec2(get_member_offset(slot, 'opacity_stops'), $setData, opacityStops);
+    if (slot == null) return;
+
+    set_vec2(get_member_offset(slot!, 'opacity_stops'), $setData, opacityStops);
 
     setInternal();
   }
@@ -98,7 +110,9 @@ class GlacierUbo extends UniformBufferObjectBindings {
     : super(name: 'GlacierUbo');
 
   void set({required Vector2 opacityStops}) {
-    set_vec2(get_member_offset(slot, 'opacity_stops'), $setData, opacityStops);
+    if (slot == null) return;
+
+    set_vec2(get_member_offset(slot!, 'opacity_stops'), $setData, opacityStops);
 
     setInternal();
   }
@@ -110,7 +124,9 @@ class ForestUbo extends UniformBufferObjectBindings {
     : super(name: 'ForestUbo');
 
   void set({required Vector2 opacityStops}) {
-    set_vec2(get_member_offset(slot, 'opacity_stops'), $setData, opacityStops);
+    if (slot == null) return;
+
+    set_vec2(get_member_offset(slot!, 'opacity_stops'), $setData, opacityStops);
 
     setInternal();
   }
@@ -122,7 +138,9 @@ class ResidentialUbo extends UniformBufferObjectBindings {
     : super(name: 'ResidentialUbo');
 
   void set({required Vector2 colorStops}) {
-    set_vec2(get_member_offset(slot, 'color_stops'), $setData, colorStops);
+    if (slot == null) return;
+
+    set_vec2(get_member_offset(slot!, 'color_stops'), $setData, colorStops);
 
     setInternal();
   }
@@ -134,7 +152,9 @@ class IndustrialUbo extends UniformBufferObjectBindings {
     : super(name: 'IndustrialUbo');
 
   void set({required Vector2 opacityStops}) {
-    set_vec2(get_member_offset(slot, 'opacity_stops'), $setData, opacityStops);
+    if (slot == null) return;
+
+    set_vec2(get_member_offset(slot!, 'opacity_stops'), $setData, opacityStops);
 
     setInternal();
   }
@@ -146,7 +166,9 @@ class CemeteryUbo extends UniformBufferObjectBindings {
     : super(name: 'CemeteryUbo');
 
   void set({required Vector2 opacityStops}) {
-    set_vec2(get_member_offset(slot, 'opacity_stops'), $setData, opacityStops);
+    if (slot == null) return;
+
+    set_vec2(get_member_offset(slot!, 'opacity_stops'), $setData, opacityStops);
 
     setInternal();
   }
@@ -158,7 +180,9 @@ class HospitalUbo extends UniformBufferObjectBindings {
     : super(name: 'HospitalUbo');
 
   void set({required Vector2 opacityStops}) {
-    set_vec2(get_member_offset(slot, 'opacity_stops'), $setData, opacityStops);
+    if (slot == null) return;
+
+    set_vec2(get_member_offset(slot!, 'opacity_stops'), $setData, opacityStops);
 
     setInternal();
   }
@@ -170,7 +194,9 @@ class StadiumUbo extends UniformBufferObjectBindings {
     : super(name: 'StadiumUbo');
 
   void set({required Vector2 opacityStops}) {
-    set_vec2(get_member_offset(slot, 'opacity_stops'), $setData, opacityStops);
+    if (slot == null) return;
+
+    set_vec2(get_member_offset(slot!, 'opacity_stops'), $setData, opacityStops);
 
     setInternal();
   }
@@ -182,7 +208,9 @@ class SchoolUbo extends UniformBufferObjectBindings {
     : super(name: 'SchoolUbo');
 
   void set({required Vector2 opacityStops}) {
-    set_vec2(get_member_offset(slot, 'opacity_stops'), $setData, opacityStops);
+    if (slot == null) return;
+
+    set_vec2(get_member_offset(slot!, 'opacity_stops'), $setData, opacityStops);
 
     setInternal();
   }
@@ -194,9 +222,11 @@ class RiverTunnelUbo extends UniformBufferObjectBindings {
     : super(name: 'RiverTunnelUbo');
 
   void set({required Vector2 widthStops, required Vector2 dasharraySize}) {
-    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    if (slot == null) return;
+
+    set_vec2(get_member_offset(slot!, 'width_stops'), $setData, widthStops);
     set_vec2(
-      get_member_offset(slot, 'dasharray_size'),
+      get_member_offset(slot!, 'dasharray_size'),
       $setData,
       dasharraySize,
     );
@@ -211,7 +241,9 @@ class RiverUbo extends UniformBufferObjectBindings {
     : super(name: 'RiverUbo');
 
   void set({required Vector2 widthStops}) {
-    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    if (slot == null) return;
+
+    set_vec2(get_member_offset(slot!, 'width_stops'), $setData, widthStops);
 
     setInternal();
   }
@@ -223,7 +255,9 @@ class AerowayUbo extends UniformBufferObjectBindings {
     : super(name: 'AerowayUbo');
 
   void set({required Vector2 widthStops}) {
-    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    if (slot == null) return;
+
+    set_vec2(get_member_offset(slot!, 'width_stops'), $setData, widthStops);
 
     setInternal();
   }
@@ -240,11 +274,13 @@ class FerryLineUbo extends UniformBufferObjectBindings {
     required Vector2 widthStops,
     required Vector2 dasharraySize,
   }) {
-    set_vec2(get_member_offset(slot, 'color_stops'), $setData, colorStops);
-    set_vec2(get_member_offset(slot, 'opacity_stops'), $setData, opacityStops);
-    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    if (slot == null) return;
+
+    set_vec2(get_member_offset(slot!, 'color_stops'), $setData, colorStops);
+    set_vec2(get_member_offset(slot!, 'opacity_stops'), $setData, opacityStops);
+    set_vec2(get_member_offset(slot!, 'width_stops'), $setData, widthStops);
     set_vec2(
-      get_member_offset(slot, 'dasharray_size'),
+      get_member_offset(slot!, 'dasharray_size'),
       $setData,
       dasharraySize,
     );
@@ -259,9 +295,11 @@ class TunnelOutlineUbo extends UniformBufferObjectBindings {
     : super(name: 'TunnelOutlineUbo');
 
   void set({required Vector2 widthStops, required Vector2 dasharraySize}) {
-    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    if (slot == null) return;
+
+    set_vec2(get_member_offset(slot!, 'width_stops'), $setData, widthStops);
     set_vec2(
-      get_member_offset(slot, 'dasharray_size'),
+      get_member_offset(slot!, 'dasharray_size'),
       $setData,
       dasharraySize,
     );
@@ -276,7 +314,9 @@ class TunnelUbo extends UniformBufferObjectBindings {
     : super(name: 'TunnelUbo');
 
   void set({required Vector2 widthStops}) {
-    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    if (slot == null) return;
+
+    set_vec2(get_member_offset(slot!, 'width_stops'), $setData, widthStops);
 
     setInternal();
   }
@@ -288,7 +328,9 @@ class RailwayTunnelUbo extends UniformBufferObjectBindings {
     : super(name: 'RailwayTunnelUbo');
 
   void set({required Vector2 widthStops}) {
-    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    if (slot == null) return;
+
+    set_vec2(get_member_offset(slot!, 'width_stops'), $setData, widthStops);
 
     setInternal();
   }
@@ -302,9 +344,11 @@ class RailwayTunnelHatchingUbo extends UniformBufferObjectBindings {
   }) : super(name: 'RailwayTunnelHatchingUbo');
 
   void set({required Vector2 widthStops, required Vector2 dasharraySize}) {
-    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    if (slot == null) return;
+
+    set_vec2(get_member_offset(slot!, 'width_stops'), $setData, widthStops);
     set_vec2(
-      get_member_offset(slot, 'dasharray_size'),
+      get_member_offset(slot!, 'dasharray_size'),
       $setData,
       dasharraySize,
     );
@@ -321,7 +365,9 @@ class FootwayTunnelOutlineUbo extends UniformBufferObjectBindings {
   }) : super(name: 'FootwayTunnelOutlineUbo');
 
   void set({required Vector2 widthStops}) {
-    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    if (slot == null) return;
+
+    set_vec2(get_member_offset(slot!, 'width_stops'), $setData, widthStops);
 
     setInternal();
   }
@@ -333,9 +379,11 @@ class FootwayTunnelUbo extends UniformBufferObjectBindings {
     : super(name: 'FootwayTunnelUbo');
 
   void set({required Vector2 widthStops, required Vector2 dasharraySize}) {
-    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    if (slot == null) return;
+
+    set_vec2(get_member_offset(slot!, 'width_stops'), $setData, widthStops);
     set_vec2(
-      get_member_offset(slot, 'dasharray_size'),
+      get_member_offset(slot!, 'dasharray_size'),
       $setData,
       dasharraySize,
     );
@@ -350,7 +398,9 @@ class PierRoadUbo extends UniformBufferObjectBindings {
     : super(name: 'PierRoadUbo');
 
   void set({required Vector2 widthStops}) {
-    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    if (slot == null) return;
+
+    set_vec2(get_member_offset(slot!, 'width_stops'), $setData, widthStops);
 
     setInternal();
   }
@@ -364,7 +414,9 @@ class MinorRoadOutlineUbo extends UniformBufferObjectBindings {
   }) : super(name: 'MinorRoadOutlineUbo');
 
   void set({required Vector2 widthStops}) {
-    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    if (slot == null) return;
+
+    set_vec2(get_member_offset(slot!, 'width_stops'), $setData, widthStops);
 
     setInternal();
   }
@@ -378,7 +430,9 @@ class MajorRoadOutlineUbo extends UniformBufferObjectBindings {
   }) : super(name: 'MajorRoadOutlineUbo');
 
   void set({required Vector2 widthStops}) {
-    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    if (slot == null) return;
+
+    set_vec2(get_member_offset(slot!, 'width_stops'), $setData, widthStops);
 
     setInternal();
   }
@@ -392,7 +446,9 @@ class HighwayOutlineUbo extends UniformBufferObjectBindings {
   }) : super(name: 'HighwayOutlineUbo');
 
   void set({required Vector2 widthStops}) {
-    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    if (slot == null) return;
+
+    set_vec2(get_member_offset(slot!, 'width_stops'), $setData, widthStops);
 
     setInternal();
   }
@@ -406,9 +462,11 @@ class RoadUnderConstructionUbo extends UniformBufferObjectBindings {
   }) : super(name: 'RoadUnderConstructionUbo');
 
   void set({required Vector2 widthStops, required Vector2 dasharraySize}) {
-    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    if (slot == null) return;
+
+    set_vec2(get_member_offset(slot!, 'width_stops'), $setData, widthStops);
     set_vec2(
-      get_member_offset(slot, 'dasharray_size'),
+      get_member_offset(slot!, 'dasharray_size'),
       $setData,
       dasharraySize,
     );
@@ -423,7 +481,9 @@ class MinorRoadUbo extends UniformBufferObjectBindings {
     : super(name: 'MinorRoadUbo');
 
   void set({required Vector2 widthStops}) {
-    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    if (slot == null) return;
+
+    set_vec2(get_member_offset(slot!, 'width_stops'), $setData, widthStops);
 
     setInternal();
   }
@@ -435,8 +495,10 @@ class MajorRoadUbo extends UniformBufferObjectBindings {
     : super(name: 'MajorRoadUbo');
 
   void set({required Vector2 colorStops, required Vector2 widthStops}) {
-    set_vec2(get_member_offset(slot, 'color_stops'), $setData, colorStops);
-    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    if (slot == null) return;
+
+    set_vec2(get_member_offset(slot!, 'color_stops'), $setData, colorStops);
+    set_vec2(get_member_offset(slot!, 'width_stops'), $setData, widthStops);
 
     setInternal();
   }
@@ -448,8 +510,10 @@ class HighwayUbo extends UniformBufferObjectBindings {
     : super(name: 'HighwayUbo');
 
   void set({required Vector2 colorStops, required Vector2 widthStops}) {
-    set_vec2(get_member_offset(slot, 'color_stops'), $setData, colorStops);
-    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    if (slot == null) return;
+
+    set_vec2(get_member_offset(slot!, 'color_stops'), $setData, colorStops);
+    set_vec2(get_member_offset(slot!, 'width_stops'), $setData, widthStops);
 
     setInternal();
   }
@@ -461,7 +525,9 @@ class PathOutlineUbo extends UniformBufferObjectBindings {
     : super(name: 'PathOutlineUbo');
 
   void set({required Vector2 widthStops}) {
-    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    if (slot == null) return;
+
+    set_vec2(get_member_offset(slot!, 'width_stops'), $setData, widthStops);
 
     setInternal();
   }
@@ -473,9 +539,11 @@ class PathMinorUbo extends UniformBufferObjectBindings {
     : super(name: 'PathMinorUbo');
 
   void set({required Vector2 widthStops, required Vector2 dasharraySize}) {
-    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    if (slot == null) return;
+
+    set_vec2(get_member_offset(slot!, 'width_stops'), $setData, widthStops);
     set_vec2(
-      get_member_offset(slot, 'dasharray_size'),
+      get_member_offset(slot!, 'dasharray_size'),
       $setData,
       dasharraySize,
     );
@@ -490,9 +558,11 @@ class PathUbo extends UniformBufferObjectBindings {
     : super(name: 'PathUbo');
 
   void set({required Vector2 widthStops, required Vector2 dasharraySize}) {
-    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    if (slot == null) return;
+
+    set_vec2(get_member_offset(slot!, 'width_stops'), $setData, widthStops);
     set_vec2(
-      get_member_offset(slot, 'dasharray_size'),
+      get_member_offset(slot!, 'dasharray_size'),
       $setData,
       dasharraySize,
     );
@@ -507,8 +577,10 @@ class MajorRailUbo extends UniformBufferObjectBindings {
     : super(name: 'MajorRailUbo');
 
   void set({required Vector2 colorStops, required Vector2 widthStops}) {
-    set_vec2(get_member_offset(slot, 'color_stops'), $setData, colorStops);
-    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    if (slot == null) return;
+
+    set_vec2(get_member_offset(slot!, 'color_stops'), $setData, colorStops);
+    set_vec2(get_member_offset(slot!, 'width_stops'), $setData, widthStops);
 
     setInternal();
   }
@@ -526,10 +598,12 @@ class MajorRailHatchingUbo extends UniformBufferObjectBindings {
     required Vector2 widthStops,
     required Vector2 dasharraySize,
   }) {
-    set_vec2(get_member_offset(slot, 'color_stops'), $setData, colorStops);
-    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    if (slot == null) return;
+
+    set_vec2(get_member_offset(slot!, 'color_stops'), $setData, colorStops);
+    set_vec2(get_member_offset(slot!, 'width_stops'), $setData, widthStops);
     set_vec2(
-      get_member_offset(slot, 'dasharray_size'),
+      get_member_offset(slot!, 'dasharray_size'),
       $setData,
       dasharraySize,
     );
@@ -544,7 +618,9 @@ class MinorRailUbo extends UniformBufferObjectBindings {
     : super(name: 'MinorRailUbo');
 
   void set({required Vector2 widthStops}) {
-    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    if (slot == null) return;
+
+    set_vec2(get_member_offset(slot!, 'width_stops'), $setData, widthStops);
 
     setInternal();
   }
@@ -558,9 +634,11 @@ class MinorRailHatchingUbo extends UniformBufferObjectBindings {
   }) : super(name: 'MinorRailHatchingUbo');
 
   void set({required Vector2 widthStops, required Vector2 dasharraySize}) {
-    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    if (slot == null) return;
+
+    set_vec2(get_member_offset(slot!, 'width_stops'), $setData, widthStops);
     set_vec2(
-      get_member_offset(slot, 'dasharray_size'),
+      get_member_offset(slot!, 'dasharray_size'),
       $setData,
       dasharraySize,
     );
@@ -577,7 +655,9 @@ class AqueductOutlineUbo extends UniformBufferObjectBindings {
   }) : super(name: 'AqueductOutlineUbo');
 
   void set({required Vector2 widthStops}) {
-    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    if (slot == null) return;
+
+    set_vec2(get_member_offset(slot!, 'width_stops'), $setData, widthStops);
 
     setInternal();
   }
@@ -589,7 +669,9 @@ class AqueductUbo extends UniformBufferObjectBindings {
     : super(name: 'AqueductUbo');
 
   void set({required Vector2 widthStops}) {
-    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    if (slot == null) return;
+
+    set_vec2(get_member_offset(slot!, 'width_stops'), $setData, widthStops);
 
     setInternal();
   }
@@ -601,7 +683,9 @@ class CablecarUbo extends UniformBufferObjectBindings {
     : super(name: 'CablecarUbo');
 
   void set({required Vector2 widthStops}) {
-    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    if (slot == null) return;
+
+    set_vec2(get_member_offset(slot!, 'width_stops'), $setData, widthStops);
 
     setInternal();
   }
@@ -613,9 +697,11 @@ class CablecarDashUbo extends UniformBufferObjectBindings {
     : super(name: 'CablecarDashUbo');
 
   void set({required Vector2 widthStops, required Vector2 dasharraySize}) {
-    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    if (slot == null) return;
+
+    set_vec2(get_member_offset(slot!, 'width_stops'), $setData, widthStops);
     set_vec2(
-      get_member_offset(slot, 'dasharray_size'),
+      get_member_offset(slot!, 'dasharray_size'),
       $setData,
       dasharraySize,
     );
@@ -630,9 +716,11 @@ class OtherBorderUbo extends UniformBufferObjectBindings {
     : super(name: 'OtherBorderUbo');
 
   void set({required Vector2 widthStops, required Vector2 dasharraySize}) {
-    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    if (slot == null) return;
+
+    set_vec2(get_member_offset(slot!, 'width_stops'), $setData, widthStops);
     set_vec2(
-      get_member_offset(slot, 'dasharray_size'),
+      get_member_offset(slot!, 'dasharray_size'),
       $setData,
       dasharraySize,
     );
@@ -649,9 +737,11 @@ class DisputedBorderUbo extends UniformBufferObjectBindings {
   }) : super(name: 'DisputedBorderUbo');
 
   void set({required Vector2 widthStops, required Vector2 dasharraySize}) {
-    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    if (slot == null) return;
+
+    set_vec2(get_member_offset(slot!, 'width_stops'), $setData, widthStops);
     set_vec2(
-      get_member_offset(slot, 'dasharray_size'),
+      get_member_offset(slot!, 'dasharray_size'),
       $setData,
       dasharraySize,
     );
@@ -666,7 +756,9 @@ class CountryBorderUbo extends UniformBufferObjectBindings {
     : super(name: 'CountryBorderUbo');
 
   void set({required Vector2 widthStops}) {
-    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    if (slot == null) return;
+
+    set_vec2(get_member_offset(slot!, 'width_stops'), $setData, widthStops);
 
     setInternal();
   }
@@ -728,7 +820,7 @@ class BackgroundRenderPipelineBindings
   /// Sets the uniforms for this shader.
   void setUniforms({
     required Vector4 backgroundUboColor,
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -738,7 +830,7 @@ class BackgroundRenderPipelineBindings
   }) {
     backgroundUbo.set(color: backgroundUboColor);
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -814,7 +906,7 @@ class MeadowRenderPipelineBindings
   /// Sets the uniforms for this shader.
   void setUniforms({
     required Vector2 meadowUboOpacityStops,
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -824,7 +916,7 @@ class MeadowRenderPipelineBindings
   }) {
     meadowUbo.set(opacityStops: meadowUboOpacityStops);
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -900,7 +992,7 @@ class ScrubRenderPipelineBindings
   /// Sets the uniforms for this shader.
   void setUniforms({
     required Vector2 scrubUboOpacityStops,
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -910,7 +1002,7 @@ class ScrubRenderPipelineBindings
   }) {
     scrubUbo.set(opacityStops: scrubUboOpacityStops);
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -986,7 +1078,7 @@ class CropRenderPipelineBindings
   /// Sets the uniforms for this shader.
   void setUniforms({
     required Vector2 cropUboOpacityStops,
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -996,7 +1088,7 @@ class CropRenderPipelineBindings
   }) {
     cropUbo.set(opacityStops: cropUboOpacityStops);
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -1072,7 +1164,7 @@ class GlacierRenderPipelineBindings
   /// Sets the uniforms for this shader.
   void setUniforms({
     required Vector2 glacierUboOpacityStops,
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -1082,7 +1174,7 @@ class GlacierRenderPipelineBindings
   }) {
     glacierUbo.set(opacityStops: glacierUboOpacityStops);
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -1158,7 +1250,7 @@ class ForestRenderPipelineBindings
   /// Sets the uniforms for this shader.
   void setUniforms({
     required Vector2 forestUboOpacityStops,
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -1168,7 +1260,7 @@ class ForestRenderPipelineBindings
   }) {
     forestUbo.set(opacityStops: forestUboOpacityStops);
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -1231,7 +1323,7 @@ class SandRenderPipelineBindings
 
   /// Sets the uniforms for this shader.
   void setUniforms({
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -1240,7 +1332,7 @@ class SandRenderPipelineBindings
     required double cameraPixelRatio,
   }) {
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -1303,7 +1395,7 @@ class WoodRenderPipelineBindings
 
   /// Sets the uniforms for this shader.
   void setUniforms({
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -1312,7 +1404,7 @@ class WoodRenderPipelineBindings
     required double cameraPixelRatio,
   }) {
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -1388,7 +1480,7 @@ class ResidentialRenderPipelineBindings
   /// Sets the uniforms for this shader.
   void setUniforms({
     required Vector2 residentialUboColorStops,
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -1398,7 +1490,7 @@ class ResidentialRenderPipelineBindings
   }) {
     residentialUbo.set(colorStops: residentialUboColorStops);
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -1474,7 +1566,7 @@ class IndustrialRenderPipelineBindings
   /// Sets the uniforms for this shader.
   void setUniforms({
     required Vector2 industrialUboOpacityStops,
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -1484,7 +1576,7 @@ class IndustrialRenderPipelineBindings
   }) {
     industrialUbo.set(opacityStops: industrialUboOpacityStops);
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -1547,7 +1639,7 @@ class GrassRenderPipelineBindings
 
   /// Sets the uniforms for this shader.
   void setUniforms({
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -1556,7 +1648,7 @@ class GrassRenderPipelineBindings
     required double cameraPixelRatio,
   }) {
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -1619,7 +1711,7 @@ class AirportZoneRenderPipelineBindings
 
   /// Sets the uniforms for this shader.
   void setUniforms({
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -1628,7 +1720,7 @@ class AirportZoneRenderPipelineBindings
     required double cameraPixelRatio,
   }) {
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -1691,7 +1783,7 @@ class PedestrianRenderPipelineBindings
 
   /// Sets the uniforms for this shader.
   void setUniforms({
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -1700,7 +1792,7 @@ class PedestrianRenderPipelineBindings
     required double cameraPixelRatio,
   }) {
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -1776,7 +1868,7 @@ class CemeteryRenderPipelineBindings
   /// Sets the uniforms for this shader.
   void setUniforms({
     required Vector2 cemeteryUboOpacityStops,
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -1786,7 +1878,7 @@ class CemeteryRenderPipelineBindings
   }) {
     cemeteryUbo.set(opacityStops: cemeteryUboOpacityStops);
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -1862,7 +1954,7 @@ class HospitalRenderPipelineBindings
   /// Sets the uniforms for this shader.
   void setUniforms({
     required Vector2 hospitalUboOpacityStops,
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -1872,7 +1964,7 @@ class HospitalRenderPipelineBindings
   }) {
     hospitalUbo.set(opacityStops: hospitalUboOpacityStops);
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -1948,7 +2040,7 @@ class StadiumRenderPipelineBindings
   /// Sets the uniforms for this shader.
   void setUniforms({
     required Vector2 stadiumUboOpacityStops,
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -1958,7 +2050,7 @@ class StadiumRenderPipelineBindings
   }) {
     stadiumUbo.set(opacityStops: stadiumUboOpacityStops);
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -2034,7 +2126,7 @@ class SchoolRenderPipelineBindings
   /// Sets the uniforms for this shader.
   void setUniforms({
     required Vector2 schoolUboOpacityStops,
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -2044,7 +2136,7 @@ class SchoolRenderPipelineBindings
   }) {
     schoolUbo.set(opacityStops: schoolUboOpacityStops);
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -2133,7 +2225,7 @@ class RiverTunnelRenderPipelineBindings
   void setUniforms({
     required Vector2 riverTunnelUboWidthStops,
     required Vector2 riverTunnelUboDasharraySize,
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -2148,7 +2240,7 @@ class RiverTunnelRenderPipelineBindings
       dasharraySize: riverTunnelUboDasharraySize,
     );
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -2230,7 +2322,7 @@ class RiverRenderPipelineBindings
   /// Sets the uniforms for this shader.
   void setUniforms({
     required Vector2 riverUboWidthStops,
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -2240,7 +2332,7 @@ class RiverRenderPipelineBindings
   }) {
     riverUbo.set(widthStops: riverUboWidthStops);
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -2306,7 +2398,7 @@ class WaterIntermittentRenderPipelineBindings
 
   /// Sets the uniforms for this shader.
   void setUniforms({
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -2315,7 +2407,7 @@ class WaterIntermittentRenderPipelineBindings
     required double cameraPixelRatio,
   }) {
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -2383,7 +2475,7 @@ class WaterRenderPipelineBindings
 
   /// Sets the uniforms for this shader.
   void setUniforms({
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -2392,7 +2484,7 @@ class WaterRenderPipelineBindings
     required double cameraPixelRatio,
   }) {
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -2470,7 +2562,7 @@ class AerowayRenderPipelineBindings
   /// Sets the uniforms for this shader.
   void setUniforms({
     required Vector2 aerowayUboWidthStops,
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -2480,7 +2572,7 @@ class AerowayRenderPipelineBindings
   }) {
     aerowayUbo.set(widthStops: aerowayUboWidthStops);
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -2543,7 +2635,7 @@ class HeliportRenderPipelineBindings
 
   /// Sets the uniforms for this shader.
   void setUniforms({
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -2552,7 +2644,7 @@ class HeliportRenderPipelineBindings
     required double cameraPixelRatio,
   }) {
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -2651,7 +2743,7 @@ class FerryLineRenderPipelineBindings
     required Vector2 ferryLineUboOpacityStops,
     required Vector2 ferryLineUboWidthStops,
     required Vector2 ferryLineUboDasharraySize,
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -2668,7 +2760,7 @@ class FerryLineRenderPipelineBindings
       dasharraySize: ferryLineUboDasharraySize,
     );
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -2763,7 +2855,7 @@ class TunnelOutlineRenderPipelineBindings
   void setUniforms({
     required Vector2 tunnelOutlineUboWidthStops,
     required Vector2 tunnelOutlineUboDasharraySize,
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -2778,7 +2870,7 @@ class TunnelOutlineRenderPipelineBindings
       dasharraySize: tunnelOutlineUboDasharraySize,
     );
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -2862,7 +2954,7 @@ class TunnelRenderPipelineBindings
   /// Sets the uniforms for this shader.
   void setUniforms({
     required Vector2 tunnelUboWidthStops,
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -2872,7 +2964,7 @@ class TunnelRenderPipelineBindings
   }) {
     tunnelUbo.set(widthStops: tunnelUboWidthStops);
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -2950,7 +3042,7 @@ class RailwayTunnelRenderPipelineBindings
   /// Sets the uniforms for this shader.
   void setUniforms({
     required Vector2 railwayTunnelUboWidthStops,
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -2960,7 +3052,7 @@ class RailwayTunnelRenderPipelineBindings
   }) {
     railwayTunnelUbo.set(widthStops: railwayTunnelUboWidthStops);
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -3054,7 +3146,7 @@ class RailwayTunnelHatchingRenderPipelineBindings
   void setUniforms({
     required Vector2 railwayTunnelHatchingUboWidthStops,
     required Vector2 railwayTunnelHatchingUboDasharraySize,
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -3069,7 +3161,7 @@ class RailwayTunnelHatchingRenderPipelineBindings
       dasharraySize: railwayTunnelHatchingUboDasharraySize,
     );
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -3156,7 +3248,7 @@ class FootwayTunnelOutlineRenderPipelineBindings
   /// Sets the uniforms for this shader.
   void setUniforms({
     required Vector2 footwayTunnelOutlineUboWidthStops,
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -3166,7 +3258,7 @@ class FootwayTunnelOutlineRenderPipelineBindings
   }) {
     footwayTunnelOutlineUbo.set(widthStops: footwayTunnelOutlineUboWidthStops);
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -3255,7 +3347,7 @@ class FootwayTunnelRenderPipelineBindings
   void setUniforms({
     required Vector2 footwayTunnelUboWidthStops,
     required Vector2 footwayTunnelUboDasharraySize,
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -3270,7 +3362,7 @@ class FootwayTunnelRenderPipelineBindings
       dasharraySize: footwayTunnelUboDasharraySize,
     );
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -3337,7 +3429,7 @@ class PierRenderPipelineBindings
 
   /// Sets the uniforms for this shader.
   void setUniforms({
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -3346,7 +3438,7 @@ class PierRenderPipelineBindings
     required double cameraPixelRatio,
   }) {
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -3424,7 +3516,7 @@ class PierRoadRenderPipelineBindings
   /// Sets the uniforms for this shader.
   void setUniforms({
     required Vector2 pierRoadUboWidthStops,
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -3434,7 +3526,7 @@ class PierRoadRenderPipelineBindings
   }) {
     pierRoadUbo.set(widthStops: pierRoadUboWidthStops);
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -3497,7 +3589,7 @@ class BridgeRenderPipelineBindings
 
   /// Sets the uniforms for this shader.
   void setUniforms({
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -3506,7 +3598,7 @@ class BridgeRenderPipelineBindings
     required double cameraPixelRatio,
   }) {
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -3588,7 +3680,7 @@ class MinorRoadOutlineRenderPipelineBindings
   /// Sets the uniforms for this shader.
   void setUniforms({
     required Vector2 minorRoadOutlineUboWidthStops,
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -3598,7 +3690,7 @@ class MinorRoadOutlineRenderPipelineBindings
   }) {
     minorRoadOutlineUbo.set(widthStops: minorRoadOutlineUboWidthStops);
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -3680,7 +3772,7 @@ class MajorRoadOutlineRenderPipelineBindings
   /// Sets the uniforms for this shader.
   void setUniforms({
     required Vector2 majorRoadOutlineUboWidthStops,
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -3690,7 +3782,7 @@ class MajorRoadOutlineRenderPipelineBindings
   }) {
     majorRoadOutlineUbo.set(widthStops: majorRoadOutlineUboWidthStops);
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -3768,7 +3860,7 @@ class HighwayOutlineRenderPipelineBindings
   /// Sets the uniforms for this shader.
   void setUniforms({
     required Vector2 highwayOutlineUboWidthStops,
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -3778,7 +3870,7 @@ class HighwayOutlineRenderPipelineBindings
   }) {
     highwayOutlineUbo.set(widthStops: highwayOutlineUboWidthStops);
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -3874,7 +3966,7 @@ class RoadUnderConstructionRenderPipelineBindings
   void setUniforms({
     required Vector2 roadUnderConstructionUboWidthStops,
     required Vector2 roadUnderConstructionUboDasharraySize,
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -3889,7 +3981,7 @@ class RoadUnderConstructionRenderPipelineBindings
       dasharraySize: roadUnderConstructionUboDasharraySize,
     );
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -3971,7 +4063,7 @@ class MinorRoadRenderPipelineBindings
   /// Sets the uniforms for this shader.
   void setUniforms({
     required Vector2 minorRoadUboWidthStops,
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -3981,7 +4073,7 @@ class MinorRoadRenderPipelineBindings
   }) {
     minorRoadUbo.set(widthStops: minorRoadUboWidthStops);
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -4064,7 +4156,7 @@ class MajorRoadRenderPipelineBindings
   void setUniforms({
     required Vector2 majorRoadUboColorStops,
     required Vector2 majorRoadUboWidthStops,
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -4077,7 +4169,7 @@ class MajorRoadRenderPipelineBindings
       widthStops: majorRoadUboWidthStops,
     );
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -4160,7 +4252,7 @@ class HighwayRenderPipelineBindings
   void setUniforms({
     required Vector2 highwayUboColorStops,
     required Vector2 highwayUboWidthStops,
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -4173,7 +4265,7 @@ class HighwayRenderPipelineBindings
       widthStops: highwayUboWidthStops,
     );
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -4251,7 +4343,7 @@ class PathOutlineRenderPipelineBindings
   /// Sets the uniforms for this shader.
   void setUniforms({
     required Vector2 pathOutlineUboWidthStops,
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -4261,7 +4353,7 @@ class PathOutlineRenderPipelineBindings
   }) {
     pathOutlineUbo.set(widthStops: pathOutlineUboWidthStops);
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -4350,7 +4442,7 @@ class PathMinorRenderPipelineBindings
   void setUniforms({
     required Vector2 pathMinorUboWidthStops,
     required Vector2 pathMinorUboDasharraySize,
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -4365,7 +4457,7 @@ class PathMinorRenderPipelineBindings
       dasharraySize: pathMinorUboDasharraySize,
     );
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -4458,7 +4550,7 @@ class PathRenderPipelineBindings
   void setUniforms({
     required Vector2 pathUboWidthStops,
     required Vector2 pathUboDasharraySize,
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -4473,7 +4565,7 @@ class PathRenderPipelineBindings
       dasharraySize: pathUboDasharraySize,
     );
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -4562,7 +4654,7 @@ class MajorRailRenderPipelineBindings
   void setUniforms({
     required Vector2 majorRailUboColorStops,
     required Vector2 majorRailUboWidthStops,
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -4575,7 +4667,7 @@ class MajorRailRenderPipelineBindings
       widthStops: majorRailUboWidthStops,
     );
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -4675,7 +4767,7 @@ class MajorRailHatchingRenderPipelineBindings
     required Vector2 majorRailHatchingUboColorStops,
     required Vector2 majorRailHatchingUboWidthStops,
     required Vector2 majorRailHatchingUboDasharraySize,
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -4691,7 +4783,7 @@ class MajorRailHatchingRenderPipelineBindings
       dasharraySize: majorRailHatchingUboDasharraySize,
     );
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -4773,7 +4865,7 @@ class MinorRailRenderPipelineBindings
   /// Sets the uniforms for this shader.
   void setUniforms({
     required Vector2 minorRailUboWidthStops,
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -4783,7 +4875,7 @@ class MinorRailRenderPipelineBindings
   }) {
     minorRailUbo.set(widthStops: minorRailUboWidthStops);
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -4876,7 +4968,7 @@ class MinorRailHatchingRenderPipelineBindings
   void setUniforms({
     required Vector2 minorRailHatchingUboWidthStops,
     required Vector2 minorRailHatchingUboDasharraySize,
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -4891,7 +4983,7 @@ class MinorRailHatchingRenderPipelineBindings
       dasharraySize: minorRailHatchingUboDasharraySize,
     );
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -4958,7 +5050,7 @@ class BuildingRenderPipelineBindings
 
   /// Sets the uniforms for this shader.
   void setUniforms({
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -4967,7 +5059,7 @@ class BuildingRenderPipelineBindings
     required double cameraPixelRatio,
   }) {
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -5049,7 +5141,7 @@ class AqueductOutlineRenderPipelineBindings
   /// Sets the uniforms for this shader.
   void setUniforms({
     required Vector2 aqueductOutlineUboWidthStops,
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -5059,7 +5151,7 @@ class AqueductOutlineRenderPipelineBindings
   }) {
     aqueductOutlineUbo.set(widthStops: aqueductOutlineUboWidthStops);
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -5137,7 +5229,7 @@ class AqueductRenderPipelineBindings
   /// Sets the uniforms for this shader.
   void setUniforms({
     required Vector2 aqueductUboWidthStops,
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -5147,7 +5239,7 @@ class AqueductRenderPipelineBindings
   }) {
     aqueductUbo.set(widthStops: aqueductUboWidthStops);
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -5225,7 +5317,7 @@ class CablecarRenderPipelineBindings
   /// Sets the uniforms for this shader.
   void setUniforms({
     required Vector2 cablecarUboWidthStops,
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -5235,7 +5327,7 @@ class CablecarRenderPipelineBindings
   }) {
     cablecarUbo.set(widthStops: cablecarUboWidthStops);
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -5324,7 +5416,7 @@ class CablecarDashRenderPipelineBindings
   void setUniforms({
     required Vector2 cablecarDashUboWidthStops,
     required Vector2 cablecarDashUboDasharraySize,
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -5339,7 +5431,7 @@ class CablecarDashRenderPipelineBindings
       dasharraySize: cablecarDashUboDasharraySize,
     );
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -5432,7 +5524,7 @@ class OtherBorderRenderPipelineBindings
   void setUniforms({
     required Vector2 otherBorderUboWidthStops,
     required Vector2 otherBorderUboDasharraySize,
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -5447,7 +5539,7 @@ class OtherBorderRenderPipelineBindings
       dasharraySize: otherBorderUboDasharraySize,
     );
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -5540,7 +5632,7 @@ class DisputedBorderRenderPipelineBindings
   void setUniforms({
     required Vector2 disputedBorderUboWidthStops,
     required Vector2 disputedBorderUboDasharraySize,
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -5555,7 +5647,7 @@ class DisputedBorderRenderPipelineBindings
       dasharraySize: disputedBorderUboDasharraySize,
     );
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,
@@ -5637,7 +5729,7 @@ class CountryBorderRenderPipelineBindings
   /// Sets the uniforms for this shader.
   void setUniforms({
     required Vector2 countryBorderUboWidthStops,
-    required Matrix4 tileLocalToWorld,
+    required Matrix4 tileLocalToGl,
     required double tileSize,
     required double tileExtent,
     required double tileOpacity,
@@ -5647,7 +5739,7 @@ class CountryBorderRenderPipelineBindings
   }) {
     countryBorderUbo.set(widthStops: countryBorderUboWidthStops);
     tileUbo.set(
-      localToWorld: tileLocalToWorld,
+      localToGl: tileLocalToGl,
       size: tileSize,
       extent: tileExtent,
       opacity: tileOpacity,

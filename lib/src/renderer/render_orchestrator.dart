@@ -1,5 +1,6 @@
 import 'dart:ui' as ui;
 
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_gpu/gpu.dart' as gpu;
 import 'package:flutter_map/flutter_map.dart' as fm;
@@ -89,6 +90,19 @@ class VectorTileLayerRenderOrchestrator with ChangeNotifier {
       _tileScaleCalculator = TileScaleCalculator(crs: camera.crs, tileSize: tileSize);
     }
 
+    if (_lastCamera?.zoom.floor() != camera.zoom.floor()) {
+      if (_layers != null) {
+        // Re-prepare the layers if the zoom level has changed.
+        for (final layer in _layers!) {
+          SchedulerBinding.instance.scheduleTask(() async {
+            layer.prepare(
+              PrepareContext(eval: spec.EvaluationContext.empty().copyWithZoom(camera.zoom.floorToDouble())),
+            );
+          }, Priority.idle);
+        }
+      }
+    }
+
     _lastCamera = camera;
     _lastTileSize = tileSize;
     _tileScaleCalculator!.clearCacheUnlessZoomMatches(camera.zoom);
@@ -104,7 +118,7 @@ class VectorTileLayerRenderOrchestrator with ChangeNotifier {
     if (_texture != null && _texture!.width == width && _texture!.height == height) return;
 
     if (gpu.gpuContext.doesSupportOffscreenMSAA) {
-    // if (false) {
+      // if (false) {
       _texture = gpu.gpuContext.createTexture(
         gpu.StorageMode.hostVisible,
         width,

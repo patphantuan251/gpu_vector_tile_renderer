@@ -50,10 +50,12 @@ class TiledLayerRenderer<T extends spec.Layer> extends LayerRenderer<T> {
     final futures = <Future<void>>[];
 
     for (final tile in tiles) {
+      if (!tile.isReadyToDisplay) continue;
+
       final renderer = tile.renderers[specLayer.id];
       if (renderer == null) continue;
 
-      final futureOr = renderer.prepare(PrepareContext(eval: context.eval.copyWithZoom(tile.coordinates.z.toDouble())));
+      final futureOr = renderer.prepare(context);
       if (futureOr is Future) futures.add(futureOr);
     }
 

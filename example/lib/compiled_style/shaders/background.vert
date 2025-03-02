@@ -31,7 +31,7 @@ uniform BackgroundUbo {
 precision highp float;
 
 uniform Tile {
-  highp mat4 local_to_world;
+  highp mat4 local_to_gl;
   highp float size;
   highp float extent;
   highp float opacity;
@@ -44,7 +44,7 @@ uniform Camera {
 } camera;
 
 vec4 project_tile_position(vec2 position) {
-  return camera.world_to_gl * tile.local_to_world * (vec4(position * (tile.size / tile.extent), 0.0, 1.0));
+  return tile.local_to_gl * vec4(position, 0.0, 1.0);
 }
 
 float project_pixel_length(float len) {
@@ -57,6 +57,6 @@ const highp float opacity = 1;
 
 void main() {
   highp vec4 color = background_ubo.color;
-  gl_Position = camera.world_to_gl * tile.local_to_world * vec4(position.x * tile.size, position.y * tile.size, 0.0, 1.0);
+  gl_Position = tile.local_to_gl * vec4(position.x * tile.size, position.y * tile.size, 0.0, 1.0);
 }
 

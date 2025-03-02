@@ -31,7 +31,7 @@ abstract class $BackgroundLayerRenderer extends SingleTileLayerRenderer<spec.Lay
     Matrix4 cameraWorldToGl,
     double cameraZoom,
     double pixelRatio,
-    Matrix4 tileLocalToWorld,
+    Matrix4 tileLocalToGl,
     double tileSize,
     double tileExtent,
     double tileOpacity,
@@ -42,17 +42,17 @@ abstract class $BackgroundLayerRenderer extends SingleTileLayerRenderer<spec.Lay
     if (!pipeline.isReady) return;
 
     final tileSize = context.getScaledTileSize(coordinates);
-    final origin = ui.Offset(coordinates.x * tileSize, coordinates.y * tileSize);
-    final tileLocalToWorld = Matrix4.identity()..translate(origin.dx, origin.dy);
+    final extent = vtLayer.extent.toDouble();
+    final tileLocalToWorld = Matrix4.identity()..translate(coordinates.x * tileSize, coordinates.y * tileSize);
 
     setUniforms(
       context,
       context.worldToGl,
       context.camera.zoom,
       context.pixelRatio,
-      tileLocalToWorld,
+      context.worldToGl * tileLocalToWorld,
       tileSize,
-      vtLayer.extent.toDouble(),
+      extent,
       container.opacityAnimation.value,
     );
 

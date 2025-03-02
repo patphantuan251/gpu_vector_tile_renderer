@@ -1,18 +1,14 @@
-double getNearestFloorValue(double value, List<double> stops) {
-  for (var i = 0; i < stops.length; i++) {
-    if (value < stops[i]) {
-      return stops[i];
-    }
+double getNearestCeilValue(double value, List<double> stops) {
+  for (final stop in stops) {
+    if (value <= stop) return stop;
   }
 
   return stops.last;
 }
 
-double getNearestCeilValue(double value, List<double> stops) {
-  for (var i = stops.length - 1; i >= 0; i--) {
-    if (value > stops[i]) {
-      return stops[i];
-    }
+double getNearestFloorValue(double value, List<double> stops) {
+  for (final stop in stops.reversed) {
+    if (value >= stop) return stop;
   }
 
   return stops.first;

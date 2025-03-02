@@ -38,13 +38,11 @@ abstract class UniformBufferObjectBindings {
     _vertexShaderSlot = _getUboSlot(vertexShader, name);
     _fragmentShaderSlot = _getUboSlot(fragmentShader, name);
 
-    if (_vertexShaderSlot == null && _fragmentShaderSlot == null) {
-      throw Exception('UBO $name not found in vertex or fragment shader');
-    }
+    if (slot == null) return;
 
-    _buffer = gpu.gpuContext.createDeviceBuffer(gpu.StorageMode.hostVisible, slot.sizeInBytes!);
-    _bufferView = gpu.BufferView(_buffer, offsetInBytes: 0, lengthInBytes: _buffer.sizeInBytes);
-    $setData = ByteData(slot.sizeInBytes!);
+    _buffer = gpu.gpuContext.createDeviceBuffer(gpu.StorageMode.hostVisible, slot!.sizeInBytes!);
+    _bufferView = gpu.BufferView(_buffer!, offsetInBytes: 0, lengthInBytes: _buffer!.sizeInBytes);
+    $setData = ByteData(slot!.sizeInBytes!);
   }
 
   /// The name of the UBO.
@@ -54,12 +52,12 @@ abstract class UniformBufferObjectBindings {
 
   gpu.UniformSlot? _vertexShaderSlot;
   gpu.UniformSlot? _fragmentShaderSlot;
-  gpu.UniformSlot get slot => _vertexShaderSlot ?? _fragmentShaderSlot!;
+  gpu.UniformSlot? get slot => _vertexShaderSlot ?? _fragmentShaderSlot;
 
-  late final gpu.DeviceBuffer _buffer;
-  late final gpu.BufferView _bufferView;
+  gpu.DeviceBuffer? _buffer;
+  gpu.BufferView? _bufferView;
 
-  int get lengthInBytes => slot.sizeInBytes!;
+  int? get lengthInBytes => slot?.sizeInBytes;
 
   /// Whether the data needs to be flushed to the GPU.
   ///
@@ -71,18 +69,21 @@ abstract class UniformBufferObjectBindings {
   late final ByteData $setData;
 
   void setInternal() {
-    _buffer.overwrite($setData, destinationOffsetInBytes: 0);
+    if (_buffer == null) return;
+    _buffer!.overwrite($setData, destinationOffsetInBytes: 0);
     needsFlush = true;
   }
 
   void bind(gpu.GpuContext context, gpu.RenderPass pass) {
+    if (_buffer == null) return;
+
     if (needsFlush) {
-      _buffer.flush();
+      _buffer!.flush();
       needsFlush = false;
     }
 
-    if (_vertexShaderSlot != null) pass.bindUniform(_vertexShaderSlot!, _bufferView);
-    if (_fragmentShaderSlot != null) pass.bindUniform(_fragmentShaderSlot!, _bufferView);
+    if (_vertexShaderSlot != null) pass.bindUniform(_vertexShaderSlot!, _bufferView!);
+    if (_fragmentShaderSlot != null) pass.bindUniform(_fragmentShaderSlot!, _bufferView!);
   }
 }
 

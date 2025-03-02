@@ -42,9 +42,11 @@ String generateCommonShaderUboBindings(Iterable<ParsedShader> shaders) {
       if (i != ubo.variables.length - 1) o.write(', ');
     }
     o.writeln('}) {');
+    o.writeln('  if (slot == null) return;');
+    o.writeln('');
     for (final variable in ubo.variables) {
       o.writeln(
-        '    set_${variable.typeGlsl.value}(get_member_offset(slot, \'${variable.name}\'), \$setData, ${variable.dartName()});',
+        '    set_${variable.typeGlsl.value}(get_member_offset(slot!, \'${variable.name}\'), \$setData, ${variable.dartName()});',
       );
     }
     o.writeln('');
