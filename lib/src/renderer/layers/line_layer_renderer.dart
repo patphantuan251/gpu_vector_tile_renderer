@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:flutter_gpu/gpu.dart' as gpu;
@@ -11,8 +12,8 @@ import 'package:vector_math/vector_math_64.dart';
 
 const _kLineCapRoundSegments = 16;
 
-abstract class LineLayerRenderer extends SingleTileLayerRenderer<spec.LayerLine> {
-  LineLayerRenderer({
+abstract class $LineLayerRenderer extends SingleTileLayerRenderer<spec.LayerLine> {
+  $LineLayerRenderer({
     required super.coordinates,
     required super.container,
     required super.specLayer,
@@ -25,7 +26,7 @@ abstract class LineLayerRenderer extends SingleTileLayerRenderer<spec.LayerLine>
     spec.EvaluationContext eval,
     vt.LineStringFeature feature,
     int index,
-    List<(Vector2 position, Vector2 normal)> vertexData,
+    List<(Vector2 position, Vector2 normal, double lineLength)> vertexData,
   );
 
   @override
@@ -46,11 +47,11 @@ abstract class LineLayerRenderer extends SingleTileLayerRenderer<spec.LayerLine>
     // final miterLimit = specLayer.layout.lineMiterLimit.evaluate(context.eval);
     // final roundLimit = specLayer.layout.lineRoundLimit.evaluate(context.eval);
 
-    // Contains the list of (position, normal) for each vertex, grouped by feature.
-    // During vertex shader, position is extended by normal * 0.5 * width
-    final vertexData = <List<(Vector2 position, Vector2 normal)>>[];
+    // Contains the list of (position, normal, lineLength) for each vertex, grouped by feature.
+    final vertexData = <List<(Vector2 position, Vector2 normal, double lineLength)>>[];
     final indices = <int>[];
     var vertexCount = 0;
+    var currentLength = 0.0;
 
     void _addRelativeIndices(List<int> idx) {
       indices.addAll(idx.map((i) => i + vertexCount));
@@ -66,25 +67,25 @@ abstract class LineLayerRenderer extends SingleTileLayerRenderer<spec.LayerLine>
       if (lineCap == spec.LayoutLine$LineCap.square) {
         _addRelativeIndices([0, 1, 2, 1, 2, 3]);
 
-        vertexData.last.add((a, n));
-        vertexData.last.add((a, -n));
+        vertexData.last.add((a, n, currentLength));
+        vertexData.last.add((a, -n, currentLength));
 
-        vertexData.last.add((a, t + n));
-        vertexData.last.add((a, t - n));
+        vertexData.last.add((a, t + n, currentLength));
+        vertexData.last.add((a, t - n, currentLength));
 
         vertexCount += 4;
       } else if (lineCap == spec.LayoutLine$LineCap.round) {
         final center = a;
         final startAngle = math.atan2(-n.y, -n.x);
 
-        vertexData.last.add((center, Vector2.zero()));
+        vertexData.last.add((center, Vector2.zero(), currentLength));
         final centerIndex = vertexCount;
 
         for (var i = 0; i <= _kLineCapRoundSegments; i++) {
           final angle = startAngle + i / _kLineCapRoundSegments * math.pi;
           final vec = Vector2(math.cos(angle), math.sin(angle));
 
-          vertexData.last.add((center, vec));
+          vertexData.last.add((center, vec, currentLength));
         }
 
         for (var i = 0; i < _kLineCapRoundSegments; i++) {
@@ -102,11 +103,13 @@ abstract class LineLayerRenderer extends SingleTileLayerRenderer<spec.LayerLine>
 
       _addRelativeIndices([0, 1, 2, 1, 2, 3]);
 
-      vertexData.last.add((a, n));
-      vertexData.last.add((a, -n));
+      vertexData.last.add((a, n, currentLength));
+      vertexData.last.add((a, -n, currentLength));
 
-      vertexData.last.add((b, n));
-      vertexData.last.add((b, -n));
+      currentLength += t.length;
+
+      vertexData.last.add((b, n, currentLength));
+      vertexData.last.add((b, -n, currentLength));
 
       vertexCount += 4;
     }
@@ -129,9 +132,9 @@ abstract class LineLayerRenderer extends SingleTileLayerRenderer<spec.LayerLine>
       // TODO: Miter, round joins
       _addRelativeIndices([0, 1, 2]);
 
-      vertexData.last.add((c, Vector2.zero()));
-      vertexData.last.add((c, na));
-      vertexData.last.add((c, nb));
+      vertexData.last.add((c, Vector2.zero(), currentLength));
+      vertexData.last.add((c, na, currentLength));
+      vertexData.last.add((c, nb, currentLength));
 
       vertexCount += 3;
     }
@@ -155,6 +158,8 @@ abstract class LineLayerRenderer extends SingleTileLayerRenderer<spec.LayerLine>
         }
 
         _addCap(line.points[line.points.length - 1].vec2, line.points[line.points.length - 2].vec2);
+
+        currentLength = 0.0;
       }
     }
 
@@ -184,6 +189,8 @@ abstract class LineLayerRenderer extends SingleTileLayerRenderer<spec.LayerLine>
     double tileOpacity,
   );
 
+  gpu.Texture? lineDasharrayTexture;
+
   @override
   void draw(RenderContext context) {
     if (!pipeline.isReady) return;
@@ -191,6 +198,41 @@ abstract class LineLayerRenderer extends SingleTileLayerRenderer<spec.LayerLine>
     final tileSize = context.getScaledTileSize(coordinates);
     final origin = ui.Offset(coordinates.x * tileSize, coordinates.y * tileSize);
     final tileLocalToWorld = Matrix4.identity()..translate(origin.dx, origin.dy);
+
+    // Dasharray evaluation
+    if (specLayer.paint.lineDasharray != null) {
+      final dasharray = specLayer.paint.lineDasharray!.evaluate(context.eval).map((v) => v * 1).toList();
+      final dasharrayLength = dasharray.fold(0.0, (acc, v) => acc + v);
+      final textureWidth = dasharrayLength.ceil();
+
+      if (lineDasharrayTexture?.width != textureWidth) {
+        lineDasharrayTexture = gpu.gpuContext.createTexture(
+          gpu.StorageMode.hostVisible,
+          textureWidth,
+          1,
+          format: gpu.PixelFormat.r8UNormInt,
+          coordinateSystem: gpu.TextureCoordinateSystem.uploadFromHost,
+        );
+      }
+
+      final data = Uint8List(textureWidth);
+      var isGap = false;
+      var offset = 0;
+
+      for (final v in dasharray) {
+        final length = v.round();
+        final value = isGap ? 0 : 255;
+
+        for (var i = offset; i < offset + length; i++) {
+          data[i] = value;
+        }
+
+        offset += length;
+        isGap = !isGap;
+      }
+
+      lineDasharrayTexture!.overwrite(data.buffer.asByteData());
+    }
 
     setUniforms(
       context,

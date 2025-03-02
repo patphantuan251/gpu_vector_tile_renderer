@@ -18,19 +18,15 @@ float data_interpolate_factor(
 ) {
   float difference = end_stop - start_stop;
   float progress = t - start_stop;
-
+  
   if (difference == 0.0) return 0.0;
   else if (base == 1.0) return progress / difference;
   else return (pow(base, progress) - 1.0) / (pow(base, difference) - 1.0);
 }
 
 uniform IndustrialUbo {
-  float opacity_start_stop;
-  float opacity_end_stop;
-  float color_start_stop;
-  float color_end_stop;
+  vec2 opacity_stops;
 } industrial_ubo;
-
 
 precision highp float;
 
@@ -41,18 +37,19 @@ uniform Tile {
   highp float opacity;
 } tile;
 
-
 uniform Camera {
   highp mat4 world_to_gl;
   highp float zoom;
   float pixel_ratio;
 } camera;
 
-
 vec4 project_tile_position(vec2 position) {
   return camera.world_to_gl * tile.local_to_world * (vec4(position * (tile.size / tile.extent), 0.0, 1.0));
 }
 
+float project_pixel_length(float len) {
+  return len * tile.size / tile.extent;
+}
 
 in highp vec2 position;
 
@@ -60,17 +57,12 @@ const bool antialias = true;
 in highp float opacity_start_value;
 in highp float opacity_end_value;
 out highp float v_opacity;
-in highp vec4 color_start_value;
-in highp vec4 color_end_value;
-out highp vec4 v_color;
+const highp vec4 color = vec4(0.13020000000000004, 0.19669999999999999, 0.28979999999999995, 1.0);
 const highp vec2 translate = vec2(0, 0);
 
 void main() {
-highp float opacity = data_step(opacity_start_value, opacity_end_value, industrial_ubo.opacity_start_stop, industrial_ubo.opacity_end_stop);
-v_opacity = opacity;
-highp vec4 color = data_interpolate(color_start_value, color_end_value, industrial_ubo.color_start_stop, industrial_ubo.color_end_stop);
-v_color = color;
+  highp float opacity = data_step(opacity_start_value, opacity_end_value, industrial_ubo.opacity_stops.x, industrial_ubo.opacity_stops.y);
+  v_opacity = opacity;
   gl_Position = project_tile_position(position + translate);
 }
-
 

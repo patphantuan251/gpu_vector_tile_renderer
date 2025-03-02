@@ -104,6 +104,7 @@ class VectorTileLayerRenderOrchestrator with ChangeNotifier {
     if (_texture != null && _texture!.width == width && _texture!.height == height) return;
 
     if (gpu.gpuContext.doesSupportOffscreenMSAA) {
+    // if (false) {
       _texture = gpu.gpuContext.createTexture(
         gpu.StorageMode.hostVisible,
         width,
@@ -126,6 +127,7 @@ class VectorTileLayerRenderOrchestrator with ChangeNotifier {
         height,
         format: gpu.PixelFormat.r8g8b8a8UNormIntSRGB,
       );
+
       _resolveTexture = null;
     }
   }

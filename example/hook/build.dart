@@ -8,7 +8,7 @@ Future<void> main(List<String> args) async {
     await buildShaderBundleJson(
       buildConfig: config,
       buildOutput: output,
-      manifestFileName: 'lib/compiled_style/Streets.shaderbundle.json',
+      manifestFileName: 'lib/compiled_style/streets_dark.shaderbundle.json',
     );
   });
 }

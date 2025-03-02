@@ -18,17 +18,15 @@ float data_interpolate_factor(
 ) {
   float difference = end_stop - start_stop;
   float progress = t - start_stop;
-
+  
   if (difference == 0.0) return 0.0;
   else if (base == 1.0) return progress / difference;
   else return (pow(base, progress) - 1.0) / (pow(base, difference) - 1.0);
 }
 
 uniform HospitalUbo {
-  float opacity_start_stop;
-  float opacity_end_stop;
+  vec2 opacity_stops;
 } hospital_ubo;
-
 
 precision highp float;
 
@@ -39,29 +37,29 @@ uniform Tile {
   highp float opacity;
 } tile;
 
-
 uniform Camera {
   highp mat4 world_to_gl;
   highp float zoom;
   float pixel_ratio;
 } camera;
 
-
 vec4 project_tile_position(vec2 position) {
   return camera.world_to_gl * tile.local_to_world * (vec4(position * (tile.size / tile.extent), 0.0, 1.0));
 }
 
+float project_pixel_length(float len) {
+  return len * tile.size / tile.extent;
+}
 
 const bool antialias = true;
 in highp float v_opacity;
-const highp vec4 color = vec4(0.9764705882352941, 0.9176470588235294, 0.9019607843137255, 1.0);
+const highp vec4 color = vec4(0.2025466666666667, 0.18260000000000004, 0.25739999999999996, 1.0);
 const highp vec2 translate = vec2(0, 0);
 
 out highp vec4 f_color;
 
 void main() {
-highp float opacity = v_opacity;
+  highp float opacity = v_opacity;
   f_color = color * (opacity * tile.opacity);
 }
-
 

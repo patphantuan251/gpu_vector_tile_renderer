@@ -1,7 +1,6 @@
 import 'dart:ffi';
 import 'dart:isolate';
 
-import 'package:gpu_vector_tile_renderer/gpu_vector_tile_renderer.dart';
 import 'package:gpu_vector_tile_renderer/src/ffi/bindings.gen.dart' as ffi;
 import 'package:gpu_vector_tile_renderer/src/isolates/core/worker_isolate.dart';
 import 'package:gpu_vector_tile_renderer/src/isolates/core/worker_isolate_pool.dart';

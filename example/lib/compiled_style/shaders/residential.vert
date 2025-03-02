@@ -18,17 +18,15 @@ float data_interpolate_factor(
 ) {
   float difference = end_stop - start_stop;
   float progress = t - start_stop;
-
+  
   if (difference == 0.0) return 0.0;
   else if (base == 1.0) return progress / difference;
   else return (pow(base, progress) - 1.0) / (pow(base, difference) - 1.0);
 }
 
 uniform ResidentialUbo {
-  float color_start_stop;
-  float color_end_stop;
+  vec2 color_stops;
 } residential_ubo;
-
 
 precision highp float;
 
@@ -39,18 +37,19 @@ uniform Tile {
   highp float opacity;
 } tile;
 
-
 uniform Camera {
   highp mat4 world_to_gl;
   highp float zoom;
   float pixel_ratio;
 } camera;
 
-
 vec4 project_tile_position(vec2 position) {
   return camera.world_to_gl * tile.local_to_world * (vec4(position * (tile.size / tile.extent), 0.0, 1.0));
 }
 
+float project_pixel_length(float len) {
+  return len * tile.size / tile.extent;
+}
 
 in highp vec2 position;
 
@@ -62,9 +61,8 @@ out highp vec4 v_color;
 const highp vec2 translate = vec2(0, 0);
 
 void main() {
-highp vec4 color = data_interpolate(color_start_value, color_end_value, residential_ubo.color_start_stop, residential_ubo.color_end_stop);
-v_color = color;
+  highp vec4 color = data_interpolate(color_start_value, color_end_value, residential_ubo.color_stops.x, residential_ubo.color_stops.y);
+  v_color = color;
   gl_Position = project_tile_position(position + translate);
 }
-
 

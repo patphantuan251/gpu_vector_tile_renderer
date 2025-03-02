@@ -18,21 +18,18 @@ float data_interpolate_factor(
 ) {
   float difference = end_stop - start_stop;
   float progress = t - start_stop;
-
+  
   if (difference == 0.0) return 0.0;
   else if (base == 1.0) return progress / difference;
   else return (pow(base, progress) - 1.0) / (pow(base, difference) - 1.0);
 }
 
 uniform FerryLineUbo {
-  float color_start_stop;
-  float color_end_stop;
-  float opacity_start_stop;
-  float opacity_end_stop;
-  float width_start_stop;
-  float width_end_stop;
+  vec2 color_stops;
+  vec2 opacity_stops;
+  vec2 width_stops;
+  vec2 dasharray_size;
 } ferry_line_ubo;
-
 
 precision highp float;
 
@@ -43,30 +40,39 @@ uniform Tile {
   highp float opacity;
 } tile;
 
-
 uniform Camera {
   highp mat4 world_to_gl;
   highp float zoom;
   float pixel_ratio;
 } camera;
 
-
 vec4 project_tile_position(vec2 position) {
   return camera.world_to_gl * tile.local_to_world * (vec4(position * (tile.size / tile.extent), 0.0, 1.0));
 }
 
+float project_pixel_length(float len) {
+  return len * tile.size / tile.extent;
+}
+
+in highp float v_line_length;
 
 in highp vec4 v_color;
 in float v_opacity;
 in float v_width;
+uniform sampler2D dasharray;
 
 out highp vec4 f_color;
 
 void main() {
-highp vec4 color = v_color;
-float opacity = v_opacity;
-float width = v_width;
+  highp vec4 color = v_color;
+  float opacity = v_opacity;
+  float width = v_width;
+  vec2 dasharray_size = ferry_line_ubo.dasharray_size;
+  
+  float line_position = project_pixel_length(v_line_length) / width;
+  float dash_value = texture(dasharray, vec2(line_position / dasharray_size.x, 0.5)).r;
+  if (dash_value < 0.5) discard;
+  
   f_color = color * (opacity * tile.opacity);
 }
-
 

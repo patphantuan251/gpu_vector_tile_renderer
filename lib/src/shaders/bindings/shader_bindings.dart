@@ -18,9 +18,14 @@ abstract class ShaderBindings {
   void bind(gpu.GpuContext context, gpu.RenderPass pass);
 }
 
-gpu.UniformSlot? _getUniformSlot(gpu.Shader shader, String name) {
+gpu.UniformSlot? _getUboSlot(gpu.Shader shader, String name) {
   final slot = shader.getUniformSlot(name);
   if (slot.sizeInBytes == null) return null;
+  return slot;
+}
+
+gpu.UniformSlot? _getUniformSamplerSlot(gpu.Shader shader, String name) {
+  final slot = shader.getUniformSlot(name);
   return slot;
 }
 
@@ -30,14 +35,16 @@ gpu.UniformSlot? _getUniformSlot(gpu.Shader shader, String name) {
 /// `tool/generate_shaders.dart`.
 abstract class UniformBufferObjectBindings {
   UniformBufferObjectBindings({required this.name, required this.vertexShader, required this.fragmentShader}) {
-    _vertexShaderSlot = _getUniformSlot(vertexShader, name);
-    _fragmentShaderSlot = _getUniformSlot(fragmentShader, name);
+    _vertexShaderSlot = _getUboSlot(vertexShader, name);
+    _fragmentShaderSlot = _getUboSlot(fragmentShader, name);
 
     if (_vertexShaderSlot == null && _fragmentShaderSlot == null) {
       throw Exception('UBO $name not found in vertex or fragment shader');
     }
 
-    data = ByteData(_vertexShaderSlot?.sizeInBytes ?? _fragmentShaderSlot!.sizeInBytes!);
+    _buffer = gpu.gpuContext.createDeviceBuffer(gpu.StorageMode.hostVisible, slot.sizeInBytes!);
+    _bufferView = gpu.BufferView(_buffer, offsetInBytes: 0, lengthInBytes: _buffer.sizeInBytes);
+    $setData = ByteData(slot.sizeInBytes!);
   }
 
   /// The name of the UBO.
@@ -45,18 +52,14 @@ abstract class UniformBufferObjectBindings {
   final gpu.Shader vertexShader;
   final gpu.Shader fragmentShader;
 
-  /// The data that will be uploaded to the GPU.
-  late final ByteData data;
-
   gpu.UniformSlot? _vertexShaderSlot;
   gpu.UniformSlot? _fragmentShaderSlot;
   gpu.UniformSlot get slot => _vertexShaderSlot ?? _fragmentShaderSlot!;
 
-  gpu.DeviceBuffer? _buffer;
-  gpu.BufferView? _bufferView;
+  late final gpu.DeviceBuffer _buffer;
+  late final gpu.BufferView _bufferView;
 
-  /// The length of the UBO data in bytes.
-  int get lengthInBytes => data.lengthInBytes;
+  int get lengthInBytes => slot.sizeInBytes!;
 
   /// Whether the data needs to be flushed to the GPU.
   ///
@@ -65,17 +68,65 @@ abstract class UniformBufferObjectBindings {
 
   void upload(gpu.GpuContext context) {}
 
+  late final ByteData $setData;
+
+  void setInternal() {
+    _buffer.overwrite($setData, destinationOffsetInBytes: 0);
+    needsFlush = true;
+  }
+
   void bind(gpu.GpuContext context, gpu.RenderPass pass) {
     if (needsFlush) {
-      _buffer ??= context.createDeviceBuffer(gpu.StorageMode.hostVisible, data.lengthInBytes);
-      _bufferView ??= gpu.BufferView(_buffer!, offsetInBytes: 0, lengthInBytes: data.lengthInBytes);
-      _buffer!.overwrite(data);
-      _buffer!.flush();
+      _buffer.flush();
       needsFlush = false;
     }
 
-    if (_vertexShaderSlot != null) pass.bindUniform(_vertexShaderSlot!, _bufferView!);
-    if (_fragmentShaderSlot != null) pass.bindUniform(_fragmentShaderSlot!, _bufferView!);
+    if (_vertexShaderSlot != null) pass.bindUniform(_vertexShaderSlot!, _bufferView);
+    if (_fragmentShaderSlot != null) pass.bindUniform(_fragmentShaderSlot!, _bufferView);
+  }
+}
+
+/// Bindings for a uniform sampler.
+class UniformSamplerBindings {
+  UniformSamplerBindings({required this.name, required this.vertexShader, required this.fragmentShader}) {
+    // TODO: Fix this
+    // _vertexShaderSlot = _getUniformSamplerSlot(vertexShader, name);
+    _fragmentShaderSlot = _getUniformSamplerSlot(fragmentShader, name);
+
+    if (_vertexShaderSlot == null && _fragmentShaderSlot == null) {
+      throw Exception('Uniform sampler $name not found in vertex or fragment shader');
+    }
+  }
+
+  /// The name of the uniform sampler.
+  final String name;
+  final gpu.Shader vertexShader;
+  final gpu.Shader fragmentShader;
+
+  gpu.UniformSlot? _vertexShaderSlot;
+  gpu.UniformSlot? _fragmentShaderSlot;
+  gpu.UniformSlot get slot => _vertexShaderSlot ?? _fragmentShaderSlot!;
+
+  gpu.Texture? _texture;
+  gpu.SamplerOptions? _options;
+
+  void setTexture(gpu.Texture texture, {gpu.SamplerOptions? options}) {
+    _texture = texture;
+    _options = options;
+  }
+
+  void bind(gpu.GpuContext context, gpu.RenderPass pass) {
+    if (_texture == null) return;
+
+    final options =
+        _options ??
+        gpu.SamplerOptions(
+          widthAddressMode: gpu.SamplerAddressMode.repeat,
+          heightAddressMode: gpu.SamplerAddressMode.repeat,
+        );
+
+    if (_vertexShaderSlot != null) pass.bindTexture(_vertexShaderSlot!, _texture!, sampler: options);
+    if (_fragmentShaderSlot != null) pass.bindTexture(_fragmentShaderSlot!, _texture!, sampler: options);
   }
 }
 
@@ -91,16 +142,14 @@ abstract class UniformBufferObjectBindings {
 ///
 /// Vertex and index buffers (and transient UBO buffers) are automatically managed by the bindings.
 abstract class VertexShaderBindings extends ShaderBindings {
-  VertexShaderBindings({required this.bytesPerVertex, required super.shader});
+  VertexShaderBindings({required this.bytesPerVertex, required super.shader})
+    : $setVertexData = ByteData(bytesPerVertex);
 
   /// Number of bytes per vertex.
   final int bytesPerVertex;
 
   int? vertexCount;
   int? _indexCount;
-
-  ByteData? vertexData;
-  ByteData? _indexData;
 
   gpu.DeviceBuffer? _vertexBuffer;
   gpu.DeviceBuffer? _indexBuffer;
@@ -115,9 +164,8 @@ abstract class VertexShaderBindings extends ShaderBindings {
     if (vertexCount == this.vertexCount) return;
 
     this.vertexCount = vertexCount;
-    vertexData = ByteData(vertexCount * bytesPerVertex);
-    _vertexBuffer = null;
-    _vertexBufferView = null;
+    _vertexBuffer = context.createDeviceBuffer(gpu.StorageMode.hostVisible, bytesPerVertex * vertexCount);
+    _vertexBufferView = gpu.BufferView(_vertexBuffer!, offsetInBytes: 0, lengthInBytes: bytesPerVertex * vertexCount);
   }
 
   /// Allocates the index buffer for the shader using a list of indices.
@@ -130,25 +178,25 @@ abstract class VertexShaderBindings extends ShaderBindings {
   /// Allocates the index buffer for the shader using a [Int32List].
   void allocateIndicesDirect(gpu.GpuContext context, Int32List indices) {
     _indexCount = indices.length;
-    _indexData = indices.buffer.asByteData();
-    _indexBuffer = null;
-    _indexBufferView = null;
+    _indexBuffer = context.createDeviceBufferWithCopy(indices.buffer.asByteData());
+    _indexBufferView = gpu.BufferView(_indexBuffer!, offsetInBytes: 0, lengthInBytes: indices.lengthInBytes);
+  }
+
+  final ByteData $setVertexData;
+
+  void setVertexInternal(int index) {
+    final offset = index * bytesPerVertex;
+    _vertexBuffer!.overwrite($setVertexData, destinationOffsetInBytes: offset);
   }
 
   @override
   @mustCallSuper
   void upload(gpu.GpuContext context) {
-    if (vertexData != null) {
-      _vertexBuffer ??= context.createDeviceBuffer(gpu.StorageMode.hostVisible, vertexData!.lengthInBytes);
-      _vertexBufferView = gpu.BufferView(_vertexBuffer!, offsetInBytes: 0, lengthInBytes: vertexData!.lengthInBytes);
-      _vertexBuffer!.overwrite(vertexData!);
+    if (_vertexBuffer != null) {
       _vertexBuffer!.flush();
     }
 
-    if (_indexData != null) {
-      _indexBuffer ??= context.createDeviceBuffer(gpu.StorageMode.hostVisible, _indexData!.lengthInBytes);
-      _indexBufferView = gpu.BufferView(_indexBuffer!, offsetInBytes: 0, lengthInBytes: _indexData!.lengthInBytes);
-      _indexBuffer!.overwrite(_indexData!);
+    if (_indexBuffer != null) {
       _indexBuffer!.flush();
     }
   }
@@ -156,13 +204,8 @@ abstract class VertexShaderBindings extends ShaderBindings {
   @override
   @mustCallSuper
   void bind(gpu.GpuContext context, gpu.RenderPass pass) {
-    if (_vertexBufferView != null) {
-      pass.bindVertexBuffer(_vertexBufferView!, vertexCount!);
-    }
-
-    if (_indexBufferView != null) {
-      pass.bindIndexBuffer(_indexBufferView!, gpu.IndexType.int32, _indexCount!);
-    }
+    if (_vertexBufferView != null) pass.bindVertexBuffer(_vertexBufferView!, vertexCount!);
+    if (_indexBufferView != null) pass.bindIndexBuffer(_indexBufferView!, gpu.IndexType.int32, _indexCount!);
   }
 }
 
@@ -180,7 +223,7 @@ abstract class FragmentShaderBindings extends ShaderBindings {
 ///
 /// You can also bind the pipeline to a render pass using the `bind` method.
 abstract class RenderPipelineBindings<TVertex extends VertexShaderBindings, TFragment extends FragmentShaderBindings> {
-  RenderPipelineBindings({required this.vertex, required this.fragment, required this.ubos});
+  RenderPipelineBindings({required this.vertex, required this.fragment, required this.ubos, required this.samplers});
 
   final TVertex vertex;
   final TFragment fragment;
@@ -188,6 +231,9 @@ abstract class RenderPipelineBindings<TVertex extends VertexShaderBindings, TFra
 
   /// The UBOs that are bound to this pipeline.
   final List<UniformBufferObjectBindings> ubos;
+
+  /// The uniform samplers that are bound to this pipeline.
+  final List<UniformSamplerBindings> samplers;
 
   bool _isReady = false;
   bool get isReady => _isReady;
@@ -205,9 +251,8 @@ abstract class RenderPipelineBindings<TVertex extends VertexShaderBindings, TFra
   void bind(gpu.GpuContext context, gpu.RenderPass pass) {
     if (_pipeline == null) throw Exception('Pipeline has not been uploaded yet');
 
-    for (final ubo in ubos) {
-      ubo.bind(context, pass);
-    }
+    for (final ubo in ubos) ubo.bind(context, pass);
+    for (final sampler in samplers) sampler.bind(context, pass);
 
     pass.bindPipeline(_pipeline!);
 

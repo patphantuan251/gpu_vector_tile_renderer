@@ -53,8 +53,8 @@ class RenderContext {
       coordinates.y * scaledTileSize - camera.pixelOrigin.y,
     );
 
-    var _x = (origin.dx * pixelRatio).ceil();
-    var _y = (origin.dy * pixelRatio).ceil();
+    var _x = (origin.dx * pixelRatio).floor();
+    var _y = (origin.dy * pixelRatio).floor();
     var _width = (scaledTileSize * pixelRatio).ceil();
     var _height = (scaledTileSize * pixelRatio).ceil();
 

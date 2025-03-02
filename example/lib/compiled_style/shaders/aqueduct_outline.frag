@@ -18,17 +18,15 @@ float data_interpolate_factor(
 ) {
   float difference = end_stop - start_stop;
   float progress = t - start_stop;
-
+  
   if (difference == 0.0) return 0.0;
   else if (base == 1.0) return progress / difference;
   else return (pow(base, progress) - 1.0) / (pow(base, difference) - 1.0);
 }
 
 uniform AqueductOutlineUbo {
-  float width_start_stop;
-  float width_end_stop;
+  vec2 width_stops;
 } aqueduct_outline_ubo;
-
 
 precision highp float;
 
@@ -39,28 +37,28 @@ uniform Tile {
   highp float opacity;
 } tile;
 
-
 uniform Camera {
   highp mat4 world_to_gl;
   highp float zoom;
   float pixel_ratio;
 } camera;
 
-
 vec4 project_tile_position(vec2 position) {
   return camera.world_to_gl * tile.local_to_world * (vec4(position * (tile.size / tile.extent), 0.0, 1.0));
 }
 
+float project_pixel_length(float len) {
+  return len * tile.size / tile.extent;
+}
 
-const highp vec4 color = vec4(0.5098039215686274, 0.5098039215686274, 0.5098039215686274, 1.0);
+const highp vec4 color = vec4(0.65, 0.65, 0.65, 1.0);
 const float opacity = 1;
 in float v_width;
 
 out highp vec4 f_color;
 
 void main() {
-float width = v_width;
+  float width = v_width;
   f_color = color * (opacity * tile.opacity);
 }
-
 

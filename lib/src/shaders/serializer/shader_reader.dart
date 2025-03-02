@@ -9,6 +9,10 @@ import 'package:gpu_vector_tile_renderer/src/shaders/serializer/parsed_shader.da
 final _uboStartRegex = RegExp(r'uniform\s+\w+\s+\{');
 final _whitespace = RegExp(r'\s+');
 
+// Uniform samplers:
+// uniform sampler2D {name};
+final _uniformSamplerRegex = RegExp(r'uniform\s+sampler2D\s+(\w+)\;');
+
 // (in|out)? (highp|mediump|lowp)? (\w+) (\w+);
 final _variableRegex = RegExp(r'(in|out)?\s*(highp|mediump|lowp)?\s*(\w+)\s+(\w+)\;');
 
@@ -47,10 +51,12 @@ ParsedShader readShader(String source, {required String name, required ShaderTyp
       if (instanceName != null) {
         content.add(ShaderUbo(name: uboName, instanceName: instanceName, variables: variables));
         i = j;
-      }
-      else {
+      } else {
         content.add(line);
       }
+    } else if (_uniformSamplerRegex.hasMatch(lineTrim)) {
+      final name = _uniformSamplerRegex.firstMatch(lineTrim)!.group(1)!;
+      content.add(ShaderUniformSampler(name: name));
     } else if (!line.startsWith(_whitespace) && _variableRegex.hasMatch(line)) {
       if (line.startsWith('precision')) {
         content.add(line);
@@ -104,6 +110,7 @@ ShaderVariableQualifier _readShaderVariableQualifier(String qualifier) {
     'in' => ShaderVariableQualifier.in_,
     'out' => ShaderVariableQualifier.out_,
     'const' => ShaderVariableQualifier.const_,
+    'uniform' => ShaderVariableQualifier.uniform_,
     _ => throw UnimplementedError('Qualifier not supported: $qualifier'),
   };
 }
@@ -128,6 +135,7 @@ ShaderGlslType _readShaderGlslType(String type) {
     'mat3' => ShaderGlslType.mat3,
     'mat4' => ShaderGlslType.mat4,
     'bool' => ShaderGlslType.bool,
+    'sampler2D' => ShaderGlslType.sampler2D,
     _ => throw UnimplementedError('Type not supported: $type'),
   };
 }
@@ -141,7 +149,7 @@ ShaderVariable _readShaderVariable(String line) {
   if (parts.length == 2) {
     return ShaderVariable(typeGlsl: _readShaderGlslType(parts[0]), name: parts[1]);
   } else if (parts.length == 3) {
-    if (parts[0] == 'in' || parts[0] == 'out') {
+    if (parts[0] == 'in' || parts[0] == 'out' || parts[0] == 'uniform' || parts[0] == 'const') {
       return ShaderVariable(
         qualifier: _readShaderVariableQualifier(parts[0]),
         typeGlsl: _readShaderGlslType(parts[1]),

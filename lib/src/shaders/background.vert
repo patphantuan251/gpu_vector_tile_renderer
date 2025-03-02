@@ -1,18 +1,13 @@
 #version 320 es
+#pragma prelude: interpolation
+#pragma prelude: tile
 
-uniform BackgroundUbo {
-  highp vec4 color;
-  highp float opacity;
-} background_ubo;
+in highp vec2 position;
 
-in vec2 position;
-
-out vec4 v_color;
-out float v_opacity;
+#pragma prop: declare(highp vec4 color)
+#pragma prop: declare(highp float opacity)
 
 void main() {
-  v_color = background_ubo.color;
-  v_opacity = background_ubo.opacity;
-
-  gl_Position = vec4(position, 0.0, 1.0);
+  #pragma prop: resolve(...)
+  gl_Position = camera.world_to_gl * tile.local_to_world * vec4(position.x * tile.size, position.y * tile.size, 0.0, 1.0);
 }

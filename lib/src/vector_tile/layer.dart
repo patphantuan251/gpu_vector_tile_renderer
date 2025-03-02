@@ -4,6 +4,9 @@ import 'package:gpu_vector_tile_renderer/_vector_tile.dart';
 class Layer {
   const Layer({required this.version, required this.name, required this.extent, required this.features});
 
+  /// An empty layer.
+  static const empty = Layer(version: 1, name: '', extent: 4096, features: []);
+
   /// Version of the layer. Currently unused.
   final int version;
 

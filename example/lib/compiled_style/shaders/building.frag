@@ -18,7 +18,7 @@ float data_interpolate_factor(
 ) {
   float difference = end_stop - start_stop;
   float progress = t - start_stop;
-
+  
   if (difference == 0.0) return 0.0;
   else if (base == 1.0) return progress / difference;
   else return (pow(base, progress) - 1.0) / (pow(base, difference) - 1.0);
@@ -33,22 +33,23 @@ uniform Tile {
   highp float opacity;
 } tile;
 
-
 uniform Camera {
   highp mat4 world_to_gl;
   highp float zoom;
   float pixel_ratio;
 } camera;
 
-
 vec4 project_tile_position(vec2 position) {
   return camera.world_to_gl * tile.local_to_world * (vec4(position * (tile.size / tile.extent), 0.0, 1.0));
 }
 
+float project_pixel_length(float len) {
+  return len * tile.size / tile.extent;
+}
 
 const bool antialias = true;
 const highp float opacity = 0.3;
-const highp vec4 color = vec4(0.7450980392156863, 0.7294117647058823, 0.7137254901960784, 1.0);
+const highp vec4 color = vec4(0.27970000000000006, 0.45626333333333335, 0.7403, 1.0);
 const highp vec2 translate = vec2(0, 0);
 
 out highp vec4 f_color;
@@ -56,5 +57,4 @@ out highp vec4 f_color;
 void main() {
   f_color = color * (opacity * tile.opacity);
 }
-
 

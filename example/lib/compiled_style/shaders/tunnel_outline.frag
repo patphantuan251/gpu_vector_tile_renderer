@@ -18,17 +18,16 @@ float data_interpolate_factor(
 ) {
   float difference = end_stop - start_stop;
   float progress = t - start_stop;
-
+  
   if (difference == 0.0) return 0.0;
   else if (base == 1.0) return progress / difference;
   else return (pow(base, progress) - 1.0) / (pow(base, difference) - 1.0);
 }
 
 uniform TunnelOutlineUbo {
-  float width_start_stop;
-  float width_end_stop;
+  vec2 width_stops;
+  vec2 dasharray_size;
 } tunnel_outline_ubo;
-
 
 precision highp float;
 
@@ -39,29 +38,38 @@ uniform Tile {
   highp float opacity;
 } tile;
 
-
 uniform Camera {
   highp mat4 world_to_gl;
   highp float zoom;
   float pixel_ratio;
 } camera;
 
-
 vec4 project_tile_position(vec2 position) {
   return camera.world_to_gl * tile.local_to_world * (vec4(position * (tile.size / tile.extent), 0.0, 1.0));
 }
 
+float project_pixel_length(float len) {
+  return len * tile.size / tile.extent;
+}
+
+in highp float v_line_length;
 
 in highp vec4 v_color;
-const float opacity = 1;
+const float opacity = 0.85;
 in float v_width;
+uniform sampler2D dasharray;
 
 out highp vec4 f_color;
 
 void main() {
-highp vec4 color = v_color;
-float width = v_width;
+  highp vec4 color = v_color;
+  float width = v_width;
+  vec2 dasharray_size = tunnel_outline_ubo.dasharray_size;
+  
+  float line_position = project_pixel_length(v_line_length) / width;
+  float dash_value = texture(dasharray, vec2(line_position / dasharray_size.x, 0.5)).r;
+  if (dash_value < 0.5) discard;
+  
   f_color = color * (opacity * tile.opacity);
 }
-
 

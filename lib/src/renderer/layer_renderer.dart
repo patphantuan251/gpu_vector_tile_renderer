@@ -5,20 +5,14 @@ import 'package:gpu_vector_tile_renderer/_controller.dart';
 import 'package:gpu_vector_tile_renderer/_renderer.dart';
 import 'package:gpu_vector_tile_renderer/_spec.dart' as spec;
 import 'package:gpu_vector_tile_renderer/_vector_tile.dart' as vt;
-import 'package:gpu_vector_tile_renderer/src/renderer/layers/background_layer_renderer.dart';
 
 List<LayerRenderer> createLayerRenderers(VectorTileLayerRenderOrchestrator orchestrator, spec.Style style) {
-  final layers =
-      style.layers
-          // temporary!
-          .where((layer) => supportedLayerTypes.contains(layer.type) || layer.type == spec.Layer$Type.background)
-          .toList();
+  final layers = style.layers.where((layer) => supportedLayerTypes.contains(layer.type)).toList();
 
   return layers
       .map(
         (layer) => switch (layer.type) {
-          spec.Layer$Type.background => BackgroundLayerRenderer(
-            shaderLibrary: orchestrator.shaderLibrary,
+          spec.Layer$Type.background => TiledLayerRenderer<spec.LayerBackground>(
             orchestrator: orchestrator,
             specLayer: layer as spec.LayerBackground,
           ),

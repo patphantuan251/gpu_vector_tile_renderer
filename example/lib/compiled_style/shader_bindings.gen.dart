@@ -11,30 +11,10 @@ class BackgroundUbo extends UniformBufferObjectBindings {
   BackgroundUbo({required super.vertexShader, required super.fragmentShader})
     : super(name: 'BackgroundUbo');
 
-  void set({required Vector4 color, required double opacity}) {
-    set_vec4(get_member_offset(slot, 'color'), data, color);
-    set_float(get_member_offset(slot, 'opacity'), data, opacity);
-    needsFlush = true;
-  }
-}
+  void set({required Vector4 color}) {
+    set_vec4(get_member_offset(slot, 'color'), $setData, color);
 
-/// Generated UBO bindings for `MeadowUbo`
-class MeadowUbo extends UniformBufferObjectBindings {
-  MeadowUbo({required super.vertexShader, required super.fragmentShader})
-    : super(name: 'MeadowUbo');
-
-  void set({required double opacityStartStop, required double opacityEndStop}) {
-    set_float(
-      get_member_offset(slot, 'opacity_start_stop'),
-      data,
-      opacityStartStop,
-    );
-    set_float(
-      get_member_offset(slot, 'opacity_end_stop'),
-      data,
-      opacityEndStop,
-    );
-    needsFlush = true;
+    setInternal();
   }
 }
 
@@ -49,11 +29,12 @@ class TileUbo extends UniformBufferObjectBindings {
     required double extent,
     required double opacity,
   }) {
-    set_mat4(get_member_offset(slot, 'local_to_world'), data, localToWorld);
-    set_float(get_member_offset(slot, 'size'), data, size);
-    set_float(get_member_offset(slot, 'extent'), data, extent);
-    set_float(get_member_offset(slot, 'opacity'), data, opacity);
-    needsFlush = true;
+    set_mat4(get_member_offset(slot, 'local_to_world'), $setData, localToWorld);
+    set_float(get_member_offset(slot, 'size'), $setData, size);
+    set_float(get_member_offset(slot, 'extent'), $setData, extent);
+    set_float(get_member_offset(slot, 'opacity'), $setData, opacity);
+
+    setInternal();
   }
 }
 
@@ -67,10 +48,23 @@ class CameraUbo extends UniformBufferObjectBindings {
     required double zoom,
     required double pixelRatio,
   }) {
-    set_mat4(get_member_offset(slot, 'world_to_gl'), data, worldToGl);
-    set_float(get_member_offset(slot, 'zoom'), data, zoom);
-    set_float(get_member_offset(slot, 'pixel_ratio'), data, pixelRatio);
-    needsFlush = true;
+    set_mat4(get_member_offset(slot, 'world_to_gl'), $setData, worldToGl);
+    set_float(get_member_offset(slot, 'zoom'), $setData, zoom);
+    set_float(get_member_offset(slot, 'pixel_ratio'), $setData, pixelRatio);
+
+    setInternal();
+  }
+}
+
+/// Generated UBO bindings for `MeadowUbo`
+class MeadowUbo extends UniformBufferObjectBindings {
+  MeadowUbo({required super.vertexShader, required super.fragmentShader})
+    : super(name: 'MeadowUbo');
+
+  void set({required Vector2 opacityStops}) {
+    set_vec2(get_member_offset(slot, 'opacity_stops'), $setData, opacityStops);
+
+    setInternal();
   }
 }
 
@@ -79,18 +73,10 @@ class ScrubUbo extends UniformBufferObjectBindings {
   ScrubUbo({required super.vertexShader, required super.fragmentShader})
     : super(name: 'ScrubUbo');
 
-  void set({required double opacityStartStop, required double opacityEndStop}) {
-    set_float(
-      get_member_offset(slot, 'opacity_start_stop'),
-      data,
-      opacityStartStop,
-    );
-    set_float(
-      get_member_offset(slot, 'opacity_end_stop'),
-      data,
-      opacityEndStop,
-    );
-    needsFlush = true;
+  void set({required Vector2 opacityStops}) {
+    set_vec2(get_member_offset(slot, 'opacity_stops'), $setData, opacityStops);
+
+    setInternal();
   }
 }
 
@@ -99,18 +85,10 @@ class CropUbo extends UniformBufferObjectBindings {
   CropUbo({required super.vertexShader, required super.fragmentShader})
     : super(name: 'CropUbo');
 
-  void set({required double opacityStartStop, required double opacityEndStop}) {
-    set_float(
-      get_member_offset(slot, 'opacity_start_stop'),
-      data,
-      opacityStartStop,
-    );
-    set_float(
-      get_member_offset(slot, 'opacity_end_stop'),
-      data,
-      opacityEndStop,
-    );
-    needsFlush = true;
+  void set({required Vector2 opacityStops}) {
+    set_vec2(get_member_offset(slot, 'opacity_stops'), $setData, opacityStops);
+
+    setInternal();
   }
 }
 
@@ -119,18 +97,10 @@ class GlacierUbo extends UniformBufferObjectBindings {
   GlacierUbo({required super.vertexShader, required super.fragmentShader})
     : super(name: 'GlacierUbo');
 
-  void set({required double opacityStartStop, required double opacityEndStop}) {
-    set_float(
-      get_member_offset(slot, 'opacity_start_stop'),
-      data,
-      opacityStartStop,
-    );
-    set_float(
-      get_member_offset(slot, 'opacity_end_stop'),
-      data,
-      opacityEndStop,
-    );
-    needsFlush = true;
+  void set({required Vector2 opacityStops}) {
+    set_vec2(get_member_offset(slot, 'opacity_stops'), $setData, opacityStops);
+
+    setInternal();
   }
 }
 
@@ -139,18 +109,10 @@ class ForestUbo extends UniformBufferObjectBindings {
   ForestUbo({required super.vertexShader, required super.fragmentShader})
     : super(name: 'ForestUbo');
 
-  void set({required double opacityStartStop, required double opacityEndStop}) {
-    set_float(
-      get_member_offset(slot, 'opacity_start_stop'),
-      data,
-      opacityStartStop,
-    );
-    set_float(
-      get_member_offset(slot, 'opacity_end_stop'),
-      data,
-      opacityEndStop,
-    );
-    needsFlush = true;
+  void set({required Vector2 opacityStops}) {
+    set_vec2(get_member_offset(slot, 'opacity_stops'), $setData, opacityStops);
+
+    setInternal();
   }
 }
 
@@ -159,14 +121,10 @@ class ResidentialUbo extends UniformBufferObjectBindings {
   ResidentialUbo({required super.vertexShader, required super.fragmentShader})
     : super(name: 'ResidentialUbo');
 
-  void set({required double colorStartStop, required double colorEndStop}) {
-    set_float(
-      get_member_offset(slot, 'color_start_stop'),
-      data,
-      colorStartStop,
-    );
-    set_float(get_member_offset(slot, 'color_end_stop'), data, colorEndStop);
-    needsFlush = true;
+  void set({required Vector2 colorStops}) {
+    set_vec2(get_member_offset(slot, 'color_stops'), $setData, colorStops);
+
+    setInternal();
   }
 }
 
@@ -175,29 +133,10 @@ class IndustrialUbo extends UniformBufferObjectBindings {
   IndustrialUbo({required super.vertexShader, required super.fragmentShader})
     : super(name: 'IndustrialUbo');
 
-  void set({
-    required double opacityStartStop,
-    required double opacityEndStop,
-    required double colorStartStop,
-    required double colorEndStop,
-  }) {
-    set_float(
-      get_member_offset(slot, 'opacity_start_stop'),
-      data,
-      opacityStartStop,
-    );
-    set_float(
-      get_member_offset(slot, 'opacity_end_stop'),
-      data,
-      opacityEndStop,
-    );
-    set_float(
-      get_member_offset(slot, 'color_start_stop'),
-      data,
-      colorStartStop,
-    );
-    set_float(get_member_offset(slot, 'color_end_stop'), data, colorEndStop);
-    needsFlush = true;
+  void set({required Vector2 opacityStops}) {
+    set_vec2(get_member_offset(slot, 'opacity_stops'), $setData, opacityStops);
+
+    setInternal();
   }
 }
 
@@ -206,18 +145,10 @@ class CemeteryUbo extends UniformBufferObjectBindings {
   CemeteryUbo({required super.vertexShader, required super.fragmentShader})
     : super(name: 'CemeteryUbo');
 
-  void set({required double opacityStartStop, required double opacityEndStop}) {
-    set_float(
-      get_member_offset(slot, 'opacity_start_stop'),
-      data,
-      opacityStartStop,
-    );
-    set_float(
-      get_member_offset(slot, 'opacity_end_stop'),
-      data,
-      opacityEndStop,
-    );
-    needsFlush = true;
+  void set({required Vector2 opacityStops}) {
+    set_vec2(get_member_offset(slot, 'opacity_stops'), $setData, opacityStops);
+
+    setInternal();
   }
 }
 
@@ -226,18 +157,10 @@ class HospitalUbo extends UniformBufferObjectBindings {
   HospitalUbo({required super.vertexShader, required super.fragmentShader})
     : super(name: 'HospitalUbo');
 
-  void set({required double opacityStartStop, required double opacityEndStop}) {
-    set_float(
-      get_member_offset(slot, 'opacity_start_stop'),
-      data,
-      opacityStartStop,
-    );
-    set_float(
-      get_member_offset(slot, 'opacity_end_stop'),
-      data,
-      opacityEndStop,
-    );
-    needsFlush = true;
+  void set({required Vector2 opacityStops}) {
+    set_vec2(get_member_offset(slot, 'opacity_stops'), $setData, opacityStops);
+
+    setInternal();
   }
 }
 
@@ -246,18 +169,10 @@ class StadiumUbo extends UniformBufferObjectBindings {
   StadiumUbo({required super.vertexShader, required super.fragmentShader})
     : super(name: 'StadiumUbo');
 
-  void set({required double opacityStartStop, required double opacityEndStop}) {
-    set_float(
-      get_member_offset(slot, 'opacity_start_stop'),
-      data,
-      opacityStartStop,
-    );
-    set_float(
-      get_member_offset(slot, 'opacity_end_stop'),
-      data,
-      opacityEndStop,
-    );
-    needsFlush = true;
+  void set({required Vector2 opacityStops}) {
+    set_vec2(get_member_offset(slot, 'opacity_stops'), $setData, opacityStops);
+
+    setInternal();
   }
 }
 
@@ -266,18 +181,10 @@ class SchoolUbo extends UniformBufferObjectBindings {
   SchoolUbo({required super.vertexShader, required super.fragmentShader})
     : super(name: 'SchoolUbo');
 
-  void set({required double opacityStartStop, required double opacityEndStop}) {
-    set_float(
-      get_member_offset(slot, 'opacity_start_stop'),
-      data,
-      opacityStartStop,
-    );
-    set_float(
-      get_member_offset(slot, 'opacity_end_stop'),
-      data,
-      opacityEndStop,
-    );
-    needsFlush = true;
+  void set({required Vector2 opacityStops}) {
+    set_vec2(get_member_offset(slot, 'opacity_stops'), $setData, opacityStops);
+
+    setInternal();
   }
 }
 
@@ -286,14 +193,15 @@ class RiverTunnelUbo extends UniformBufferObjectBindings {
   RiverTunnelUbo({required super.vertexShader, required super.fragmentShader})
     : super(name: 'RiverTunnelUbo');
 
-  void set({required double widthStartStop, required double widthEndStop}) {
-    set_float(
-      get_member_offset(slot, 'width_start_stop'),
-      data,
-      widthStartStop,
+  void set({required Vector2 widthStops, required Vector2 dasharraySize}) {
+    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    set_vec2(
+      get_member_offset(slot, 'dasharray_size'),
+      $setData,
+      dasharraySize,
     );
-    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
-    needsFlush = true;
+
+    setInternal();
   }
 }
 
@@ -302,14 +210,10 @@ class RiverUbo extends UniformBufferObjectBindings {
   RiverUbo({required super.vertexShader, required super.fragmentShader})
     : super(name: 'RiverUbo');
 
-  void set({required double widthStartStop, required double widthEndStop}) {
-    set_float(
-      get_member_offset(slot, 'width_start_stop'),
-      data,
-      widthStartStop,
-    );
-    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
-    needsFlush = true;
+  void set({required Vector2 widthStops}) {
+    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+
+    setInternal();
   }
 }
 
@@ -318,14 +222,10 @@ class AerowayUbo extends UniformBufferObjectBindings {
   AerowayUbo({required super.vertexShader, required super.fragmentShader})
     : super(name: 'AerowayUbo');
 
-  void set({required double widthStartStop, required double widthEndStop}) {
-    set_float(
-      get_member_offset(slot, 'width_start_stop'),
-      data,
-      widthStartStop,
-    );
-    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
-    needsFlush = true;
+  void set({required Vector2 widthStops}) {
+    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+
+    setInternal();
   }
 }
 
@@ -335,36 +235,21 @@ class FerryLineUbo extends UniformBufferObjectBindings {
     : super(name: 'FerryLineUbo');
 
   void set({
-    required double colorStartStop,
-    required double colorEndStop,
-    required double opacityStartStop,
-    required double opacityEndStop,
-    required double widthStartStop,
-    required double widthEndStop,
+    required Vector2 colorStops,
+    required Vector2 opacityStops,
+    required Vector2 widthStops,
+    required Vector2 dasharraySize,
   }) {
-    set_float(
-      get_member_offset(slot, 'color_start_stop'),
-      data,
-      colorStartStop,
+    set_vec2(get_member_offset(slot, 'color_stops'), $setData, colorStops);
+    set_vec2(get_member_offset(slot, 'opacity_stops'), $setData, opacityStops);
+    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    set_vec2(
+      get_member_offset(slot, 'dasharray_size'),
+      $setData,
+      dasharraySize,
     );
-    set_float(get_member_offset(slot, 'color_end_stop'), data, colorEndStop);
-    set_float(
-      get_member_offset(slot, 'opacity_start_stop'),
-      data,
-      opacityStartStop,
-    );
-    set_float(
-      get_member_offset(slot, 'opacity_end_stop'),
-      data,
-      opacityEndStop,
-    );
-    set_float(
-      get_member_offset(slot, 'width_start_stop'),
-      data,
-      widthStartStop,
-    );
-    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
-    needsFlush = true;
+
+    setInternal();
   }
 }
 
@@ -373,14 +258,15 @@ class TunnelOutlineUbo extends UniformBufferObjectBindings {
   TunnelOutlineUbo({required super.vertexShader, required super.fragmentShader})
     : super(name: 'TunnelOutlineUbo');
 
-  void set({required double widthStartStop, required double widthEndStop}) {
-    set_float(
-      get_member_offset(slot, 'width_start_stop'),
-      data,
-      widthStartStop,
+  void set({required Vector2 widthStops, required Vector2 dasharraySize}) {
+    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    set_vec2(
+      get_member_offset(slot, 'dasharray_size'),
+      $setData,
+      dasharraySize,
     );
-    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
-    needsFlush = true;
+
+    setInternal();
   }
 }
 
@@ -389,14 +275,10 @@ class TunnelUbo extends UniformBufferObjectBindings {
   TunnelUbo({required super.vertexShader, required super.fragmentShader})
     : super(name: 'TunnelUbo');
 
-  void set({required double widthStartStop, required double widthEndStop}) {
-    set_float(
-      get_member_offset(slot, 'width_start_stop'),
-      data,
-      widthStartStop,
-    );
-    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
-    needsFlush = true;
+  void set({required Vector2 widthStops}) {
+    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+
+    setInternal();
   }
 }
 
@@ -405,14 +287,10 @@ class RailwayTunnelUbo extends UniformBufferObjectBindings {
   RailwayTunnelUbo({required super.vertexShader, required super.fragmentShader})
     : super(name: 'RailwayTunnelUbo');
 
-  void set({required double widthStartStop, required double widthEndStop}) {
-    set_float(
-      get_member_offset(slot, 'width_start_stop'),
-      data,
-      widthStartStop,
-    );
-    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
-    needsFlush = true;
+  void set({required Vector2 widthStops}) {
+    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+
+    setInternal();
   }
 }
 
@@ -423,14 +301,15 @@ class RailwayTunnelHatchingUbo extends UniformBufferObjectBindings {
     required super.fragmentShader,
   }) : super(name: 'RailwayTunnelHatchingUbo');
 
-  void set({required double widthStartStop, required double widthEndStop}) {
-    set_float(
-      get_member_offset(slot, 'width_start_stop'),
-      data,
-      widthStartStop,
+  void set({required Vector2 widthStops, required Vector2 dasharraySize}) {
+    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    set_vec2(
+      get_member_offset(slot, 'dasharray_size'),
+      $setData,
+      dasharraySize,
     );
-    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
-    needsFlush = true;
+
+    setInternal();
   }
 }
 
@@ -441,14 +320,10 @@ class FootwayTunnelOutlineUbo extends UniformBufferObjectBindings {
     required super.fragmentShader,
   }) : super(name: 'FootwayTunnelOutlineUbo');
 
-  void set({required double widthStartStop, required double widthEndStop}) {
-    set_float(
-      get_member_offset(slot, 'width_start_stop'),
-      data,
-      widthStartStop,
-    );
-    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
-    needsFlush = true;
+  void set({required Vector2 widthStops}) {
+    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+
+    setInternal();
   }
 }
 
@@ -457,14 +332,15 @@ class FootwayTunnelUbo extends UniformBufferObjectBindings {
   FootwayTunnelUbo({required super.vertexShader, required super.fragmentShader})
     : super(name: 'FootwayTunnelUbo');
 
-  void set({required double widthStartStop, required double widthEndStop}) {
-    set_float(
-      get_member_offset(slot, 'width_start_stop'),
-      data,
-      widthStartStop,
+  void set({required Vector2 widthStops, required Vector2 dasharraySize}) {
+    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    set_vec2(
+      get_member_offset(slot, 'dasharray_size'),
+      $setData,
+      dasharraySize,
     );
-    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
-    needsFlush = true;
+
+    setInternal();
   }
 }
 
@@ -473,14 +349,10 @@ class PierRoadUbo extends UniformBufferObjectBindings {
   PierRoadUbo({required super.vertexShader, required super.fragmentShader})
     : super(name: 'PierRoadUbo');
 
-  void set({required double widthStartStop, required double widthEndStop}) {
-    set_float(
-      get_member_offset(slot, 'width_start_stop'),
-      data,
-      widthStartStop,
-    );
-    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
-    needsFlush = true;
+  void set({required Vector2 widthStops}) {
+    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+
+    setInternal();
   }
 }
 
@@ -491,14 +363,10 @@ class MinorRoadOutlineUbo extends UniformBufferObjectBindings {
     required super.fragmentShader,
   }) : super(name: 'MinorRoadOutlineUbo');
 
-  void set({required double widthStartStop, required double widthEndStop}) {
-    set_float(
-      get_member_offset(slot, 'width_start_stop'),
-      data,
-      widthStartStop,
-    );
-    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
-    needsFlush = true;
+  void set({required Vector2 widthStops}) {
+    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+
+    setInternal();
   }
 }
 
@@ -509,14 +377,10 @@ class MajorRoadOutlineUbo extends UniformBufferObjectBindings {
     required super.fragmentShader,
   }) : super(name: 'MajorRoadOutlineUbo');
 
-  void set({required double widthStartStop, required double widthEndStop}) {
-    set_float(
-      get_member_offset(slot, 'width_start_stop'),
-      data,
-      widthStartStop,
-    );
-    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
-    needsFlush = true;
+  void set({required Vector2 widthStops}) {
+    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+
+    setInternal();
   }
 }
 
@@ -527,14 +391,10 @@ class HighwayOutlineUbo extends UniformBufferObjectBindings {
     required super.fragmentShader,
   }) : super(name: 'HighwayOutlineUbo');
 
-  void set({required double widthStartStop, required double widthEndStop}) {
-    set_float(
-      get_member_offset(slot, 'width_start_stop'),
-      data,
-      widthStartStop,
-    );
-    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
-    needsFlush = true;
+  void set({required Vector2 widthStops}) {
+    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+
+    setInternal();
   }
 }
 
@@ -545,14 +405,15 @@ class RoadUnderConstructionUbo extends UniformBufferObjectBindings {
     required super.fragmentShader,
   }) : super(name: 'RoadUnderConstructionUbo');
 
-  void set({required double widthStartStop, required double widthEndStop}) {
-    set_float(
-      get_member_offset(slot, 'width_start_stop'),
-      data,
-      widthStartStop,
+  void set({required Vector2 widthStops, required Vector2 dasharraySize}) {
+    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    set_vec2(
+      get_member_offset(slot, 'dasharray_size'),
+      $setData,
+      dasharraySize,
     );
-    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
-    needsFlush = true;
+
+    setInternal();
   }
 }
 
@@ -561,14 +422,10 @@ class MinorRoadUbo extends UniformBufferObjectBindings {
   MinorRoadUbo({required super.vertexShader, required super.fragmentShader})
     : super(name: 'MinorRoadUbo');
 
-  void set({required double widthStartStop, required double widthEndStop}) {
-    set_float(
-      get_member_offset(slot, 'width_start_stop'),
-      data,
-      widthStartStop,
-    );
-    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
-    needsFlush = true;
+  void set({required Vector2 widthStops}) {
+    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+
+    setInternal();
   }
 }
 
@@ -577,14 +434,11 @@ class MajorRoadUbo extends UniformBufferObjectBindings {
   MajorRoadUbo({required super.vertexShader, required super.fragmentShader})
     : super(name: 'MajorRoadUbo');
 
-  void set({required double widthStartStop, required double widthEndStop}) {
-    set_float(
-      get_member_offset(slot, 'width_start_stop'),
-      data,
-      widthStartStop,
-    );
-    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
-    needsFlush = true;
+  void set({required Vector2 colorStops, required Vector2 widthStops}) {
+    set_vec2(get_member_offset(slot, 'color_stops'), $setData, colorStops);
+    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+
+    setInternal();
   }
 }
 
@@ -593,14 +447,11 @@ class HighwayUbo extends UniformBufferObjectBindings {
   HighwayUbo({required super.vertexShader, required super.fragmentShader})
     : super(name: 'HighwayUbo');
 
-  void set({required double widthStartStop, required double widthEndStop}) {
-    set_float(
-      get_member_offset(slot, 'width_start_stop'),
-      data,
-      widthStartStop,
-    );
-    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
-    needsFlush = true;
+  void set({required Vector2 colorStops, required Vector2 widthStops}) {
+    set_vec2(get_member_offset(slot, 'color_stops'), $setData, colorStops);
+    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+
+    setInternal();
   }
 }
 
@@ -609,14 +460,27 @@ class PathOutlineUbo extends UniformBufferObjectBindings {
   PathOutlineUbo({required super.vertexShader, required super.fragmentShader})
     : super(name: 'PathOutlineUbo');
 
-  void set({required double widthStartStop, required double widthEndStop}) {
-    set_float(
-      get_member_offset(slot, 'width_start_stop'),
-      data,
-      widthStartStop,
+  void set({required Vector2 widthStops}) {
+    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+
+    setInternal();
+  }
+}
+
+/// Generated UBO bindings for `PathMinorUbo`
+class PathMinorUbo extends UniformBufferObjectBindings {
+  PathMinorUbo({required super.vertexShader, required super.fragmentShader})
+    : super(name: 'PathMinorUbo');
+
+  void set({required Vector2 widthStops, required Vector2 dasharraySize}) {
+    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    set_vec2(
+      get_member_offset(slot, 'dasharray_size'),
+      $setData,
+      dasharraySize,
     );
-    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
-    needsFlush = true;
+
+    setInternal();
   }
 }
 
@@ -625,14 +489,15 @@ class PathUbo extends UniformBufferObjectBindings {
   PathUbo({required super.vertexShader, required super.fragmentShader})
     : super(name: 'PathUbo');
 
-  void set({required double widthStartStop, required double widthEndStop}) {
-    set_float(
-      get_member_offset(slot, 'width_start_stop'),
-      data,
-      widthStartStop,
+  void set({required Vector2 widthStops, required Vector2 dasharraySize}) {
+    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    set_vec2(
+      get_member_offset(slot, 'dasharray_size'),
+      $setData,
+      dasharraySize,
     );
-    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
-    needsFlush = true;
+
+    setInternal();
   }
 }
 
@@ -641,25 +506,11 @@ class MajorRailUbo extends UniformBufferObjectBindings {
   MajorRailUbo({required super.vertexShader, required super.fragmentShader})
     : super(name: 'MajorRailUbo');
 
-  void set({
-    required double colorStartStop,
-    required double colorEndStop,
-    required double widthStartStop,
-    required double widthEndStop,
-  }) {
-    set_float(
-      get_member_offset(slot, 'color_start_stop'),
-      data,
-      colorStartStop,
-    );
-    set_float(get_member_offset(slot, 'color_end_stop'), data, colorEndStop);
-    set_float(
-      get_member_offset(slot, 'width_start_stop'),
-      data,
-      widthStartStop,
-    );
-    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
-    needsFlush = true;
+  void set({required Vector2 colorStops, required Vector2 widthStops}) {
+    set_vec2(get_member_offset(slot, 'color_stops'), $setData, colorStops);
+    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+
+    setInternal();
   }
 }
 
@@ -670,14 +521,20 @@ class MajorRailHatchingUbo extends UniformBufferObjectBindings {
     required super.fragmentShader,
   }) : super(name: 'MajorRailHatchingUbo');
 
-  void set({required double widthStartStop, required double widthEndStop}) {
-    set_float(
-      get_member_offset(slot, 'width_start_stop'),
-      data,
-      widthStartStop,
+  void set({
+    required Vector2 colorStops,
+    required Vector2 widthStops,
+    required Vector2 dasharraySize,
+  }) {
+    set_vec2(get_member_offset(slot, 'color_stops'), $setData, colorStops);
+    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    set_vec2(
+      get_member_offset(slot, 'dasharray_size'),
+      $setData,
+      dasharraySize,
     );
-    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
-    needsFlush = true;
+
+    setInternal();
   }
 }
 
@@ -686,14 +543,10 @@ class MinorRailUbo extends UniformBufferObjectBindings {
   MinorRailUbo({required super.vertexShader, required super.fragmentShader})
     : super(name: 'MinorRailUbo');
 
-  void set({required double widthStartStop, required double widthEndStop}) {
-    set_float(
-      get_member_offset(slot, 'width_start_stop'),
-      data,
-      widthStartStop,
-    );
-    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
-    needsFlush = true;
+  void set({required Vector2 widthStops}) {
+    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+
+    setInternal();
   }
 }
 
@@ -704,14 +557,15 @@ class MinorRailHatchingUbo extends UniformBufferObjectBindings {
     required super.fragmentShader,
   }) : super(name: 'MinorRailHatchingUbo');
 
-  void set({required double widthStartStop, required double widthEndStop}) {
-    set_float(
-      get_member_offset(slot, 'width_start_stop'),
-      data,
-      widthStartStop,
+  void set({required Vector2 widthStops, required Vector2 dasharraySize}) {
+    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    set_vec2(
+      get_member_offset(slot, 'dasharray_size'),
+      $setData,
+      dasharraySize,
     );
-    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
-    needsFlush = true;
+
+    setInternal();
   }
 }
 
@@ -722,14 +576,10 @@ class AqueductOutlineUbo extends UniformBufferObjectBindings {
     required super.fragmentShader,
   }) : super(name: 'AqueductOutlineUbo');
 
-  void set({required double widthStartStop, required double widthEndStop}) {
-    set_float(
-      get_member_offset(slot, 'width_start_stop'),
-      data,
-      widthStartStop,
-    );
-    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
-    needsFlush = true;
+  void set({required Vector2 widthStops}) {
+    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+
+    setInternal();
   }
 }
 
@@ -738,14 +588,10 @@ class AqueductUbo extends UniformBufferObjectBindings {
   AqueductUbo({required super.vertexShader, required super.fragmentShader})
     : super(name: 'AqueductUbo');
 
-  void set({required double widthStartStop, required double widthEndStop}) {
-    set_float(
-      get_member_offset(slot, 'width_start_stop'),
-      data,
-      widthStartStop,
-    );
-    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
-    needsFlush = true;
+  void set({required Vector2 widthStops}) {
+    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+
+    setInternal();
   }
 }
 
@@ -754,14 +600,10 @@ class CablecarUbo extends UniformBufferObjectBindings {
   CablecarUbo({required super.vertexShader, required super.fragmentShader})
     : super(name: 'CablecarUbo');
 
-  void set({required double widthStartStop, required double widthEndStop}) {
-    set_float(
-      get_member_offset(slot, 'width_start_stop'),
-      data,
-      widthStartStop,
-    );
-    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
-    needsFlush = true;
+  void set({required Vector2 widthStops}) {
+    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+
+    setInternal();
   }
 }
 
@@ -770,14 +612,15 @@ class CablecarDashUbo extends UniformBufferObjectBindings {
   CablecarDashUbo({required super.vertexShader, required super.fragmentShader})
     : super(name: 'CablecarDashUbo');
 
-  void set({required double widthStartStop, required double widthEndStop}) {
-    set_float(
-      get_member_offset(slot, 'width_start_stop'),
-      data,
-      widthStartStop,
+  void set({required Vector2 widthStops, required Vector2 dasharraySize}) {
+    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    set_vec2(
+      get_member_offset(slot, 'dasharray_size'),
+      $setData,
+      dasharraySize,
     );
-    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
-    needsFlush = true;
+
+    setInternal();
   }
 }
 
@@ -786,14 +629,15 @@ class OtherBorderUbo extends UniformBufferObjectBindings {
   OtherBorderUbo({required super.vertexShader, required super.fragmentShader})
     : super(name: 'OtherBorderUbo');
 
-  void set({required double widthStartStop, required double widthEndStop}) {
-    set_float(
-      get_member_offset(slot, 'width_start_stop'),
-      data,
-      widthStartStop,
+  void set({required Vector2 widthStops, required Vector2 dasharraySize}) {
+    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    set_vec2(
+      get_member_offset(slot, 'dasharray_size'),
+      $setData,
+      dasharraySize,
     );
-    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
-    needsFlush = true;
+
+    setInternal();
   }
 }
 
@@ -804,14 +648,15 @@ class DisputedBorderUbo extends UniformBufferObjectBindings {
     required super.fragmentShader,
   }) : super(name: 'DisputedBorderUbo');
 
-  void set({required double widthStartStop, required double widthEndStop}) {
-    set_float(
-      get_member_offset(slot, 'width_start_stop'),
-      data,
-      widthStartStop,
+  void set({required Vector2 widthStops, required Vector2 dasharraySize}) {
+    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+    set_vec2(
+      get_member_offset(slot, 'dasharray_size'),
+      $setData,
+      dasharraySize,
     );
-    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
-    needsFlush = true;
+
+    setInternal();
   }
 }
 
@@ -820,14 +665,10 @@ class CountryBorderUbo extends UniformBufferObjectBindings {
   CountryBorderUbo({required super.vertexShader, required super.fragmentShader})
     : super(name: 'CountryBorderUbo');
 
-  void set({required double widthStartStop, required double widthEndStop}) {
-    set_float(
-      get_member_offset(slot, 'width_start_stop'),
-      data,
-      widthStartStop,
-    );
-    set_float(get_member_offset(slot, 'width_end_stop'), data, widthEndStop);
-    needsFlush = true;
+  void set({required Vector2 widthStops}) {
+    set_vec2(get_member_offset(slot, 'width_stops'), $setData, widthStops);
+
+    setInternal();
   }
 }
 
@@ -840,9 +681,9 @@ class BackgroundVertexShaderBindings extends VertexShaderBindings {
   ///
   /// Ensure that [allocateVertices] has been called before calling this method.
   void setVertex(int index, {required Vector2 position}) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
 
-    set_vec2(offset + 0, vertexData!, position);
+    setVertexInternal(index);
   }
 }
 
@@ -868,17 +709,45 @@ class BackgroundRenderPipelineBindings
             vertexShader: shaderLibrary['background_vert']!,
             fragmentShader: shaderLibrary['background_frag']!,
           ),
+          TileUbo(
+            vertexShader: shaderLibrary['background_vert']!,
+            fragmentShader: shaderLibrary['background_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['background_vert']!,
+            fragmentShader: shaderLibrary['background_frag']!,
+          ),
         ],
+        samplers: [],
       );
 
   late final BackgroundUbo backgroundUbo = ubos[0] as BackgroundUbo;
+  late final TileUbo tileUbo = ubos[1] as TileUbo;
+  late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
+  /// Sets the uniforms for this shader.
+  void setUniforms({
     required Vector4 backgroundUboColor,
-    required double backgroundUboOpacity,
+    required Matrix4 tileLocalToWorld,
+    required double tileSize,
+    required double tileExtent,
+    required double tileOpacity,
+    required Matrix4 cameraWorldToGl,
+    required double cameraZoom,
+    required double cameraPixelRatio,
   }) {
-    backgroundUbo.set(color: backgroundUboColor, opacity: backgroundUboOpacity);
+    backgroundUbo.set(color: backgroundUboColor);
+    tileUbo.set(
+      localToWorld: tileLocalToWorld,
+      size: tileSize,
+      extent: tileExtent,
+      opacity: tileOpacity,
+    );
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
   }
 }
 
@@ -896,11 +765,11 @@ class MeadowVertexShaderBindings extends VertexShaderBindings {
     required double opacityStartValue,
     required double opacityEndValue,
   }) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
+    set_float(8, $setVertexData, opacityStartValue);
+    set_float(12, $setVertexData, opacityEndValue);
 
-    set_vec2(offset + 0, vertexData!, position);
-    set_float(offset + 8, vertexData!, opacityStartValue);
-    set_float(offset + 12, vertexData!, opacityEndValue);
+    setVertexInternal(index);
   }
 }
 
@@ -935,16 +804,16 @@ class MeadowRenderPipelineBindings
             fragmentShader: shaderLibrary['meadow_frag']!,
           ),
         ],
+        samplers: [],
       );
 
   late final MeadowUbo meadowUbo = ubos[0] as MeadowUbo;
   late final TileUbo tileUbo = ubos[1] as TileUbo;
   late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
-    required double meadowUboOpacityStartStop,
-    required double meadowUboOpacityEndStop,
+  /// Sets the uniforms for this shader.
+  void setUniforms({
+    required Vector2 meadowUboOpacityStops,
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -953,10 +822,7 @@ class MeadowRenderPipelineBindings
     required double cameraZoom,
     required double cameraPixelRatio,
   }) {
-    meadowUbo.set(
-      opacityStartStop: meadowUboOpacityStartStop,
-      opacityEndStop: meadowUboOpacityEndStop,
-    );
+    meadowUbo.set(opacityStops: meadowUboOpacityStops);
     tileUbo.set(
       localToWorld: tileLocalToWorld,
       size: tileSize,
@@ -985,11 +851,11 @@ class ScrubVertexShaderBindings extends VertexShaderBindings {
     required double opacityStartValue,
     required double opacityEndValue,
   }) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
+    set_float(8, $setVertexData, opacityStartValue);
+    set_float(12, $setVertexData, opacityEndValue);
 
-    set_vec2(offset + 0, vertexData!, position);
-    set_float(offset + 8, vertexData!, opacityStartValue);
-    set_float(offset + 12, vertexData!, opacityEndValue);
+    setVertexInternal(index);
   }
 }
 
@@ -1024,16 +890,16 @@ class ScrubRenderPipelineBindings
             fragmentShader: shaderLibrary['scrub_frag']!,
           ),
         ],
+        samplers: [],
       );
 
   late final ScrubUbo scrubUbo = ubos[0] as ScrubUbo;
   late final TileUbo tileUbo = ubos[1] as TileUbo;
   late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
-    required double scrubUboOpacityStartStop,
-    required double scrubUboOpacityEndStop,
+  /// Sets the uniforms for this shader.
+  void setUniforms({
+    required Vector2 scrubUboOpacityStops,
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -1042,10 +908,7 @@ class ScrubRenderPipelineBindings
     required double cameraZoom,
     required double cameraPixelRatio,
   }) {
-    scrubUbo.set(
-      opacityStartStop: scrubUboOpacityStartStop,
-      opacityEndStop: scrubUboOpacityEndStop,
-    );
+    scrubUbo.set(opacityStops: scrubUboOpacityStops);
     tileUbo.set(
       localToWorld: tileLocalToWorld,
       size: tileSize,
@@ -1074,11 +937,11 @@ class CropVertexShaderBindings extends VertexShaderBindings {
     required double opacityStartValue,
     required double opacityEndValue,
   }) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
+    set_float(8, $setVertexData, opacityStartValue);
+    set_float(12, $setVertexData, opacityEndValue);
 
-    set_vec2(offset + 0, vertexData!, position);
-    set_float(offset + 8, vertexData!, opacityStartValue);
-    set_float(offset + 12, vertexData!, opacityEndValue);
+    setVertexInternal(index);
   }
 }
 
@@ -1113,16 +976,16 @@ class CropRenderPipelineBindings
             fragmentShader: shaderLibrary['crop_frag']!,
           ),
         ],
+        samplers: [],
       );
 
   late final CropUbo cropUbo = ubos[0] as CropUbo;
   late final TileUbo tileUbo = ubos[1] as TileUbo;
   late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
-    required double cropUboOpacityStartStop,
-    required double cropUboOpacityEndStop,
+  /// Sets the uniforms for this shader.
+  void setUniforms({
+    required Vector2 cropUboOpacityStops,
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -1131,10 +994,7 @@ class CropRenderPipelineBindings
     required double cameraZoom,
     required double cameraPixelRatio,
   }) {
-    cropUbo.set(
-      opacityStartStop: cropUboOpacityStartStop,
-      opacityEndStop: cropUboOpacityEndStop,
-    );
+    cropUbo.set(opacityStops: cropUboOpacityStops);
     tileUbo.set(
       localToWorld: tileLocalToWorld,
       size: tileSize,
@@ -1163,11 +1023,11 @@ class GlacierVertexShaderBindings extends VertexShaderBindings {
     required double opacityStartValue,
     required double opacityEndValue,
   }) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
+    set_float(8, $setVertexData, opacityStartValue);
+    set_float(12, $setVertexData, opacityEndValue);
 
-    set_vec2(offset + 0, vertexData!, position);
-    set_float(offset + 8, vertexData!, opacityStartValue);
-    set_float(offset + 12, vertexData!, opacityEndValue);
+    setVertexInternal(index);
   }
 }
 
@@ -1202,16 +1062,16 @@ class GlacierRenderPipelineBindings
             fragmentShader: shaderLibrary['glacier_frag']!,
           ),
         ],
+        samplers: [],
       );
 
   late final GlacierUbo glacierUbo = ubos[0] as GlacierUbo;
   late final TileUbo tileUbo = ubos[1] as TileUbo;
   late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
-    required double glacierUboOpacityStartStop,
-    required double glacierUboOpacityEndStop,
+  /// Sets the uniforms for this shader.
+  void setUniforms({
+    required Vector2 glacierUboOpacityStops,
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -1220,10 +1080,7 @@ class GlacierRenderPipelineBindings
     required double cameraZoom,
     required double cameraPixelRatio,
   }) {
-    glacierUbo.set(
-      opacityStartStop: glacierUboOpacityStartStop,
-      opacityEndStop: glacierUboOpacityEndStop,
-    );
+    glacierUbo.set(opacityStops: glacierUboOpacityStops);
     tileUbo.set(
       localToWorld: tileLocalToWorld,
       size: tileSize,
@@ -1252,11 +1109,11 @@ class ForestVertexShaderBindings extends VertexShaderBindings {
     required double opacityStartValue,
     required double opacityEndValue,
   }) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
+    set_float(8, $setVertexData, opacityStartValue);
+    set_float(12, $setVertexData, opacityEndValue);
 
-    set_vec2(offset + 0, vertexData!, position);
-    set_float(offset + 8, vertexData!, opacityStartValue);
-    set_float(offset + 12, vertexData!, opacityEndValue);
+    setVertexInternal(index);
   }
 }
 
@@ -1291,16 +1148,16 @@ class ForestRenderPipelineBindings
             fragmentShader: shaderLibrary['forest_frag']!,
           ),
         ],
+        samplers: [],
       );
 
   late final ForestUbo forestUbo = ubos[0] as ForestUbo;
   late final TileUbo tileUbo = ubos[1] as TileUbo;
   late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
-    required double forestUboOpacityStartStop,
-    required double forestUboOpacityEndStop,
+  /// Sets the uniforms for this shader.
+  void setUniforms({
+    required Vector2 forestUboOpacityStops,
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -1309,10 +1166,7 @@ class ForestRenderPipelineBindings
     required double cameraZoom,
     required double cameraPixelRatio,
   }) {
-    forestUbo.set(
-      opacityStartStop: forestUboOpacityStartStop,
-      opacityEndStop: forestUboOpacityEndStop,
-    );
+    forestUbo.set(opacityStops: forestUboOpacityStops);
     tileUbo.set(
       localToWorld: tileLocalToWorld,
       size: tileSize,
@@ -1336,9 +1190,9 @@ class SandVertexShaderBindings extends VertexShaderBindings {
   ///
   /// Ensure that [allocateVertices] has been called before calling this method.
   void setVertex(int index, {required Vector2 position}) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
 
-    set_vec2(offset + 0, vertexData!, position);
+    setVertexInternal(index);
   }
 }
 
@@ -1369,13 +1223,14 @@ class SandRenderPipelineBindings
             fragmentShader: shaderLibrary['sand_frag']!,
           ),
         ],
+        samplers: [],
       );
 
   late final TileUbo tileUbo = ubos[0] as TileUbo;
   late final CameraUbo cameraUbo = ubos[1] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
+  /// Sets the uniforms for this shader.
+  void setUniforms({
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -1407,9 +1262,9 @@ class WoodVertexShaderBindings extends VertexShaderBindings {
   ///
   /// Ensure that [allocateVertices] has been called before calling this method.
   void setVertex(int index, {required Vector2 position}) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
 
-    set_vec2(offset + 0, vertexData!, position);
+    setVertexInternal(index);
   }
 }
 
@@ -1440,13 +1295,14 @@ class WoodRenderPipelineBindings
             fragmentShader: shaderLibrary['wood_frag']!,
           ),
         ],
+        samplers: [],
       );
 
   late final TileUbo tileUbo = ubos[0] as TileUbo;
   late final CameraUbo cameraUbo = ubos[1] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
+  /// Sets the uniforms for this shader.
+  void setUniforms({
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -1483,11 +1339,11 @@ class ResidentialVertexShaderBindings extends VertexShaderBindings {
     required Vector4 colorStartValue,
     required Vector4 colorEndValue,
   }) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
+    set_vec4(8, $setVertexData, colorStartValue);
+    set_vec4(24, $setVertexData, colorEndValue);
 
-    set_vec2(offset + 0, vertexData!, position);
-    set_vec4(offset + 8, vertexData!, colorStartValue);
-    set_vec4(offset + 24, vertexData!, colorEndValue);
+    setVertexInternal(index);
   }
 }
 
@@ -1522,16 +1378,16 @@ class ResidentialRenderPipelineBindings
             fragmentShader: shaderLibrary['residential_frag']!,
           ),
         ],
+        samplers: [],
       );
 
   late final ResidentialUbo residentialUbo = ubos[0] as ResidentialUbo;
   late final TileUbo tileUbo = ubos[1] as TileUbo;
   late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
-    required double residentialUboColorStartStop,
-    required double residentialUboColorEndStop,
+  /// Sets the uniforms for this shader.
+  void setUniforms({
+    required Vector2 residentialUboColorStops,
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -1540,10 +1396,7 @@ class ResidentialRenderPipelineBindings
     required double cameraZoom,
     required double cameraPixelRatio,
   }) {
-    residentialUbo.set(
-      colorStartStop: residentialUboColorStartStop,
-      colorEndStop: residentialUboColorEndStop,
-    );
+    residentialUbo.set(colorStops: residentialUboColorStops);
     tileUbo.set(
       localToWorld: tileLocalToWorld,
       size: tileSize,
@@ -1561,7 +1414,7 @@ class ResidentialRenderPipelineBindings
 /// Generated bindings for the vertex shader `industrial`
 class IndustrialVertexShaderBindings extends VertexShaderBindings {
   IndustrialVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
-    : super(bytesPerVertex: 48, shader: shaderLibrary['industrial_vert']!);
+    : super(bytesPerVertex: 16, shader: shaderLibrary['industrial_vert']!);
 
   /// Sets attributes for a vertex at [index].
   ///
@@ -1571,16 +1424,12 @@ class IndustrialVertexShaderBindings extends VertexShaderBindings {
     required Vector2 position,
     required double opacityStartValue,
     required double opacityEndValue,
-    required Vector4 colorStartValue,
-    required Vector4 colorEndValue,
   }) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
+    set_float(8, $setVertexData, opacityStartValue);
+    set_float(12, $setVertexData, opacityEndValue);
 
-    set_vec2(offset + 0, vertexData!, position);
-    set_float(offset + 8, vertexData!, opacityStartValue);
-    set_float(offset + 12, vertexData!, opacityEndValue);
-    set_vec4(offset + 16, vertexData!, colorStartValue);
-    set_vec4(offset + 32, vertexData!, colorEndValue);
+    setVertexInternal(index);
   }
 }
 
@@ -1615,18 +1464,16 @@ class IndustrialRenderPipelineBindings
             fragmentShader: shaderLibrary['industrial_frag']!,
           ),
         ],
+        samplers: [],
       );
 
   late final IndustrialUbo industrialUbo = ubos[0] as IndustrialUbo;
   late final TileUbo tileUbo = ubos[1] as TileUbo;
   late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
-    required double industrialUboOpacityStartStop,
-    required double industrialUboOpacityEndStop,
-    required double industrialUboColorStartStop,
-    required double industrialUboColorEndStop,
+  /// Sets the uniforms for this shader.
+  void setUniforms({
+    required Vector2 industrialUboOpacityStops,
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -1635,12 +1482,7 @@ class IndustrialRenderPipelineBindings
     required double cameraZoom,
     required double cameraPixelRatio,
   }) {
-    industrialUbo.set(
-      opacityStartStop: industrialUboOpacityStartStop,
-      opacityEndStop: industrialUboOpacityEndStop,
-      colorStartStop: industrialUboColorStartStop,
-      colorEndStop: industrialUboColorEndStop,
-    );
+    industrialUbo.set(opacityStops: industrialUboOpacityStops);
     tileUbo.set(
       localToWorld: tileLocalToWorld,
       size: tileSize,
@@ -1664,9 +1506,9 @@ class GrassVertexShaderBindings extends VertexShaderBindings {
   ///
   /// Ensure that [allocateVertices] has been called before calling this method.
   void setVertex(int index, {required Vector2 position}) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
 
-    set_vec2(offset + 0, vertexData!, position);
+    setVertexInternal(index);
   }
 }
 
@@ -1697,13 +1539,14 @@ class GrassRenderPipelineBindings
             fragmentShader: shaderLibrary['grass_frag']!,
           ),
         ],
+        samplers: [],
       );
 
   late final TileUbo tileUbo = ubos[0] as TileUbo;
   late final CameraUbo cameraUbo = ubos[1] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
+  /// Sets the uniforms for this shader.
+  void setUniforms({
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -1735,9 +1578,9 @@ class AirportZoneVertexShaderBindings extends VertexShaderBindings {
   ///
   /// Ensure that [allocateVertices] has been called before calling this method.
   void setVertex(int index, {required Vector2 position}) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
 
-    set_vec2(offset + 0, vertexData!, position);
+    setVertexInternal(index);
   }
 }
 
@@ -1768,13 +1611,14 @@ class AirportZoneRenderPipelineBindings
             fragmentShader: shaderLibrary['airport_zone_frag']!,
           ),
         ],
+        samplers: [],
       );
 
   late final TileUbo tileUbo = ubos[0] as TileUbo;
   late final CameraUbo cameraUbo = ubos[1] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
+  /// Sets the uniforms for this shader.
+  void setUniforms({
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -1806,9 +1650,9 @@ class PedestrianVertexShaderBindings extends VertexShaderBindings {
   ///
   /// Ensure that [allocateVertices] has been called before calling this method.
   void setVertex(int index, {required Vector2 position}) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
 
-    set_vec2(offset + 0, vertexData!, position);
+    setVertexInternal(index);
   }
 }
 
@@ -1839,13 +1683,14 @@ class PedestrianRenderPipelineBindings
             fragmentShader: shaderLibrary['pedestrian_frag']!,
           ),
         ],
+        samplers: [],
       );
 
   late final TileUbo tileUbo = ubos[0] as TileUbo;
   late final CameraUbo cameraUbo = ubos[1] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
+  /// Sets the uniforms for this shader.
+  void setUniforms({
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -1882,11 +1727,11 @@ class CemeteryVertexShaderBindings extends VertexShaderBindings {
     required double opacityStartValue,
     required double opacityEndValue,
   }) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
+    set_float(8, $setVertexData, opacityStartValue);
+    set_float(12, $setVertexData, opacityEndValue);
 
-    set_vec2(offset + 0, vertexData!, position);
-    set_float(offset + 8, vertexData!, opacityStartValue);
-    set_float(offset + 12, vertexData!, opacityEndValue);
+    setVertexInternal(index);
   }
 }
 
@@ -1921,16 +1766,16 @@ class CemeteryRenderPipelineBindings
             fragmentShader: shaderLibrary['cemetery_frag']!,
           ),
         ],
+        samplers: [],
       );
 
   late final CemeteryUbo cemeteryUbo = ubos[0] as CemeteryUbo;
   late final TileUbo tileUbo = ubos[1] as TileUbo;
   late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
-    required double cemeteryUboOpacityStartStop,
-    required double cemeteryUboOpacityEndStop,
+  /// Sets the uniforms for this shader.
+  void setUniforms({
+    required Vector2 cemeteryUboOpacityStops,
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -1939,10 +1784,7 @@ class CemeteryRenderPipelineBindings
     required double cameraZoom,
     required double cameraPixelRatio,
   }) {
-    cemeteryUbo.set(
-      opacityStartStop: cemeteryUboOpacityStartStop,
-      opacityEndStop: cemeteryUboOpacityEndStop,
-    );
+    cemeteryUbo.set(opacityStops: cemeteryUboOpacityStops);
     tileUbo.set(
       localToWorld: tileLocalToWorld,
       size: tileSize,
@@ -1971,11 +1813,11 @@ class HospitalVertexShaderBindings extends VertexShaderBindings {
     required double opacityStartValue,
     required double opacityEndValue,
   }) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
+    set_float(8, $setVertexData, opacityStartValue);
+    set_float(12, $setVertexData, opacityEndValue);
 
-    set_vec2(offset + 0, vertexData!, position);
-    set_float(offset + 8, vertexData!, opacityStartValue);
-    set_float(offset + 12, vertexData!, opacityEndValue);
+    setVertexInternal(index);
   }
 }
 
@@ -2010,16 +1852,16 @@ class HospitalRenderPipelineBindings
             fragmentShader: shaderLibrary['hospital_frag']!,
           ),
         ],
+        samplers: [],
       );
 
   late final HospitalUbo hospitalUbo = ubos[0] as HospitalUbo;
   late final TileUbo tileUbo = ubos[1] as TileUbo;
   late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
-    required double hospitalUboOpacityStartStop,
-    required double hospitalUboOpacityEndStop,
+  /// Sets the uniforms for this shader.
+  void setUniforms({
+    required Vector2 hospitalUboOpacityStops,
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -2028,10 +1870,7 @@ class HospitalRenderPipelineBindings
     required double cameraZoom,
     required double cameraPixelRatio,
   }) {
-    hospitalUbo.set(
-      opacityStartStop: hospitalUboOpacityStartStop,
-      opacityEndStop: hospitalUboOpacityEndStop,
-    );
+    hospitalUbo.set(opacityStops: hospitalUboOpacityStops);
     tileUbo.set(
       localToWorld: tileLocalToWorld,
       size: tileSize,
@@ -2060,11 +1899,11 @@ class StadiumVertexShaderBindings extends VertexShaderBindings {
     required double opacityStartValue,
     required double opacityEndValue,
   }) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
+    set_float(8, $setVertexData, opacityStartValue);
+    set_float(12, $setVertexData, opacityEndValue);
 
-    set_vec2(offset + 0, vertexData!, position);
-    set_float(offset + 8, vertexData!, opacityStartValue);
-    set_float(offset + 12, vertexData!, opacityEndValue);
+    setVertexInternal(index);
   }
 }
 
@@ -2099,16 +1938,16 @@ class StadiumRenderPipelineBindings
             fragmentShader: shaderLibrary['stadium_frag']!,
           ),
         ],
+        samplers: [],
       );
 
   late final StadiumUbo stadiumUbo = ubos[0] as StadiumUbo;
   late final TileUbo tileUbo = ubos[1] as TileUbo;
   late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
-    required double stadiumUboOpacityStartStop,
-    required double stadiumUboOpacityEndStop,
+  /// Sets the uniforms for this shader.
+  void setUniforms({
+    required Vector2 stadiumUboOpacityStops,
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -2117,10 +1956,7 @@ class StadiumRenderPipelineBindings
     required double cameraZoom,
     required double cameraPixelRatio,
   }) {
-    stadiumUbo.set(
-      opacityStartStop: stadiumUboOpacityStartStop,
-      opacityEndStop: stadiumUboOpacityEndStop,
-    );
+    stadiumUbo.set(opacityStops: stadiumUboOpacityStops);
     tileUbo.set(
       localToWorld: tileLocalToWorld,
       size: tileSize,
@@ -2149,11 +1985,11 @@ class SchoolVertexShaderBindings extends VertexShaderBindings {
     required double opacityStartValue,
     required double opacityEndValue,
   }) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
+    set_float(8, $setVertexData, opacityStartValue);
+    set_float(12, $setVertexData, opacityEndValue);
 
-    set_vec2(offset + 0, vertexData!, position);
-    set_float(offset + 8, vertexData!, opacityStartValue);
-    set_float(offset + 12, vertexData!, opacityEndValue);
+    setVertexInternal(index);
   }
 }
 
@@ -2188,16 +2024,16 @@ class SchoolRenderPipelineBindings
             fragmentShader: shaderLibrary['school_frag']!,
           ),
         ],
+        samplers: [],
       );
 
   late final SchoolUbo schoolUbo = ubos[0] as SchoolUbo;
   late final TileUbo tileUbo = ubos[1] as TileUbo;
   late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
-    required double schoolUboOpacityStartStop,
-    required double schoolUboOpacityEndStop,
+  /// Sets the uniforms for this shader.
+  void setUniforms({
+    required Vector2 schoolUboOpacityStops,
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -2206,10 +2042,7 @@ class SchoolRenderPipelineBindings
     required double cameraZoom,
     required double cameraPixelRatio,
   }) {
-    schoolUbo.set(
-      opacityStartStop: schoolUboOpacityStartStop,
-      opacityEndStop: schoolUboOpacityEndStop,
-    );
+    schoolUbo.set(opacityStops: schoolUboOpacityStops);
     tileUbo.set(
       localToWorld: tileLocalToWorld,
       size: tileSize,
@@ -2227,7 +2060,7 @@ class SchoolRenderPipelineBindings
 /// Generated bindings for the vertex shader `river_tunnel`
 class RiverTunnelVertexShaderBindings extends VertexShaderBindings {
   RiverTunnelVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
-    : super(bytesPerVertex: 24, shader: shaderLibrary['river_tunnel_vert']!);
+    : super(bytesPerVertex: 28, shader: shaderLibrary['river_tunnel_vert']!);
 
   /// Sets attributes for a vertex at [index].
   ///
@@ -2236,15 +2069,17 @@ class RiverTunnelVertexShaderBindings extends VertexShaderBindings {
     int index, {
     required Vector2 position,
     required Vector2 normal,
+    required double lineLength,
     required double widthStartValue,
     required double widthEndValue,
   }) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
+    set_vec2(8, $setVertexData, normal);
+    set_float(16, $setVertexData, lineLength);
+    set_float(20, $setVertexData, widthStartValue);
+    set_float(24, $setVertexData, widthEndValue);
 
-    set_vec2(offset + 0, vertexData!, position);
-    set_vec2(offset + 8, vertexData!, normal);
-    set_float(offset + 16, vertexData!, widthStartValue);
-    set_float(offset + 20, vertexData!, widthEndValue);
+    setVertexInternal(index);
   }
 }
 
@@ -2279,16 +2114,25 @@ class RiverTunnelRenderPipelineBindings
             fragmentShader: shaderLibrary['river_tunnel_frag']!,
           ),
         ],
+        samplers: [
+          UniformSamplerBindings(
+            name: 'dasharray',
+            vertexShader: shaderLibrary['river_tunnel_vert']!,
+            fragmentShader: shaderLibrary['river_tunnel_frag']!,
+          ),
+        ],
       );
 
   late final RiverTunnelUbo riverTunnelUbo = ubos[0] as RiverTunnelUbo;
   late final TileUbo tileUbo = ubos[1] as TileUbo;
   late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
-    required double riverTunnelUboWidthStartStop,
-    required double riverTunnelUboWidthEndStop,
+  late final UniformSamplerBindings dasharray = samplers[0];
+
+  /// Sets the uniforms for this shader.
+  void setUniforms({
+    required Vector2 riverTunnelUboWidthStops,
+    required Vector2 riverTunnelUboDasharraySize,
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -2296,10 +2140,12 @@ class RiverTunnelRenderPipelineBindings
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
     required double cameraPixelRatio,
+    required gpu.Texture dasharrayTexture,
+    gpu.SamplerOptions? dasharrayTextureSamplerOptions,
   }) {
     riverTunnelUbo.set(
-      widthStartStop: riverTunnelUboWidthStartStop,
-      widthEndStop: riverTunnelUboWidthEndStop,
+      widthStops: riverTunnelUboWidthStops,
+      dasharraySize: riverTunnelUboDasharraySize,
     );
     tileUbo.set(
       localToWorld: tileLocalToWorld,
@@ -2311,6 +2157,10 @@ class RiverTunnelRenderPipelineBindings
       worldToGl: cameraWorldToGl,
       zoom: cameraZoom,
       pixelRatio: cameraPixelRatio,
+    );
+    dasharray.setTexture(
+      dasharrayTexture,
+      options: dasharrayTextureSamplerOptions,
     );
   }
 }
@@ -2330,12 +2180,12 @@ class RiverVertexShaderBindings extends VertexShaderBindings {
     required double widthStartValue,
     required double widthEndValue,
   }) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
+    set_vec2(8, $setVertexData, normal);
+    set_float(16, $setVertexData, widthStartValue);
+    set_float(20, $setVertexData, widthEndValue);
 
-    set_vec2(offset + 0, vertexData!, position);
-    set_vec2(offset + 8, vertexData!, normal);
-    set_float(offset + 16, vertexData!, widthStartValue);
-    set_float(offset + 20, vertexData!, widthEndValue);
+    setVertexInternal(index);
   }
 }
 
@@ -2370,16 +2220,16 @@ class RiverRenderPipelineBindings
             fragmentShader: shaderLibrary['river_frag']!,
           ),
         ],
+        samplers: [],
       );
 
   late final RiverUbo riverUbo = ubos[0] as RiverUbo;
   late final TileUbo tileUbo = ubos[1] as TileUbo;
   late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
-    required double riverUboWidthStartStop,
-    required double riverUboWidthEndStop,
+  /// Sets the uniforms for this shader.
+  void setUniforms({
+    required Vector2 riverUboWidthStops,
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -2388,10 +2238,7 @@ class RiverRenderPipelineBindings
     required double cameraZoom,
     required double cameraPixelRatio,
   }) {
-    riverUbo.set(
-      widthStartStop: riverUboWidthStartStop,
-      widthEndStop: riverUboWidthEndStop,
-    );
+    riverUbo.set(widthStops: riverUboWidthStops);
     tileUbo.set(
       localToWorld: tileLocalToWorld,
       size: tileSize,
@@ -2418,9 +2265,9 @@ class WaterIntermittentVertexShaderBindings extends VertexShaderBindings {
   ///
   /// Ensure that [allocateVertices] has been called before calling this method.
   void setVertex(int index, {required Vector2 position}) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
 
-    set_vec2(offset + 0, vertexData!, position);
+    setVertexInternal(index);
   }
 }
 
@@ -2451,13 +2298,14 @@ class WaterIntermittentRenderPipelineBindings
             fragmentShader: shaderLibrary['water_intermittent_frag']!,
           ),
         ],
+        samplers: [],
       );
 
   late final TileUbo tileUbo = ubos[0] as TileUbo;
   late final CameraUbo cameraUbo = ubos[1] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
+  /// Sets the uniforms for this shader.
+  void setUniforms({
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -2493,10 +2341,10 @@ class WaterVertexShaderBindings extends VertexShaderBindings {
     required Vector2 position,
     required double opacity,
   }) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
+    set_float(8, $setVertexData, opacity);
 
-    set_vec2(offset + 0, vertexData!, position);
-    set_float(offset + 8, vertexData!, opacity);
+    setVertexInternal(index);
   }
 }
 
@@ -2527,13 +2375,14 @@ class WaterRenderPipelineBindings
             fragmentShader: shaderLibrary['water_frag']!,
           ),
         ],
+        samplers: [],
       );
 
   late final TileUbo tileUbo = ubos[0] as TileUbo;
   late final CameraUbo cameraUbo = ubos[1] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
+  /// Sets the uniforms for this shader.
+  void setUniforms({
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -2571,12 +2420,12 @@ class AerowayVertexShaderBindings extends VertexShaderBindings {
     required double widthStartValue,
     required double widthEndValue,
   }) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
+    set_vec2(8, $setVertexData, normal);
+    set_float(16, $setVertexData, widthStartValue);
+    set_float(20, $setVertexData, widthEndValue);
 
-    set_vec2(offset + 0, vertexData!, position);
-    set_vec2(offset + 8, vertexData!, normal);
-    set_float(offset + 16, vertexData!, widthStartValue);
-    set_float(offset + 20, vertexData!, widthEndValue);
+    setVertexInternal(index);
   }
 }
 
@@ -2611,16 +2460,16 @@ class AerowayRenderPipelineBindings
             fragmentShader: shaderLibrary['aeroway_frag']!,
           ),
         ],
+        samplers: [],
       );
 
   late final AerowayUbo aerowayUbo = ubos[0] as AerowayUbo;
   late final TileUbo tileUbo = ubos[1] as TileUbo;
   late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
-    required double aerowayUboWidthStartStop,
-    required double aerowayUboWidthEndStop,
+  /// Sets the uniforms for this shader.
+  void setUniforms({
+    required Vector2 aerowayUboWidthStops,
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -2629,10 +2478,7 @@ class AerowayRenderPipelineBindings
     required double cameraZoom,
     required double cameraPixelRatio,
   }) {
-    aerowayUbo.set(
-      widthStartStop: aerowayUboWidthStartStop,
-      widthEndStop: aerowayUboWidthEndStop,
-    );
+    aerowayUbo.set(widthStops: aerowayUboWidthStops);
     tileUbo.set(
       localToWorld: tileLocalToWorld,
       size: tileSize,
@@ -2656,9 +2502,9 @@ class HeliportVertexShaderBindings extends VertexShaderBindings {
   ///
   /// Ensure that [allocateVertices] has been called before calling this method.
   void setVertex(int index, {required Vector2 position}) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
 
-    set_vec2(offset + 0, vertexData!, position);
+    setVertexInternal(index);
   }
 }
 
@@ -2689,13 +2535,14 @@ class HeliportRenderPipelineBindings
             fragmentShader: shaderLibrary['heliport_frag']!,
           ),
         ],
+        samplers: [],
       );
 
   late final TileUbo tileUbo = ubos[0] as TileUbo;
   late final CameraUbo cameraUbo = ubos[1] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
+  /// Sets the uniforms for this shader.
+  void setUniforms({
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -2721,7 +2568,7 @@ class HeliportRenderPipelineBindings
 /// Generated bindings for the vertex shader `ferry_line`
 class FerryLineVertexShaderBindings extends VertexShaderBindings {
   FerryLineVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
-    : super(bytesPerVertex: 64, shader: shaderLibrary['ferry_line_vert']!);
+    : super(bytesPerVertex: 68, shader: shaderLibrary['ferry_line_vert']!);
 
   /// Sets attributes for a vertex at [index].
   ///
@@ -2730,6 +2577,7 @@ class FerryLineVertexShaderBindings extends VertexShaderBindings {
     int index, {
     required Vector2 position,
     required Vector2 normal,
+    required double lineLength,
     required Vector4 colorStartValue,
     required Vector4 colorEndValue,
     required double opacityStartValue,
@@ -2737,16 +2585,17 @@ class FerryLineVertexShaderBindings extends VertexShaderBindings {
     required double widthStartValue,
     required double widthEndValue,
   }) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
+    set_vec2(8, $setVertexData, normal);
+    set_float(16, $setVertexData, lineLength);
+    set_vec4(20, $setVertexData, colorStartValue);
+    set_vec4(36, $setVertexData, colorEndValue);
+    set_float(52, $setVertexData, opacityStartValue);
+    set_float(56, $setVertexData, opacityEndValue);
+    set_float(60, $setVertexData, widthStartValue);
+    set_float(64, $setVertexData, widthEndValue);
 
-    set_vec2(offset + 0, vertexData!, position);
-    set_vec2(offset + 8, vertexData!, normal);
-    set_vec4(offset + 16, vertexData!, colorStartValue);
-    set_vec4(offset + 32, vertexData!, colorEndValue);
-    set_float(offset + 48, vertexData!, opacityStartValue);
-    set_float(offset + 52, vertexData!, opacityEndValue);
-    set_float(offset + 56, vertexData!, widthStartValue);
-    set_float(offset + 60, vertexData!, widthEndValue);
+    setVertexInternal(index);
   }
 }
 
@@ -2781,20 +2630,27 @@ class FerryLineRenderPipelineBindings
             fragmentShader: shaderLibrary['ferry_line_frag']!,
           ),
         ],
+        samplers: [
+          UniformSamplerBindings(
+            name: 'dasharray',
+            vertexShader: shaderLibrary['ferry_line_vert']!,
+            fragmentShader: shaderLibrary['ferry_line_frag']!,
+          ),
+        ],
       );
 
   late final FerryLineUbo ferryLineUbo = ubos[0] as FerryLineUbo;
   late final TileUbo tileUbo = ubos[1] as TileUbo;
   late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
-    required double ferryLineUboColorStartStop,
-    required double ferryLineUboColorEndStop,
-    required double ferryLineUboOpacityStartStop,
-    required double ferryLineUboOpacityEndStop,
-    required double ferryLineUboWidthStartStop,
-    required double ferryLineUboWidthEndStop,
+  late final UniformSamplerBindings dasharray = samplers[0];
+
+  /// Sets the uniforms for this shader.
+  void setUniforms({
+    required Vector2 ferryLineUboColorStops,
+    required Vector2 ferryLineUboOpacityStops,
+    required Vector2 ferryLineUboWidthStops,
+    required Vector2 ferryLineUboDasharraySize,
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -2802,14 +2658,14 @@ class FerryLineRenderPipelineBindings
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
     required double cameraPixelRatio,
+    required gpu.Texture dasharrayTexture,
+    gpu.SamplerOptions? dasharrayTextureSamplerOptions,
   }) {
     ferryLineUbo.set(
-      colorStartStop: ferryLineUboColorStartStop,
-      colorEndStop: ferryLineUboColorEndStop,
-      opacityStartStop: ferryLineUboOpacityStartStop,
-      opacityEndStop: ferryLineUboOpacityEndStop,
-      widthStartStop: ferryLineUboWidthStartStop,
-      widthEndStop: ferryLineUboWidthEndStop,
+      colorStops: ferryLineUboColorStops,
+      opacityStops: ferryLineUboOpacityStops,
+      widthStops: ferryLineUboWidthStops,
+      dasharraySize: ferryLineUboDasharraySize,
     );
     tileUbo.set(
       localToWorld: tileLocalToWorld,
@@ -2822,13 +2678,17 @@ class FerryLineRenderPipelineBindings
       zoom: cameraZoom,
       pixelRatio: cameraPixelRatio,
     );
+    dasharray.setTexture(
+      dasharrayTexture,
+      options: dasharrayTextureSamplerOptions,
+    );
   }
 }
 
 /// Generated bindings for the vertex shader `tunnel_outline`
 class TunnelOutlineVertexShaderBindings extends VertexShaderBindings {
   TunnelOutlineVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
-    : super(bytesPerVertex: 40, shader: shaderLibrary['tunnel_outline_vert']!);
+    : super(bytesPerVertex: 44, shader: shaderLibrary['tunnel_outline_vert']!);
 
   /// Sets attributes for a vertex at [index].
   ///
@@ -2837,17 +2697,19 @@ class TunnelOutlineVertexShaderBindings extends VertexShaderBindings {
     int index, {
     required Vector2 position,
     required Vector2 normal,
+    required double lineLength,
     required Vector4 color,
     required double widthStartValue,
     required double widthEndValue,
   }) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
+    set_vec2(8, $setVertexData, normal);
+    set_float(16, $setVertexData, lineLength);
+    set_vec4(20, $setVertexData, color);
+    set_float(36, $setVertexData, widthStartValue);
+    set_float(40, $setVertexData, widthEndValue);
 
-    set_vec2(offset + 0, vertexData!, position);
-    set_vec2(offset + 8, vertexData!, normal);
-    set_vec4(offset + 16, vertexData!, color);
-    set_float(offset + 32, vertexData!, widthStartValue);
-    set_float(offset + 36, vertexData!, widthEndValue);
+    setVertexInternal(index);
   }
 }
 
@@ -2882,16 +2744,25 @@ class TunnelOutlineRenderPipelineBindings
             fragmentShader: shaderLibrary['tunnel_outline_frag']!,
           ),
         ],
+        samplers: [
+          UniformSamplerBindings(
+            name: 'dasharray',
+            vertexShader: shaderLibrary['tunnel_outline_vert']!,
+            fragmentShader: shaderLibrary['tunnel_outline_frag']!,
+          ),
+        ],
       );
 
   late final TunnelOutlineUbo tunnelOutlineUbo = ubos[0] as TunnelOutlineUbo;
   late final TileUbo tileUbo = ubos[1] as TileUbo;
   late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
-    required double tunnelOutlineUboWidthStartStop,
-    required double tunnelOutlineUboWidthEndStop,
+  late final UniformSamplerBindings dasharray = samplers[0];
+
+  /// Sets the uniforms for this shader.
+  void setUniforms({
+    required Vector2 tunnelOutlineUboWidthStops,
+    required Vector2 tunnelOutlineUboDasharraySize,
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -2899,10 +2770,12 @@ class TunnelOutlineRenderPipelineBindings
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
     required double cameraPixelRatio,
+    required gpu.Texture dasharrayTexture,
+    gpu.SamplerOptions? dasharrayTextureSamplerOptions,
   }) {
     tunnelOutlineUbo.set(
-      widthStartStop: tunnelOutlineUboWidthStartStop,
-      widthEndStop: tunnelOutlineUboWidthEndStop,
+      widthStops: tunnelOutlineUboWidthStops,
+      dasharraySize: tunnelOutlineUboDasharraySize,
     );
     tileUbo.set(
       localToWorld: tileLocalToWorld,
@@ -2914,6 +2787,10 @@ class TunnelOutlineRenderPipelineBindings
       worldToGl: cameraWorldToGl,
       zoom: cameraZoom,
       pixelRatio: cameraPixelRatio,
+    );
+    dasharray.setTexture(
+      dasharrayTexture,
+      options: dasharrayTextureSamplerOptions,
     );
   }
 }
@@ -2934,13 +2811,13 @@ class TunnelVertexShaderBindings extends VertexShaderBindings {
     required double widthStartValue,
     required double widthEndValue,
   }) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
+    set_vec2(8, $setVertexData, normal);
+    set_vec4(16, $setVertexData, color);
+    set_float(32, $setVertexData, widthStartValue);
+    set_float(36, $setVertexData, widthEndValue);
 
-    set_vec2(offset + 0, vertexData!, position);
-    set_vec2(offset + 8, vertexData!, normal);
-    set_vec4(offset + 16, vertexData!, color);
-    set_float(offset + 32, vertexData!, widthStartValue);
-    set_float(offset + 36, vertexData!, widthEndValue);
+    setVertexInternal(index);
   }
 }
 
@@ -2975,16 +2852,16 @@ class TunnelRenderPipelineBindings
             fragmentShader: shaderLibrary['tunnel_frag']!,
           ),
         ],
+        samplers: [],
       );
 
   late final TunnelUbo tunnelUbo = ubos[0] as TunnelUbo;
   late final TileUbo tileUbo = ubos[1] as TileUbo;
   late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
-    required double tunnelUboWidthStartStop,
-    required double tunnelUboWidthEndStop,
+  /// Sets the uniforms for this shader.
+  void setUniforms({
+    required Vector2 tunnelUboWidthStops,
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -2993,10 +2870,7 @@ class TunnelRenderPipelineBindings
     required double cameraZoom,
     required double cameraPixelRatio,
   }) {
-    tunnelUbo.set(
-      widthStartStop: tunnelUboWidthStartStop,
-      widthEndStop: tunnelUboWidthEndStop,
-    );
+    tunnelUbo.set(widthStops: tunnelUboWidthStops);
     tileUbo.set(
       localToWorld: tileLocalToWorld,
       size: tileSize,
@@ -3026,12 +2900,12 @@ class RailwayTunnelVertexShaderBindings extends VertexShaderBindings {
     required double widthStartValue,
     required double widthEndValue,
   }) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
+    set_vec2(8, $setVertexData, normal);
+    set_float(16, $setVertexData, widthStartValue);
+    set_float(20, $setVertexData, widthEndValue);
 
-    set_vec2(offset + 0, vertexData!, position);
-    set_vec2(offset + 8, vertexData!, normal);
-    set_float(offset + 16, vertexData!, widthStartValue);
-    set_float(offset + 20, vertexData!, widthEndValue);
+    setVertexInternal(index);
   }
 }
 
@@ -3066,16 +2940,16 @@ class RailwayTunnelRenderPipelineBindings
             fragmentShader: shaderLibrary['railway_tunnel_frag']!,
           ),
         ],
+        samplers: [],
       );
 
   late final RailwayTunnelUbo railwayTunnelUbo = ubos[0] as RailwayTunnelUbo;
   late final TileUbo tileUbo = ubos[1] as TileUbo;
   late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
-    required double railwayTunnelUboWidthStartStop,
-    required double railwayTunnelUboWidthEndStop,
+  /// Sets the uniforms for this shader.
+  void setUniforms({
+    required Vector2 railwayTunnelUboWidthStops,
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -3084,10 +2958,7 @@ class RailwayTunnelRenderPipelineBindings
     required double cameraZoom,
     required double cameraPixelRatio,
   }) {
-    railwayTunnelUbo.set(
-      widthStartStop: railwayTunnelUboWidthStartStop,
-      widthEndStop: railwayTunnelUboWidthEndStop,
-    );
+    railwayTunnelUbo.set(widthStops: railwayTunnelUboWidthStops);
     tileUbo.set(
       localToWorld: tileLocalToWorld,
       size: tileSize,
@@ -3106,7 +2977,7 @@ class RailwayTunnelRenderPipelineBindings
 class RailwayTunnelHatchingVertexShaderBindings extends VertexShaderBindings {
   RailwayTunnelHatchingVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
     : super(
-        bytesPerVertex: 24,
+        bytesPerVertex: 28,
         shader: shaderLibrary['railway_tunnel_hatching_vert']!,
       );
 
@@ -3117,15 +2988,17 @@ class RailwayTunnelHatchingVertexShaderBindings extends VertexShaderBindings {
     int index, {
     required Vector2 position,
     required Vector2 normal,
+    required double lineLength,
     required double widthStartValue,
     required double widthEndValue,
   }) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
+    set_vec2(8, $setVertexData, normal);
+    set_float(16, $setVertexData, lineLength);
+    set_float(20, $setVertexData, widthStartValue);
+    set_float(24, $setVertexData, widthEndValue);
 
-    set_vec2(offset + 0, vertexData!, position);
-    set_vec2(offset + 8, vertexData!, normal);
-    set_float(offset + 16, vertexData!, widthStartValue);
-    set_float(offset + 20, vertexData!, widthEndValue);
+    setVertexInternal(index);
   }
 }
 
@@ -3161,6 +3034,13 @@ class RailwayTunnelHatchingRenderPipelineBindings
             fragmentShader: shaderLibrary['railway_tunnel_hatching_frag']!,
           ),
         ],
+        samplers: [
+          UniformSamplerBindings(
+            name: 'dasharray',
+            vertexShader: shaderLibrary['railway_tunnel_hatching_vert']!,
+            fragmentShader: shaderLibrary['railway_tunnel_hatching_frag']!,
+          ),
+        ],
       );
 
   late final RailwayTunnelHatchingUbo railwayTunnelHatchingUbo =
@@ -3168,10 +3048,12 @@ class RailwayTunnelHatchingRenderPipelineBindings
   late final TileUbo tileUbo = ubos[1] as TileUbo;
   late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
-    required double railwayTunnelHatchingUboWidthStartStop,
-    required double railwayTunnelHatchingUboWidthEndStop,
+  late final UniformSamplerBindings dasharray = samplers[0];
+
+  /// Sets the uniforms for this shader.
+  void setUniforms({
+    required Vector2 railwayTunnelHatchingUboWidthStops,
+    required Vector2 railwayTunnelHatchingUboDasharraySize,
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -3179,10 +3061,12 @@ class RailwayTunnelHatchingRenderPipelineBindings
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
     required double cameraPixelRatio,
+    required gpu.Texture dasharrayTexture,
+    gpu.SamplerOptions? dasharrayTextureSamplerOptions,
   }) {
     railwayTunnelHatchingUbo.set(
-      widthStartStop: railwayTunnelHatchingUboWidthStartStop,
-      widthEndStop: railwayTunnelHatchingUboWidthEndStop,
+      widthStops: railwayTunnelHatchingUboWidthStops,
+      dasharraySize: railwayTunnelHatchingUboDasharraySize,
     );
     tileUbo.set(
       localToWorld: tileLocalToWorld,
@@ -3194,6 +3078,10 @@ class RailwayTunnelHatchingRenderPipelineBindings
       worldToGl: cameraWorldToGl,
       zoom: cameraZoom,
       pixelRatio: cameraPixelRatio,
+    );
+    dasharray.setTexture(
+      dasharrayTexture,
+      options: dasharrayTextureSamplerOptions,
     );
   }
 }
@@ -3216,12 +3104,12 @@ class FootwayTunnelOutlineVertexShaderBindings extends VertexShaderBindings {
     required double widthStartValue,
     required double widthEndValue,
   }) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
+    set_vec2(8, $setVertexData, normal);
+    set_float(16, $setVertexData, widthStartValue);
+    set_float(20, $setVertexData, widthEndValue);
 
-    set_vec2(offset + 0, vertexData!, position);
-    set_vec2(offset + 8, vertexData!, normal);
-    set_float(offset + 16, vertexData!, widthStartValue);
-    set_float(offset + 20, vertexData!, widthEndValue);
+    setVertexInternal(index);
   }
 }
 
@@ -3257,6 +3145,7 @@ class FootwayTunnelOutlineRenderPipelineBindings
             fragmentShader: shaderLibrary['footway_tunnel_outline_frag']!,
           ),
         ],
+        samplers: [],
       );
 
   late final FootwayTunnelOutlineUbo footwayTunnelOutlineUbo =
@@ -3264,10 +3153,9 @@ class FootwayTunnelOutlineRenderPipelineBindings
   late final TileUbo tileUbo = ubos[1] as TileUbo;
   late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
-    required double footwayTunnelOutlineUboWidthStartStop,
-    required double footwayTunnelOutlineUboWidthEndStop,
+  /// Sets the uniforms for this shader.
+  void setUniforms({
+    required Vector2 footwayTunnelOutlineUboWidthStops,
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -3276,10 +3164,7 @@ class FootwayTunnelOutlineRenderPipelineBindings
     required double cameraZoom,
     required double cameraPixelRatio,
   }) {
-    footwayTunnelOutlineUbo.set(
-      widthStartStop: footwayTunnelOutlineUboWidthStartStop,
-      widthEndStop: footwayTunnelOutlineUboWidthEndStop,
-    );
+    footwayTunnelOutlineUbo.set(widthStops: footwayTunnelOutlineUboWidthStops);
     tileUbo.set(
       localToWorld: tileLocalToWorld,
       size: tileSize,
@@ -3297,7 +3182,7 @@ class FootwayTunnelOutlineRenderPipelineBindings
 /// Generated bindings for the vertex shader `footway_tunnel`
 class FootwayTunnelVertexShaderBindings extends VertexShaderBindings {
   FootwayTunnelVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
-    : super(bytesPerVertex: 24, shader: shaderLibrary['footway_tunnel_vert']!);
+    : super(bytesPerVertex: 28, shader: shaderLibrary['footway_tunnel_vert']!);
 
   /// Sets attributes for a vertex at [index].
   ///
@@ -3306,15 +3191,17 @@ class FootwayTunnelVertexShaderBindings extends VertexShaderBindings {
     int index, {
     required Vector2 position,
     required Vector2 normal,
+    required double lineLength,
     required double widthStartValue,
     required double widthEndValue,
   }) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
+    set_vec2(8, $setVertexData, normal);
+    set_float(16, $setVertexData, lineLength);
+    set_float(20, $setVertexData, widthStartValue);
+    set_float(24, $setVertexData, widthEndValue);
 
-    set_vec2(offset + 0, vertexData!, position);
-    set_vec2(offset + 8, vertexData!, normal);
-    set_float(offset + 16, vertexData!, widthStartValue);
-    set_float(offset + 20, vertexData!, widthEndValue);
+    setVertexInternal(index);
   }
 }
 
@@ -3349,16 +3236,25 @@ class FootwayTunnelRenderPipelineBindings
             fragmentShader: shaderLibrary['footway_tunnel_frag']!,
           ),
         ],
+        samplers: [
+          UniformSamplerBindings(
+            name: 'dasharray',
+            vertexShader: shaderLibrary['footway_tunnel_vert']!,
+            fragmentShader: shaderLibrary['footway_tunnel_frag']!,
+          ),
+        ],
       );
 
   late final FootwayTunnelUbo footwayTunnelUbo = ubos[0] as FootwayTunnelUbo;
   late final TileUbo tileUbo = ubos[1] as TileUbo;
   late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
-    required double footwayTunnelUboWidthStartStop,
-    required double footwayTunnelUboWidthEndStop,
+  late final UniformSamplerBindings dasharray = samplers[0];
+
+  /// Sets the uniforms for this shader.
+  void setUniforms({
+    required Vector2 footwayTunnelUboWidthStops,
+    required Vector2 footwayTunnelUboDasharraySize,
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -3366,10 +3262,12 @@ class FootwayTunnelRenderPipelineBindings
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
     required double cameraPixelRatio,
+    required gpu.Texture dasharrayTexture,
+    gpu.SamplerOptions? dasharrayTextureSamplerOptions,
   }) {
     footwayTunnelUbo.set(
-      widthStartStop: footwayTunnelUboWidthStartStop,
-      widthEndStop: footwayTunnelUboWidthEndStop,
+      widthStops: footwayTunnelUboWidthStops,
+      dasharraySize: footwayTunnelUboDasharraySize,
     );
     tileUbo.set(
       localToWorld: tileLocalToWorld,
@@ -3381,6 +3279,10 @@ class FootwayTunnelRenderPipelineBindings
       worldToGl: cameraWorldToGl,
       zoom: cameraZoom,
       pixelRatio: cameraPixelRatio,
+    );
+    dasharray.setTexture(
+      dasharrayTexture,
+      options: dasharrayTextureSamplerOptions,
     );
   }
 }
@@ -3394,9 +3296,9 @@ class PierVertexShaderBindings extends VertexShaderBindings {
   ///
   /// Ensure that [allocateVertices] has been called before calling this method.
   void setVertex(int index, {required Vector2 position}) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
 
-    set_vec2(offset + 0, vertexData!, position);
+    setVertexInternal(index);
   }
 }
 
@@ -3427,13 +3329,14 @@ class PierRenderPipelineBindings
             fragmentShader: shaderLibrary['pier_frag']!,
           ),
         ],
+        samplers: [],
       );
 
   late final TileUbo tileUbo = ubos[0] as TileUbo;
   late final CameraUbo cameraUbo = ubos[1] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
+  /// Sets the uniforms for this shader.
+  void setUniforms({
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -3471,12 +3374,12 @@ class PierRoadVertexShaderBindings extends VertexShaderBindings {
     required double widthStartValue,
     required double widthEndValue,
   }) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
+    set_vec2(8, $setVertexData, normal);
+    set_float(16, $setVertexData, widthStartValue);
+    set_float(20, $setVertexData, widthEndValue);
 
-    set_vec2(offset + 0, vertexData!, position);
-    set_vec2(offset + 8, vertexData!, normal);
-    set_float(offset + 16, vertexData!, widthStartValue);
-    set_float(offset + 20, vertexData!, widthEndValue);
+    setVertexInternal(index);
   }
 }
 
@@ -3511,16 +3414,16 @@ class PierRoadRenderPipelineBindings
             fragmentShader: shaderLibrary['pier_road_frag']!,
           ),
         ],
+        samplers: [],
       );
 
   late final PierRoadUbo pierRoadUbo = ubos[0] as PierRoadUbo;
   late final TileUbo tileUbo = ubos[1] as TileUbo;
   late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
-    required double pierRoadUboWidthStartStop,
-    required double pierRoadUboWidthEndStop,
+  /// Sets the uniforms for this shader.
+  void setUniforms({
+    required Vector2 pierRoadUboWidthStops,
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -3529,10 +3432,7 @@ class PierRoadRenderPipelineBindings
     required double cameraZoom,
     required double cameraPixelRatio,
   }) {
-    pierRoadUbo.set(
-      widthStartStop: pierRoadUboWidthStartStop,
-      widthEndStop: pierRoadUboWidthEndStop,
-    );
+    pierRoadUbo.set(widthStops: pierRoadUboWidthStops);
     tileUbo.set(
       localToWorld: tileLocalToWorld,
       size: tileSize,
@@ -3556,9 +3456,9 @@ class BridgeVertexShaderBindings extends VertexShaderBindings {
   ///
   /// Ensure that [allocateVertices] has been called before calling this method.
   void setVertex(int index, {required Vector2 position}) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
 
-    set_vec2(offset + 0, vertexData!, position);
+    setVertexInternal(index);
   }
 }
 
@@ -3589,13 +3489,14 @@ class BridgeRenderPipelineBindings
             fragmentShader: shaderLibrary['bridge_frag']!,
           ),
         ],
+        samplers: [],
       );
 
   late final TileUbo tileUbo = ubos[0] as TileUbo;
   late final CameraUbo cameraUbo = ubos[1] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
+  /// Sets the uniforms for this shader.
+  void setUniforms({
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -3636,12 +3537,12 @@ class MinorRoadOutlineVertexShaderBindings extends VertexShaderBindings {
     required double widthStartValue,
     required double widthEndValue,
   }) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
+    set_vec2(8, $setVertexData, normal);
+    set_float(16, $setVertexData, widthStartValue);
+    set_float(20, $setVertexData, widthEndValue);
 
-    set_vec2(offset + 0, vertexData!, position);
-    set_vec2(offset + 8, vertexData!, normal);
-    set_float(offset + 16, vertexData!, widthStartValue);
-    set_float(offset + 20, vertexData!, widthEndValue);
+    setVertexInternal(index);
   }
 }
 
@@ -3676,6 +3577,7 @@ class MinorRoadOutlineRenderPipelineBindings
             fragmentShader: shaderLibrary['minor_road_outline_frag']!,
           ),
         ],
+        samplers: [],
       );
 
   late final MinorRoadOutlineUbo minorRoadOutlineUbo =
@@ -3683,10 +3585,9 @@ class MinorRoadOutlineRenderPipelineBindings
   late final TileUbo tileUbo = ubos[1] as TileUbo;
   late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
-    required double minorRoadOutlineUboWidthStartStop,
-    required double minorRoadOutlineUboWidthEndStop,
+  /// Sets the uniforms for this shader.
+  void setUniforms({
+    required Vector2 minorRoadOutlineUboWidthStops,
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -3695,10 +3596,7 @@ class MinorRoadOutlineRenderPipelineBindings
     required double cameraZoom,
     required double cameraPixelRatio,
   }) {
-    minorRoadOutlineUbo.set(
-      widthStartStop: minorRoadOutlineUboWidthStartStop,
-      widthEndStop: minorRoadOutlineUboWidthEndStop,
-    );
+    minorRoadOutlineUbo.set(widthStops: minorRoadOutlineUboWidthStops);
     tileUbo.set(
       localToWorld: tileLocalToWorld,
       size: tileSize,
@@ -3731,12 +3629,12 @@ class MajorRoadOutlineVertexShaderBindings extends VertexShaderBindings {
     required double widthStartValue,
     required double widthEndValue,
   }) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
+    set_vec2(8, $setVertexData, normal);
+    set_float(16, $setVertexData, widthStartValue);
+    set_float(20, $setVertexData, widthEndValue);
 
-    set_vec2(offset + 0, vertexData!, position);
-    set_vec2(offset + 8, vertexData!, normal);
-    set_float(offset + 16, vertexData!, widthStartValue);
-    set_float(offset + 20, vertexData!, widthEndValue);
+    setVertexInternal(index);
   }
 }
 
@@ -3771,6 +3669,7 @@ class MajorRoadOutlineRenderPipelineBindings
             fragmentShader: shaderLibrary['major_road_outline_frag']!,
           ),
         ],
+        samplers: [],
       );
 
   late final MajorRoadOutlineUbo majorRoadOutlineUbo =
@@ -3778,10 +3677,9 @@ class MajorRoadOutlineRenderPipelineBindings
   late final TileUbo tileUbo = ubos[1] as TileUbo;
   late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
-    required double majorRoadOutlineUboWidthStartStop,
-    required double majorRoadOutlineUboWidthEndStop,
+  /// Sets the uniforms for this shader.
+  void setUniforms({
+    required Vector2 majorRoadOutlineUboWidthStops,
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -3790,10 +3688,7 @@ class MajorRoadOutlineRenderPipelineBindings
     required double cameraZoom,
     required double cameraPixelRatio,
   }) {
-    majorRoadOutlineUbo.set(
-      widthStartStop: majorRoadOutlineUboWidthStartStop,
-      widthEndStop: majorRoadOutlineUboWidthEndStop,
-    );
+    majorRoadOutlineUbo.set(widthStops: majorRoadOutlineUboWidthStops);
     tileUbo.set(
       localToWorld: tileLocalToWorld,
       size: tileSize,
@@ -3823,12 +3718,12 @@ class HighwayOutlineVertexShaderBindings extends VertexShaderBindings {
     required double widthStartValue,
     required double widthEndValue,
   }) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
+    set_vec2(8, $setVertexData, normal);
+    set_float(16, $setVertexData, widthStartValue);
+    set_float(20, $setVertexData, widthEndValue);
 
-    set_vec2(offset + 0, vertexData!, position);
-    set_vec2(offset + 8, vertexData!, normal);
-    set_float(offset + 16, vertexData!, widthStartValue);
-    set_float(offset + 20, vertexData!, widthEndValue);
+    setVertexInternal(index);
   }
 }
 
@@ -3863,16 +3758,16 @@ class HighwayOutlineRenderPipelineBindings
             fragmentShader: shaderLibrary['highway_outline_frag']!,
           ),
         ],
+        samplers: [],
       );
 
   late final HighwayOutlineUbo highwayOutlineUbo = ubos[0] as HighwayOutlineUbo;
   late final TileUbo tileUbo = ubos[1] as TileUbo;
   late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
-    required double highwayOutlineUboWidthStartStop,
-    required double highwayOutlineUboWidthEndStop,
+  /// Sets the uniforms for this shader.
+  void setUniforms({
+    required Vector2 highwayOutlineUboWidthStops,
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -3881,10 +3776,7 @@ class HighwayOutlineRenderPipelineBindings
     required double cameraZoom,
     required double cameraPixelRatio,
   }) {
-    highwayOutlineUbo.set(
-      widthStartStop: highwayOutlineUboWidthStartStop,
-      widthEndStop: highwayOutlineUboWidthEndStop,
-    );
+    highwayOutlineUbo.set(widthStops: highwayOutlineUboWidthStops);
     tileUbo.set(
       localToWorld: tileLocalToWorld,
       size: tileSize,
@@ -3903,7 +3795,7 @@ class HighwayOutlineRenderPipelineBindings
 class RoadUnderConstructionVertexShaderBindings extends VertexShaderBindings {
   RoadUnderConstructionVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
     : super(
-        bytesPerVertex: 40,
+        bytesPerVertex: 44,
         shader: shaderLibrary['road_under_construction_vert']!,
       );
 
@@ -3914,17 +3806,19 @@ class RoadUnderConstructionVertexShaderBindings extends VertexShaderBindings {
     int index, {
     required Vector2 position,
     required Vector2 normal,
+    required double lineLength,
     required Vector4 color,
     required double widthStartValue,
     required double widthEndValue,
   }) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
+    set_vec2(8, $setVertexData, normal);
+    set_float(16, $setVertexData, lineLength);
+    set_vec4(20, $setVertexData, color);
+    set_float(36, $setVertexData, widthStartValue);
+    set_float(40, $setVertexData, widthEndValue);
 
-    set_vec2(offset + 0, vertexData!, position);
-    set_vec2(offset + 8, vertexData!, normal);
-    set_vec4(offset + 16, vertexData!, color);
-    set_float(offset + 32, vertexData!, widthStartValue);
-    set_float(offset + 36, vertexData!, widthEndValue);
+    setVertexInternal(index);
   }
 }
 
@@ -3960,6 +3854,13 @@ class RoadUnderConstructionRenderPipelineBindings
             fragmentShader: shaderLibrary['road_under_construction_frag']!,
           ),
         ],
+        samplers: [
+          UniformSamplerBindings(
+            name: 'dasharray',
+            vertexShader: shaderLibrary['road_under_construction_vert']!,
+            fragmentShader: shaderLibrary['road_under_construction_frag']!,
+          ),
+        ],
       );
 
   late final RoadUnderConstructionUbo roadUnderConstructionUbo =
@@ -3967,10 +3868,12 @@ class RoadUnderConstructionRenderPipelineBindings
   late final TileUbo tileUbo = ubos[1] as TileUbo;
   late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
-    required double roadUnderConstructionUboWidthStartStop,
-    required double roadUnderConstructionUboWidthEndStop,
+  late final UniformSamplerBindings dasharray = samplers[0];
+
+  /// Sets the uniforms for this shader.
+  void setUniforms({
+    required Vector2 roadUnderConstructionUboWidthStops,
+    required Vector2 roadUnderConstructionUboDasharraySize,
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -3978,10 +3881,12 @@ class RoadUnderConstructionRenderPipelineBindings
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
     required double cameraPixelRatio,
+    required gpu.Texture dasharrayTexture,
+    gpu.SamplerOptions? dasharrayTextureSamplerOptions,
   }) {
     roadUnderConstructionUbo.set(
-      widthStartStop: roadUnderConstructionUboWidthStartStop,
-      widthEndStop: roadUnderConstructionUboWidthEndStop,
+      widthStops: roadUnderConstructionUboWidthStops,
+      dasharraySize: roadUnderConstructionUboDasharraySize,
     );
     tileUbo.set(
       localToWorld: tileLocalToWorld,
@@ -3993,6 +3898,10 @@ class RoadUnderConstructionRenderPipelineBindings
       worldToGl: cameraWorldToGl,
       zoom: cameraZoom,
       pixelRatio: cameraPixelRatio,
+    );
+    dasharray.setTexture(
+      dasharrayTexture,
+      options: dasharrayTextureSamplerOptions,
     );
   }
 }
@@ -4012,12 +3921,12 @@ class MinorRoadVertexShaderBindings extends VertexShaderBindings {
     required double widthStartValue,
     required double widthEndValue,
   }) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
+    set_vec2(8, $setVertexData, normal);
+    set_float(16, $setVertexData, widthStartValue);
+    set_float(20, $setVertexData, widthEndValue);
 
-    set_vec2(offset + 0, vertexData!, position);
-    set_vec2(offset + 8, vertexData!, normal);
-    set_float(offset + 16, vertexData!, widthStartValue);
-    set_float(offset + 20, vertexData!, widthEndValue);
+    setVertexInternal(index);
   }
 }
 
@@ -4052,16 +3961,16 @@ class MinorRoadRenderPipelineBindings
             fragmentShader: shaderLibrary['minor_road_frag']!,
           ),
         ],
+        samplers: [],
       );
 
   late final MinorRoadUbo minorRoadUbo = ubos[0] as MinorRoadUbo;
   late final TileUbo tileUbo = ubos[1] as TileUbo;
   late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
-    required double minorRoadUboWidthStartStop,
-    required double minorRoadUboWidthEndStop,
+  /// Sets the uniforms for this shader.
+  void setUniforms({
+    required Vector2 minorRoadUboWidthStops,
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -4070,10 +3979,7 @@ class MinorRoadRenderPipelineBindings
     required double cameraZoom,
     required double cameraPixelRatio,
   }) {
-    minorRoadUbo.set(
-      widthStartStop: minorRoadUboWidthStartStop,
-      widthEndStop: minorRoadUboWidthEndStop,
-    );
+    minorRoadUbo.set(widthStops: minorRoadUboWidthStops);
     tileUbo.set(
       localToWorld: tileLocalToWorld,
       size: tileSize,
@@ -4091,7 +3997,7 @@ class MinorRoadRenderPipelineBindings
 /// Generated bindings for the vertex shader `major_road`
 class MajorRoadVertexShaderBindings extends VertexShaderBindings {
   MajorRoadVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
-    : super(bytesPerVertex: 24, shader: shaderLibrary['major_road_vert']!);
+    : super(bytesPerVertex: 56, shader: shaderLibrary['major_road_vert']!);
 
   /// Sets attributes for a vertex at [index].
   ///
@@ -4100,15 +4006,19 @@ class MajorRoadVertexShaderBindings extends VertexShaderBindings {
     int index, {
     required Vector2 position,
     required Vector2 normal,
+    required Vector4 colorStartValue,
+    required Vector4 colorEndValue,
     required double widthStartValue,
     required double widthEndValue,
   }) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
+    set_vec2(8, $setVertexData, normal);
+    set_vec4(16, $setVertexData, colorStartValue);
+    set_vec4(32, $setVertexData, colorEndValue);
+    set_float(48, $setVertexData, widthStartValue);
+    set_float(52, $setVertexData, widthEndValue);
 
-    set_vec2(offset + 0, vertexData!, position);
-    set_vec2(offset + 8, vertexData!, normal);
-    set_float(offset + 16, vertexData!, widthStartValue);
-    set_float(offset + 20, vertexData!, widthEndValue);
+    setVertexInternal(index);
   }
 }
 
@@ -4143,16 +4053,17 @@ class MajorRoadRenderPipelineBindings
             fragmentShader: shaderLibrary['major_road_frag']!,
           ),
         ],
+        samplers: [],
       );
 
   late final MajorRoadUbo majorRoadUbo = ubos[0] as MajorRoadUbo;
   late final TileUbo tileUbo = ubos[1] as TileUbo;
   late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
-    required double majorRoadUboWidthStartStop,
-    required double majorRoadUboWidthEndStop,
+  /// Sets the uniforms for this shader.
+  void setUniforms({
+    required Vector2 majorRoadUboColorStops,
+    required Vector2 majorRoadUboWidthStops,
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -4162,8 +4073,8 @@ class MajorRoadRenderPipelineBindings
     required double cameraPixelRatio,
   }) {
     majorRoadUbo.set(
-      widthStartStop: majorRoadUboWidthStartStop,
-      widthEndStop: majorRoadUboWidthEndStop,
+      colorStops: majorRoadUboColorStops,
+      widthStops: majorRoadUboWidthStops,
     );
     tileUbo.set(
       localToWorld: tileLocalToWorld,
@@ -4182,7 +4093,7 @@ class MajorRoadRenderPipelineBindings
 /// Generated bindings for the vertex shader `highway`
 class HighwayVertexShaderBindings extends VertexShaderBindings {
   HighwayVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
-    : super(bytesPerVertex: 24, shader: shaderLibrary['highway_vert']!);
+    : super(bytesPerVertex: 56, shader: shaderLibrary['highway_vert']!);
 
   /// Sets attributes for a vertex at [index].
   ///
@@ -4191,15 +4102,19 @@ class HighwayVertexShaderBindings extends VertexShaderBindings {
     int index, {
     required Vector2 position,
     required Vector2 normal,
+    required Vector4 colorStartValue,
+    required Vector4 colorEndValue,
     required double widthStartValue,
     required double widthEndValue,
   }) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
+    set_vec2(8, $setVertexData, normal);
+    set_vec4(16, $setVertexData, colorStartValue);
+    set_vec4(32, $setVertexData, colorEndValue);
+    set_float(48, $setVertexData, widthStartValue);
+    set_float(52, $setVertexData, widthEndValue);
 
-    set_vec2(offset + 0, vertexData!, position);
-    set_vec2(offset + 8, vertexData!, normal);
-    set_float(offset + 16, vertexData!, widthStartValue);
-    set_float(offset + 20, vertexData!, widthEndValue);
+    setVertexInternal(index);
   }
 }
 
@@ -4234,16 +4149,17 @@ class HighwayRenderPipelineBindings
             fragmentShader: shaderLibrary['highway_frag']!,
           ),
         ],
+        samplers: [],
       );
 
   late final HighwayUbo highwayUbo = ubos[0] as HighwayUbo;
   late final TileUbo tileUbo = ubos[1] as TileUbo;
   late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
-    required double highwayUboWidthStartStop,
-    required double highwayUboWidthEndStop,
+  /// Sets the uniforms for this shader.
+  void setUniforms({
+    required Vector2 highwayUboColorStops,
+    required Vector2 highwayUboWidthStops,
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -4253,8 +4169,8 @@ class HighwayRenderPipelineBindings
     required double cameraPixelRatio,
   }) {
     highwayUbo.set(
-      widthStartStop: highwayUboWidthStartStop,
-      widthEndStop: highwayUboWidthEndStop,
+      colorStops: highwayUboColorStops,
+      widthStops: highwayUboWidthStops,
     );
     tileUbo.set(
       localToWorld: tileLocalToWorld,
@@ -4285,12 +4201,12 @@ class PathOutlineVertexShaderBindings extends VertexShaderBindings {
     required double widthStartValue,
     required double widthEndValue,
   }) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
+    set_vec2(8, $setVertexData, normal);
+    set_float(16, $setVertexData, widthStartValue);
+    set_float(20, $setVertexData, widthEndValue);
 
-    set_vec2(offset + 0, vertexData!, position);
-    set_vec2(offset + 8, vertexData!, normal);
-    set_float(offset + 16, vertexData!, widthStartValue);
-    set_float(offset + 20, vertexData!, widthEndValue);
+    setVertexInternal(index);
   }
 }
 
@@ -4325,16 +4241,16 @@ class PathOutlineRenderPipelineBindings
             fragmentShader: shaderLibrary['path_outline_frag']!,
           ),
         ],
+        samplers: [],
       );
 
   late final PathOutlineUbo pathOutlineUbo = ubos[0] as PathOutlineUbo;
   late final TileUbo tileUbo = ubos[1] as TileUbo;
   late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
-    required double pathOutlineUboWidthStartStop,
-    required double pathOutlineUboWidthEndStop,
+  /// Sets the uniforms for this shader.
+  void setUniforms({
+    required Vector2 pathOutlineUboWidthStops,
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -4343,10 +4259,7 @@ class PathOutlineRenderPipelineBindings
     required double cameraZoom,
     required double cameraPixelRatio,
   }) {
-    pathOutlineUbo.set(
-      widthStartStop: pathOutlineUboWidthStartStop,
-      widthEndStop: pathOutlineUboWidthEndStop,
-    );
+    pathOutlineUbo.set(widthStops: pathOutlineUboWidthStops);
     tileUbo.set(
       localToWorld: tileLocalToWorld,
       size: tileSize,
@@ -4361,10 +4274,10 @@ class PathOutlineRenderPipelineBindings
   }
 }
 
-/// Generated bindings for the vertex shader `path`
-class PathVertexShaderBindings extends VertexShaderBindings {
-  PathVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
-    : super(bytesPerVertex: 24, shader: shaderLibrary['path_vert']!);
+/// Generated bindings for the vertex shader `path_minor`
+class PathMinorVertexShaderBindings extends VertexShaderBindings {
+  PathMinorVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(bytesPerVertex: 28, shader: shaderLibrary['path_minor_vert']!);
 
   /// Sets attributes for a vertex at [index].
   ///
@@ -4373,15 +4286,125 @@ class PathVertexShaderBindings extends VertexShaderBindings {
     int index, {
     required Vector2 position,
     required Vector2 normal,
+    required double lineLength,
     required double widthStartValue,
     required double widthEndValue,
   }) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
+    set_vec2(8, $setVertexData, normal);
+    set_float(16, $setVertexData, lineLength);
+    set_float(20, $setVertexData, widthStartValue);
+    set_float(24, $setVertexData, widthEndValue);
 
-    set_vec2(offset + 0, vertexData!, position);
-    set_vec2(offset + 8, vertexData!, normal);
-    set_float(offset + 16, vertexData!, widthStartValue);
-    set_float(offset + 20, vertexData!, widthEndValue);
+    setVertexInternal(index);
+  }
+}
+
+/// Generated bindings for the fragment shader `path_minor`
+class PathMinorFragmentShaderBindings extends FragmentShaderBindings {
+  PathMinorFragmentShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(shader: shaderLibrary['path_minor_frag']!);
+}
+
+/// Generated bindings for the render pipeline `path_minor`
+class PathMinorRenderPipelineBindings
+    extends
+        RenderPipelineBindings<
+          PathMinorVertexShaderBindings,
+          PathMinorFragmentShaderBindings
+        > {
+  PathMinorRenderPipelineBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(
+        vertex: PathMinorVertexShaderBindings(shaderLibrary),
+        fragment: PathMinorFragmentShaderBindings(shaderLibrary),
+        ubos: [
+          PathMinorUbo(
+            vertexShader: shaderLibrary['path_minor_vert']!,
+            fragmentShader: shaderLibrary['path_minor_frag']!,
+          ),
+          TileUbo(
+            vertexShader: shaderLibrary['path_minor_vert']!,
+            fragmentShader: shaderLibrary['path_minor_frag']!,
+          ),
+          CameraUbo(
+            vertexShader: shaderLibrary['path_minor_vert']!,
+            fragmentShader: shaderLibrary['path_minor_frag']!,
+          ),
+        ],
+        samplers: [
+          UniformSamplerBindings(
+            name: 'dasharray',
+            vertexShader: shaderLibrary['path_minor_vert']!,
+            fragmentShader: shaderLibrary['path_minor_frag']!,
+          ),
+        ],
+      );
+
+  late final PathMinorUbo pathMinorUbo = ubos[0] as PathMinorUbo;
+  late final TileUbo tileUbo = ubos[1] as TileUbo;
+  late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
+
+  late final UniformSamplerBindings dasharray = samplers[0];
+
+  /// Sets the uniforms for this shader.
+  void setUniforms({
+    required Vector2 pathMinorUboWidthStops,
+    required Vector2 pathMinorUboDasharraySize,
+    required Matrix4 tileLocalToWorld,
+    required double tileSize,
+    required double tileExtent,
+    required double tileOpacity,
+    required Matrix4 cameraWorldToGl,
+    required double cameraZoom,
+    required double cameraPixelRatio,
+    required gpu.Texture dasharrayTexture,
+    gpu.SamplerOptions? dasharrayTextureSamplerOptions,
+  }) {
+    pathMinorUbo.set(
+      widthStops: pathMinorUboWidthStops,
+      dasharraySize: pathMinorUboDasharraySize,
+    );
+    tileUbo.set(
+      localToWorld: tileLocalToWorld,
+      size: tileSize,
+      extent: tileExtent,
+      opacity: tileOpacity,
+    );
+    cameraUbo.set(
+      worldToGl: cameraWorldToGl,
+      zoom: cameraZoom,
+      pixelRatio: cameraPixelRatio,
+    );
+    dasharray.setTexture(
+      dasharrayTexture,
+      options: dasharrayTextureSamplerOptions,
+    );
+  }
+}
+
+/// Generated bindings for the vertex shader `path`
+class PathVertexShaderBindings extends VertexShaderBindings {
+  PathVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
+    : super(bytesPerVertex: 28, shader: shaderLibrary['path_vert']!);
+
+  /// Sets attributes for a vertex at [index].
+  ///
+  /// Ensure that [allocateVertices] has been called before calling this method.
+  void setVertex(
+    int index, {
+    required Vector2 position,
+    required Vector2 normal,
+    required double lineLength,
+    required double widthStartValue,
+    required double widthEndValue,
+  }) {
+    set_vec2(0, $setVertexData, position);
+    set_vec2(8, $setVertexData, normal);
+    set_float(16, $setVertexData, lineLength);
+    set_float(20, $setVertexData, widthStartValue);
+    set_float(24, $setVertexData, widthEndValue);
+
+    setVertexInternal(index);
   }
 }
 
@@ -4416,16 +4439,25 @@ class PathRenderPipelineBindings
             fragmentShader: shaderLibrary['path_frag']!,
           ),
         ],
+        samplers: [
+          UniformSamplerBindings(
+            name: 'dasharray',
+            vertexShader: shaderLibrary['path_vert']!,
+            fragmentShader: shaderLibrary['path_frag']!,
+          ),
+        ],
       );
 
   late final PathUbo pathUbo = ubos[0] as PathUbo;
   late final TileUbo tileUbo = ubos[1] as TileUbo;
   late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
-    required double pathUboWidthStartStop,
-    required double pathUboWidthEndStop,
+  late final UniformSamplerBindings dasharray = samplers[0];
+
+  /// Sets the uniforms for this shader.
+  void setUniforms({
+    required Vector2 pathUboWidthStops,
+    required Vector2 pathUboDasharraySize,
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -4433,10 +4465,12 @@ class PathRenderPipelineBindings
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
     required double cameraPixelRatio,
+    required gpu.Texture dasharrayTexture,
+    gpu.SamplerOptions? dasharrayTextureSamplerOptions,
   }) {
     pathUbo.set(
-      widthStartStop: pathUboWidthStartStop,
-      widthEndStop: pathUboWidthEndStop,
+      widthStops: pathUboWidthStops,
+      dasharraySize: pathUboDasharraySize,
     );
     tileUbo.set(
       localToWorld: tileLocalToWorld,
@@ -4448,6 +4482,10 @@ class PathRenderPipelineBindings
       worldToGl: cameraWorldToGl,
       zoom: cameraZoom,
       pixelRatio: cameraPixelRatio,
+    );
+    dasharray.setTexture(
+      dasharrayTexture,
+      options: dasharrayTextureSamplerOptions,
     );
   }
 }
@@ -4470,15 +4508,15 @@ class MajorRailVertexShaderBindings extends VertexShaderBindings {
     required double widthStartValue,
     required double widthEndValue,
   }) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
+    set_vec2(8, $setVertexData, normal);
+    set_vec4(16, $setVertexData, colorStartValue);
+    set_vec4(32, $setVertexData, colorEndValue);
+    set_float(48, $setVertexData, opacity);
+    set_float(52, $setVertexData, widthStartValue);
+    set_float(56, $setVertexData, widthEndValue);
 
-    set_vec2(offset + 0, vertexData!, position);
-    set_vec2(offset + 8, vertexData!, normal);
-    set_vec4(offset + 16, vertexData!, colorStartValue);
-    set_vec4(offset + 32, vertexData!, colorEndValue);
-    set_float(offset + 48, vertexData!, opacity);
-    set_float(offset + 52, vertexData!, widthStartValue);
-    set_float(offset + 56, vertexData!, widthEndValue);
+    setVertexInternal(index);
   }
 }
 
@@ -4513,18 +4551,17 @@ class MajorRailRenderPipelineBindings
             fragmentShader: shaderLibrary['major_rail_frag']!,
           ),
         ],
+        samplers: [],
       );
 
   late final MajorRailUbo majorRailUbo = ubos[0] as MajorRailUbo;
   late final TileUbo tileUbo = ubos[1] as TileUbo;
   late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
-    required double majorRailUboColorStartStop,
-    required double majorRailUboColorEndStop,
-    required double majorRailUboWidthStartStop,
-    required double majorRailUboWidthEndStop,
+  /// Sets the uniforms for this shader.
+  void setUniforms({
+    required Vector2 majorRailUboColorStops,
+    required Vector2 majorRailUboWidthStops,
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -4534,10 +4571,8 @@ class MajorRailRenderPipelineBindings
     required double cameraPixelRatio,
   }) {
     majorRailUbo.set(
-      colorStartStop: majorRailUboColorStartStop,
-      colorEndStop: majorRailUboColorEndStop,
-      widthStartStop: majorRailUboWidthStartStop,
-      widthEndStop: majorRailUboWidthEndStop,
+      colorStops: majorRailUboColorStops,
+      widthStops: majorRailUboWidthStops,
     );
     tileUbo.set(
       localToWorld: tileLocalToWorld,
@@ -4557,7 +4592,7 @@ class MajorRailRenderPipelineBindings
 class MajorRailHatchingVertexShaderBindings extends VertexShaderBindings {
   MajorRailHatchingVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
     : super(
-        bytesPerVertex: 28,
+        bytesPerVertex: 64,
         shader: shaderLibrary['major_rail_hatching_vert']!,
       );
 
@@ -4568,17 +4603,23 @@ class MajorRailHatchingVertexShaderBindings extends VertexShaderBindings {
     int index, {
     required Vector2 position,
     required Vector2 normal,
+    required double lineLength,
+    required Vector4 colorStartValue,
+    required Vector4 colorEndValue,
     required double opacity,
     required double widthStartValue,
     required double widthEndValue,
   }) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
+    set_vec2(8, $setVertexData, normal);
+    set_float(16, $setVertexData, lineLength);
+    set_vec4(20, $setVertexData, colorStartValue);
+    set_vec4(36, $setVertexData, colorEndValue);
+    set_float(52, $setVertexData, opacity);
+    set_float(56, $setVertexData, widthStartValue);
+    set_float(60, $setVertexData, widthEndValue);
 
-    set_vec2(offset + 0, vertexData!, position);
-    set_vec2(offset + 8, vertexData!, normal);
-    set_float(offset + 16, vertexData!, opacity);
-    set_float(offset + 20, vertexData!, widthStartValue);
-    set_float(offset + 24, vertexData!, widthEndValue);
+    setVertexInternal(index);
   }
 }
 
@@ -4613,6 +4654,13 @@ class MajorRailHatchingRenderPipelineBindings
             fragmentShader: shaderLibrary['major_rail_hatching_frag']!,
           ),
         ],
+        samplers: [
+          UniformSamplerBindings(
+            name: 'dasharray',
+            vertexShader: shaderLibrary['major_rail_hatching_vert']!,
+            fragmentShader: shaderLibrary['major_rail_hatching_frag']!,
+          ),
+        ],
       );
 
   late final MajorRailHatchingUbo majorRailHatchingUbo =
@@ -4620,10 +4668,13 @@ class MajorRailHatchingRenderPipelineBindings
   late final TileUbo tileUbo = ubos[1] as TileUbo;
   late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
-    required double majorRailHatchingUboWidthStartStop,
-    required double majorRailHatchingUboWidthEndStop,
+  late final UniformSamplerBindings dasharray = samplers[0];
+
+  /// Sets the uniforms for this shader.
+  void setUniforms({
+    required Vector2 majorRailHatchingUboColorStops,
+    required Vector2 majorRailHatchingUboWidthStops,
+    required Vector2 majorRailHatchingUboDasharraySize,
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -4631,10 +4682,13 @@ class MajorRailHatchingRenderPipelineBindings
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
     required double cameraPixelRatio,
+    required gpu.Texture dasharrayTexture,
+    gpu.SamplerOptions? dasharrayTextureSamplerOptions,
   }) {
     majorRailHatchingUbo.set(
-      widthStartStop: majorRailHatchingUboWidthStartStop,
-      widthEndStop: majorRailHatchingUboWidthEndStop,
+      colorStops: majorRailHatchingUboColorStops,
+      widthStops: majorRailHatchingUboWidthStops,
+      dasharraySize: majorRailHatchingUboDasharraySize,
     );
     tileUbo.set(
       localToWorld: tileLocalToWorld,
@@ -4646,6 +4700,10 @@ class MajorRailHatchingRenderPipelineBindings
       worldToGl: cameraWorldToGl,
       zoom: cameraZoom,
       pixelRatio: cameraPixelRatio,
+    );
+    dasharray.setTexture(
+      dasharrayTexture,
+      options: dasharrayTextureSamplerOptions,
     );
   }
 }
@@ -4665,12 +4723,12 @@ class MinorRailVertexShaderBindings extends VertexShaderBindings {
     required double widthStartValue,
     required double widthEndValue,
   }) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
+    set_vec2(8, $setVertexData, normal);
+    set_float(16, $setVertexData, widthStartValue);
+    set_float(20, $setVertexData, widthEndValue);
 
-    set_vec2(offset + 0, vertexData!, position);
-    set_vec2(offset + 8, vertexData!, normal);
-    set_float(offset + 16, vertexData!, widthStartValue);
-    set_float(offset + 20, vertexData!, widthEndValue);
+    setVertexInternal(index);
   }
 }
 
@@ -4705,16 +4763,16 @@ class MinorRailRenderPipelineBindings
             fragmentShader: shaderLibrary['minor_rail_frag']!,
           ),
         ],
+        samplers: [],
       );
 
   late final MinorRailUbo minorRailUbo = ubos[0] as MinorRailUbo;
   late final TileUbo tileUbo = ubos[1] as TileUbo;
   late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
-    required double minorRailUboWidthStartStop,
-    required double minorRailUboWidthEndStop,
+  /// Sets the uniforms for this shader.
+  void setUniforms({
+    required Vector2 minorRailUboWidthStops,
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -4723,10 +4781,7 @@ class MinorRailRenderPipelineBindings
     required double cameraZoom,
     required double cameraPixelRatio,
   }) {
-    minorRailUbo.set(
-      widthStartStop: minorRailUboWidthStartStop,
-      widthEndStop: minorRailUboWidthEndStop,
-    );
+    minorRailUbo.set(widthStops: minorRailUboWidthStops);
     tileUbo.set(
       localToWorld: tileLocalToWorld,
       size: tileSize,
@@ -4745,7 +4800,7 @@ class MinorRailRenderPipelineBindings
 class MinorRailHatchingVertexShaderBindings extends VertexShaderBindings {
   MinorRailHatchingVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
     : super(
-        bytesPerVertex: 24,
+        bytesPerVertex: 28,
         shader: shaderLibrary['minor_rail_hatching_vert']!,
       );
 
@@ -4756,15 +4811,17 @@ class MinorRailHatchingVertexShaderBindings extends VertexShaderBindings {
     int index, {
     required Vector2 position,
     required Vector2 normal,
+    required double lineLength,
     required double widthStartValue,
     required double widthEndValue,
   }) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
+    set_vec2(8, $setVertexData, normal);
+    set_float(16, $setVertexData, lineLength);
+    set_float(20, $setVertexData, widthStartValue);
+    set_float(24, $setVertexData, widthEndValue);
 
-    set_vec2(offset + 0, vertexData!, position);
-    set_vec2(offset + 8, vertexData!, normal);
-    set_float(offset + 16, vertexData!, widthStartValue);
-    set_float(offset + 20, vertexData!, widthEndValue);
+    setVertexInternal(index);
   }
 }
 
@@ -4799,6 +4856,13 @@ class MinorRailHatchingRenderPipelineBindings
             fragmentShader: shaderLibrary['minor_rail_hatching_frag']!,
           ),
         ],
+        samplers: [
+          UniformSamplerBindings(
+            name: 'dasharray',
+            vertexShader: shaderLibrary['minor_rail_hatching_vert']!,
+            fragmentShader: shaderLibrary['minor_rail_hatching_frag']!,
+          ),
+        ],
       );
 
   late final MinorRailHatchingUbo minorRailHatchingUbo =
@@ -4806,10 +4870,12 @@ class MinorRailHatchingRenderPipelineBindings
   late final TileUbo tileUbo = ubos[1] as TileUbo;
   late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
-    required double minorRailHatchingUboWidthStartStop,
-    required double minorRailHatchingUboWidthEndStop,
+  late final UniformSamplerBindings dasharray = samplers[0];
+
+  /// Sets the uniforms for this shader.
+  void setUniforms({
+    required Vector2 minorRailHatchingUboWidthStops,
+    required Vector2 minorRailHatchingUboDasharraySize,
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -4817,10 +4883,12 @@ class MinorRailHatchingRenderPipelineBindings
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
     required double cameraPixelRatio,
+    required gpu.Texture dasharrayTexture,
+    gpu.SamplerOptions? dasharrayTextureSamplerOptions,
   }) {
     minorRailHatchingUbo.set(
-      widthStartStop: minorRailHatchingUboWidthStartStop,
-      widthEndStop: minorRailHatchingUboWidthEndStop,
+      widthStops: minorRailHatchingUboWidthStops,
+      dasharraySize: minorRailHatchingUboDasharraySize,
     );
     tileUbo.set(
       localToWorld: tileLocalToWorld,
@@ -4832,6 +4900,10 @@ class MinorRailHatchingRenderPipelineBindings
       worldToGl: cameraWorldToGl,
       zoom: cameraZoom,
       pixelRatio: cameraPixelRatio,
+    );
+    dasharray.setTexture(
+      dasharrayTexture,
+      options: dasharrayTextureSamplerOptions,
     );
   }
 }
@@ -4845,9 +4917,9 @@ class BuildingVertexShaderBindings extends VertexShaderBindings {
   ///
   /// Ensure that [allocateVertices] has been called before calling this method.
   void setVertex(int index, {required Vector2 position}) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
 
-    set_vec2(offset + 0, vertexData!, position);
+    setVertexInternal(index);
   }
 }
 
@@ -4878,13 +4950,14 @@ class BuildingRenderPipelineBindings
             fragmentShader: shaderLibrary['building_frag']!,
           ),
         ],
+        samplers: [],
       );
 
   late final TileUbo tileUbo = ubos[0] as TileUbo;
   late final CameraUbo cameraUbo = ubos[1] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
+  /// Sets the uniforms for this shader.
+  void setUniforms({
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -4925,12 +4998,12 @@ class AqueductOutlineVertexShaderBindings extends VertexShaderBindings {
     required double widthStartValue,
     required double widthEndValue,
   }) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
+    set_vec2(8, $setVertexData, normal);
+    set_float(16, $setVertexData, widthStartValue);
+    set_float(20, $setVertexData, widthEndValue);
 
-    set_vec2(offset + 0, vertexData!, position);
-    set_vec2(offset + 8, vertexData!, normal);
-    set_float(offset + 16, vertexData!, widthStartValue);
-    set_float(offset + 20, vertexData!, widthEndValue);
+    setVertexInternal(index);
   }
 }
 
@@ -4965,6 +5038,7 @@ class AqueductOutlineRenderPipelineBindings
             fragmentShader: shaderLibrary['aqueduct_outline_frag']!,
           ),
         ],
+        samplers: [],
       );
 
   late final AqueductOutlineUbo aqueductOutlineUbo =
@@ -4972,10 +5046,9 @@ class AqueductOutlineRenderPipelineBindings
   late final TileUbo tileUbo = ubos[1] as TileUbo;
   late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
-    required double aqueductOutlineUboWidthStartStop,
-    required double aqueductOutlineUboWidthEndStop,
+  /// Sets the uniforms for this shader.
+  void setUniforms({
+    required Vector2 aqueductOutlineUboWidthStops,
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -4984,10 +5057,7 @@ class AqueductOutlineRenderPipelineBindings
     required double cameraZoom,
     required double cameraPixelRatio,
   }) {
-    aqueductOutlineUbo.set(
-      widthStartStop: aqueductOutlineUboWidthStartStop,
-      widthEndStop: aqueductOutlineUboWidthEndStop,
-    );
+    aqueductOutlineUbo.set(widthStops: aqueductOutlineUboWidthStops);
     tileUbo.set(
       localToWorld: tileLocalToWorld,
       size: tileSize,
@@ -5017,12 +5087,12 @@ class AqueductVertexShaderBindings extends VertexShaderBindings {
     required double widthStartValue,
     required double widthEndValue,
   }) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
+    set_vec2(8, $setVertexData, normal);
+    set_float(16, $setVertexData, widthStartValue);
+    set_float(20, $setVertexData, widthEndValue);
 
-    set_vec2(offset + 0, vertexData!, position);
-    set_vec2(offset + 8, vertexData!, normal);
-    set_float(offset + 16, vertexData!, widthStartValue);
-    set_float(offset + 20, vertexData!, widthEndValue);
+    setVertexInternal(index);
   }
 }
 
@@ -5057,16 +5127,16 @@ class AqueductRenderPipelineBindings
             fragmentShader: shaderLibrary['aqueduct_frag']!,
           ),
         ],
+        samplers: [],
       );
 
   late final AqueductUbo aqueductUbo = ubos[0] as AqueductUbo;
   late final TileUbo tileUbo = ubos[1] as TileUbo;
   late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
-    required double aqueductUboWidthStartStop,
-    required double aqueductUboWidthEndStop,
+  /// Sets the uniforms for this shader.
+  void setUniforms({
+    required Vector2 aqueductUboWidthStops,
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -5075,10 +5145,7 @@ class AqueductRenderPipelineBindings
     required double cameraZoom,
     required double cameraPixelRatio,
   }) {
-    aqueductUbo.set(
-      widthStartStop: aqueductUboWidthStartStop,
-      widthEndStop: aqueductUboWidthEndStop,
-    );
+    aqueductUbo.set(widthStops: aqueductUboWidthStops);
     tileUbo.set(
       localToWorld: tileLocalToWorld,
       size: tileSize,
@@ -5108,12 +5175,12 @@ class CablecarVertexShaderBindings extends VertexShaderBindings {
     required double widthStartValue,
     required double widthEndValue,
   }) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
+    set_vec2(8, $setVertexData, normal);
+    set_float(16, $setVertexData, widthStartValue);
+    set_float(20, $setVertexData, widthEndValue);
 
-    set_vec2(offset + 0, vertexData!, position);
-    set_vec2(offset + 8, vertexData!, normal);
-    set_float(offset + 16, vertexData!, widthStartValue);
-    set_float(offset + 20, vertexData!, widthEndValue);
+    setVertexInternal(index);
   }
 }
 
@@ -5148,16 +5215,16 @@ class CablecarRenderPipelineBindings
             fragmentShader: shaderLibrary['cablecar_frag']!,
           ),
         ],
+        samplers: [],
       );
 
   late final CablecarUbo cablecarUbo = ubos[0] as CablecarUbo;
   late final TileUbo tileUbo = ubos[1] as TileUbo;
   late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
-    required double cablecarUboWidthStartStop,
-    required double cablecarUboWidthEndStop,
+  /// Sets the uniforms for this shader.
+  void setUniforms({
+    required Vector2 cablecarUboWidthStops,
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -5166,10 +5233,7 @@ class CablecarRenderPipelineBindings
     required double cameraZoom,
     required double cameraPixelRatio,
   }) {
-    cablecarUbo.set(
-      widthStartStop: cablecarUboWidthStartStop,
-      widthEndStop: cablecarUboWidthEndStop,
-    );
+    cablecarUbo.set(widthStops: cablecarUboWidthStops);
     tileUbo.set(
       localToWorld: tileLocalToWorld,
       size: tileSize,
@@ -5187,7 +5251,7 @@ class CablecarRenderPipelineBindings
 /// Generated bindings for the vertex shader `cablecar_dash`
 class CablecarDashVertexShaderBindings extends VertexShaderBindings {
   CablecarDashVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
-    : super(bytesPerVertex: 24, shader: shaderLibrary['cablecar_dash_vert']!);
+    : super(bytesPerVertex: 28, shader: shaderLibrary['cablecar_dash_vert']!);
 
   /// Sets attributes for a vertex at [index].
   ///
@@ -5196,15 +5260,17 @@ class CablecarDashVertexShaderBindings extends VertexShaderBindings {
     int index, {
     required Vector2 position,
     required Vector2 normal,
+    required double lineLength,
     required double widthStartValue,
     required double widthEndValue,
   }) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
+    set_vec2(8, $setVertexData, normal);
+    set_float(16, $setVertexData, lineLength);
+    set_float(20, $setVertexData, widthStartValue);
+    set_float(24, $setVertexData, widthEndValue);
 
-    set_vec2(offset + 0, vertexData!, position);
-    set_vec2(offset + 8, vertexData!, normal);
-    set_float(offset + 16, vertexData!, widthStartValue);
-    set_float(offset + 20, vertexData!, widthEndValue);
+    setVertexInternal(index);
   }
 }
 
@@ -5239,16 +5305,25 @@ class CablecarDashRenderPipelineBindings
             fragmentShader: shaderLibrary['cablecar_dash_frag']!,
           ),
         ],
+        samplers: [
+          UniformSamplerBindings(
+            name: 'dasharray',
+            vertexShader: shaderLibrary['cablecar_dash_vert']!,
+            fragmentShader: shaderLibrary['cablecar_dash_frag']!,
+          ),
+        ],
       );
 
   late final CablecarDashUbo cablecarDashUbo = ubos[0] as CablecarDashUbo;
   late final TileUbo tileUbo = ubos[1] as TileUbo;
   late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
-    required double cablecarDashUboWidthStartStop,
-    required double cablecarDashUboWidthEndStop,
+  late final UniformSamplerBindings dasharray = samplers[0];
+
+  /// Sets the uniforms for this shader.
+  void setUniforms({
+    required Vector2 cablecarDashUboWidthStops,
+    required Vector2 cablecarDashUboDasharraySize,
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -5256,10 +5331,12 @@ class CablecarDashRenderPipelineBindings
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
     required double cameraPixelRatio,
+    required gpu.Texture dasharrayTexture,
+    gpu.SamplerOptions? dasharrayTextureSamplerOptions,
   }) {
     cablecarDashUbo.set(
-      widthStartStop: cablecarDashUboWidthStartStop,
-      widthEndStop: cablecarDashUboWidthEndStop,
+      widthStops: cablecarDashUboWidthStops,
+      dasharraySize: cablecarDashUboDasharraySize,
     );
     tileUbo.set(
       localToWorld: tileLocalToWorld,
@@ -5272,13 +5349,17 @@ class CablecarDashRenderPipelineBindings
       zoom: cameraZoom,
       pixelRatio: cameraPixelRatio,
     );
+    dasharray.setTexture(
+      dasharrayTexture,
+      options: dasharrayTextureSamplerOptions,
+    );
   }
 }
 
 /// Generated bindings for the vertex shader `other_border`
 class OtherBorderVertexShaderBindings extends VertexShaderBindings {
   OtherBorderVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
-    : super(bytesPerVertex: 24, shader: shaderLibrary['other_border_vert']!);
+    : super(bytesPerVertex: 28, shader: shaderLibrary['other_border_vert']!);
 
   /// Sets attributes for a vertex at [index].
   ///
@@ -5287,15 +5368,17 @@ class OtherBorderVertexShaderBindings extends VertexShaderBindings {
     int index, {
     required Vector2 position,
     required Vector2 normal,
+    required double lineLength,
     required double widthStartValue,
     required double widthEndValue,
   }) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
+    set_vec2(8, $setVertexData, normal);
+    set_float(16, $setVertexData, lineLength);
+    set_float(20, $setVertexData, widthStartValue);
+    set_float(24, $setVertexData, widthEndValue);
 
-    set_vec2(offset + 0, vertexData!, position);
-    set_vec2(offset + 8, vertexData!, normal);
-    set_float(offset + 16, vertexData!, widthStartValue);
-    set_float(offset + 20, vertexData!, widthEndValue);
+    setVertexInternal(index);
   }
 }
 
@@ -5330,16 +5413,25 @@ class OtherBorderRenderPipelineBindings
             fragmentShader: shaderLibrary['other_border_frag']!,
           ),
         ],
+        samplers: [
+          UniformSamplerBindings(
+            name: 'dasharray',
+            vertexShader: shaderLibrary['other_border_vert']!,
+            fragmentShader: shaderLibrary['other_border_frag']!,
+          ),
+        ],
       );
 
   late final OtherBorderUbo otherBorderUbo = ubos[0] as OtherBorderUbo;
   late final TileUbo tileUbo = ubos[1] as TileUbo;
   late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
-    required double otherBorderUboWidthStartStop,
-    required double otherBorderUboWidthEndStop,
+  late final UniformSamplerBindings dasharray = samplers[0];
+
+  /// Sets the uniforms for this shader.
+  void setUniforms({
+    required Vector2 otherBorderUboWidthStops,
+    required Vector2 otherBorderUboDasharraySize,
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -5347,10 +5439,12 @@ class OtherBorderRenderPipelineBindings
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
     required double cameraPixelRatio,
+    required gpu.Texture dasharrayTexture,
+    gpu.SamplerOptions? dasharrayTextureSamplerOptions,
   }) {
     otherBorderUbo.set(
-      widthStartStop: otherBorderUboWidthStartStop,
-      widthEndStop: otherBorderUboWidthEndStop,
+      widthStops: otherBorderUboWidthStops,
+      dasharraySize: otherBorderUboDasharraySize,
     );
     tileUbo.set(
       localToWorld: tileLocalToWorld,
@@ -5363,13 +5457,17 @@ class OtherBorderRenderPipelineBindings
       zoom: cameraZoom,
       pixelRatio: cameraPixelRatio,
     );
+    dasharray.setTexture(
+      dasharrayTexture,
+      options: dasharrayTextureSamplerOptions,
+    );
   }
 }
 
 /// Generated bindings for the vertex shader `disputed_border`
 class DisputedBorderVertexShaderBindings extends VertexShaderBindings {
   DisputedBorderVertexShaderBindings(gpu.ShaderLibrary shaderLibrary)
-    : super(bytesPerVertex: 24, shader: shaderLibrary['disputed_border_vert']!);
+    : super(bytesPerVertex: 28, shader: shaderLibrary['disputed_border_vert']!);
 
   /// Sets attributes for a vertex at [index].
   ///
@@ -5378,15 +5476,17 @@ class DisputedBorderVertexShaderBindings extends VertexShaderBindings {
     int index, {
     required Vector2 position,
     required Vector2 normal,
+    required double lineLength,
     required double widthStartValue,
     required double widthEndValue,
   }) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
+    set_vec2(8, $setVertexData, normal);
+    set_float(16, $setVertexData, lineLength);
+    set_float(20, $setVertexData, widthStartValue);
+    set_float(24, $setVertexData, widthEndValue);
 
-    set_vec2(offset + 0, vertexData!, position);
-    set_vec2(offset + 8, vertexData!, normal);
-    set_float(offset + 16, vertexData!, widthStartValue);
-    set_float(offset + 20, vertexData!, widthEndValue);
+    setVertexInternal(index);
   }
 }
 
@@ -5421,16 +5521,25 @@ class DisputedBorderRenderPipelineBindings
             fragmentShader: shaderLibrary['disputed_border_frag']!,
           ),
         ],
+        samplers: [
+          UniformSamplerBindings(
+            name: 'dasharray',
+            vertexShader: shaderLibrary['disputed_border_vert']!,
+            fragmentShader: shaderLibrary['disputed_border_frag']!,
+          ),
+        ],
       );
 
   late final DisputedBorderUbo disputedBorderUbo = ubos[0] as DisputedBorderUbo;
   late final TileUbo tileUbo = ubos[1] as TileUbo;
   late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
-    required double disputedBorderUboWidthStartStop,
-    required double disputedBorderUboWidthEndStop,
+  late final UniformSamplerBindings dasharray = samplers[0];
+
+  /// Sets the uniforms for this shader.
+  void setUniforms({
+    required Vector2 disputedBorderUboWidthStops,
+    required Vector2 disputedBorderUboDasharraySize,
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -5438,10 +5547,12 @@ class DisputedBorderRenderPipelineBindings
     required Matrix4 cameraWorldToGl,
     required double cameraZoom,
     required double cameraPixelRatio,
+    required gpu.Texture dasharrayTexture,
+    gpu.SamplerOptions? dasharrayTextureSamplerOptions,
   }) {
     disputedBorderUbo.set(
-      widthStartStop: disputedBorderUboWidthStartStop,
-      widthEndStop: disputedBorderUboWidthEndStop,
+      widthStops: disputedBorderUboWidthStops,
+      dasharraySize: disputedBorderUboDasharraySize,
     );
     tileUbo.set(
       localToWorld: tileLocalToWorld,
@@ -5453,6 +5564,10 @@ class DisputedBorderRenderPipelineBindings
       worldToGl: cameraWorldToGl,
       zoom: cameraZoom,
       pixelRatio: cameraPixelRatio,
+    );
+    dasharray.setTexture(
+      dasharrayTexture,
+      options: dasharrayTextureSamplerOptions,
     );
   }
 }
@@ -5472,12 +5587,12 @@ class CountryBorderVertexShaderBindings extends VertexShaderBindings {
     required double widthStartValue,
     required double widthEndValue,
   }) {
-    final offset = index * bytesPerVertex;
+    set_vec2(0, $setVertexData, position);
+    set_vec2(8, $setVertexData, normal);
+    set_float(16, $setVertexData, widthStartValue);
+    set_float(20, $setVertexData, widthEndValue);
 
-    set_vec2(offset + 0, vertexData!, position);
-    set_vec2(offset + 8, vertexData!, normal);
-    set_float(offset + 16, vertexData!, widthStartValue);
-    set_float(offset + 20, vertexData!, widthEndValue);
+    setVertexInternal(index);
   }
 }
 
@@ -5512,16 +5627,16 @@ class CountryBorderRenderPipelineBindings
             fragmentShader: shaderLibrary['country_border_frag']!,
           ),
         ],
+        samplers: [],
       );
 
   late final CountryBorderUbo countryBorderUbo = ubos[0] as CountryBorderUbo;
   late final TileUbo tileUbo = ubos[1] as TileUbo;
   late final CameraUbo cameraUbo = ubos[2] as CameraUbo;
 
-  /// Sets the UBOs for this shader.
-  void setUbos({
-    required double countryBorderUboWidthStartStop,
-    required double countryBorderUboWidthEndStop,
+  /// Sets the uniforms for this shader.
+  void setUniforms({
+    required Vector2 countryBorderUboWidthStops,
     required Matrix4 tileLocalToWorld,
     required double tileSize,
     required double tileExtent,
@@ -5530,10 +5645,7 @@ class CountryBorderRenderPipelineBindings
     required double cameraZoom,
     required double cameraPixelRatio,
   }) {
-    countryBorderUbo.set(
-      widthStartStop: countryBorderUboWidthStartStop,
-      widthEndStop: countryBorderUboWidthEndStop,
-    );
+    countryBorderUbo.set(widthStops: countryBorderUboWidthStops);
     tileUbo.set(
       localToWorld: tileLocalToWorld,
       size: tileSize,

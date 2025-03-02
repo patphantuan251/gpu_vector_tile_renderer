@@ -22,18 +22,19 @@ class _DemoPageState extends State<VectorTileLayerDemo> {
   late final _controller = MapController();
 
   final _locations = {
-    'Zero': LatLng(0.0, 0.0),
-    'London': LatLng(51.5074, -0.1278),
-    'Almaty': LatLng(43.2389498, 76.8897094),
-    'Milano': LatLng(45.4642, 9.1900),
-    'Zurich': LatLng(47.3769, 8.5417),
-    'New York': LatLng(40.7128, -74.0060),
-    'Tokyo': LatLng(35.6895, 139.6917),
-    'Sydney': LatLng(-33.8688, 151.2093),
-    'Santiago': LatLng(-33.4489, -70.6693),
-    'Rio de Janeiro': LatLng(-22.9068, -43.1729),
-    'Reykjavik': LatLng(64.1466, -21.9426),
-    'Barcelona': LatLng(41.3851, 2.1734),
+    'Zero': (LatLng(0.0, 0.0), 0.0),
+    'Europe': (LatLng(51.1657, 10.4515), 4.0),
+    'London': (LatLng(51.5074, -0.1278), 13.0),
+    'Almaty': (LatLng(43.2220, 76.8512), 13.0),
+    'New York': (LatLng(40.7128, -74.0060), 13.0),
+    'Sydney': (LatLng(-33.8688, 151.2093), 13.0),
+    'Tokyo': (LatLng(35.6895, 139.6917), 13.0),
+    'Rio de Janeiro': (LatLng(-22.9068, -43.1729), 13.0),
+    'Milan': (LatLng(45.4642, 9.1900), 13.0),
+    'Cape Town': (LatLng(-33.9249, 18.4241), 13.0),
+    'Beijing': (LatLng(39.9042, 116.4074), 13.0),
+    'Kuala Lumpur': (LatLng(3.1390, 101.6869), 13.0),
+    'Singapore': (LatLng(1.3521, 103.8198), 13.0),
   };
 
   void _showJumpToLocation() {
@@ -47,12 +48,12 @@ class _DemoPageState extends State<VectorTileLayerDemo> {
                   return ListTile(
                     title: Text(entry.key),
                     subtitle: Text(
-                      '${entry.value.latitude}, ${entry.value.longitude}',
+                      '${entry.value.$1.latitude}, ${entry.value.$1.longitude} : ${entry.value.$2}',
                     ),
                     trailing: Icon(Icons.chevron_right_rounded),
                     onTap: () {
                       final location = _locations[entry.key]!;
-                      _controller.move(location, 13.0);
+                      _controller.move(location.$1, location.$2);
 
                       Navigator.pop(context);
                     },
@@ -85,12 +86,12 @@ class _DemoPageState extends State<VectorTileLayerDemo> {
                 enableRender: _showVectorLayer,
                 debug: _isDebug,
                 styleProvider: jsonStyleProvider(
-                  jsonDecode(maptilerStreetsStyle),
+                  jsonDecode(maptilerStreetsDarkStyle),
                 ),
                 createSingleTileLayerRenderer: createSingleTileLayerRenderer,
                 shaderLibrary:
                     ShaderLibrary.fromAsset(
-                      'build/shaderbundles/Streets.shaderbundle',
+                      'build/shaderbundles/streets_dark.shaderbundle',
                     )!,
               ),
               if (_showRasterLayer)

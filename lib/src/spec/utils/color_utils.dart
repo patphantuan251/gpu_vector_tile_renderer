@@ -104,3 +104,24 @@ num _lab2xyz(num t) {
 num _constrainAngle(num angle) {
   return (angle %= 360) < 0 ? angle + 360 : angle;
 }
+
+/// Converts given HSL color to RGB color.
+///
+/// Implementation taken from https://stackoverflow.com/questions/2353211/hsl-to-rgb-color-conversion.
+Color hslToRgb(double h, double s, double l, double? a) {
+  if (s == 0) return Color(r: l, g: l, b: l, a: a ?? 1.0);
+
+  final q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+  final p = 2 * l - q;
+
+  return Color(r: _hueToRgb(p, q, h + 1 / 3), g: _hueToRgb(p, q, h), b: _hueToRgb(p, q, h - 1 / 3), a: a ?? 1.0);
+}
+
+double _hueToRgb(double p, double q, double t) {
+  if (t < 0) t += 1;
+  if (t > 1) t -= 1;
+  if (t < 1 / 6) return p + (q - p) * 6 * t;
+  if (t < 1 / 2) return q;
+  if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+  return p;
+}

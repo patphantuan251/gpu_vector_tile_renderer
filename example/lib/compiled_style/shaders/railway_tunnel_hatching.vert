@@ -18,17 +18,16 @@ float data_interpolate_factor(
 ) {
   float difference = end_stop - start_stop;
   float progress = t - start_stop;
-
+  
   if (difference == 0.0) return 0.0;
   else if (base == 1.0) return progress / difference;
   else return (pow(base, progress) - 1.0) / (pow(base, difference) - 1.0);
 }
 
 uniform RailwayTunnelHatchingUbo {
-  float width_start_stop;
-  float width_end_stop;
+  vec2 width_stops;
+  vec2 dasharray_size;
 } railway_tunnel_hatching_ubo;
-
 
 precision highp float;
 
@@ -39,36 +38,43 @@ uniform Tile {
   highp float opacity;
 } tile;
 
-
 uniform Camera {
   highp mat4 world_to_gl;
   highp float zoom;
   float pixel_ratio;
 } camera;
 
-
 vec4 project_tile_position(vec2 position) {
   return camera.world_to_gl * tile.local_to_world * (vec4(position * (tile.size / tile.extent), 0.0, 1.0));
 }
 
+float project_pixel_length(float len) {
+  return len * tile.size / tile.extent;
+}
 
 in highp vec2 position;
 in highp vec2 normal;
+in highp float line_length;
 
-const highp vec4 color = vec4(0.7294117647058823, 0.7294117647058823, 0.7294117647058823, 1.0);
+out highp float v_line_length;
+
+const highp vec4 color = vec4(0.73, 0.73, 0.73, 1.0);
 const float opacity = 0.5;
 in float width_start_value;
 in float width_end_value;
 out float v_width;
+uniform sampler2D dasharray;
 
 void main() {
-float width = data_interpolate(width_start_value, width_end_value, railway_tunnel_hatching_ubo.width_start_stop, railway_tunnel_hatching_ubo.width_end_stop);
-v_width = width;
-
+  float width = data_interpolate(width_start_value, width_end_value, railway_tunnel_hatching_ubo.width_stops.x, railway_tunnel_hatching_ubo.width_stops.y);
+  v_width = width;
+  vec2 dasharray_size = railway_tunnel_hatching_ubo.dasharray_size;
+  
   // Width is defined in terms of screen pixels, so we need to convert it.
   float local_width = width * (tile.extent / tile.size);
   vec2 offset = normal * local_width * 0.5;
+  
   gl_Position = project_tile_position(position + offset);
+  v_line_length = line_length;
 }
-
 

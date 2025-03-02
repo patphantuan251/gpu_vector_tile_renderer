@@ -8,8 +8,8 @@ import 'package:gpu_vector_tile_renderer/_vector_tile.dart' as vt;
 import 'package:gpu_vector_tile_renderer/src/shaders/bindings/shader_bindings.dart';
 import 'package:vector_math/vector_math_64.dart';
 
-abstract class FillLayerRenderer extends SingleTileLayerRenderer<spec.LayerFill> {
-  FillLayerRenderer({
+abstract class $FillLayerRenderer extends SingleTileLayerRenderer<spec.LayerFill> {
+  $FillLayerRenderer({
     required super.coordinates,
     required super.container,
     required super.specLayer,

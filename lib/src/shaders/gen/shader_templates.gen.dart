@@ -47,6 +47,10 @@ uniform Camera {
 vec4 project_tile_position(vec2 position) {
   return camera.world_to_gl * tile.local_to_world * (vec4(position * (tile.size / tile.extent), 0.0, 1.0));
 }
+
+float project_pixel_length(float len) {
+  return len * tile.size / tile.extent;
+}
 ''',
 };
 
@@ -91,22 +95,45 @@ void main() {
 ''',
 'background': '''
 #version 320 es
+#pragma prelude: interpolation
+#pragma prelude: tile
 
-uniform BackgroundUbo {
-  highp vec4 color;
-  highp float opacity;
-} background_ubo;
+in highp vec2 position;
 
-in vec2 position;
-
-out vec4 v_color;
-out float v_opacity;
+#pragma prop: declare(highp vec4 color)
+#pragma prop: declare(highp float opacity)
 
 void main() {
-  v_color = background_ubo.color;
-  v_opacity = background_ubo.opacity;
+  #pragma prop: resolve(...)
+  gl_Position = camera.world_to_gl * tile.local_to_world * vec4(position.x * tile.size, position.y * tile.size, 0.0, 1.0);
+}
+''',
+'line-dashed': '''
+#version 320 es
+#pragma prelude: interpolation
+#pragma prelude: tile
 
-  gl_Position = vec4(position, 0.0, 1.0);
+
+in highp vec2 position;
+in highp vec2 normal;
+in highp float line_length;
+
+out highp float v_line_length;
+
+#pragma prop: declare(highp vec4 color)
+#pragma prop: declare(float opacity)
+#pragma prop: declare(float width)
+#pragma prop: declare(sampler2D dasharray)
+
+void main() {
+  #pragma prop: resolve(...)
+
+  // Width is defined in terms of screen pixels, so we need to convert it.
+  float local_width = width * (tile.extent / tile.size);
+  vec2 offset = normal * local_width * 0.5;
+  
+  gl_Position = project_tile_position(position + offset);
+  v_line_length = line_length;
 }
 ''',
 };
@@ -114,19 +141,17 @@ void main() {
 const fragmentShaderTemplates = <String, String>{
 'background': '''
 #version 320 es
+#pragma prelude: interpolation
+#pragma prelude: tile
 
-uniform BackgroundUbo {
-  highp vec4 color;
-  highp float opacity;
-} background_ubo;
+#pragma prop: declare(highp vec4 color)
+#pragma prop: declare(highp float opacity)
 
-in vec4 v_color;
-in float v_opacity;
-
-out vec4 f_color;
+out highp vec4 f_color;
 
 void main() {
-  f_color = v_color * v_opacity;
+  #pragma prop: resolve(...)
+  f_color = color * (opacity * tile.opacity);
 }
 ''',
 'line': '''
@@ -142,6 +167,30 @@ out highp vec4 f_color;
 
 void main() {
   #pragma prop: resolve(...)
+  f_color = color * (opacity * tile.opacity);
+}
+''',
+'line-dashed': '''
+#version 320 es
+#pragma prelude: interpolation
+#pragma prelude: tile
+
+in highp float v_line_length;
+
+#pragma prop: declare(highp vec4 color)
+#pragma prop: declare(float opacity)
+#pragma prop: declare(float width)
+#pragma prop: declare(sampler2D dasharray)
+
+out highp vec4 f_color;
+
+void main() {
+  #pragma prop: resolve(...)
+  
+  float line_position = project_pixel_length(v_line_length) / width;
+  float dash_value = texture(dasharray, vec2(line_position / dasharray_size.x, 0.5)).r;
+  if (dash_value < 0.5) discard;
+
   f_color = color * (opacity * tile.opacity);
 }
 ''',

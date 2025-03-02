@@ -18,21 +18,10 @@ import 'package:gpu_vector_tile_renderer/src/utils/string_utils.dart';
   final shaderBindings = <String>[];
   final layerRenderers = <String>[];
 
-  // temporary!
-  vertexShaders.add(
-    readShader(vertexShaderTemplates['background']!, name: 'background', type: ShaderType.vertex) as ParsedShaderVertex,
-  );
-
-  fragmentShaders.add(
-    readShader(fragmentShaderTemplates['background']!, name: 'background', type: ShaderType.fragment)
-        as ParsedShaderFragment,
-  );
-
-  shaderBindings.add(generateShaderBindings(vertexShaders.first, fragmentShaders.first));
-
   // For each layer, precompile the shaders
   for (final layer in style.layers) {
     final result = switch (layer.type) {
+      spec.Layer$Type.background => _precompileBackgroundLayer(layer as spec.LayerBackground),
       spec.Layer$Type.fill => _precompileFillLayer(layer as spec.LayerFill),
       spec.Layer$Type.line => _precompileLineLayer(layer as spec.LayerLine),
       _ => null,
@@ -110,13 +99,29 @@ import 'package:gpu_vector_tile_renderer/src/utils/string_utils.dart';
   );
 }
 
+_PrecompileLayerResult _precompileBackgroundLayer(spec.LayerBackground layer) {
+  final paint = layer.paint;
+
+  return _precompileLayer(
+    layer,
+    shaderTemplateName: 'background',
+    abstractLayerRendererClassName: '\$BackgroundLayerRenderer',
+    setFeatureVerticesGenerator: backgroundLayerRendererSetVerticesGenerator,
+    setUniformsGenerator: setUniformsGenerator,
+    jointPropertiesMap: {
+      'color': (paint.backgroundColor, 'backgroundColor', 'color'),
+      'opacity': (paint.backgroundOpacity, 'backgroundOpacity', 'opacity'),
+    },
+  );
+}
+
 _PrecompileLayerResult _precompileFillLayer(spec.LayerFill layer) {
   final paint = layer.paint;
 
   return _precompileLayer(
     layer,
     shaderTemplateName: 'fill',
-    abstractLayerRendererClassName: 'FillLayerRenderer',
+    abstractLayerRendererClassName: '\$FillLayerRenderer',
     setFeatureVerticesGenerator: fillLayerRendererSetFeatureVerticesGenerator,
     setUniformsGenerator: setUniformsGenerator,
     jointPropertiesMap: {
@@ -131,16 +136,20 @@ _PrecompileLayerResult _precompileFillLayer(spec.LayerFill layer) {
 _PrecompileLayerResult _precompileLineLayer(spec.LayerLine layer) {
   final paint = layer.paint;
 
+  final isDasharray = paint.lineDasharray != null;
+
   return _precompileLayer(
     layer,
-    shaderTemplateName: 'line',
-    abstractLayerRendererClassName: 'LineLayerRenderer',
-    setFeatureVerticesGenerator: lineLayerRendererSetFeatureVerticesGenerator,
+    shaderTemplateName: paint.lineDasharray != null ? 'line-dashed' : 'line',
+    abstractLayerRendererClassName: '\$LineLayerRenderer',
+    setFeatureVerticesGenerator:
+        isDasharray ? lineDashedLayerRendererSetFeatureVerticesGenerator : lineLayerRendererSetFeatureVerticesGenerator,
     setUniformsGenerator: setUniformsGenerator,
     jointPropertiesMap: {
       'color': (paint.lineColor, 'lineColor', 'color'),
       'opacity': (paint.lineOpacity, 'lineOpacity', 'opacity'),
       'width': (paint.lineWidth, 'lineWidth', 'width'),
+      if (isDasharray) 'dasharray': (paint.lineDasharray!, 'lineDasharray', 'dasharray'),
     },
   );
 }
@@ -170,13 +179,6 @@ _PrecompileLayerResult _precompileLayer(
   final dartNameMap = <String, String>{};
   final glslNameMap = <String, String>{};
   final analysisResultsMap = <String, _PropertyAnalysis>{};
-
-  for (final entry in jointPropertiesMap.entries) {
-    propertiesMap[entry.key] = entry.value.$1;
-    dartNameMap[entry.key] = entry.value.$2;
-    glslNameMap[entry.key] = entry.value.$3;
-    analysisResultsMap[entry.key] = _analyzeProperty(entry.value.$1);
-  }
 
   // Shader name is snake-case of the layer id.
   //
@@ -222,6 +224,14 @@ _PrecompileLayerResult _precompileLayer(
     shader.content.insertAll(index, values.nonNulls);
   }
 
+  // Perform analysis on props
+  for (final entry in jointPropertiesMap.entries) {
+    propertiesMap[entry.key] = entry.value.$1;
+    dartNameMap[entry.key] = entry.value.$2;
+    glslNameMap[entry.key] = entry.value.$3;
+    analysisResultsMap[entry.key] = _analyzeProperty(entry.value.$1, _getPropDeclarationPragma(entry.key));
+  }
+
   // Property resolution map for shaders.
   //
   // This determines how the property will be resolved in the shader's `main()` block, and will be used to replace the
@@ -238,7 +248,7 @@ _PrecompileLayerResult _precompileLayer(
   final rendererVertexAttributeSetters = <String>[];
 
   // This will be the code that's used in the layer renderer to set the uniform values.
-  final rendererUboSetters = <String>[];
+  final rendererUniformSetters = <String>[];
 
   // The shader UBO that will contain the property values set as uniform.
   final propertiesUboName = '${shaderClassName}Ubo';
@@ -252,7 +262,7 @@ _PrecompileLayerResult _precompileLayer(
   // - Generate the code to resolve the property in the shader's `main()` block (prop resolutions)
   for (final key in keys) {
     final analysis = analysisResultsMap[key]!;
-    final propertyDartName = dartNameMap[key];
+    final dartPropertyName = dartNameMap[key];
     final dartProperty = propertiesMap[key];
     final pragma = _getPropDeclarationPragma(key);
 
@@ -286,6 +296,34 @@ _PrecompileLayerResult _precompileLayer(
       continue;
     }
 
+    //
+    // Property is a sampler. It will be passed as a uniform sampler. The size of the texture is passed as a uniform.
+    // Note: `textureSize` for some reason crashes the Impeller reflector.
+    // TODO: Add data-driven properties for samplers.
+    //
+    if (analysis.type == _PropertyShaderType.sampler) {
+      final sampler = ShaderUniformSampler(name: pragma.variable.name);
+
+      _replacePragma(vertexShader, pragma, [sampler]);
+      _replacePragma(fragmentShader, pragma, [sampler]);
+
+      final sizeVariable = ShaderVariable(typeGlsl: ShaderGlslType.vec2, name: '${pragma.variable.name}_size');
+      final sizeResolution = [sizeVariable.copyWith(value: '$propertiesUboInstance.${sizeVariable.name}')];
+
+      final textureDartPropertyName = '${dartPropertyName}Texture';
+
+      propertiesUbo.variables.add(sizeVariable);
+      rendererUniformSetters.add('${pragma.variable.name}Texture: $textureDartPropertyName!');
+      rendererUniformSetters.add(
+        '${nameToDartFieldName('${propertiesUboName}_${sizeVariable.name}')}: Vector2($textureDartPropertyName!.width.toDouble(), $textureDartPropertyName!.height.toDouble())',
+      );
+
+      vertexPropResolutions[key] = sizeResolution;
+      fragmentPropResolutions[key] = sizeResolution;
+
+      continue;
+    }
+
     // Variables that will be added to the UBO
     List<ShaderVariable>? uboVariables;
 
@@ -293,7 +331,13 @@ _PrecompileLayerResult _precompileLayer(
     final List<ShaderVariable> flexibleVariables;
 
     // Function that will be used to resolve the property in the vertex shader's `main()` block.
-    final List<Object> Function(String Function(String name) variableAccessor)? vertexResolutionFn;
+    List<Object> Function(String Function(String name) variableAccessor)? vertexResolutionFn;
+
+    // Function that will be used to output the property to the fragment shader in the vertex shader's `main()` block.
+    List<Object> Function(String Function(String name) variableAccessor)? vertexOutputFn;
+
+    // Function that will be used to resolve the property in the fragment shader's `main()` block.
+    List<Object> Function(String Function(String name) variableAccessor)? fragmentResolutionFn;
 
     // Function that will be used to compute the property values before the setter runs.
     //
@@ -341,8 +385,8 @@ _PrecompileLayerResult _precompileLayer(
 
         dartPropertyEvalFn = () {
           return [
-            'final $startValueName = paint.$propertyDartName.evaluate(eval.copyWithZoom(eval.zoom.floor()))$propertyConversion;',
-            'final $endValueName = paint.$propertyDartName.evaluate(eval.copyWithZoom(eval.zoom.floor() + 1))$propertyConversion;',
+            'final $startValueName = paint.$dartPropertyName.evaluate(eval.copyWithZoom(eval.zoom.floor()))$propertyConversion;',
+            'final $endValueName = paint.$dartPropertyName.evaluate(eval.copyWithZoom(eval.zoom.floor() + 1))$propertyConversion;',
           ];
         };
 
@@ -361,24 +405,20 @@ _PrecompileLayerResult _precompileLayer(
       else {
         final startValueName = '${pragma.variable.name}_start_value';
         final endValueName = '${pragma.variable.name}_end_value';
-        final startStopName = '${pragma.variable.name}_start_stop';
-        final endStopName = '${pragma.variable.name}_end_stop';
+        final stopsName = '${pragma.variable.name}_stops';
 
         flexibleVariables = [
           pragma.variable.copyWith(name: startValueName),
           pragma.variable.copyWith(name: endValueName),
         ];
 
-        uboVariables = [
-          ShaderVariable(typeGlsl: ShaderGlslType.float, name: startStopName),
-          ShaderVariable(typeGlsl: ShaderGlslType.float, name: endStopName),
-        ];
+        uboVariables = [ShaderVariable(typeGlsl: ShaderGlslType.vec2, name: stopsName)];
 
         vertexResolutionFn = (accessor) {
           final _startValue = accessor(startValueName);
           final _endValue = accessor(endValueName);
-          final _startStop = '$propertiesUboInstance.$startStopName';
-          final _endStop = '$propertiesUboInstance.$endStopName';
+          final _startStop = '$propertiesUboInstance.$stopsName.x';
+          final _endStop = '$propertiesUboInstance.$stopsName.y';
           final _params = '$_startValue, $_endValue, $_startStop, $_endStop';
 
           if (analysis.interpolation == _PropertyInterpolation.step) {
@@ -394,8 +434,7 @@ _PrecompileLayerResult _precompileLayer(
           final stopsArray = '[${analysis.interpolationStops!.join(', ')}]';
 
           return [
-            'final $startStopName = getNearestFloorValue(eval.zoom, $stopsArray);',
-            'final $endStopName = getNearestCeilValue(eval.zoom, $stopsArray);',
+            'final $stopsName = Vector2(getNearestFloorValue(eval.zoom, const $stopsArray), getNearestCeilValue(eval.zoom, const $stopsArray));',
           ];
         };
 
@@ -403,16 +442,15 @@ _PrecompileLayerResult _precompileLayer(
           final stopsArray = '[${analysis.interpolationStops!.join(', ')}]';
 
           return [
-            'final $startValueName = paint.$propertyDartName.evaluate(eval.copyWithZoom(getNearestFloorValue(eval.zoom, $stopsArray)))$propertyConversion;',
-            'final $endValueName = paint.$propertyDartName.evaluate(eval.copyWithZoom(getNearestCeilValue(eval.zoom, $stopsArray)))$propertyConversion;',
+            'final $startValueName = paint.$dartPropertyName.evaluate(eval.copyWithZoom(getNearestFloorValue(eval.zoom, const $stopsArray)))$propertyConversion;',
+            'final $endValueName = paint.$dartPropertyName.evaluate(eval.copyWithZoom(getNearestCeilValue(eval.zoom, const $stopsArray)))$propertyConversion;',
           ];
         };
 
         dartUboSetterFn = () {
-          final _startStopKey = nameToDartFieldName('${propertiesUboName}_$startStopName');
-          final _endStopKey = nameToDartFieldName('${propertiesUboName}_$endStopName');
+          final _stopsKey = nameToDartFieldName('${propertiesUboName}_$stopsName');
 
-          return ['$_startStopKey: $startStopName', '$_endStopKey: $endStopName'];
+          return ['$_stopsKey: $stopsName'];
         };
 
         dartSetterFn = (getShaderBindingKey) {
@@ -429,9 +467,10 @@ _PrecompileLayerResult _precompileLayer(
     else {
       flexibleVariables = [pragma.variable];
       vertexResolutionFn = null;
+      fragmentResolutionFn = null;
 
       dartPropertyEvalFn = () {
-        return ['final ${pragma.variable.name} = paint.$propertyDartName.evaluate(eval)$propertyConversion;'];
+        return ['final ${pragma.variable.name} = paint.$dartPropertyName.evaluate(eval)$propertyConversion;'];
       };
 
       dartSetterFn = (getShaderBindingKey) {
@@ -443,13 +482,13 @@ _PrecompileLayerResult _precompileLayer(
     // Add any ubo variables if needed
     if (uboVariables != null) propertiesUbo.variables.addAll(uboVariables);
     if (dartUboPropertyEvalFn != null) rendererPropertyUniformEval.addAll(dartUboPropertyEvalFn());
-    if (dartUboSetterFn != null) rendererUboSetters.addAll(dartUboSetterFn());
+    if (dartUboSetterFn != null) rendererUniformSetters.addAll(dartUboSetterFn());
 
     //
     // Property is passed in an uniform.
     // - Vertex declaration: uniform, output
     // - Vertex resolution: yes
-    // - Fragment declaration: input
+    // - Fragment declaration: input (if cross-fade/interpolate/step), uniform otherwise
     // - Fragment resolution: yes
     // - Renderer vertex attribute setter: none
     // - Renderer uniform setter: yes
@@ -458,19 +497,37 @@ _PrecompileLayerResult _precompileLayer(
       // Add variables to the UBO.
       propertiesUbo.variables.addAll(flexibleVariables);
 
-      // Add an output variable to the vertex shader.
-      _replacePragma(vertexShader, pragma, [
-        pragma.variable.copyWith(qualifier: ShaderVariableQualifier.out_, name: 'v_${pragma.variable.name}'),
-      ]);
+      // If the property is interpolated, add an output variable to the vertex shader, and a corresponding input
+      // variable to the fragment shader.
+      //
+      // Otherwise, the fragment shader can just use the uniform directly.
+      if (vertexResolutionFn != null) {
+        // Add an output variable to the vertex shader.
+        _replacePragma(vertexShader, pragma, [
+          pragma.variable.copyWith(qualifier: ShaderVariableQualifier.out_, name: 'v_${pragma.variable.name}'),
+        ]);
 
-      // Add an input variable to the fragment shader.
-      _replacePragma(fragmentShader, pragma, [
-        pragma.variable.copyWith(qualifier: ShaderVariableQualifier.in_, name: 'v_${pragma.variable.name}'),
-      ]);
+        // Add an input variable to the fragment shader.
+        _replacePragma(fragmentShader, pragma, [
+          pragma.variable.copyWith(qualifier: ShaderVariableQualifier.in_, name: 'v_${pragma.variable.name}'),
+        ]);
+
+        vertexOutputFn = (accessor) {
+          return [pragma.variable.copyWith(value: accessor('$propertiesUboInstance.v_${pragma.variable.name}'))];
+        };
+      } else {
+        _replacePragma(vertexShader, pragma, []);
+        _replacePragma(fragmentShader, pragma, []);
+
+        vertexResolutionFn =
+            fragmentResolutionFn = (accessor) {
+              return [pragma.variable.copyWith(value: accessor('$propertiesUboInstance.${pragma.variable.name}'))];
+            };
+      }
 
       // Add the Dart-side code.
       rendererPropertyUniformEval.addAll(dartPropertyEvalFn());
-      rendererUboSetters.addAll(dartSetterFn((name) => nameToDartFieldName('${propertiesUboName}_$name')));
+      rendererUniformSetters.addAll(dartSetterFn((name) => nameToDartFieldName('${propertiesUboName}_$name')));
     }
     //
     // Property is passed as an attribute.
@@ -493,9 +550,19 @@ _PrecompileLayerResult _precompileLayer(
         pragma.variable.copyWith(qualifier: ShaderVariableQualifier.in_, name: 'v_${pragma.variable.name}'),
       ]);
 
+      // Add the fragment resolution.
+      fragmentResolutionFn = (accessor) {
+        return [pragma.variable.copyWith(value: accessor('v_${pragma.variable.name}'))];
+      };
+
       // Add the Dart side code.
       rendererPropertyVertexEval.addAll(dartPropertyEvalFn());
       rendererVertexAttributeSetters.addAll(dartSetterFn((name) => nameToDartFieldName(name)));
+
+      // Add the vertex output
+      vertexOutputFn = (accessor) {
+        return ['v_${pragma.variable.name} = ${pragma.variable.name};'];
+      };
     }
     //
     // Property type is unknown.
@@ -506,16 +573,14 @@ _PrecompileLayerResult _precompileLayer(
 
     vertexPropResolutions[key] = [
       // Add the vertex resolution if it's applicable
-      if (vertexResolutionFn != null) ...vertexResolutionFn((name) => name),
-
-      // Pass the property to the output
-      'v_${pragma.variable.name} = ${pragma.variable.name};',
+      if (vertexResolutionFn != null) ...[...vertexResolutionFn((name) => name)],
+      if (vertexOutputFn != null) ...[...vertexOutputFn((name) => name)],
     ];
 
     // Add the fragment resolution
     fragmentPropResolutions[key] = [
-      // Retrieve the property from the input
-      pragma.variable.copyWith(value: 'v_${pragma.variable.name}'),
+      // Add the fragment resolution if it's applicable
+      if (fragmentResolutionFn != null) ...[...fragmentResolutionFn((name) => name)],
     ];
   }
 
@@ -620,7 +685,7 @@ _PrecompileLayerResult _precompileLayer(
   layerRendererO.writeln();
   layerRendererO.writeln('  @override');
   layerRendererO.writeln(
-    setUniformsGenerator(rendererPropertyUniformEval, rendererUboSetters).map((v) => '  $v').join('\n'),
+    setUniformsGenerator(rendererPropertyUniformEval, rendererUniformSetters).map((v) => '  $v').join('\n'),
   );
   layerRendererO.writeln('}');
 
@@ -634,7 +699,7 @@ _PrecompileLayerResult _precompileLayer(
 }
 
 /// How the property is passed to the shader.
-enum _PropertyShaderType { uniform, attribute, constant }
+enum _PropertyShaderType { uniform, sampler, attribute, constant }
 
 /// How the property is interpolated.
 enum _PropertyInterpolation { crossfade, interpolate, step }
@@ -668,7 +733,15 @@ const _emptyEvaluationContext = spec.EvaluationContext.empty();
 /// Analyzes a given property.
 ///
 /// See [_PropertyAnalysis] on what the analysis results mean.
-_PropertyAnalysis _analyzeProperty(spec.Property prop) {
+_PropertyAnalysis _analyzeProperty(spec.Property prop, PropDeclarationShaderPragma declPragma) {
+  // For sampler2D properties, we need to handle them differently.
+  //
+  // sampler2D can only be passed in an uniform, with no interpolation. Interpolation will **always** be handled during
+  // paint.
+  if (declPragma.variable.typeGlsl == ShaderGlslType.sampler2D) {
+    return _PropertyAnalysis(type: _PropertyShaderType.sampler);
+  }
+
   final hasExpression = prop.expression != null;
 
   final dependencies = hasExpression ? prop.expression!.dependencies : const <spec.ExpressionDependency>{};

@@ -5,5 +5,8 @@ analyzer:
     curly_braces_in_flow_control_structures: ignore
     no_leading_underscores_for_local_identifiers: ignore
 
+  exclude:
+    - lib/src/ffi/bindings.gen.dart
+
 formatter:
   page_width: 120

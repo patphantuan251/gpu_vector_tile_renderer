@@ -16,3 +16,7 @@ uniform Camera {
 vec4 project_tile_position(vec2 position) {
   return camera.world_to_gl * tile.local_to_world * (vec4(position * (tile.size / tile.extent), 0.0, 1.0));
 }
+
+float project_pixel_length(float len) {
+  return len * tile.size / tile.extent;
+}

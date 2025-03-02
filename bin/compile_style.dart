@@ -7,7 +7,7 @@ import 'package:gpu_vector_tile_renderer/src/shaders/serializer/shader_writer.da
 import 'package:gpu_vector_tile_renderer/src/style_precompiler_2/style_precompiler.dart';
 
 void main(List<String> args) {
-  final styleFilePath = 'scratchpad/maptiler-streets-v2.json';
+  final styleFilePath = 'scratchpad/maptiler-streets-v2-dark.json';
   final outDirectoryPath = 'example/lib/compiled_style';
   final styleFile = File(styleFilePath);
   final outDirectory = Directory(outDirectoryPath);

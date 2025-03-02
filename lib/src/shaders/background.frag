@@ -1,15 +1,13 @@
 #version 320 es
+#pragma prelude: interpolation
+#pragma prelude: tile
 
-uniform BackgroundUbo {
-  highp vec4 color;
-  highp float opacity;
-} background_ubo;
+#pragma prop: declare(highp vec4 color)
+#pragma prop: declare(highp float opacity)
 
-in vec4 v_color;
-in float v_opacity;
-
-out vec4 f_color;
+out highp vec4 f_color;
 
 void main() {
-  f_color = v_color * v_opacity;
+  #pragma prop: resolve(...)
+  f_color = color * (opacity * tile.opacity);
 }

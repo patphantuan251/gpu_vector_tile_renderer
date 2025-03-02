@@ -5,23 +5,42 @@ import 'package:vector_math/vector_math_64.dart';
 String writeShader(ParsedShader shader) {
   final buffer = StringBuffer();
 
+  int currentIndent = 0;
   for (final content in shader.content) {
+    if (content is String && content.startsWith('}')) currentIndent--;
+
+    String line;
+
     if (content is ShaderPragma) {
-      buffer.writeln(_writePragma(content));
+      line = _writePragma(content);
     } else if (content is ShaderUbo) {
-      buffer.writeln(_writeUbo(content));
+      line = _writeUbo(content);
     } else if (content is ShaderVariable) {
-      buffer.writeln(_writeVariable(content));
+      line = _writeVariable(content);
+    } else if (content is ShaderUniformSampler) {
+      line = _writeUniformSampler(content);
     } else {
-      buffer.writeln(content);
+      line = content.toString();
     }
+
+    if (line.trimLeft().length == line.length) {
+      line = '  ' * currentIndent + line.trimLeft();
+    }
+    
+    buffer.writeln(line);
+    if (content is String && content.endsWith('{')) currentIndent++;
   }
 
-  return buffer.toString();
+  // Remove duplicated newlines
+  return buffer.toString().replaceAll(RegExp(r'\n\n\n+'), '\n\n');
 }
 
 String _writePragma(ShaderPragma pragma) {
   return '#pragma ${pragma.value}';
+}
+
+String _writeUniformSampler(ShaderUniformSampler sampler) {
+  return 'uniform sampler2D ${sampler.name};';
 }
 
 String _writeUbo(ShaderUbo ubo) {
@@ -92,6 +111,8 @@ String _writeVariableValue(ShaderVariable variable) {
     if (value is Vector4) return 'vec4(${value.storage.join(', ')})';
     if (value is List && value.length == 4) return 'vec4(${value.join(', ')})';
     throw ArgumentError('Invalid value for vec4: $value');
+  } else if (variable.typeGlsl == ShaderGlslType.sampler2D) {
+    throw UnimplementedError('Sampler2D serialization not implemented');
   }
 
   throw UnimplementedError('Value serialization not implemented for ${variable.typeGlsl}');

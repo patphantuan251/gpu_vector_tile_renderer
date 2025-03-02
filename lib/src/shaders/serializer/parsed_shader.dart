@@ -16,7 +16,8 @@ enum ShaderType {
 enum ShaderVariableQualifier {
   in_._('in'),
   out_._('out'),
-  const_._('const');
+  const_._('const'),
+  uniform_._('uniform');
 
   const ShaderVariableQualifier._(this.value);
 
@@ -44,7 +45,8 @@ enum ShaderGlslType {
   mat2._('mat2', 'Matrix2', 16),
   mat3._('mat3', 'Matrix3', 36),
   mat4._('mat4', 'Matrix4', 64),
-  bool._('bool', 'bool', 4);
+  bool._('bool', 'bool', 4),
+  sampler2D._('sampler2D', 'gpu.Texture', 4);
 
   const ShaderGlslType._(this.value, this.dartType, this.sizeInBytes);
 
@@ -138,6 +140,17 @@ class ShaderUbo with EquatableMixin {
   List<Object?> get props => [name, variables];
 }
 
+/// Represents a uniform sampler used by a shader.
+class ShaderUniformSampler with EquatableMixin {
+  const ShaderUniformSampler({required this.name});
+
+  /// Name of the uniform sampler.
+  final String name;
+
+  @override
+  List<Object?> get props => [name];
+}
+
 /// Represents a pragma keyword used by a shader.
 ///
 /// Currently two pragmas are recognized:
@@ -203,6 +216,9 @@ abstract class ParsedShader with EquatableMixin {
 
   /// List of UBOs in the [content].
   Iterable<ShaderUbo> get ubos => content.whereType<ShaderUbo>();
+
+  /// List of uniform samplers in the [content].
+  Iterable<ShaderUniformSampler> get samplers => content.whereType<ShaderUniformSampler>();
 
   /// List of pragmas in the [content].
   Iterable<ShaderPragma> get pragmas => content.whereType<ShaderPragma>();

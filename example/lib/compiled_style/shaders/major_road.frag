@@ -18,17 +18,16 @@ float data_interpolate_factor(
 ) {
   float difference = end_stop - start_stop;
   float progress = t - start_stop;
-
+  
   if (difference == 0.0) return 0.0;
   else if (base == 1.0) return progress / difference;
   else return (pow(base, progress) - 1.0) / (pow(base, difference) - 1.0);
 }
 
 uniform MajorRoadUbo {
-  float width_start_stop;
-  float width_end_stop;
+  vec2 color_stops;
+  vec2 width_stops;
 } major_road_ubo;
-
 
 precision highp float;
 
@@ -39,28 +38,29 @@ uniform Tile {
   highp float opacity;
 } tile;
 
-
 uniform Camera {
   highp mat4 world_to_gl;
   highp float zoom;
   float pixel_ratio;
 } camera;
 
-
 vec4 project_tile_position(vec2 position) {
   return camera.world_to_gl * tile.local_to_world * (vec4(position * (tile.size / tile.extent), 0.0, 1.0));
 }
 
+float project_pixel_length(float len) {
+  return len * tile.size / tile.extent;
+}
 
-const highp vec4 color = vec4(1.0, 0.9333333333333333, 0.6588235294117647, 1.0);
+in highp vec4 v_color;
 const float opacity = 1;
 in float v_width;
 
 out highp vec4 f_color;
 
 void main() {
-float width = v_width;
+  highp vec4 color = v_color;
+  float width = v_width;
   f_color = color * (opacity * tile.opacity);
 }
-
 

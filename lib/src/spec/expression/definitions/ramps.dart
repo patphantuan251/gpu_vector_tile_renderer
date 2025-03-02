@@ -2,8 +2,7 @@ import 'dart:math';
 
 import 'package:gpu_vector_tile_renderer/src/spec/expression/_definition_imports.dart';
 import 'package:gpu_vector_tile_renderer/src/spec/utils/color_utils.dart';
-import 'package:vector_math/vector_math.dart';
-import 'package:bezier/bezier.dart';
+import 'package:gpu_vector_tile_renderer/src/spec/utils/unit_bezier.dart';
 
 @ExpressionAnnotation('StepExpression', rawName: 'step')
 T stepExpressionImpl<T>(
@@ -201,15 +200,14 @@ num _interpolationFactor(InterpolationOptions interpolation, num input, num lowe
   } else if (interpolation is ExponentialInterpolationOptions) {
     t = _exponentialInterpolation(input, interpolation.base, lower, upper);
   } else if (interpolation is CubicBezierInterpolationOptions) {
-    final bezier = CubicBezier([
-      Vector2(0, 0),
-      Vector2(interpolation.x1, interpolation.y1),
-      Vector2(interpolation.x2, interpolation.y2),
-      Vector2(1, 1),
-    ]);
+    final ub = UnitBezier(
+      p1x: interpolation.x1,
+      p1y: interpolation.y1,
+      p2x: interpolation.x2,
+      p2y: interpolation.y2,
+    );
 
-    final point = bezier.pointAt(_exponentialInterpolation(input, 1, lower, upper).toDouble());
-    t = point.y;
+    t = ub.solve(_exponentialInterpolation(input, 1, lower, upper).toDouble());
   }
 
   return t;

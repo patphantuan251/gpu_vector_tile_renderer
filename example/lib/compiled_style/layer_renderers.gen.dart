@@ -14,7 +14,7 @@ import 'package:flutter_map/flutter_map.dart';
 
 import './shader_bindings.gen.dart';
 
-const shaderBundleName = 'Streets.shaderbundle';
+const shaderBundleName = 'Streets Dark.shaderbundle';
 
 SingleTileLayerRenderer? createSingleTileLayerRenderer(
   gpu.ShaderLibrary shaderLibrary,
@@ -24,6 +24,13 @@ SingleTileLayerRenderer? createSingleTileLayerRenderer(
   vt.Layer vtLayer,
 ) {
   return switch (specLayer.id) {
+    'Background' => BackgroundLayerRenderer(
+      shaderLibrary: shaderLibrary,
+      coordinates: coordinates,
+      container: container,
+      specLayer: specLayer as dynamic,
+      vtLayer: vtLayer,
+    ),
     'Meadow' => MeadowLayerRenderer(
       shaderLibrary: shaderLibrary,
       coordinates: coordinates,
@@ -304,6 +311,13 @@ SingleTileLayerRenderer? createSingleTileLayerRenderer(
       specLayer: specLayer as dynamic,
       vtLayer: vtLayer,
     ),
+    'Path minor' => PathMinorLayerRenderer(
+      shaderLibrary: shaderLibrary,
+      coordinates: coordinates,
+      container: container,
+      specLayer: specLayer as dynamic,
+      vtLayer: vtLayer,
+    ),
     'Path' => PathLayerRenderer(
       shaderLibrary: shaderLibrary,
       coordinates: coordinates,
@@ -399,7 +413,60 @@ SingleTileLayerRenderer? createSingleTileLayerRenderer(
   };
 }
 
-class MeadowLayerRenderer extends FillLayerRenderer {
+class BackgroundLayerRenderer extends $BackgroundLayerRenderer {
+  BackgroundLayerRenderer({
+    required gpu.ShaderLibrary shaderLibrary,
+    required super.coordinates,
+    required super.container,
+    required super.specLayer,
+    required super.vtLayer,
+  }) : pipeline = BackgroundRenderPipelineBindings(shaderLibrary);
+
+  @override
+  final BackgroundRenderPipelineBindings pipeline;
+
+  @override
+  void setVertices() {
+    final paint = specLayer.paint;
+
+    pipeline.vertex.setVertex(0, position: Vector2(-1, -1));
+    pipeline.vertex.setVertex(1, position: Vector2(1, -1));
+    pipeline.vertex.setVertex(2, position: Vector2(1, 1));
+    pipeline.vertex.setVertex(3, position: Vector2(-1, 1));
+
+    pipeline.upload(gpu.gpuContext);
+  }
+
+  @override
+  void setUniforms(
+    RenderContext context,
+    Matrix4 cameraWorldToGl,
+    double cameraZoom,
+    double pixelRatio,
+    Matrix4 tileLocalToWorld,
+    double tileSize,
+    double tileExtent,
+    double tileOpacity,
+  ) {
+    final eval = context.eval;
+    final paint = specLayer.paint;
+
+    final color = paint.backgroundColor.evaluate(eval).vec;
+
+    pipeline.setUniforms(
+      cameraWorldToGl: cameraWorldToGl,
+      cameraZoom: cameraZoom,
+      cameraPixelRatio: pixelRatio,
+      tileLocalToWorld: tileLocalToWorld,
+      tileSize: tileSize,
+      tileExtent: tileExtent,
+      tileOpacity: tileOpacity,
+      backgroundUboColor: color,
+    );
+  }
+}
+
+class MeadowLayerRenderer extends $FillLayerRenderer {
   MeadowLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -421,13 +488,17 @@ class MeadowLayerRenderer extends FillLayerRenderer {
     final opacity_start_value =
         paint.fillOpacity
             .evaluate(
-              eval.copyWithZoom(getNearestFloorValue(eval.zoom, [0.0, 8.0])),
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, const [0.0, 8.0]),
+              ),
             )
             .toDouble();
     final opacity_end_value =
         paint.fillOpacity
             .evaluate(
-              eval.copyWithZoom(getNearestCeilValue(eval.zoom, [0.0, 8.0])),
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, const [0.0, 8.0]),
+              ),
             )
             .toDouble();
 
@@ -458,10 +529,14 @@ class MeadowLayerRenderer extends FillLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
-    final opacity_start_stop = getNearestFloorValue(eval.zoom, [0.0, 8.0]);
-    final opacity_end_stop = getNearestCeilValue(eval.zoom, [0.0, 8.0]);
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    final opacity_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [0.0, 8.0]),
+      getNearestCeilValue(eval.zoom, const [0.0, 8.0]),
+    );
+
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -469,13 +544,12 @@ class MeadowLayerRenderer extends FillLayerRenderer {
       tileSize: tileSize,
       tileExtent: tileExtent,
       tileOpacity: tileOpacity,
-      meadowUboOpacityStartStop: opacity_start_stop,
-      meadowUboOpacityEndStop: opacity_end_stop,
+      meadowUboOpacityStops: opacity_stops,
     );
   }
 }
 
-class ScrubLayerRenderer extends FillLayerRenderer {
+class ScrubLayerRenderer extends $FillLayerRenderer {
   ScrubLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -497,13 +571,17 @@ class ScrubLayerRenderer extends FillLayerRenderer {
     final opacity_start_value =
         paint.fillOpacity
             .evaluate(
-              eval.copyWithZoom(getNearestFloorValue(eval.zoom, [0.0, 8.0])),
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, const [0.0, 8.0]),
+              ),
             )
             .toDouble();
     final opacity_end_value =
         paint.fillOpacity
             .evaluate(
-              eval.copyWithZoom(getNearestCeilValue(eval.zoom, [0.0, 8.0])),
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, const [0.0, 8.0]),
+              ),
             )
             .toDouble();
 
@@ -534,10 +612,14 @@ class ScrubLayerRenderer extends FillLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
-    final opacity_start_stop = getNearestFloorValue(eval.zoom, [0.0, 8.0]);
-    final opacity_end_stop = getNearestCeilValue(eval.zoom, [0.0, 8.0]);
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    final opacity_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [0.0, 8.0]),
+      getNearestCeilValue(eval.zoom, const [0.0, 8.0]),
+    );
+
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -545,13 +627,12 @@ class ScrubLayerRenderer extends FillLayerRenderer {
       tileSize: tileSize,
       tileExtent: tileExtent,
       tileOpacity: tileOpacity,
-      scrubUboOpacityStartStop: opacity_start_stop,
-      scrubUboOpacityEndStop: opacity_end_stop,
+      scrubUboOpacityStops: opacity_stops,
     );
   }
 }
 
-class CropLayerRenderer extends FillLayerRenderer {
+class CropLayerRenderer extends $FillLayerRenderer {
   CropLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -573,13 +654,17 @@ class CropLayerRenderer extends FillLayerRenderer {
     final opacity_start_value =
         paint.fillOpacity
             .evaluate(
-              eval.copyWithZoom(getNearestFloorValue(eval.zoom, [0.0, 8.0])),
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, const [0.0, 8.0]),
+              ),
             )
             .toDouble();
     final opacity_end_value =
         paint.fillOpacity
             .evaluate(
-              eval.copyWithZoom(getNearestCeilValue(eval.zoom, [0.0, 8.0])),
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, const [0.0, 8.0]),
+              ),
             )
             .toDouble();
 
@@ -610,10 +695,14 @@ class CropLayerRenderer extends FillLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
-    final opacity_start_stop = getNearestFloorValue(eval.zoom, [0.0, 8.0]);
-    final opacity_end_stop = getNearestCeilValue(eval.zoom, [0.0, 8.0]);
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    final opacity_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [0.0, 8.0]),
+      getNearestCeilValue(eval.zoom, const [0.0, 8.0]),
+    );
+
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -621,13 +710,12 @@ class CropLayerRenderer extends FillLayerRenderer {
       tileSize: tileSize,
       tileExtent: tileExtent,
       tileOpacity: tileOpacity,
-      cropUboOpacityStartStop: opacity_start_stop,
-      cropUboOpacityEndStop: opacity_end_stop,
+      cropUboOpacityStops: opacity_stops,
     );
   }
 }
 
-class GlacierLayerRenderer extends FillLayerRenderer {
+class GlacierLayerRenderer extends $FillLayerRenderer {
   GlacierLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -649,13 +737,17 @@ class GlacierLayerRenderer extends FillLayerRenderer {
     final opacity_start_value =
         paint.fillOpacity
             .evaluate(
-              eval.copyWithZoom(getNearestFloorValue(eval.zoom, [0.0, 10.0])),
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, const [0.0, 10.0]),
+              ),
             )
             .toDouble();
     final opacity_end_value =
         paint.fillOpacity
             .evaluate(
-              eval.copyWithZoom(getNearestCeilValue(eval.zoom, [0.0, 10.0])),
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, const [0.0, 10.0]),
+              ),
             )
             .toDouble();
 
@@ -686,10 +778,14 @@ class GlacierLayerRenderer extends FillLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
-    final opacity_start_stop = getNearestFloorValue(eval.zoom, [0.0, 10.0]);
-    final opacity_end_stop = getNearestCeilValue(eval.zoom, [0.0, 10.0]);
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    final opacity_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [0.0, 10.0]),
+      getNearestCeilValue(eval.zoom, const [0.0, 10.0]),
+    );
+
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -697,13 +793,12 @@ class GlacierLayerRenderer extends FillLayerRenderer {
       tileSize: tileSize,
       tileExtent: tileExtent,
       tileOpacity: tileOpacity,
-      glacierUboOpacityStartStop: opacity_start_stop,
-      glacierUboOpacityEndStop: opacity_end_stop,
+      glacierUboOpacityStops: opacity_stops,
     );
   }
 }
 
-class ForestLayerRenderer extends FillLayerRenderer {
+class ForestLayerRenderer extends $FillLayerRenderer {
   ForestLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -725,13 +820,17 @@ class ForestLayerRenderer extends FillLayerRenderer {
     final opacity_start_value =
         paint.fillOpacity
             .evaluate(
-              eval.copyWithZoom(getNearestFloorValue(eval.zoom, [1.0, 8.0])),
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, const [1.0, 8.0]),
+              ),
             )
             .toDouble();
     final opacity_end_value =
         paint.fillOpacity
             .evaluate(
-              eval.copyWithZoom(getNearestCeilValue(eval.zoom, [1.0, 8.0])),
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, const [1.0, 8.0]),
+              ),
             )
             .toDouble();
 
@@ -762,10 +861,14 @@ class ForestLayerRenderer extends FillLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
-    final opacity_start_stop = getNearestFloorValue(eval.zoom, [1.0, 8.0]);
-    final opacity_end_stop = getNearestCeilValue(eval.zoom, [1.0, 8.0]);
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    final opacity_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [1.0, 8.0]),
+      getNearestCeilValue(eval.zoom, const [1.0, 8.0]),
+    );
+
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -773,13 +876,12 @@ class ForestLayerRenderer extends FillLayerRenderer {
       tileSize: tileSize,
       tileExtent: tileExtent,
       tileOpacity: tileOpacity,
-      forestUboOpacityStartStop: opacity_start_stop,
-      forestUboOpacityEndStop: opacity_end_stop,
+      forestUboOpacityStops: opacity_stops,
     );
   }
 }
 
-class SandLayerRenderer extends FillLayerRenderer {
+class SandLayerRenderer extends $FillLayerRenderer {
   SandLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -821,8 +923,9 @@ class SandLayerRenderer extends FillLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -834,7 +937,7 @@ class SandLayerRenderer extends FillLayerRenderer {
   }
 }
 
-class WoodLayerRenderer extends FillLayerRenderer {
+class WoodLayerRenderer extends $FillLayerRenderer {
   WoodLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -876,8 +979,9 @@ class WoodLayerRenderer extends FillLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -889,7 +993,7 @@ class WoodLayerRenderer extends FillLayerRenderer {
   }
 }
 
-class ResidentialLayerRenderer extends FillLayerRenderer {
+class ResidentialLayerRenderer extends $FillLayerRenderer {
   ResidentialLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -911,13 +1015,17 @@ class ResidentialLayerRenderer extends FillLayerRenderer {
     final color_start_value =
         paint.fillColor
             .evaluate(
-              eval.copyWithZoom(getNearestFloorValue(eval.zoom, [4.0, 16.0])),
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, const [4.0, 16.0]),
+              ),
             )
             .vec;
     final color_end_value =
         paint.fillColor
             .evaluate(
-              eval.copyWithZoom(getNearestCeilValue(eval.zoom, [4.0, 16.0])),
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, const [4.0, 16.0]),
+              ),
             )
             .vec;
 
@@ -948,10 +1056,14 @@ class ResidentialLayerRenderer extends FillLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
-    final color_start_stop = getNearestFloorValue(eval.zoom, [4.0, 16.0]);
-    final color_end_stop = getNearestCeilValue(eval.zoom, [4.0, 16.0]);
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    final color_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [4.0, 16.0]),
+      getNearestCeilValue(eval.zoom, const [4.0, 16.0]),
+    );
+
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -959,13 +1071,12 @@ class ResidentialLayerRenderer extends FillLayerRenderer {
       tileSize: tileSize,
       tileExtent: tileExtent,
       tileOpacity: tileOpacity,
-      residentialUboColorStartStop: color_start_stop,
-      residentialUboColorEndStop: color_end_stop,
+      residentialUboColorStops: color_stops,
     );
   }
 }
 
-class IndustrialLayerRenderer extends FillLayerRenderer {
+class IndustrialLayerRenderer extends $FillLayerRenderer {
   IndustrialLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -987,27 +1098,19 @@ class IndustrialLayerRenderer extends FillLayerRenderer {
     final opacity_start_value =
         paint.fillOpacity
             .evaluate(
-              eval.copyWithZoom(getNearestFloorValue(eval.zoom, [9.0, 10.0])),
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, const [9.0, 10.0]),
+              ),
             )
             .toDouble();
     final opacity_end_value =
         paint.fillOpacity
             .evaluate(
-              eval.copyWithZoom(getNearestCeilValue(eval.zoom, [9.0, 10.0])),
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, const [9.0, 10.0]),
+              ),
             )
             .toDouble();
-    final color_start_value =
-        paint.fillColor
-            .evaluate(
-              eval.copyWithZoom(getNearestFloorValue(eval.zoom, [9.0, 16.0])),
-            )
-            .vec;
-    final color_end_value =
-        paint.fillColor
-            .evaluate(
-              eval.copyWithZoom(getNearestCeilValue(eval.zoom, [9.0, 16.0])),
-            )
-            .vec;
 
     for (final polygon in feature.polygons) {
       for (final vertex in polygon.vertices) {
@@ -1016,8 +1119,6 @@ class IndustrialLayerRenderer extends FillLayerRenderer {
           position: vertex.vec2,
           opacityStartValue: opacity_start_value,
           opacityEndValue: opacity_end_value,
-          colorStartValue: color_start_value,
-          colorEndValue: color_end_value,
         );
         index += 1;
       }
@@ -1038,12 +1139,14 @@ class IndustrialLayerRenderer extends FillLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
-    final opacity_start_stop = getNearestFloorValue(eval.zoom, [9.0, 10.0]);
-    final opacity_end_stop = getNearestCeilValue(eval.zoom, [9.0, 10.0]);
-    final color_start_stop = getNearestFloorValue(eval.zoom, [9.0, 16.0]);
-    final color_end_stop = getNearestCeilValue(eval.zoom, [9.0, 16.0]);
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    final opacity_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [9.0, 10.0]),
+      getNearestCeilValue(eval.zoom, const [9.0, 10.0]),
+    );
+
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -1051,15 +1154,12 @@ class IndustrialLayerRenderer extends FillLayerRenderer {
       tileSize: tileSize,
       tileExtent: tileExtent,
       tileOpacity: tileOpacity,
-      industrialUboOpacityStartStop: opacity_start_stop,
-      industrialUboOpacityEndStop: opacity_end_stop,
-      industrialUboColorStartStop: color_start_stop,
-      industrialUboColorEndStop: color_end_stop,
+      industrialUboOpacityStops: opacity_stops,
     );
   }
 }
 
-class GrassLayerRenderer extends FillLayerRenderer {
+class GrassLayerRenderer extends $FillLayerRenderer {
   GrassLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -1101,8 +1201,9 @@ class GrassLayerRenderer extends FillLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -1114,7 +1215,7 @@ class GrassLayerRenderer extends FillLayerRenderer {
   }
 }
 
-class AirportZoneLayerRenderer extends FillLayerRenderer {
+class AirportZoneLayerRenderer extends $FillLayerRenderer {
   AirportZoneLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -1156,8 +1257,9 @@ class AirportZoneLayerRenderer extends FillLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -1169,7 +1271,7 @@ class AirportZoneLayerRenderer extends FillLayerRenderer {
   }
 }
 
-class PedestrianLayerRenderer extends FillLayerRenderer {
+class PedestrianLayerRenderer extends $FillLayerRenderer {
   PedestrianLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -1211,8 +1313,9 @@ class PedestrianLayerRenderer extends FillLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -1224,7 +1327,7 @@ class PedestrianLayerRenderer extends FillLayerRenderer {
   }
 }
 
-class CemeteryLayerRenderer extends FillLayerRenderer {
+class CemeteryLayerRenderer extends $FillLayerRenderer {
   CemeteryLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -1246,13 +1349,17 @@ class CemeteryLayerRenderer extends FillLayerRenderer {
     final opacity_start_value =
         paint.fillOpacity
             .evaluate(
-              eval.copyWithZoom(getNearestFloorValue(eval.zoom, [9.0, 16.0])),
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, const [9.0, 16.0]),
+              ),
             )
             .toDouble();
     final opacity_end_value =
         paint.fillOpacity
             .evaluate(
-              eval.copyWithZoom(getNearestCeilValue(eval.zoom, [9.0, 16.0])),
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, const [9.0, 16.0]),
+              ),
             )
             .toDouble();
 
@@ -1283,10 +1390,14 @@ class CemeteryLayerRenderer extends FillLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
-    final opacity_start_stop = getNearestFloorValue(eval.zoom, [9.0, 16.0]);
-    final opacity_end_stop = getNearestCeilValue(eval.zoom, [9.0, 16.0]);
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    final opacity_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [9.0, 16.0]),
+      getNearestCeilValue(eval.zoom, const [9.0, 16.0]),
+    );
+
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -1294,13 +1405,12 @@ class CemeteryLayerRenderer extends FillLayerRenderer {
       tileSize: tileSize,
       tileExtent: tileExtent,
       tileOpacity: tileOpacity,
-      cemeteryUboOpacityStartStop: opacity_start_stop,
-      cemeteryUboOpacityEndStop: opacity_end_stop,
+      cemeteryUboOpacityStops: opacity_stops,
     );
   }
 }
 
-class HospitalLayerRenderer extends FillLayerRenderer {
+class HospitalLayerRenderer extends $FillLayerRenderer {
   HospitalLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -1322,13 +1432,17 @@ class HospitalLayerRenderer extends FillLayerRenderer {
     final opacity_start_value =
         paint.fillOpacity
             .evaluate(
-              eval.copyWithZoom(getNearestFloorValue(eval.zoom, [9.0, 16.0])),
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, const [9.0, 16.0]),
+              ),
             )
             .toDouble();
     final opacity_end_value =
         paint.fillOpacity
             .evaluate(
-              eval.copyWithZoom(getNearestCeilValue(eval.zoom, [9.0, 16.0])),
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, const [9.0, 16.0]),
+              ),
             )
             .toDouble();
 
@@ -1359,10 +1473,14 @@ class HospitalLayerRenderer extends FillLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
-    final opacity_start_stop = getNearestFloorValue(eval.zoom, [9.0, 16.0]);
-    final opacity_end_stop = getNearestCeilValue(eval.zoom, [9.0, 16.0]);
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    final opacity_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [9.0, 16.0]),
+      getNearestCeilValue(eval.zoom, const [9.0, 16.0]),
+    );
+
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -1370,13 +1488,12 @@ class HospitalLayerRenderer extends FillLayerRenderer {
       tileSize: tileSize,
       tileExtent: tileExtent,
       tileOpacity: tileOpacity,
-      hospitalUboOpacityStartStop: opacity_start_stop,
-      hospitalUboOpacityEndStop: opacity_end_stop,
+      hospitalUboOpacityStops: opacity_stops,
     );
   }
 }
 
-class StadiumLayerRenderer extends FillLayerRenderer {
+class StadiumLayerRenderer extends $FillLayerRenderer {
   StadiumLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -1398,13 +1515,17 @@ class StadiumLayerRenderer extends FillLayerRenderer {
     final opacity_start_value =
         paint.fillOpacity
             .evaluate(
-              eval.copyWithZoom(getNearestFloorValue(eval.zoom, [9.0, 16.0])),
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, const [9.0, 16.0]),
+              ),
             )
             .toDouble();
     final opacity_end_value =
         paint.fillOpacity
             .evaluate(
-              eval.copyWithZoom(getNearestCeilValue(eval.zoom, [9.0, 16.0])),
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, const [9.0, 16.0]),
+              ),
             )
             .toDouble();
 
@@ -1435,10 +1556,14 @@ class StadiumLayerRenderer extends FillLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
-    final opacity_start_stop = getNearestFloorValue(eval.zoom, [9.0, 16.0]);
-    final opacity_end_stop = getNearestCeilValue(eval.zoom, [9.0, 16.0]);
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    final opacity_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [9.0, 16.0]),
+      getNearestCeilValue(eval.zoom, const [9.0, 16.0]),
+    );
+
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -1446,13 +1571,12 @@ class StadiumLayerRenderer extends FillLayerRenderer {
       tileSize: tileSize,
       tileExtent: tileExtent,
       tileOpacity: tileOpacity,
-      stadiumUboOpacityStartStop: opacity_start_stop,
-      stadiumUboOpacityEndStop: opacity_end_stop,
+      stadiumUboOpacityStops: opacity_stops,
     );
   }
 }
 
-class SchoolLayerRenderer extends FillLayerRenderer {
+class SchoolLayerRenderer extends $FillLayerRenderer {
   SchoolLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -1474,13 +1598,17 @@ class SchoolLayerRenderer extends FillLayerRenderer {
     final opacity_start_value =
         paint.fillOpacity
             .evaluate(
-              eval.copyWithZoom(getNearestFloorValue(eval.zoom, [9.0, 16.0])),
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, const [9.0, 16.0]),
+              ),
             )
             .toDouble();
     final opacity_end_value =
         paint.fillOpacity
             .evaluate(
-              eval.copyWithZoom(getNearestCeilValue(eval.zoom, [9.0, 16.0])),
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, const [9.0, 16.0]),
+              ),
             )
             .toDouble();
 
@@ -1511,10 +1639,14 @@ class SchoolLayerRenderer extends FillLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
-    final opacity_start_stop = getNearestFloorValue(eval.zoom, [9.0, 16.0]);
-    final opacity_end_stop = getNearestCeilValue(eval.zoom, [9.0, 16.0]);
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    final opacity_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [9.0, 16.0]),
+      getNearestCeilValue(eval.zoom, const [9.0, 16.0]),
+    );
+
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -1522,13 +1654,12 @@ class SchoolLayerRenderer extends FillLayerRenderer {
       tileSize: tileSize,
       tileExtent: tileExtent,
       tileOpacity: tileOpacity,
-      schoolUboOpacityStartStop: opacity_start_stop,
-      schoolUboOpacityEndStop: opacity_end_stop,
+      schoolUboOpacityStops: opacity_stops,
     );
   }
 }
 
-class RiverTunnelLayerRenderer extends LineLayerRenderer {
+class RiverTunnelLayerRenderer extends $LineLayerRenderer {
   RiverTunnelLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -1545,19 +1676,23 @@ class RiverTunnelLayerRenderer extends LineLayerRenderer {
     spec.EvaluationContext eval,
     vt.LineStringFeature feature,
     int index,
-    List<(Vector2 position, Vector2 normal)> vertexData,
+    List<(Vector2 position, Vector2 normal, double lineLength)> vertexData,
   ) {
     final paint = specLayer.paint;
     final width_start_value =
         paint.lineWidth
             .evaluate(
-              eval.copyWithZoom(getNearestFloorValue(eval.zoom, [12.0, 20.0])),
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, const [12.0, 20.0]),
+              ),
             )
             .toDouble();
     final width_end_value =
         paint.lineWidth
             .evaluate(
-              eval.copyWithZoom(getNearestCeilValue(eval.zoom, [12.0, 20.0])),
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, const [12.0, 20.0]),
+              ),
             )
             .toDouble();
 
@@ -1567,6 +1702,7 @@ class RiverTunnelLayerRenderer extends LineLayerRenderer {
         index + i,
         position: vertex.$1,
         normal: vertex.$2,
+        lineLength: vertex.$3,
         widthStartValue: width_start_value,
         widthEndValue: width_end_value,
       );
@@ -1587,10 +1723,14 @@ class RiverTunnelLayerRenderer extends LineLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
-    final width_start_stop = getNearestFloorValue(eval.zoom, [12.0, 20.0]);
-    final width_end_stop = getNearestCeilValue(eval.zoom, [12.0, 20.0]);
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    final width_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [12.0, 20.0]),
+      getNearestCeilValue(eval.zoom, const [12.0, 20.0]),
+    );
+
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -1598,13 +1738,17 @@ class RiverTunnelLayerRenderer extends LineLayerRenderer {
       tileSize: tileSize,
       tileExtent: tileExtent,
       tileOpacity: tileOpacity,
-      riverTunnelUboWidthStartStop: width_start_stop,
-      riverTunnelUboWidthEndStop: width_end_stop,
+      riverTunnelUboWidthStops: width_stops,
+      dasharrayTexture: lineDasharrayTexture!,
+      riverTunnelUboDasharraySize: Vector2(
+        lineDasharrayTexture!.width.toDouble(),
+        lineDasharrayTexture!.height.toDouble(),
+      ),
     );
   }
 }
 
-class RiverLayerRenderer extends LineLayerRenderer {
+class RiverLayerRenderer extends $LineLayerRenderer {
   RiverLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -1621,19 +1765,23 @@ class RiverLayerRenderer extends LineLayerRenderer {
     spec.EvaluationContext eval,
     vt.LineStringFeature feature,
     int index,
-    List<(Vector2 position, Vector2 normal)> vertexData,
+    List<(Vector2 position, Vector2 normal, double lineLength)> vertexData,
   ) {
     final paint = specLayer.paint;
     final width_start_value =
         paint.lineWidth
             .evaluate(
-              eval.copyWithZoom(getNearestFloorValue(eval.zoom, [12.0, 20.0])),
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, const [12.0, 20.0]),
+              ),
             )
             .toDouble();
     final width_end_value =
         paint.lineWidth
             .evaluate(
-              eval.copyWithZoom(getNearestCeilValue(eval.zoom, [12.0, 20.0])),
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, const [12.0, 20.0]),
+              ),
             )
             .toDouble();
 
@@ -1663,10 +1811,14 @@ class RiverLayerRenderer extends LineLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
-    final width_start_stop = getNearestFloorValue(eval.zoom, [12.0, 20.0]);
-    final width_end_stop = getNearestCeilValue(eval.zoom, [12.0, 20.0]);
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    final width_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [12.0, 20.0]),
+      getNearestCeilValue(eval.zoom, const [12.0, 20.0]),
+    );
+
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -1674,13 +1826,12 @@ class RiverLayerRenderer extends LineLayerRenderer {
       tileSize: tileSize,
       tileExtent: tileExtent,
       tileOpacity: tileOpacity,
-      riverUboWidthStartStop: width_start_stop,
-      riverUboWidthEndStop: width_end_stop,
+      riverUboWidthStops: width_stops,
     );
   }
 }
 
-class WaterIntermittentLayerRenderer extends FillLayerRenderer {
+class WaterIntermittentLayerRenderer extends $FillLayerRenderer {
   WaterIntermittentLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -1722,8 +1873,9 @@ class WaterIntermittentLayerRenderer extends FillLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -1735,7 +1887,7 @@ class WaterIntermittentLayerRenderer extends FillLayerRenderer {
   }
 }
 
-class WaterLayerRenderer extends FillLayerRenderer {
+class WaterLayerRenderer extends $FillLayerRenderer {
   WaterLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -1782,8 +1934,9 @@ class WaterLayerRenderer extends FillLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -1795,7 +1948,7 @@ class WaterLayerRenderer extends FillLayerRenderer {
   }
 }
 
-class AerowayLayerRenderer extends LineLayerRenderer {
+class AerowayLayerRenderer extends $LineLayerRenderer {
   AerowayLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -1812,19 +1965,23 @@ class AerowayLayerRenderer extends LineLayerRenderer {
     spec.EvaluationContext eval,
     vt.LineStringFeature feature,
     int index,
-    List<(Vector2 position, Vector2 normal)> vertexData,
+    List<(Vector2 position, Vector2 normal, double lineLength)> vertexData,
   ) {
     final paint = specLayer.paint;
     final width_start_value =
         paint.lineWidth
             .evaluate(
-              eval.copyWithZoom(getNearestFloorValue(eval.zoom, [11.0, 20.0])),
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, const [11.0, 20.0]),
+              ),
             )
             .toDouble();
     final width_end_value =
         paint.lineWidth
             .evaluate(
-              eval.copyWithZoom(getNearestCeilValue(eval.zoom, [11.0, 20.0])),
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, const [11.0, 20.0]),
+              ),
             )
             .toDouble();
 
@@ -1854,10 +2011,14 @@ class AerowayLayerRenderer extends LineLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
-    final width_start_stop = getNearestFloorValue(eval.zoom, [11.0, 20.0]);
-    final width_end_stop = getNearestCeilValue(eval.zoom, [11.0, 20.0]);
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    final width_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [11.0, 20.0]),
+      getNearestCeilValue(eval.zoom, const [11.0, 20.0]),
+    );
+
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -1865,13 +2026,12 @@ class AerowayLayerRenderer extends LineLayerRenderer {
       tileSize: tileSize,
       tileExtent: tileExtent,
       tileOpacity: tileOpacity,
-      aerowayUboWidthStartStop: width_start_stop,
-      aerowayUboWidthEndStop: width_end_stop,
+      aerowayUboWidthStops: width_stops,
     );
   }
 }
 
-class HeliportLayerRenderer extends FillLayerRenderer {
+class HeliportLayerRenderer extends $FillLayerRenderer {
   HeliportLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -1913,8 +2073,9 @@ class HeliportLayerRenderer extends FillLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -1926,7 +2087,7 @@ class HeliportLayerRenderer extends FillLayerRenderer {
   }
 }
 
-class FerryLineLayerRenderer extends LineLayerRenderer {
+class FerryLineLayerRenderer extends $LineLayerRenderer {
   FerryLineLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -1943,26 +2104,30 @@ class FerryLineLayerRenderer extends LineLayerRenderer {
     spec.EvaluationContext eval,
     vt.LineStringFeature feature,
     int index,
-    List<(Vector2 position, Vector2 normal)> vertexData,
+    List<(Vector2 position, Vector2 normal, double lineLength)> vertexData,
   ) {
     final paint = specLayer.paint;
     final color_start_value =
         paint.lineColor
             .evaluate(
-              eval.copyWithZoom(getNearestFloorValue(eval.zoom, [10.0, 16.0])),
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, const [10.0, 16.0]),
+              ),
             )
             .vec;
     final color_end_value =
         paint.lineColor
             .evaluate(
-              eval.copyWithZoom(getNearestCeilValue(eval.zoom, [10.0, 16.0])),
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, const [10.0, 16.0]),
+              ),
             )
             .vec;
     final opacity_start_value =
         paint.lineOpacity
             .evaluate(
               eval.copyWithZoom(
-                getNearestFloorValue(eval.zoom, [6.0, 7.0, 8.0]),
+                getNearestFloorValue(eval.zoom, const [6.0, 7.0, 8.0]),
               ),
             )
             .toDouble();
@@ -1970,20 +2135,24 @@ class FerryLineLayerRenderer extends LineLayerRenderer {
         paint.lineOpacity
             .evaluate(
               eval.copyWithZoom(
-                getNearestCeilValue(eval.zoom, [6.0, 7.0, 8.0]),
+                getNearestCeilValue(eval.zoom, const [6.0, 7.0, 8.0]),
               ),
             )
             .toDouble();
     final width_start_value =
         paint.lineWidth
             .evaluate(
-              eval.copyWithZoom(getNearestFloorValue(eval.zoom, [10.0, 14.0])),
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, const [10.0, 14.0]),
+              ),
             )
             .toDouble();
     final width_end_value =
         paint.lineWidth
             .evaluate(
-              eval.copyWithZoom(getNearestCeilValue(eval.zoom, [10.0, 14.0])),
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, const [10.0, 14.0]),
+              ),
             )
             .toDouble();
 
@@ -1993,6 +2162,7 @@ class FerryLineLayerRenderer extends LineLayerRenderer {
         index + i,
         position: vertex.$1,
         normal: vertex.$2,
+        lineLength: vertex.$3,
         colorStartValue: color_start_value,
         colorEndValue: color_end_value,
         opacityStartValue: opacity_start_value,
@@ -2017,14 +2187,22 @@ class FerryLineLayerRenderer extends LineLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
-    final color_start_stop = getNearestFloorValue(eval.zoom, [10.0, 16.0]);
-    final color_end_stop = getNearestCeilValue(eval.zoom, [10.0, 16.0]);
-    final opacity_start_stop = getNearestFloorValue(eval.zoom, [6.0, 7.0, 8.0]);
-    final opacity_end_stop = getNearestCeilValue(eval.zoom, [6.0, 7.0, 8.0]);
-    final width_start_stop = getNearestFloorValue(eval.zoom, [10.0, 14.0]);
-    final width_end_stop = getNearestCeilValue(eval.zoom, [10.0, 14.0]);
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    final color_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [10.0, 16.0]),
+      getNearestCeilValue(eval.zoom, const [10.0, 16.0]),
+    );
+    final opacity_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [6.0, 7.0, 8.0]),
+      getNearestCeilValue(eval.zoom, const [6.0, 7.0, 8.0]),
+    );
+    final width_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [10.0, 14.0]),
+      getNearestCeilValue(eval.zoom, const [10.0, 14.0]),
+    );
+
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -2032,17 +2210,19 @@ class FerryLineLayerRenderer extends LineLayerRenderer {
       tileSize: tileSize,
       tileExtent: tileExtent,
       tileOpacity: tileOpacity,
-      ferryLineUboColorStartStop: color_start_stop,
-      ferryLineUboColorEndStop: color_end_stop,
-      ferryLineUboOpacityStartStop: opacity_start_stop,
-      ferryLineUboOpacityEndStop: opacity_end_stop,
-      ferryLineUboWidthStartStop: width_start_stop,
-      ferryLineUboWidthEndStop: width_end_stop,
+      ferryLineUboColorStops: color_stops,
+      ferryLineUboOpacityStops: opacity_stops,
+      ferryLineUboWidthStops: width_stops,
+      dasharrayTexture: lineDasharrayTexture!,
+      ferryLineUboDasharraySize: Vector2(
+        lineDasharrayTexture!.width.toDouble(),
+        lineDasharrayTexture!.height.toDouble(),
+      ),
     );
   }
 }
 
-class TunnelOutlineLayerRenderer extends LineLayerRenderer {
+class TunnelOutlineLayerRenderer extends $LineLayerRenderer {
   TunnelOutlineLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -2059,7 +2239,7 @@ class TunnelOutlineLayerRenderer extends LineLayerRenderer {
     spec.EvaluationContext eval,
     vt.LineStringFeature feature,
     int index,
-    List<(Vector2 position, Vector2 normal)> vertexData,
+    List<(Vector2 position, Vector2 normal, double lineLength)> vertexData,
   ) {
     final paint = specLayer.paint;
     final color = paint.lineColor.evaluate(eval).vec;
@@ -2067,7 +2247,7 @@ class TunnelOutlineLayerRenderer extends LineLayerRenderer {
         paint.lineWidth
             .evaluate(
               eval.copyWithZoom(
-                getNearestFloorValue(eval.zoom, [
+                getNearestFloorValue(eval.zoom, const [
                   6.0,
                   7.0,
                   10.0,
@@ -2083,7 +2263,7 @@ class TunnelOutlineLayerRenderer extends LineLayerRenderer {
         paint.lineWidth
             .evaluate(
               eval.copyWithZoom(
-                getNearestCeilValue(eval.zoom, [
+                getNearestCeilValue(eval.zoom, const [
                   6.0,
                   7.0,
                   10.0,
@@ -2102,6 +2282,7 @@ class TunnelOutlineLayerRenderer extends LineLayerRenderer {
         index + i,
         position: vertex.$1,
         normal: vertex.$2,
+        lineLength: vertex.$3,
         color: color,
         widthStartValue: width_start_value,
         widthEndValue: width_end_value,
@@ -2123,26 +2304,30 @@ class TunnelOutlineLayerRenderer extends LineLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
-    final width_start_stop = getNearestFloorValue(eval.zoom, [
-      6.0,
-      7.0,
-      10.0,
-      12.0,
-      14.0,
-      16.0,
-      20.0,
-    ]);
-    final width_end_stop = getNearestCeilValue(eval.zoom, [
-      6.0,
-      7.0,
-      10.0,
-      12.0,
-      14.0,
-      16.0,
-      20.0,
-    ]);
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    final width_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [
+        6.0,
+        7.0,
+        10.0,
+        12.0,
+        14.0,
+        16.0,
+        20.0,
+      ]),
+      getNearestCeilValue(eval.zoom, const [
+        6.0,
+        7.0,
+        10.0,
+        12.0,
+        14.0,
+        16.0,
+        20.0,
+      ]),
+    );
+
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -2150,13 +2335,17 @@ class TunnelOutlineLayerRenderer extends LineLayerRenderer {
       tileSize: tileSize,
       tileExtent: tileExtent,
       tileOpacity: tileOpacity,
-      tunnelOutlineUboWidthStartStop: width_start_stop,
-      tunnelOutlineUboWidthEndStop: width_end_stop,
+      tunnelOutlineUboWidthStops: width_stops,
+      dasharrayTexture: lineDasharrayTexture!,
+      tunnelOutlineUboDasharraySize: Vector2(
+        lineDasharrayTexture!.width.toDouble(),
+        lineDasharrayTexture!.height.toDouble(),
+      ),
     );
   }
 }
 
-class TunnelLayerRenderer extends LineLayerRenderer {
+class TunnelLayerRenderer extends $LineLayerRenderer {
   TunnelLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -2173,7 +2362,7 @@ class TunnelLayerRenderer extends LineLayerRenderer {
     spec.EvaluationContext eval,
     vt.LineStringFeature feature,
     int index,
-    List<(Vector2 position, Vector2 normal)> vertexData,
+    List<(Vector2 position, Vector2 normal, double lineLength)> vertexData,
   ) {
     final paint = specLayer.paint;
     final color = paint.lineColor.evaluate(eval).vec;
@@ -2181,7 +2370,7 @@ class TunnelLayerRenderer extends LineLayerRenderer {
         paint.lineWidth
             .evaluate(
               eval.copyWithZoom(
-                getNearestFloorValue(eval.zoom, [
+                getNearestFloorValue(eval.zoom, const [
                   5.0,
                   6.0,
                   10.0,
@@ -2197,7 +2386,7 @@ class TunnelLayerRenderer extends LineLayerRenderer {
         paint.lineWidth
             .evaluate(
               eval.copyWithZoom(
-                getNearestCeilValue(eval.zoom, [
+                getNearestCeilValue(eval.zoom, const [
                   5.0,
                   6.0,
                   10.0,
@@ -2237,26 +2426,30 @@ class TunnelLayerRenderer extends LineLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
-    final width_start_stop = getNearestFloorValue(eval.zoom, [
-      5.0,
-      6.0,
-      10.0,
-      12.0,
-      14.0,
-      16.0,
-      20.0,
-    ]);
-    final width_end_stop = getNearestCeilValue(eval.zoom, [
-      5.0,
-      6.0,
-      10.0,
-      12.0,
-      14.0,
-      16.0,
-      20.0,
-    ]);
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    final width_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [
+        5.0,
+        6.0,
+        10.0,
+        12.0,
+        14.0,
+        16.0,
+        20.0,
+      ]),
+      getNearestCeilValue(eval.zoom, const [
+        5.0,
+        6.0,
+        10.0,
+        12.0,
+        14.0,
+        16.0,
+        20.0,
+      ]),
+    );
+
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -2264,13 +2457,12 @@ class TunnelLayerRenderer extends LineLayerRenderer {
       tileSize: tileSize,
       tileExtent: tileExtent,
       tileOpacity: tileOpacity,
-      tunnelUboWidthStartStop: width_start_stop,
-      tunnelUboWidthEndStop: width_end_stop,
+      tunnelUboWidthStops: width_stops,
     );
   }
 }
 
-class RailwayTunnelLayerRenderer extends LineLayerRenderer {
+class RailwayTunnelLayerRenderer extends $LineLayerRenderer {
   RailwayTunnelLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -2287,14 +2479,14 @@ class RailwayTunnelLayerRenderer extends LineLayerRenderer {
     spec.EvaluationContext eval,
     vt.LineStringFeature feature,
     int index,
-    List<(Vector2 position, Vector2 normal)> vertexData,
+    List<(Vector2 position, Vector2 normal, double lineLength)> vertexData,
   ) {
     final paint = specLayer.paint;
     final width_start_value =
         paint.lineWidth
             .evaluate(
               eval.copyWithZoom(
-                getNearestFloorValue(eval.zoom, [14.0, 15.0, 20.0]),
+                getNearestFloorValue(eval.zoom, const [14.0, 15.0, 20.0]),
               ),
             )
             .toDouble();
@@ -2302,7 +2494,7 @@ class RailwayTunnelLayerRenderer extends LineLayerRenderer {
         paint.lineWidth
             .evaluate(
               eval.copyWithZoom(
-                getNearestCeilValue(eval.zoom, [14.0, 15.0, 20.0]),
+                getNearestCeilValue(eval.zoom, const [14.0, 15.0, 20.0]),
               ),
             )
             .toDouble();
@@ -2333,14 +2525,14 @@ class RailwayTunnelLayerRenderer extends LineLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
-    final width_start_stop = getNearestFloorValue(eval.zoom, [
-      14.0,
-      15.0,
-      20.0,
-    ]);
-    final width_end_stop = getNearestCeilValue(eval.zoom, [14.0, 15.0, 20.0]);
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    final width_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [14.0, 15.0, 20.0]),
+      getNearestCeilValue(eval.zoom, const [14.0, 15.0, 20.0]),
+    );
+
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -2348,13 +2540,12 @@ class RailwayTunnelLayerRenderer extends LineLayerRenderer {
       tileSize: tileSize,
       tileExtent: tileExtent,
       tileOpacity: tileOpacity,
-      railwayTunnelUboWidthStartStop: width_start_stop,
-      railwayTunnelUboWidthEndStop: width_end_stop,
+      railwayTunnelUboWidthStops: width_stops,
     );
   }
 }
 
-class RailwayTunnelHatchingLayerRenderer extends LineLayerRenderer {
+class RailwayTunnelHatchingLayerRenderer extends $LineLayerRenderer {
   RailwayTunnelHatchingLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -2371,14 +2562,14 @@ class RailwayTunnelHatchingLayerRenderer extends LineLayerRenderer {
     spec.EvaluationContext eval,
     vt.LineStringFeature feature,
     int index,
-    List<(Vector2 position, Vector2 normal)> vertexData,
+    List<(Vector2 position, Vector2 normal, double lineLength)> vertexData,
   ) {
     final paint = specLayer.paint;
     final width_start_value =
         paint.lineWidth
             .evaluate(
               eval.copyWithZoom(
-                getNearestFloorValue(eval.zoom, [14.5, 15.0, 20.0]),
+                getNearestFloorValue(eval.zoom, const [14.5, 15.0, 20.0]),
               ),
             )
             .toDouble();
@@ -2386,7 +2577,7 @@ class RailwayTunnelHatchingLayerRenderer extends LineLayerRenderer {
         paint.lineWidth
             .evaluate(
               eval.copyWithZoom(
-                getNearestCeilValue(eval.zoom, [14.5, 15.0, 20.0]),
+                getNearestCeilValue(eval.zoom, const [14.5, 15.0, 20.0]),
               ),
             )
             .toDouble();
@@ -2397,6 +2588,7 @@ class RailwayTunnelHatchingLayerRenderer extends LineLayerRenderer {
         index + i,
         position: vertex.$1,
         normal: vertex.$2,
+        lineLength: vertex.$3,
         widthStartValue: width_start_value,
         widthEndValue: width_end_value,
       );
@@ -2417,14 +2609,14 @@ class RailwayTunnelHatchingLayerRenderer extends LineLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
-    final width_start_stop = getNearestFloorValue(eval.zoom, [
-      14.5,
-      15.0,
-      20.0,
-    ]);
-    final width_end_stop = getNearestCeilValue(eval.zoom, [14.5, 15.0, 20.0]);
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    final width_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [14.5, 15.0, 20.0]),
+      getNearestCeilValue(eval.zoom, const [14.5, 15.0, 20.0]),
+    );
+
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -2432,13 +2624,17 @@ class RailwayTunnelHatchingLayerRenderer extends LineLayerRenderer {
       tileSize: tileSize,
       tileExtent: tileExtent,
       tileOpacity: tileOpacity,
-      railwayTunnelHatchingUboWidthStartStop: width_start_stop,
-      railwayTunnelHatchingUboWidthEndStop: width_end_stop,
+      railwayTunnelHatchingUboWidthStops: width_stops,
+      dasharrayTexture: lineDasharrayTexture!,
+      railwayTunnelHatchingUboDasharraySize: Vector2(
+        lineDasharrayTexture!.width.toDouble(),
+        lineDasharrayTexture!.height.toDouble(),
+      ),
     );
   }
 }
 
-class FootwayTunnelOutlineLayerRenderer extends LineLayerRenderer {
+class FootwayTunnelOutlineLayerRenderer extends $LineLayerRenderer {
   FootwayTunnelOutlineLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -2455,14 +2651,14 @@ class FootwayTunnelOutlineLayerRenderer extends LineLayerRenderer {
     spec.EvaluationContext eval,
     vt.LineStringFeature feature,
     int index,
-    List<(Vector2 position, Vector2 normal)> vertexData,
+    List<(Vector2 position, Vector2 normal, double lineLength)> vertexData,
   ) {
     final paint = specLayer.paint;
     final width_start_value =
         paint.lineWidth
             .evaluate(
               eval.copyWithZoom(
-                getNearestFloorValue(eval.zoom, [14.0, 16.0, 18.0, 22.0]),
+                getNearestFloorValue(eval.zoom, const [14.0, 16.0, 18.0, 22.0]),
               ),
             )
             .toDouble();
@@ -2470,7 +2666,7 @@ class FootwayTunnelOutlineLayerRenderer extends LineLayerRenderer {
         paint.lineWidth
             .evaluate(
               eval.copyWithZoom(
-                getNearestCeilValue(eval.zoom, [14.0, 16.0, 18.0, 22.0]),
+                getNearestCeilValue(eval.zoom, const [14.0, 16.0, 18.0, 22.0]),
               ),
             )
             .toDouble();
@@ -2501,20 +2697,14 @@ class FootwayTunnelOutlineLayerRenderer extends LineLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
-    final width_start_stop = getNearestFloorValue(eval.zoom, [
-      14.0,
-      16.0,
-      18.0,
-      22.0,
-    ]);
-    final width_end_stop = getNearestCeilValue(eval.zoom, [
-      14.0,
-      16.0,
-      18.0,
-      22.0,
-    ]);
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    final width_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [14.0, 16.0, 18.0, 22.0]),
+      getNearestCeilValue(eval.zoom, const [14.0, 16.0, 18.0, 22.0]),
+    );
+
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -2522,13 +2712,12 @@ class FootwayTunnelOutlineLayerRenderer extends LineLayerRenderer {
       tileSize: tileSize,
       tileExtent: tileExtent,
       tileOpacity: tileOpacity,
-      footwayTunnelOutlineUboWidthStartStop: width_start_stop,
-      footwayTunnelOutlineUboWidthEndStop: width_end_stop,
+      footwayTunnelOutlineUboWidthStops: width_stops,
     );
   }
 }
 
-class FootwayTunnelLayerRenderer extends LineLayerRenderer {
+class FootwayTunnelLayerRenderer extends $LineLayerRenderer {
   FootwayTunnelLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -2545,14 +2734,14 @@ class FootwayTunnelLayerRenderer extends LineLayerRenderer {
     spec.EvaluationContext eval,
     vt.LineStringFeature feature,
     int index,
-    List<(Vector2 position, Vector2 normal)> vertexData,
+    List<(Vector2 position, Vector2 normal, double lineLength)> vertexData,
   ) {
     final paint = specLayer.paint;
     final width_start_value =
         paint.lineWidth
             .evaluate(
               eval.copyWithZoom(
-                getNearestFloorValue(eval.zoom, [14.0, 16.0, 18.0, 22.0]),
+                getNearestFloorValue(eval.zoom, const [14.0, 16.0, 18.0, 22.0]),
               ),
             )
             .toDouble();
@@ -2560,7 +2749,7 @@ class FootwayTunnelLayerRenderer extends LineLayerRenderer {
         paint.lineWidth
             .evaluate(
               eval.copyWithZoom(
-                getNearestCeilValue(eval.zoom, [14.0, 16.0, 18.0, 22.0]),
+                getNearestCeilValue(eval.zoom, const [14.0, 16.0, 18.0, 22.0]),
               ),
             )
             .toDouble();
@@ -2571,6 +2760,7 @@ class FootwayTunnelLayerRenderer extends LineLayerRenderer {
         index + i,
         position: vertex.$1,
         normal: vertex.$2,
+        lineLength: vertex.$3,
         widthStartValue: width_start_value,
         widthEndValue: width_end_value,
       );
@@ -2591,20 +2781,14 @@ class FootwayTunnelLayerRenderer extends LineLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
-    final width_start_stop = getNearestFloorValue(eval.zoom, [
-      14.0,
-      16.0,
-      18.0,
-      22.0,
-    ]);
-    final width_end_stop = getNearestCeilValue(eval.zoom, [
-      14.0,
-      16.0,
-      18.0,
-      22.0,
-    ]);
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    final width_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [14.0, 16.0, 18.0, 22.0]),
+      getNearestCeilValue(eval.zoom, const [14.0, 16.0, 18.0, 22.0]),
+    );
+
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -2612,13 +2796,17 @@ class FootwayTunnelLayerRenderer extends LineLayerRenderer {
       tileSize: tileSize,
       tileExtent: tileExtent,
       tileOpacity: tileOpacity,
-      footwayTunnelUboWidthStartStop: width_start_stop,
-      footwayTunnelUboWidthEndStop: width_end_stop,
+      footwayTunnelUboWidthStops: width_stops,
+      dasharrayTexture: lineDasharrayTexture!,
+      footwayTunnelUboDasharraySize: Vector2(
+        lineDasharrayTexture!.width.toDouble(),
+        lineDasharrayTexture!.height.toDouble(),
+      ),
     );
   }
 }
 
-class PierLayerRenderer extends FillLayerRenderer {
+class PierLayerRenderer extends $FillLayerRenderer {
   PierLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -2660,8 +2848,9 @@ class PierLayerRenderer extends FillLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -2673,7 +2862,7 @@ class PierLayerRenderer extends FillLayerRenderer {
   }
 }
 
-class PierRoadLayerRenderer extends LineLayerRenderer {
+class PierRoadLayerRenderer extends $LineLayerRenderer {
   PierRoadLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -2690,19 +2879,23 @@ class PierRoadLayerRenderer extends LineLayerRenderer {
     spec.EvaluationContext eval,
     vt.LineStringFeature feature,
     int index,
-    List<(Vector2 position, Vector2 normal)> vertexData,
+    List<(Vector2 position, Vector2 normal, double lineLength)> vertexData,
   ) {
     final paint = specLayer.paint;
     final width_start_value =
         paint.lineWidth
             .evaluate(
-              eval.copyWithZoom(getNearestFloorValue(eval.zoom, [15.0, 17.0])),
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, const [15.0, 17.0]),
+              ),
             )
             .toDouble();
     final width_end_value =
         paint.lineWidth
             .evaluate(
-              eval.copyWithZoom(getNearestCeilValue(eval.zoom, [15.0, 17.0])),
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, const [15.0, 17.0]),
+              ),
             )
             .toDouble();
 
@@ -2732,10 +2925,14 @@ class PierRoadLayerRenderer extends LineLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
-    final width_start_stop = getNearestFloorValue(eval.zoom, [15.0, 17.0]);
-    final width_end_stop = getNearestCeilValue(eval.zoom, [15.0, 17.0]);
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    final width_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [15.0, 17.0]),
+      getNearestCeilValue(eval.zoom, const [15.0, 17.0]),
+    );
+
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -2743,13 +2940,12 @@ class PierRoadLayerRenderer extends LineLayerRenderer {
       tileSize: tileSize,
       tileExtent: tileExtent,
       tileOpacity: tileOpacity,
-      pierRoadUboWidthStartStop: width_start_stop,
-      pierRoadUboWidthEndStop: width_end_stop,
+      pierRoadUboWidthStops: width_stops,
     );
   }
 }
 
-class BridgeLayerRenderer extends FillLayerRenderer {
+class BridgeLayerRenderer extends $FillLayerRenderer {
   BridgeLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -2791,8 +2987,9 @@ class BridgeLayerRenderer extends FillLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -2804,7 +3001,7 @@ class BridgeLayerRenderer extends FillLayerRenderer {
   }
 }
 
-class MinorRoadOutlineLayerRenderer extends LineLayerRenderer {
+class MinorRoadOutlineLayerRenderer extends $LineLayerRenderer {
   MinorRoadOutlineLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -2821,14 +3018,14 @@ class MinorRoadOutlineLayerRenderer extends LineLayerRenderer {
     spec.EvaluationContext eval,
     vt.LineStringFeature feature,
     int index,
-    List<(Vector2 position, Vector2 normal)> vertexData,
+    List<(Vector2 position, Vector2 normal, double lineLength)> vertexData,
   ) {
     final paint = specLayer.paint;
     final width_start_value =
         paint.lineWidth
             .evaluate(
               eval.copyWithZoom(
-                getNearestFloorValue(eval.zoom, [
+                getNearestFloorValue(eval.zoom, const [
                   6.0,
                   7.0,
                   12.0,
@@ -2843,7 +3040,7 @@ class MinorRoadOutlineLayerRenderer extends LineLayerRenderer {
         paint.lineWidth
             .evaluate(
               eval.copyWithZoom(
-                getNearestCeilValue(eval.zoom, [
+                getNearestCeilValue(eval.zoom, const [
                   6.0,
                   7.0,
                   12.0,
@@ -2881,24 +3078,14 @@ class MinorRoadOutlineLayerRenderer extends LineLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
-    final width_start_stop = getNearestFloorValue(eval.zoom, [
-      6.0,
-      7.0,
-      12.0,
-      14.0,
-      16.0,
-      20.0,
-    ]);
-    final width_end_stop = getNearestCeilValue(eval.zoom, [
-      6.0,
-      7.0,
-      12.0,
-      14.0,
-      16.0,
-      20.0,
-    ]);
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    final width_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [6.0, 7.0, 12.0, 14.0, 16.0, 20.0]),
+      getNearestCeilValue(eval.zoom, const [6.0, 7.0, 12.0, 14.0, 16.0, 20.0]),
+    );
+
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -2906,13 +3093,12 @@ class MinorRoadOutlineLayerRenderer extends LineLayerRenderer {
       tileSize: tileSize,
       tileExtent: tileExtent,
       tileOpacity: tileOpacity,
-      minorRoadOutlineUboWidthStartStop: width_start_stop,
-      minorRoadOutlineUboWidthEndStop: width_end_stop,
+      minorRoadOutlineUboWidthStops: width_stops,
     );
   }
 }
 
-class MajorRoadOutlineLayerRenderer extends LineLayerRenderer {
+class MajorRoadOutlineLayerRenderer extends $LineLayerRenderer {
   MajorRoadOutlineLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -2929,14 +3115,14 @@ class MajorRoadOutlineLayerRenderer extends LineLayerRenderer {
     spec.EvaluationContext eval,
     vt.LineStringFeature feature,
     int index,
-    List<(Vector2 position, Vector2 normal)> vertexData,
+    List<(Vector2 position, Vector2 normal, double lineLength)> vertexData,
   ) {
     final paint = specLayer.paint;
     final width_start_value =
         paint.lineWidth
             .evaluate(
               eval.copyWithZoom(
-                getNearestFloorValue(eval.zoom, [
+                getNearestFloorValue(eval.zoom, const [
                   6.0,
                   7.0,
                   10.0,
@@ -2952,7 +3138,7 @@ class MajorRoadOutlineLayerRenderer extends LineLayerRenderer {
         paint.lineWidth
             .evaluate(
               eval.copyWithZoom(
-                getNearestCeilValue(eval.zoom, [
+                getNearestCeilValue(eval.zoom, const [
                   6.0,
                   7.0,
                   10.0,
@@ -2991,26 +3177,30 @@ class MajorRoadOutlineLayerRenderer extends LineLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
-    final width_start_stop = getNearestFloorValue(eval.zoom, [
-      6.0,
-      7.0,
-      10.0,
-      12.0,
-      14.0,
-      16.0,
-      20.0,
-    ]);
-    final width_end_stop = getNearestCeilValue(eval.zoom, [
-      6.0,
-      7.0,
-      10.0,
-      12.0,
-      14.0,
-      16.0,
-      20.0,
-    ]);
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    final width_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [
+        6.0,
+        7.0,
+        10.0,
+        12.0,
+        14.0,
+        16.0,
+        20.0,
+      ]),
+      getNearestCeilValue(eval.zoom, const [
+        6.0,
+        7.0,
+        10.0,
+        12.0,
+        14.0,
+        16.0,
+        20.0,
+      ]),
+    );
+
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -3018,13 +3208,12 @@ class MajorRoadOutlineLayerRenderer extends LineLayerRenderer {
       tileSize: tileSize,
       tileExtent: tileExtent,
       tileOpacity: tileOpacity,
-      majorRoadOutlineUboWidthStartStop: width_start_stop,
-      majorRoadOutlineUboWidthEndStop: width_end_stop,
+      majorRoadOutlineUboWidthStops: width_stops,
     );
   }
 }
 
-class HighwayOutlineLayerRenderer extends LineLayerRenderer {
+class HighwayOutlineLayerRenderer extends $LineLayerRenderer {
   HighwayOutlineLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -3041,14 +3230,14 @@ class HighwayOutlineLayerRenderer extends LineLayerRenderer {
     spec.EvaluationContext eval,
     vt.LineStringFeature feature,
     int index,
-    List<(Vector2 position, Vector2 normal)> vertexData,
+    List<(Vector2 position, Vector2 normal, double lineLength)> vertexData,
   ) {
     final paint = specLayer.paint;
     final width_start_value =
         paint.lineWidth
             .evaluate(
               eval.copyWithZoom(
-                getNearestFloorValue(eval.zoom, [
+                getNearestFloorValue(eval.zoom, const [
                   6.0,
                   7.0,
                   10.0,
@@ -3064,7 +3253,7 @@ class HighwayOutlineLayerRenderer extends LineLayerRenderer {
         paint.lineWidth
             .evaluate(
               eval.copyWithZoom(
-                getNearestCeilValue(eval.zoom, [
+                getNearestCeilValue(eval.zoom, const [
                   6.0,
                   7.0,
                   10.0,
@@ -3103,26 +3292,30 @@ class HighwayOutlineLayerRenderer extends LineLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
-    final width_start_stop = getNearestFloorValue(eval.zoom, [
-      6.0,
-      7.0,
-      10.0,
-      12.0,
-      14.0,
-      16.0,
-      20.0,
-    ]);
-    final width_end_stop = getNearestCeilValue(eval.zoom, [
-      6.0,
-      7.0,
-      10.0,
-      12.0,
-      14.0,
-      16.0,
-      20.0,
-    ]);
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    final width_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [
+        6.0,
+        7.0,
+        10.0,
+        12.0,
+        14.0,
+        16.0,
+        20.0,
+      ]),
+      getNearestCeilValue(eval.zoom, const [
+        6.0,
+        7.0,
+        10.0,
+        12.0,
+        14.0,
+        16.0,
+        20.0,
+      ]),
+    );
+
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -3130,13 +3323,12 @@ class HighwayOutlineLayerRenderer extends LineLayerRenderer {
       tileSize: tileSize,
       tileExtent: tileExtent,
       tileOpacity: tileOpacity,
-      highwayOutlineUboWidthStartStop: width_start_stop,
-      highwayOutlineUboWidthEndStop: width_end_stop,
+      highwayOutlineUboWidthStops: width_stops,
     );
   }
 }
 
-class RoadUnderConstructionLayerRenderer extends LineLayerRenderer {
+class RoadUnderConstructionLayerRenderer extends $LineLayerRenderer {
   RoadUnderConstructionLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -3153,7 +3345,7 @@ class RoadUnderConstructionLayerRenderer extends LineLayerRenderer {
     spec.EvaluationContext eval,
     vt.LineStringFeature feature,
     int index,
-    List<(Vector2 position, Vector2 normal)> vertexData,
+    List<(Vector2 position, Vector2 normal, double lineLength)> vertexData,
   ) {
     final paint = specLayer.paint;
     final color = paint.lineColor.evaluate(eval).vec;
@@ -3161,7 +3353,7 @@ class RoadUnderConstructionLayerRenderer extends LineLayerRenderer {
         paint.lineWidth
             .evaluate(
               eval.copyWithZoom(
-                getNearestFloorValue(eval.zoom, [
+                getNearestFloorValue(eval.zoom, const [
                   5.0,
                   10.0,
                   12.0,
@@ -3176,7 +3368,7 @@ class RoadUnderConstructionLayerRenderer extends LineLayerRenderer {
         paint.lineWidth
             .evaluate(
               eval.copyWithZoom(
-                getNearestCeilValue(eval.zoom, [
+                getNearestCeilValue(eval.zoom, const [
                   5.0,
                   10.0,
                   12.0,
@@ -3194,6 +3386,7 @@ class RoadUnderConstructionLayerRenderer extends LineLayerRenderer {
         index + i,
         position: vertex.$1,
         normal: vertex.$2,
+        lineLength: vertex.$3,
         color: color,
         widthStartValue: width_start_value,
         widthEndValue: width_end_value,
@@ -3215,24 +3408,21 @@ class RoadUnderConstructionLayerRenderer extends LineLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
-    final width_start_stop = getNearestFloorValue(eval.zoom, [
-      5.0,
-      10.0,
-      12.0,
-      14.0,
-      16.0,
-      20.0,
-    ]);
-    final width_end_stop = getNearestCeilValue(eval.zoom, [
-      5.0,
-      10.0,
-      12.0,
-      14.0,
-      16.0,
-      20.0,
-    ]);
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    final width_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [
+        5.0,
+        10.0,
+        12.0,
+        14.0,
+        16.0,
+        20.0,
+      ]),
+      getNearestCeilValue(eval.zoom, const [5.0, 10.0, 12.0, 14.0, 16.0, 20.0]),
+    );
+
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -3240,13 +3430,17 @@ class RoadUnderConstructionLayerRenderer extends LineLayerRenderer {
       tileSize: tileSize,
       tileExtent: tileExtent,
       tileOpacity: tileOpacity,
-      roadUnderConstructionUboWidthStartStop: width_start_stop,
-      roadUnderConstructionUboWidthEndStop: width_end_stop,
+      roadUnderConstructionUboWidthStops: width_stops,
+      dasharrayTexture: lineDasharrayTexture!,
+      roadUnderConstructionUboDasharraySize: Vector2(
+        lineDasharrayTexture!.width.toDouble(),
+        lineDasharrayTexture!.height.toDouble(),
+      ),
     );
   }
 }
 
-class MinorRoadLayerRenderer extends LineLayerRenderer {
+class MinorRoadLayerRenderer extends $LineLayerRenderer {
   MinorRoadLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -3263,14 +3457,14 @@ class MinorRoadLayerRenderer extends LineLayerRenderer {
     spec.EvaluationContext eval,
     vt.LineStringFeature feature,
     int index,
-    List<(Vector2 position, Vector2 normal)> vertexData,
+    List<(Vector2 position, Vector2 normal, double lineLength)> vertexData,
   ) {
     final paint = specLayer.paint;
     final width_start_value =
         paint.lineWidth
             .evaluate(
               eval.copyWithZoom(
-                getNearestFloorValue(eval.zoom, [
+                getNearestFloorValue(eval.zoom, const [
                   5.0,
                   10.0,
                   12.0,
@@ -3285,7 +3479,7 @@ class MinorRoadLayerRenderer extends LineLayerRenderer {
         paint.lineWidth
             .evaluate(
               eval.copyWithZoom(
-                getNearestCeilValue(eval.zoom, [
+                getNearestCeilValue(eval.zoom, const [
                   5.0,
                   10.0,
                   12.0,
@@ -3323,24 +3517,21 @@ class MinorRoadLayerRenderer extends LineLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
-    final width_start_stop = getNearestFloorValue(eval.zoom, [
-      5.0,
-      10.0,
-      12.0,
-      14.0,
-      16.0,
-      20.0,
-    ]);
-    final width_end_stop = getNearestCeilValue(eval.zoom, [
-      5.0,
-      10.0,
-      12.0,
-      14.0,
-      16.0,
-      20.0,
-    ]);
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    final width_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [
+        5.0,
+        10.0,
+        12.0,
+        14.0,
+        16.0,
+        20.0,
+      ]),
+      getNearestCeilValue(eval.zoom, const [5.0, 10.0, 12.0, 14.0, 16.0, 20.0]),
+    );
+
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -3348,13 +3539,12 @@ class MinorRoadLayerRenderer extends LineLayerRenderer {
       tileSize: tileSize,
       tileExtent: tileExtent,
       tileOpacity: tileOpacity,
-      minorRoadUboWidthStartStop: width_start_stop,
-      minorRoadUboWidthEndStop: width_end_stop,
+      minorRoadUboWidthStops: width_stops,
     );
   }
 }
 
-class MajorRoadLayerRenderer extends LineLayerRenderer {
+class MajorRoadLayerRenderer extends $LineLayerRenderer {
   MajorRoadLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -3371,14 +3561,36 @@ class MajorRoadLayerRenderer extends LineLayerRenderer {
     spec.EvaluationContext eval,
     vt.LineStringFeature feature,
     int index,
-    List<(Vector2 position, Vector2 normal)> vertexData,
+    List<(Vector2 position, Vector2 normal, double lineLength)> vertexData,
   ) {
     final paint = specLayer.paint;
+    final color_start_value =
+        paint.lineColor
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, const [0.0, 24.0]),
+              ),
+            )
+            .vec;
+    final color_end_value =
+        paint.lineColor
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, const [0.0, 24.0]),
+              ),
+            )
+            .vec;
     final width_start_value =
         paint.lineWidth
             .evaluate(
               eval.copyWithZoom(
-                getNearestFloorValue(eval.zoom, [10.0, 12.0, 14.0, 16.0, 20.0]),
+                getNearestFloorValue(eval.zoom, const [
+                  10.0,
+                  12.0,
+                  14.0,
+                  16.0,
+                  20.0,
+                ]),
               ),
             )
             .toDouble();
@@ -3386,7 +3598,13 @@ class MajorRoadLayerRenderer extends LineLayerRenderer {
         paint.lineWidth
             .evaluate(
               eval.copyWithZoom(
-                getNearestCeilValue(eval.zoom, [10.0, 12.0, 14.0, 16.0, 20.0]),
+                getNearestCeilValue(eval.zoom, const [
+                  10.0,
+                  12.0,
+                  14.0,
+                  16.0,
+                  20.0,
+                ]),
               ),
             )
             .toDouble();
@@ -3397,6 +3615,8 @@ class MajorRoadLayerRenderer extends LineLayerRenderer {
         index + i,
         position: vertex.$1,
         normal: vertex.$2,
+        colorStartValue: color_start_value,
+        colorEndValue: color_end_value,
         widthStartValue: width_start_value,
         widthEndValue: width_end_value,
       );
@@ -3417,22 +3637,18 @@ class MajorRoadLayerRenderer extends LineLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
-    final width_start_stop = getNearestFloorValue(eval.zoom, [
-      10.0,
-      12.0,
-      14.0,
-      16.0,
-      20.0,
-    ]);
-    final width_end_stop = getNearestCeilValue(eval.zoom, [
-      10.0,
-      12.0,
-      14.0,
-      16.0,
-      20.0,
-    ]);
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    final color_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [0.0, 24.0]),
+      getNearestCeilValue(eval.zoom, const [0.0, 24.0]),
+    );
+    final width_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [10.0, 12.0, 14.0, 16.0, 20.0]),
+      getNearestCeilValue(eval.zoom, const [10.0, 12.0, 14.0, 16.0, 20.0]),
+    );
+
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -3440,13 +3656,13 @@ class MajorRoadLayerRenderer extends LineLayerRenderer {
       tileSize: tileSize,
       tileExtent: tileExtent,
       tileOpacity: tileOpacity,
-      majorRoadUboWidthStartStop: width_start_stop,
-      majorRoadUboWidthEndStop: width_end_stop,
+      majorRoadUboColorStops: color_stops,
+      majorRoadUboWidthStops: width_stops,
     );
   }
 }
 
-class HighwayLayerRenderer extends LineLayerRenderer {
+class HighwayLayerRenderer extends $LineLayerRenderer {
   HighwayLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -3463,14 +3679,30 @@ class HighwayLayerRenderer extends LineLayerRenderer {
     spec.EvaluationContext eval,
     vt.LineStringFeature feature,
     int index,
-    List<(Vector2 position, Vector2 normal)> vertexData,
+    List<(Vector2 position, Vector2 normal, double lineLength)> vertexData,
   ) {
     final paint = specLayer.paint;
+    final color_start_value =
+        paint.lineColor
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, const [0.0, 24.0]),
+              ),
+            )
+            .vec;
+    final color_end_value =
+        paint.lineColor
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, const [0.0, 24.0]),
+              ),
+            )
+            .vec;
     final width_start_value =
         paint.lineWidth
             .evaluate(
               eval.copyWithZoom(
-                getNearestFloorValue(eval.zoom, [
+                getNearestFloorValue(eval.zoom, const [
                   5.0,
                   6.0,
                   10.0,
@@ -3486,7 +3718,7 @@ class HighwayLayerRenderer extends LineLayerRenderer {
         paint.lineWidth
             .evaluate(
               eval.copyWithZoom(
-                getNearestCeilValue(eval.zoom, [
+                getNearestCeilValue(eval.zoom, const [
                   5.0,
                   6.0,
                   10.0,
@@ -3505,6 +3737,8 @@ class HighwayLayerRenderer extends LineLayerRenderer {
         index + i,
         position: vertex.$1,
         normal: vertex.$2,
+        colorStartValue: color_start_value,
+        colorEndValue: color_end_value,
         widthStartValue: width_start_value,
         widthEndValue: width_end_value,
       );
@@ -3525,26 +3759,34 @@ class HighwayLayerRenderer extends LineLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
-    final width_start_stop = getNearestFloorValue(eval.zoom, [
-      5.0,
-      6.0,
-      10.0,
-      12.0,
-      14.0,
-      16.0,
-      20.0,
-    ]);
-    final width_end_stop = getNearestCeilValue(eval.zoom, [
-      5.0,
-      6.0,
-      10.0,
-      12.0,
-      14.0,
-      16.0,
-      20.0,
-    ]);
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    final color_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [0.0, 24.0]),
+      getNearestCeilValue(eval.zoom, const [0.0, 24.0]),
+    );
+    final width_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [
+        5.0,
+        6.0,
+        10.0,
+        12.0,
+        14.0,
+        16.0,
+        20.0,
+      ]),
+      getNearestCeilValue(eval.zoom, const [
+        5.0,
+        6.0,
+        10.0,
+        12.0,
+        14.0,
+        16.0,
+        20.0,
+      ]),
+    );
+
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -3552,13 +3794,13 @@ class HighwayLayerRenderer extends LineLayerRenderer {
       tileSize: tileSize,
       tileExtent: tileExtent,
       tileOpacity: tileOpacity,
-      highwayUboWidthStartStop: width_start_stop,
-      highwayUboWidthEndStop: width_end_stop,
+      highwayUboColorStops: color_stops,
+      highwayUboWidthStops: width_stops,
     );
   }
 }
 
-class PathOutlineLayerRenderer extends LineLayerRenderer {
+class PathOutlineLayerRenderer extends $LineLayerRenderer {
   PathOutlineLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -3575,14 +3817,14 @@ class PathOutlineLayerRenderer extends LineLayerRenderer {
     spec.EvaluationContext eval,
     vt.LineStringFeature feature,
     int index,
-    List<(Vector2 position, Vector2 normal)> vertexData,
+    List<(Vector2 position, Vector2 normal, double lineLength)> vertexData,
   ) {
     final paint = specLayer.paint;
     final width_start_value =
         paint.lineWidth
             .evaluate(
               eval.copyWithZoom(
-                getNearestFloorValue(eval.zoom, [14.0, 16.0, 18.0, 22.0]),
+                getNearestFloorValue(eval.zoom, const [14.0, 16.0, 18.0, 22.0]),
               ),
             )
             .toDouble();
@@ -3590,7 +3832,7 @@ class PathOutlineLayerRenderer extends LineLayerRenderer {
         paint.lineWidth
             .evaluate(
               eval.copyWithZoom(
-                getNearestCeilValue(eval.zoom, [14.0, 16.0, 18.0, 22.0]),
+                getNearestCeilValue(eval.zoom, const [14.0, 16.0, 18.0, 22.0]),
               ),
             )
             .toDouble();
@@ -3621,20 +3863,14 @@ class PathOutlineLayerRenderer extends LineLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
-    final width_start_stop = getNearestFloorValue(eval.zoom, [
-      14.0,
-      16.0,
-      18.0,
-      22.0,
-    ]);
-    final width_end_stop = getNearestCeilValue(eval.zoom, [
-      14.0,
-      16.0,
-      18.0,
-      22.0,
-    ]);
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    final width_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [14.0, 16.0, 18.0, 22.0]),
+      getNearestCeilValue(eval.zoom, const [14.0, 16.0, 18.0, 22.0]),
+    );
+
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -3642,13 +3878,101 @@ class PathOutlineLayerRenderer extends LineLayerRenderer {
       tileSize: tileSize,
       tileExtent: tileExtent,
       tileOpacity: tileOpacity,
-      pathOutlineUboWidthStartStop: width_start_stop,
-      pathOutlineUboWidthEndStop: width_end_stop,
+      pathOutlineUboWidthStops: width_stops,
     );
   }
 }
 
-class PathLayerRenderer extends LineLayerRenderer {
+class PathMinorLayerRenderer extends $LineLayerRenderer {
+  PathMinorLayerRenderer({
+    required gpu.ShaderLibrary shaderLibrary,
+    required super.coordinates,
+    required super.container,
+    required super.specLayer,
+    required super.vtLayer,
+  }) : pipeline = PathMinorRenderPipelineBindings(shaderLibrary);
+
+  @override
+  final PathMinorRenderPipelineBindings pipeline;
+
+  @override
+  int setFeatureVertices(
+    spec.EvaluationContext eval,
+    vt.LineStringFeature feature,
+    int index,
+    List<(Vector2 position, Vector2 normal, double lineLength)> vertexData,
+  ) {
+    final paint = specLayer.paint;
+    final width_start_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, const [14.0, 16.0, 18.0, 22.0]),
+              ),
+            )
+            .toDouble();
+    final width_end_value =
+        paint.lineWidth
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, const [14.0, 16.0, 18.0, 22.0]),
+              ),
+            )
+            .toDouble();
+
+    for (var i = 0; i < vertexData.length; i++) {
+      final vertex = vertexData[i];
+      pipeline.vertex.setVertex(
+        index + i,
+        position: vertex.$1,
+        normal: vertex.$2,
+        lineLength: vertex.$3,
+        widthStartValue: width_start_value,
+        widthEndValue: width_end_value,
+      );
+    }
+
+    return index + vertexData.length;
+  }
+
+  @override
+  void setUniforms(
+    RenderContext context,
+    Matrix4 cameraWorldToGl,
+    double cameraZoom,
+    double pixelRatio,
+    Matrix4 tileLocalToWorld,
+    double tileSize,
+    double tileExtent,
+    double tileOpacity,
+  ) {
+    final eval = context.eval;
+    final paint = specLayer.paint;
+
+    final width_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [14.0, 16.0, 18.0, 22.0]),
+      getNearestCeilValue(eval.zoom, const [14.0, 16.0, 18.0, 22.0]),
+    );
+
+    pipeline.setUniforms(
+      cameraWorldToGl: cameraWorldToGl,
+      cameraZoom: cameraZoom,
+      cameraPixelRatio: pixelRatio,
+      tileLocalToWorld: tileLocalToWorld,
+      tileSize: tileSize,
+      tileExtent: tileExtent,
+      tileOpacity: tileOpacity,
+      pathMinorUboWidthStops: width_stops,
+      dasharrayTexture: lineDasharrayTexture!,
+      pathMinorUboDasharraySize: Vector2(
+        lineDasharrayTexture!.width.toDouble(),
+        lineDasharrayTexture!.height.toDouble(),
+      ),
+    );
+  }
+}
+
+class PathLayerRenderer extends $LineLayerRenderer {
   PathLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -3665,14 +3989,14 @@ class PathLayerRenderer extends LineLayerRenderer {
     spec.EvaluationContext eval,
     vt.LineStringFeature feature,
     int index,
-    List<(Vector2 position, Vector2 normal)> vertexData,
+    List<(Vector2 position, Vector2 normal, double lineLength)> vertexData,
   ) {
     final paint = specLayer.paint;
     final width_start_value =
         paint.lineWidth
             .evaluate(
               eval.copyWithZoom(
-                getNearestFloorValue(eval.zoom, [14.0, 16.0, 18.0, 22.0]),
+                getNearestFloorValue(eval.zoom, const [14.0, 16.0, 18.0, 22.0]),
               ),
             )
             .toDouble();
@@ -3680,7 +4004,7 @@ class PathLayerRenderer extends LineLayerRenderer {
         paint.lineWidth
             .evaluate(
               eval.copyWithZoom(
-                getNearestCeilValue(eval.zoom, [14.0, 16.0, 18.0, 22.0]),
+                getNearestCeilValue(eval.zoom, const [14.0, 16.0, 18.0, 22.0]),
               ),
             )
             .toDouble();
@@ -3691,6 +4015,7 @@ class PathLayerRenderer extends LineLayerRenderer {
         index + i,
         position: vertex.$1,
         normal: vertex.$2,
+        lineLength: vertex.$3,
         widthStartValue: width_start_value,
         widthEndValue: width_end_value,
       );
@@ -3711,20 +4036,14 @@ class PathLayerRenderer extends LineLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
-    final width_start_stop = getNearestFloorValue(eval.zoom, [
-      14.0,
-      16.0,
-      18.0,
-      22.0,
-    ]);
-    final width_end_stop = getNearestCeilValue(eval.zoom, [
-      14.0,
-      16.0,
-      18.0,
-      22.0,
-    ]);
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    final width_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [14.0, 16.0, 18.0, 22.0]),
+      getNearestCeilValue(eval.zoom, const [14.0, 16.0, 18.0, 22.0]),
+    );
+
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -3732,13 +4051,17 @@ class PathLayerRenderer extends LineLayerRenderer {
       tileSize: tileSize,
       tileExtent: tileExtent,
       tileOpacity: tileOpacity,
-      pathUboWidthStartStop: width_start_stop,
-      pathUboWidthEndStop: width_end_stop,
+      pathUboWidthStops: width_stops,
+      dasharrayTexture: lineDasharrayTexture!,
+      pathUboDasharraySize: Vector2(
+        lineDasharrayTexture!.width.toDouble(),
+        lineDasharrayTexture!.height.toDouble(),
+      ),
     );
   }
 }
 
-class MajorRailLayerRenderer extends LineLayerRenderer {
+class MajorRailLayerRenderer extends $LineLayerRenderer {
   MajorRailLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -3755,19 +4078,23 @@ class MajorRailLayerRenderer extends LineLayerRenderer {
     spec.EvaluationContext eval,
     vt.LineStringFeature feature,
     int index,
-    List<(Vector2 position, Vector2 normal)> vertexData,
+    List<(Vector2 position, Vector2 normal, double lineLength)> vertexData,
   ) {
     final paint = specLayer.paint;
     final color_start_value =
         paint.lineColor
             .evaluate(
-              eval.copyWithZoom(getNearestFloorValue(eval.zoom, [8.0, 16.0])),
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, const [8.0, 16.0]),
+              ),
             )
             .vec;
     final color_end_value =
         paint.lineColor
             .evaluate(
-              eval.copyWithZoom(getNearestCeilValue(eval.zoom, [8.0, 16.0])),
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, const [8.0, 16.0]),
+              ),
             )
             .vec;
     final opacity = paint.lineOpacity.evaluate(eval).toDouble();
@@ -3775,7 +4102,7 @@ class MajorRailLayerRenderer extends LineLayerRenderer {
         paint.lineWidth
             .evaluate(
               eval.copyWithZoom(
-                getNearestFloorValue(eval.zoom, [14.0, 15.0, 20.0]),
+                getNearestFloorValue(eval.zoom, const [14.0, 15.0, 20.0]),
               ),
             )
             .toDouble();
@@ -3783,7 +4110,7 @@ class MajorRailLayerRenderer extends LineLayerRenderer {
         paint.lineWidth
             .evaluate(
               eval.copyWithZoom(
-                getNearestCeilValue(eval.zoom, [14.0, 15.0, 20.0]),
+                getNearestCeilValue(eval.zoom, const [14.0, 15.0, 20.0]),
               ),
             )
             .toDouble();
@@ -3817,16 +4144,18 @@ class MajorRailLayerRenderer extends LineLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
-    final color_start_stop = getNearestFloorValue(eval.zoom, [8.0, 16.0]);
-    final color_end_stop = getNearestCeilValue(eval.zoom, [8.0, 16.0]);
-    final width_start_stop = getNearestFloorValue(eval.zoom, [
-      14.0,
-      15.0,
-      20.0,
-    ]);
-    final width_end_stop = getNearestCeilValue(eval.zoom, [14.0, 15.0, 20.0]);
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    final color_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [8.0, 16.0]),
+      getNearestCeilValue(eval.zoom, const [8.0, 16.0]),
+    );
+    final width_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [14.0, 15.0, 20.0]),
+      getNearestCeilValue(eval.zoom, const [14.0, 15.0, 20.0]),
+    );
+
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -3834,15 +4163,13 @@ class MajorRailLayerRenderer extends LineLayerRenderer {
       tileSize: tileSize,
       tileExtent: tileExtent,
       tileOpacity: tileOpacity,
-      majorRailUboColorStartStop: color_start_stop,
-      majorRailUboColorEndStop: color_end_stop,
-      majorRailUboWidthStartStop: width_start_stop,
-      majorRailUboWidthEndStop: width_end_stop,
+      majorRailUboColorStops: color_stops,
+      majorRailUboWidthStops: width_stops,
     );
   }
 }
 
-class MajorRailHatchingLayerRenderer extends LineLayerRenderer {
+class MajorRailHatchingLayerRenderer extends $LineLayerRenderer {
   MajorRailHatchingLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -3859,15 +4186,31 @@ class MajorRailHatchingLayerRenderer extends LineLayerRenderer {
     spec.EvaluationContext eval,
     vt.LineStringFeature feature,
     int index,
-    List<(Vector2 position, Vector2 normal)> vertexData,
+    List<(Vector2 position, Vector2 normal, double lineLength)> vertexData,
   ) {
     final paint = specLayer.paint;
+    final color_start_value =
+        paint.lineColor
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, const [0.0, 16.0]),
+              ),
+            )
+            .vec;
+    final color_end_value =
+        paint.lineColor
+            .evaluate(
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, const [0.0, 16.0]),
+              ),
+            )
+            .vec;
     final opacity = paint.lineOpacity.evaluate(eval).toDouble();
     final width_start_value =
         paint.lineWidth
             .evaluate(
               eval.copyWithZoom(
-                getNearestFloorValue(eval.zoom, [14.5, 15.0, 20.0]),
+                getNearestFloorValue(eval.zoom, const [14.5, 15.0, 20.0]),
               ),
             )
             .toDouble();
@@ -3875,7 +4218,7 @@ class MajorRailHatchingLayerRenderer extends LineLayerRenderer {
         paint.lineWidth
             .evaluate(
               eval.copyWithZoom(
-                getNearestCeilValue(eval.zoom, [14.5, 15.0, 20.0]),
+                getNearestCeilValue(eval.zoom, const [14.5, 15.0, 20.0]),
               ),
             )
             .toDouble();
@@ -3886,6 +4229,9 @@ class MajorRailHatchingLayerRenderer extends LineLayerRenderer {
         index + i,
         position: vertex.$1,
         normal: vertex.$2,
+        lineLength: vertex.$3,
+        colorStartValue: color_start_value,
+        colorEndValue: color_end_value,
         opacity: opacity,
         widthStartValue: width_start_value,
         widthEndValue: width_end_value,
@@ -3907,14 +4253,18 @@ class MajorRailHatchingLayerRenderer extends LineLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
-    final width_start_stop = getNearestFloorValue(eval.zoom, [
-      14.5,
-      15.0,
-      20.0,
-    ]);
-    final width_end_stop = getNearestCeilValue(eval.zoom, [14.5, 15.0, 20.0]);
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    final color_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [0.0, 16.0]),
+      getNearestCeilValue(eval.zoom, const [0.0, 16.0]),
+    );
+    final width_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [14.5, 15.0, 20.0]),
+      getNearestCeilValue(eval.zoom, const [14.5, 15.0, 20.0]),
+    );
+
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -3922,13 +4272,18 @@ class MajorRailHatchingLayerRenderer extends LineLayerRenderer {
       tileSize: tileSize,
       tileExtent: tileExtent,
       tileOpacity: tileOpacity,
-      majorRailHatchingUboWidthStartStop: width_start_stop,
-      majorRailHatchingUboWidthEndStop: width_end_stop,
+      majorRailHatchingUboColorStops: color_stops,
+      majorRailHatchingUboWidthStops: width_stops,
+      dasharrayTexture: lineDasharrayTexture!,
+      majorRailHatchingUboDasharraySize: Vector2(
+        lineDasharrayTexture!.width.toDouble(),
+        lineDasharrayTexture!.height.toDouble(),
+      ),
     );
   }
 }
 
-class MinorRailLayerRenderer extends LineLayerRenderer {
+class MinorRailLayerRenderer extends $LineLayerRenderer {
   MinorRailLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -3945,14 +4300,14 @@ class MinorRailLayerRenderer extends LineLayerRenderer {
     spec.EvaluationContext eval,
     vt.LineStringFeature feature,
     int index,
-    List<(Vector2 position, Vector2 normal)> vertexData,
+    List<(Vector2 position, Vector2 normal, double lineLength)> vertexData,
   ) {
     final paint = specLayer.paint;
     final width_start_value =
         paint.lineWidth
             .evaluate(
               eval.copyWithZoom(
-                getNearestFloorValue(eval.zoom, [14.0, 15.0, 20.0]),
+                getNearestFloorValue(eval.zoom, const [14.0, 15.0, 20.0]),
               ),
             )
             .toDouble();
@@ -3960,7 +4315,7 @@ class MinorRailLayerRenderer extends LineLayerRenderer {
         paint.lineWidth
             .evaluate(
               eval.copyWithZoom(
-                getNearestCeilValue(eval.zoom, [14.0, 15.0, 20.0]),
+                getNearestCeilValue(eval.zoom, const [14.0, 15.0, 20.0]),
               ),
             )
             .toDouble();
@@ -3991,14 +4346,14 @@ class MinorRailLayerRenderer extends LineLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
-    final width_start_stop = getNearestFloorValue(eval.zoom, [
-      14.0,
-      15.0,
-      20.0,
-    ]);
-    final width_end_stop = getNearestCeilValue(eval.zoom, [14.0, 15.0, 20.0]);
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    final width_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [14.0, 15.0, 20.0]),
+      getNearestCeilValue(eval.zoom, const [14.0, 15.0, 20.0]),
+    );
+
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -4006,13 +4361,12 @@ class MinorRailLayerRenderer extends LineLayerRenderer {
       tileSize: tileSize,
       tileExtent: tileExtent,
       tileOpacity: tileOpacity,
-      minorRailUboWidthStartStop: width_start_stop,
-      minorRailUboWidthEndStop: width_end_stop,
+      minorRailUboWidthStops: width_stops,
     );
   }
 }
 
-class MinorRailHatchingLayerRenderer extends LineLayerRenderer {
+class MinorRailHatchingLayerRenderer extends $LineLayerRenderer {
   MinorRailHatchingLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -4029,14 +4383,14 @@ class MinorRailHatchingLayerRenderer extends LineLayerRenderer {
     spec.EvaluationContext eval,
     vt.LineStringFeature feature,
     int index,
-    List<(Vector2 position, Vector2 normal)> vertexData,
+    List<(Vector2 position, Vector2 normal, double lineLength)> vertexData,
   ) {
     final paint = specLayer.paint;
     final width_start_value =
         paint.lineWidth
             .evaluate(
               eval.copyWithZoom(
-                getNearestFloorValue(eval.zoom, [14.5, 15.0, 20.0]),
+                getNearestFloorValue(eval.zoom, const [14.5, 15.0, 20.0]),
               ),
             )
             .toDouble();
@@ -4044,7 +4398,7 @@ class MinorRailHatchingLayerRenderer extends LineLayerRenderer {
         paint.lineWidth
             .evaluate(
               eval.copyWithZoom(
-                getNearestCeilValue(eval.zoom, [14.5, 15.0, 20.0]),
+                getNearestCeilValue(eval.zoom, const [14.5, 15.0, 20.0]),
               ),
             )
             .toDouble();
@@ -4055,6 +4409,7 @@ class MinorRailHatchingLayerRenderer extends LineLayerRenderer {
         index + i,
         position: vertex.$1,
         normal: vertex.$2,
+        lineLength: vertex.$3,
         widthStartValue: width_start_value,
         widthEndValue: width_end_value,
       );
@@ -4075,14 +4430,14 @@ class MinorRailHatchingLayerRenderer extends LineLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
-    final width_start_stop = getNearestFloorValue(eval.zoom, [
-      14.5,
-      15.0,
-      20.0,
-    ]);
-    final width_end_stop = getNearestCeilValue(eval.zoom, [14.5, 15.0, 20.0]);
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    final width_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [14.5, 15.0, 20.0]),
+      getNearestCeilValue(eval.zoom, const [14.5, 15.0, 20.0]),
+    );
+
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -4090,13 +4445,17 @@ class MinorRailHatchingLayerRenderer extends LineLayerRenderer {
       tileSize: tileSize,
       tileExtent: tileExtent,
       tileOpacity: tileOpacity,
-      minorRailHatchingUboWidthStartStop: width_start_stop,
-      minorRailHatchingUboWidthEndStop: width_end_stop,
+      minorRailHatchingUboWidthStops: width_stops,
+      dasharrayTexture: lineDasharrayTexture!,
+      minorRailHatchingUboDasharraySize: Vector2(
+        lineDasharrayTexture!.width.toDouble(),
+        lineDasharrayTexture!.height.toDouble(),
+      ),
     );
   }
 }
 
-class BuildingLayerRenderer extends FillLayerRenderer {
+class BuildingLayerRenderer extends $FillLayerRenderer {
   BuildingLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -4138,8 +4497,9 @@ class BuildingLayerRenderer extends FillLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -4151,7 +4511,7 @@ class BuildingLayerRenderer extends FillLayerRenderer {
   }
 }
 
-class AqueductOutlineLayerRenderer extends LineLayerRenderer {
+class AqueductOutlineLayerRenderer extends $LineLayerRenderer {
   AqueductOutlineLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -4168,19 +4528,23 @@ class AqueductOutlineLayerRenderer extends LineLayerRenderer {
     spec.EvaluationContext eval,
     vt.LineStringFeature feature,
     int index,
-    List<(Vector2 position, Vector2 normal)> vertexData,
+    List<(Vector2 position, Vector2 normal, double lineLength)> vertexData,
   ) {
     final paint = specLayer.paint;
     final width_start_value =
         paint.lineWidth
             .evaluate(
-              eval.copyWithZoom(getNearestFloorValue(eval.zoom, [14.0, 20.0])),
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, const [14.0, 20.0]),
+              ),
             )
             .toDouble();
     final width_end_value =
         paint.lineWidth
             .evaluate(
-              eval.copyWithZoom(getNearestCeilValue(eval.zoom, [14.0, 20.0])),
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, const [14.0, 20.0]),
+              ),
             )
             .toDouble();
 
@@ -4210,10 +4574,14 @@ class AqueductOutlineLayerRenderer extends LineLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
-    final width_start_stop = getNearestFloorValue(eval.zoom, [14.0, 20.0]);
-    final width_end_stop = getNearestCeilValue(eval.zoom, [14.0, 20.0]);
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    final width_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [14.0, 20.0]),
+      getNearestCeilValue(eval.zoom, const [14.0, 20.0]),
+    );
+
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -4221,13 +4589,12 @@ class AqueductOutlineLayerRenderer extends LineLayerRenderer {
       tileSize: tileSize,
       tileExtent: tileExtent,
       tileOpacity: tileOpacity,
-      aqueductOutlineUboWidthStartStop: width_start_stop,
-      aqueductOutlineUboWidthEndStop: width_end_stop,
+      aqueductOutlineUboWidthStops: width_stops,
     );
   }
 }
 
-class AqueductLayerRenderer extends LineLayerRenderer {
+class AqueductLayerRenderer extends $LineLayerRenderer {
   AqueductLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -4244,19 +4611,23 @@ class AqueductLayerRenderer extends LineLayerRenderer {
     spec.EvaluationContext eval,
     vt.LineStringFeature feature,
     int index,
-    List<(Vector2 position, Vector2 normal)> vertexData,
+    List<(Vector2 position, Vector2 normal, double lineLength)> vertexData,
   ) {
     final paint = specLayer.paint;
     final width_start_value =
         paint.lineWidth
             .evaluate(
-              eval.copyWithZoom(getNearestFloorValue(eval.zoom, [12.0, 20.0])),
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, const [12.0, 20.0]),
+              ),
             )
             .toDouble();
     final width_end_value =
         paint.lineWidth
             .evaluate(
-              eval.copyWithZoom(getNearestCeilValue(eval.zoom, [12.0, 20.0])),
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, const [12.0, 20.0]),
+              ),
             )
             .toDouble();
 
@@ -4286,10 +4657,14 @@ class AqueductLayerRenderer extends LineLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
-    final width_start_stop = getNearestFloorValue(eval.zoom, [12.0, 20.0]);
-    final width_end_stop = getNearestCeilValue(eval.zoom, [12.0, 20.0]);
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    final width_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [12.0, 20.0]),
+      getNearestCeilValue(eval.zoom, const [12.0, 20.0]),
+    );
+
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -4297,13 +4672,12 @@ class AqueductLayerRenderer extends LineLayerRenderer {
       tileSize: tileSize,
       tileExtent: tileExtent,
       tileOpacity: tileOpacity,
-      aqueductUboWidthStartStop: width_start_stop,
-      aqueductUboWidthEndStop: width_end_stop,
+      aqueductUboWidthStops: width_stops,
     );
   }
 }
 
-class CablecarLayerRenderer extends LineLayerRenderer {
+class CablecarLayerRenderer extends $LineLayerRenderer {
   CablecarLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -4320,19 +4694,23 @@ class CablecarLayerRenderer extends LineLayerRenderer {
     spec.EvaluationContext eval,
     vt.LineStringFeature feature,
     int index,
-    List<(Vector2 position, Vector2 normal)> vertexData,
+    List<(Vector2 position, Vector2 normal, double lineLength)> vertexData,
   ) {
     final paint = specLayer.paint;
     final width_start_value =
         paint.lineWidth
             .evaluate(
-              eval.copyWithZoom(getNearestFloorValue(eval.zoom, [13.0, 19.0])),
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, const [13.0, 19.0]),
+              ),
             )
             .toDouble();
     final width_end_value =
         paint.lineWidth
             .evaluate(
-              eval.copyWithZoom(getNearestCeilValue(eval.zoom, [13.0, 19.0])),
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, const [13.0, 19.0]),
+              ),
             )
             .toDouble();
 
@@ -4362,10 +4740,14 @@ class CablecarLayerRenderer extends LineLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
-    final width_start_stop = getNearestFloorValue(eval.zoom, [13.0, 19.0]);
-    final width_end_stop = getNearestCeilValue(eval.zoom, [13.0, 19.0]);
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    final width_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [13.0, 19.0]),
+      getNearestCeilValue(eval.zoom, const [13.0, 19.0]),
+    );
+
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -4373,13 +4755,12 @@ class CablecarLayerRenderer extends LineLayerRenderer {
       tileSize: tileSize,
       tileExtent: tileExtent,
       tileOpacity: tileOpacity,
-      cablecarUboWidthStartStop: width_start_stop,
-      cablecarUboWidthEndStop: width_end_stop,
+      cablecarUboWidthStops: width_stops,
     );
   }
 }
 
-class CablecarDashLayerRenderer extends LineLayerRenderer {
+class CablecarDashLayerRenderer extends $LineLayerRenderer {
   CablecarDashLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -4396,19 +4777,23 @@ class CablecarDashLayerRenderer extends LineLayerRenderer {
     spec.EvaluationContext eval,
     vt.LineStringFeature feature,
     int index,
-    List<(Vector2 position, Vector2 normal)> vertexData,
+    List<(Vector2 position, Vector2 normal, double lineLength)> vertexData,
   ) {
     final paint = specLayer.paint;
     final width_start_value =
         paint.lineWidth
             .evaluate(
-              eval.copyWithZoom(getNearestFloorValue(eval.zoom, [13.0, 19.0])),
+              eval.copyWithZoom(
+                getNearestFloorValue(eval.zoom, const [13.0, 19.0]),
+              ),
             )
             .toDouble();
     final width_end_value =
         paint.lineWidth
             .evaluate(
-              eval.copyWithZoom(getNearestCeilValue(eval.zoom, [13.0, 19.0])),
+              eval.copyWithZoom(
+                getNearestCeilValue(eval.zoom, const [13.0, 19.0]),
+              ),
             )
             .toDouble();
 
@@ -4418,6 +4803,7 @@ class CablecarDashLayerRenderer extends LineLayerRenderer {
         index + i,
         position: vertex.$1,
         normal: vertex.$2,
+        lineLength: vertex.$3,
         widthStartValue: width_start_value,
         widthEndValue: width_end_value,
       );
@@ -4438,10 +4824,14 @@ class CablecarDashLayerRenderer extends LineLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
-    final width_start_stop = getNearestFloorValue(eval.zoom, [13.0, 19.0]);
-    final width_end_stop = getNearestCeilValue(eval.zoom, [13.0, 19.0]);
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    final width_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [13.0, 19.0]),
+      getNearestCeilValue(eval.zoom, const [13.0, 19.0]),
+    );
+
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -4449,13 +4839,17 @@ class CablecarDashLayerRenderer extends LineLayerRenderer {
       tileSize: tileSize,
       tileExtent: tileExtent,
       tileOpacity: tileOpacity,
-      cablecarDashUboWidthStartStop: width_start_stop,
-      cablecarDashUboWidthEndStop: width_end_stop,
+      cablecarDashUboWidthStops: width_stops,
+      dasharrayTexture: lineDasharrayTexture!,
+      cablecarDashUboDasharraySize: Vector2(
+        lineDasharrayTexture!.width.toDouble(),
+        lineDasharrayTexture!.height.toDouble(),
+      ),
     );
   }
 }
 
-class OtherBorderLayerRenderer extends LineLayerRenderer {
+class OtherBorderLayerRenderer extends $LineLayerRenderer {
   OtherBorderLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -4472,14 +4866,14 @@ class OtherBorderLayerRenderer extends LineLayerRenderer {
     spec.EvaluationContext eval,
     vt.LineStringFeature feature,
     int index,
-    List<(Vector2 position, Vector2 normal)> vertexData,
+    List<(Vector2 position, Vector2 normal, double lineLength)> vertexData,
   ) {
     final paint = specLayer.paint;
     final width_start_value =
         paint.lineWidth
             .evaluate(
               eval.copyWithZoom(
-                getNearestFloorValue(eval.zoom, [3.0, 4.0, 11.0, 18.0]),
+                getNearestFloorValue(eval.zoom, const [3.0, 4.0, 11.0, 18.0]),
               ),
             )
             .toDouble();
@@ -4487,7 +4881,7 @@ class OtherBorderLayerRenderer extends LineLayerRenderer {
         paint.lineWidth
             .evaluate(
               eval.copyWithZoom(
-                getNearestCeilValue(eval.zoom, [3.0, 4.0, 11.0, 18.0]),
+                getNearestCeilValue(eval.zoom, const [3.0, 4.0, 11.0, 18.0]),
               ),
             )
             .toDouble();
@@ -4498,6 +4892,7 @@ class OtherBorderLayerRenderer extends LineLayerRenderer {
         index + i,
         position: vertex.$1,
         normal: vertex.$2,
+        lineLength: vertex.$3,
         widthStartValue: width_start_value,
         widthEndValue: width_end_value,
       );
@@ -4518,20 +4913,14 @@ class OtherBorderLayerRenderer extends LineLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
-    final width_start_stop = getNearestFloorValue(eval.zoom, [
-      3.0,
-      4.0,
-      11.0,
-      18.0,
-    ]);
-    final width_end_stop = getNearestCeilValue(eval.zoom, [
-      3.0,
-      4.0,
-      11.0,
-      18.0,
-    ]);
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    final width_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [3.0, 4.0, 11.0, 18.0]),
+      getNearestCeilValue(eval.zoom, const [3.0, 4.0, 11.0, 18.0]),
+    );
+
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -4539,13 +4928,17 @@ class OtherBorderLayerRenderer extends LineLayerRenderer {
       tileSize: tileSize,
       tileExtent: tileExtent,
       tileOpacity: tileOpacity,
-      otherBorderUboWidthStartStop: width_start_stop,
-      otherBorderUboWidthEndStop: width_end_stop,
+      otherBorderUboWidthStops: width_stops,
+      dasharrayTexture: lineDasharrayTexture!,
+      otherBorderUboDasharraySize: Vector2(
+        lineDasharrayTexture!.width.toDouble(),
+        lineDasharrayTexture!.height.toDouble(),
+      ),
     );
   }
 }
 
-class DisputedBorderLayerRenderer extends LineLayerRenderer {
+class DisputedBorderLayerRenderer extends $LineLayerRenderer {
   DisputedBorderLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -4562,14 +4955,14 @@ class DisputedBorderLayerRenderer extends LineLayerRenderer {
     spec.EvaluationContext eval,
     vt.LineStringFeature feature,
     int index,
-    List<(Vector2 position, Vector2 normal)> vertexData,
+    List<(Vector2 position, Vector2 normal, double lineLength)> vertexData,
   ) {
     final paint = specLayer.paint;
     final width_start_value =
         paint.lineWidth
             .evaluate(
               eval.copyWithZoom(
-                getNearestFloorValue(eval.zoom, [1.0, 5.0, 10.0, 24.0]),
+                getNearestFloorValue(eval.zoom, const [1.0, 5.0, 10.0]),
               ),
             )
             .toDouble();
@@ -4577,7 +4970,7 @@ class DisputedBorderLayerRenderer extends LineLayerRenderer {
         paint.lineWidth
             .evaluate(
               eval.copyWithZoom(
-                getNearestCeilValue(eval.zoom, [1.0, 5.0, 10.0, 24.0]),
+                getNearestCeilValue(eval.zoom, const [1.0, 5.0, 10.0]),
               ),
             )
             .toDouble();
@@ -4588,6 +4981,7 @@ class DisputedBorderLayerRenderer extends LineLayerRenderer {
         index + i,
         position: vertex.$1,
         normal: vertex.$2,
+        lineLength: vertex.$3,
         widthStartValue: width_start_value,
         widthEndValue: width_end_value,
       );
@@ -4608,20 +5002,14 @@ class DisputedBorderLayerRenderer extends LineLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
-    final width_start_stop = getNearestFloorValue(eval.zoom, [
-      1.0,
-      5.0,
-      10.0,
-      24.0,
-    ]);
-    final width_end_stop = getNearestCeilValue(eval.zoom, [
-      1.0,
-      5.0,
-      10.0,
-      24.0,
-    ]);
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    final width_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [1.0, 5.0, 10.0]),
+      getNearestCeilValue(eval.zoom, const [1.0, 5.0, 10.0]),
+    );
+
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -4629,13 +5017,17 @@ class DisputedBorderLayerRenderer extends LineLayerRenderer {
       tileSize: tileSize,
       tileExtent: tileExtent,
       tileOpacity: tileOpacity,
-      disputedBorderUboWidthStartStop: width_start_stop,
-      disputedBorderUboWidthEndStop: width_end_stop,
+      disputedBorderUboWidthStops: width_stops,
+      dasharrayTexture: lineDasharrayTexture!,
+      disputedBorderUboDasharraySize: Vector2(
+        lineDasharrayTexture!.width.toDouble(),
+        lineDasharrayTexture!.height.toDouble(),
+      ),
     );
   }
 }
 
-class CountryBorderLayerRenderer extends LineLayerRenderer {
+class CountryBorderLayerRenderer extends $LineLayerRenderer {
   CountryBorderLayerRenderer({
     required gpu.ShaderLibrary shaderLibrary,
     required super.coordinates,
@@ -4652,14 +5044,14 @@ class CountryBorderLayerRenderer extends LineLayerRenderer {
     spec.EvaluationContext eval,
     vt.LineStringFeature feature,
     int index,
-    List<(Vector2 position, Vector2 normal)> vertexData,
+    List<(Vector2 position, Vector2 normal, double lineLength)> vertexData,
   ) {
     final paint = specLayer.paint;
     final width_start_value =
         paint.lineWidth
             .evaluate(
               eval.copyWithZoom(
-                getNearestFloorValue(eval.zoom, [1.0, 5.0, 10.0, 24.0]),
+                getNearestFloorValue(eval.zoom, const [1.0, 5.0, 10.0, 24.0]),
               ),
             )
             .toDouble();
@@ -4667,7 +5059,7 @@ class CountryBorderLayerRenderer extends LineLayerRenderer {
         paint.lineWidth
             .evaluate(
               eval.copyWithZoom(
-                getNearestCeilValue(eval.zoom, [1.0, 5.0, 10.0, 24.0]),
+                getNearestCeilValue(eval.zoom, const [1.0, 5.0, 10.0, 24.0]),
               ),
             )
             .toDouble();
@@ -4698,20 +5090,14 @@ class CountryBorderLayerRenderer extends LineLayerRenderer {
     double tileOpacity,
   ) {
     final eval = context.eval;
-    final width_start_stop = getNearestFloorValue(eval.zoom, [
-      1.0,
-      5.0,
-      10.0,
-      24.0,
-    ]);
-    final width_end_stop = getNearestCeilValue(eval.zoom, [
-      1.0,
-      5.0,
-      10.0,
-      24.0,
-    ]);
+    final paint = specLayer.paint;
 
-    pipeline.setUbos(
+    final width_stops = Vector2(
+      getNearestFloorValue(eval.zoom, const [1.0, 5.0, 10.0, 24.0]),
+      getNearestCeilValue(eval.zoom, const [1.0, 5.0, 10.0, 24.0]),
+    );
+
+    pipeline.setUniforms(
       cameraWorldToGl: cameraWorldToGl,
       cameraZoom: cameraZoom,
       cameraPixelRatio: pixelRatio,
@@ -4719,8 +5105,7 @@ class CountryBorderLayerRenderer extends LineLayerRenderer {
       tileSize: tileSize,
       tileExtent: tileExtent,
       tileOpacity: tileOpacity,
-      countryBorderUboWidthStartStop: width_start_stop,
-      countryBorderUboWidthEndStop: width_end_stop,
+      countryBorderUboWidthStops: width_stops,
     );
   }
 }

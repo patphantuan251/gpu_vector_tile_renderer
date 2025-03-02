@@ -87,22 +87,35 @@ class TileContainer with ChangeNotifier {
         // Check if this layer type is even supported
         if (!supportedLayerTypes.contains(layer.type)) continue;
 
-        // Check the source key and check if we have that source
-        final sourceKey = layer.source;
-        if (sourceKey == null) continue;
-        if (!sourceKeys.contains(sourceKey)) continue;
+        late final SingleTileLayerRenderer? renderer;
 
-        // Check the source layer name
-        final sourceLayerName = layer.sourceLayer;
-        if (sourceLayerName == null) continue;
+        // Background layer is an exception to all the other rules, since it doesn't need a vector tile layer.
+        if (layer.type == spec.Layer$Type.background) {
+          renderer = controller.renderOrchestrator.createSingleTileLayerRenderer(
+            coordinates,
+            this,
+            layer,
+            vt.Layer.empty,
+          );
+        } else {
+          // Check the source key and check if we have that source
+          final sourceKey = layer.source;
+          if (sourceKey == null) continue;
+          if (!sourceKeys.contains(sourceKey)) continue;
 
-        // Get the vector tile layer
-        final vectorTile = _vectorTiles![sourceKey]!;
-        final vtLayer = vectorTile.layers.firstWhereOrNull((data) => data.name == sourceLayerName);
-        if (vtLayer == null) continue;
+          // Check the source layer name
+          final sourceLayerName = layer.sourceLayer;
+          if (sourceLayerName == null) continue;
 
-        // Create the renderer
-        final renderer = controller.renderOrchestrator.createSingleTileLayerRenderer(coordinates, this, layer, vtLayer);
+          // Get the vector tile layer
+          final vectorTile = _vectorTiles![sourceKey]!;
+          final vtLayer = vectorTile.layers.firstWhereOrNull((data) => data.name == sourceLayerName);
+          if (vtLayer == null) continue;
+
+          // Create the renderer
+          renderer = controller.renderOrchestrator.createSingleTileLayerRenderer(coordinates, this, layer, vtLayer);
+        }
+
         if (renderer == null) continue;
 
         result[layer.id] = renderer;
@@ -133,6 +146,7 @@ class TileContainer with ChangeNotifier {
   void dispose() {
     _disposed = true;
     _opacityAnimationController.dispose();
+    _renderers?.clear();
 
     super.dispose();
   }

@@ -29,7 +29,9 @@ String generateCommonShaderUboBindings(Iterable<ParsedShader> shaders) {
     // -- Class declaration and constructor --
     o.writeln('/// Generated UBO bindings for `${ubo.name}`');
     o.writeln('class $className extends UniformBufferObjectBindings {');
-    o.writeln('  $className({required super.vertexShader, required super.fragmentShader}): super(name: \'${ubo.name}\');');
+    o.writeln(
+      '  $className({required super.vertexShader, required super.fragmentShader}): super(name: \'${ubo.name}\');',
+    );
     o.writeln('');
 
     // -- UBO setter --
@@ -42,10 +44,11 @@ String generateCommonShaderUboBindings(Iterable<ParsedShader> shaders) {
     o.writeln('}) {');
     for (final variable in ubo.variables) {
       o.writeln(
-        '    set_${variable.typeGlsl.value}(get_member_offset(slot, \'${variable.name}\'), data, ${variable.dartName()});',
+        '    set_${variable.typeGlsl.value}(get_member_offset(slot, \'${variable.name}\'), \$setData, ${variable.dartName()});',
       );
     }
-    o.writeln('    needsFlush = true;');
+    o.writeln('');
+    o.writeln('    setInternal();');
     o.writeln('  }');
 
     // -- Closing --
@@ -86,13 +89,13 @@ String generateShaderBindings(ParsedShaderVertex vertexShader, ParsedShaderFragm
   }
   o.writeln('}) {');
   var offset = 0;
-  o.writeln('    final offset = index * bytesPerVertex;');
-  o.writeln('');
   for (var i = 0; i < vertexShader.attributes.length; i++) {
     final attribute = vertexShader.attributes.elementAt(i);
-    o.writeln('    set_${attribute.typeGlsl.value}(offset + $offset, vertexData!, ${attribute.dartName()});');
+    o.writeln('    set_${attribute.typeGlsl.value}($offset, \$setVertexData, ${attribute.dartName()});');
     offset += attribute.sizeInBytes;
   }
+  o.writeln('');
+  o.writeln('    setVertexInternal(index);');
   o.writeln('  }');
   o.writeln('');
 
@@ -135,6 +138,9 @@ String generateShaderBindings(ParsedShaderVertex vertexShader, ParsedShaderFragm
   o.writeln('          ubos: [');
   o.write(_generateShaderPipelineConstructorUbos(vertexShader, fragmentShader));
   o.writeln('          ],');
+  o.writeln('          samplers: [');
+  o.write(_generateShaderPipelineConstructorSamplers(vertexShader, fragmentShader));
+  o.writeln('          ],');
   o.writeln('        );');
 
   if (vertexShader.ubos.isNotEmpty || fragmentShader.ubos.isNotEmpty) {
@@ -143,8 +149,12 @@ String generateShaderBindings(ParsedShaderVertex vertexShader, ParsedShaderFragm
     o.write(_generateShaderPipelineUboGetters(vertexShader, fragmentShader));
     o.writeln('');
 
+    // -- Sampler getters --
+    o.write(_generateShaderPipelineSamplerGetters(vertexShader, fragmentShader));
+    o.writeln('');
+
     // -- UBO setter --
-    o.writeln(_generateShaderPipelineUboSetter(vertexShader, fragmentShader));
+    o.writeln(_generateShaderPipelineUniformSetter(vertexShader, fragmentShader));
   }
 
   // -- Closing --
@@ -165,7 +175,23 @@ String _generateShaderPipelineConstructorUbos(ParsedShader vertexShader, ParsedS
   final ubos = {...vertexShader.ubos, ...fragmentShader.ubos};
 
   for (final ubo in ubos) {
-    o.writeln('            ${ubo.dartClassName}(vertexShader: ${_generateShaderLibraryGetter(vertexShader)}, fragmentShader: ${_generateShaderLibraryGetter(fragmentShader)}),');
+    o.writeln(
+      '            ${ubo.dartClassName}(vertexShader: ${_generateShaderLibraryGetter(vertexShader)}, fragmentShader: ${_generateShaderLibraryGetter(fragmentShader)}),',
+    );
+  }
+
+  return o.toString();
+}
+
+/// Generates the initialization for samplers in the shader pipeline constructor.
+String _generateShaderPipelineConstructorSamplers(ParsedShader vertexShader, ParsedShader fragmentShader) {
+  final o = StringBuffer();
+  final samplers = {...vertexShader.samplers, ...fragmentShader.samplers};
+
+  for (final sampler in samplers) {
+    o.writeln(
+      '            UniformSamplerBindings(name: \'${sampler.name}\', vertexShader: ${_generateShaderLibraryGetter(vertexShader)}, fragmentShader: ${_generateShaderLibraryGetter(fragmentShader)}),',
+    );
   }
 
   return o.toString();
@@ -186,23 +212,44 @@ String _generateShaderPipelineUboGetters(ParsedShader vertexShader, ParsedShader
   return o.toString();
 }
 
-/// Generates the UBO setter for the shader pipeline.
-String _generateShaderPipelineUboSetter(ParsedShader vertexShader, ParsedShader fragmentShader) {
+/// Generates the uniform sampler getters for the shader pipeline.
+String _generateShaderPipelineSamplerGetters(ParsedShader vertexShader, ParsedShader fragmentShader) {
+  final o = StringBuffer();
+  final samplers = {...vertexShader.samplers, ...fragmentShader.samplers};
+
+  for (var i = 0; i < samplers.length; i++) {
+    final ubo = samplers.elementAt(i);
+    o.writeln('  late final UniformSamplerBindings ${ubo.name} = samplers[$i];');
+  }
+
+  return o.toString();
+}
+
+/// Generates the uniform setter for the shader pipeline.
+String _generateShaderPipelineUniformSetter(ParsedShader vertexShader, ParsedShader fragmentShader) {
   final o = StringBuffer();
   final ubos = {...vertexShader.ubos, ...fragmentShader.ubos};
+  final samplers = {...vertexShader.samplers, ...fragmentShader.samplers};
 
-  o.writeln('  /// Sets the UBOs for this shader.');
-  o.writeln('  void setUbos({');
+  o.writeln('  /// Sets the uniforms for this shader.');
+  o.writeln('  void setUniforms({');
   for (var i = 0; i < ubos.length; i++) {
     final ubo = ubos.elementAt(i);
-
+ 
     for (var j = 0; j < ubo.variables.length; j++) {
       final variable = ubo.variables.elementAt(j);
       final paramName = nameToDartFieldName('${ubo.name}_${variable.dartName()}');
       o.write('required ${variable.dartType} $paramName');
-
-      if (i != ubos.length - 1 || j != ubo.variables.length - 1) o.write(', ');
+      o.write(', ');
     }
+  }
+  for (var i = 0; i < samplers.length; i++) {
+    final sampler = samplers.elementAt(i);
+    final paramName = nameToDartFieldName('${sampler.name}Texture');
+    o.write('required gpu.Texture $paramName');
+    o.write(', ');
+    o.write('gpu.SamplerOptions? ${paramName}SamplerOptions');
+    o.write(', ');
   }
   o.writeln('}) {');
   for (final ubo in ubos) {
@@ -214,6 +261,11 @@ String _generateShaderPipelineUboSetter(ParsedShader vertexShader, ParsedShader 
       if (j != ubo.variables.length - 1) o.write(', ');
     }
     o.writeln(');');
+  }
+
+  for (final sampler in samplers) {
+    final paramName = nameToDartFieldName('${sampler.name}Texture');
+    o.writeln('    ${sampler.name}.setTexture($paramName, options: ${paramName}SamplerOptions);');
   }
 
   o.writeln('  }');
