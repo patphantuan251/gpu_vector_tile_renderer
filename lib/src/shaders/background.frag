@@ -1,4 +1,5 @@
-#version 320 es
+#version 460 core
+
 #pragma prelude: interpolation
 #pragma prelude: tile
 

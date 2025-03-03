@@ -1,7 +1,7 @@
-#version 320 es
+#version 460 core
+
 #pragma prelude: interpolation
 #pragma prelude: tile
-
 
 in highp vec2 position;
 in highp vec2 normal;

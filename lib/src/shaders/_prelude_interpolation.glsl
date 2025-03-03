@@ -1,3 +1,7 @@
+// --------------------------------------------------------------------------
+// _prelude_interpolation.glsl
+// --------------------------------------------------------------------------
+
 #define data_crossfade(a, b) mix(a, b, camera.zoom - floor(camera.zoom))
 
 #define data_step(start_value, end_value, start_stop, end_stop) \
@@ -22,3 +26,7 @@ float data_interpolate_factor(
   else if (base == 1.0) return progress / difference;
   else return (pow(base, progress) - 1.0) / (pow(base, difference) - 1.0);
 }
+
+// --------------------------------------------------------------------------
+// end of _prelude_interpolation.glsl
+// --------------------------------------------------------------------------

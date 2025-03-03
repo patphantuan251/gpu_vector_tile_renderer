@@ -3,6 +3,10 @@
 
 const preludeShaders = <String, String>{
 'interpolation': '''
+// --------------------------------------------------------------------------
+// _prelude_interpolation.glsl
+// --------------------------------------------------------------------------
+
 #define data_crossfade(a, b) mix(a, b, camera.zoom - floor(camera.zoom))
 
 #define data_step(start_value, end_value, start_stop, end_stop) \\
@@ -27,8 +31,16 @@ float data_interpolate_factor(
   else if (base == 1.0) return progress / difference;
   else return (pow(base, progress) - 1.0) / (pow(base, difference) - 1.0);
 }
+
+// --------------------------------------------------------------------------
+// end of _prelude_interpolation.glsl
+// --------------------------------------------------------------------------
 ''',
 'tile': '''
+// --------------------------------------------------------------------------
+// _prelude_tile.glsl
+// --------------------------------------------------------------------------
+
 precision highp float;
 
 uniform Tile {
@@ -51,12 +63,17 @@ vec4 project_tile_position(vec2 position) {
 float project_pixel_length(float len) {
   return len * tile.size / tile.extent;
 }
+
+// --------------------------------------------------------------------------
+// end of _prelude_tile.glsl
+// --------------------------------------------------------------------------
 ''',
 };
 
 const vertexShaderTemplates = <String, String>{
 'fill': '''
-#version 320 es
+#version 460 core
+
 #pragma prelude: interpolation
 #pragma prelude: tile
 
@@ -73,7 +90,8 @@ void main() {
 }
 ''',
 'line': '''
-#version 320 es
+#version 460 core
+
 #pragma prelude: interpolation
 #pragma prelude: tile
 
@@ -94,7 +112,8 @@ void main() {
 }
 ''',
 'background': '''
-#version 320 es
+#version 460 core
+
 #pragma prelude: interpolation
 #pragma prelude: tile
 
@@ -105,14 +124,14 @@ in highp vec2 position;
 
 void main() {
   #pragma prop: resolve(...)
-  gl_Position = tile.local_to_gl * vec4(position.x * tile.size, position.y * tile.size, 0.0, 1.0);
+  gl_Position = tile.local_to_gl * vec4(position.x, position.y, 0.0, 1.0);
 }
 ''',
 'line-dashed': '''
-#version 320 es
+#version 460 core
+
 #pragma prelude: interpolation
 #pragma prelude: tile
-
 
 in highp vec2 position;
 in highp vec2 normal;
@@ -140,7 +159,8 @@ void main() {
 
 const fragmentShaderTemplates = <String, String>{
 'background': '''
-#version 320 es
+#version 460 core
+
 #pragma prelude: interpolation
 #pragma prelude: tile
 
@@ -155,7 +175,8 @@ void main() {
 }
 ''',
 'line': '''
-#version 320 es
+#version 460 core
+
 #pragma prelude: interpolation
 #pragma prelude: tile
 
@@ -171,7 +192,8 @@ void main() {
 }
 ''',
 'line-dashed': '''
-#version 320 es
+#version 460 core
+
 #pragma prelude: interpolation
 #pragma prelude: tile
 
@@ -186,7 +208,7 @@ out highp vec4 f_color;
 
 void main() {
   #pragma prop: resolve(...)
-  
+
   float line_position = project_pixel_length(v_line_length) / width;
   float dash_value = texture(dasharray, vec2(line_position / dasharray_size.x, 0.5)).r;
   if (dash_value < 0.5) discard;
@@ -195,7 +217,8 @@ void main() {
 }
 ''',
 'fill': '''
-#version 320 es
+#version 460 core
+
 #pragma prelude: interpolation
 #pragma prelude: tile
 

@@ -1,6 +1,5 @@
 import 'dart:math' as math;
 import 'dart:typed_data';
-import 'dart:ui' as ui;
 
 import 'package:flutter_gpu/gpu.dart' as gpu;
 import 'package:gpu_vector_tile_renderer/_renderer.dart';

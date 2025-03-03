@@ -2,9 +2,11 @@
 
 import 'dart:io';
 
+void main() => generateShaders();
+
 // TODO: Rewrite this to be more concise
 
-void main() {
+void generateShaders() {
   final scriptPath = Platform.script.path;
   final rootDirectory = File(scriptPath).parent.parent.parent;
   final shadersDirectory = Directory('${rootDirectory.path}/lib/src/shaders');

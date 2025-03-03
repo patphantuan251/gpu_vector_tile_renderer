@@ -1,5 +1,3 @@
-import 'dart:ui' as ui;
-
 import 'package:flutter_gpu/gpu.dart';
 import 'package:gpu_vector_tile_renderer/_renderer.dart';
 import 'package:gpu_vector_tile_renderer/_spec.dart' as spec;

@@ -7,6 +7,7 @@ analyzer:
 
   exclude:
     - lib/src/ffi/bindings.gen.dart
+    - lib/src/shaders/shader_bundle/shader_bundle_impeller.fb.shaderbundle_generated.dart
 
 formatter:
   page_width: 120

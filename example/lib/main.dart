@@ -1,8 +1,11 @@
 import 'package:example/vector_tile_layer_demo.dart';
 import 'package:flutter/material.dart';
+import 'package:gpu_vector_tile_renderer/_shaders.dart';
 import 'package:logging/logging.dart';
 
-void main() {
+Future<void> main() async {
+  await HotReloadableShaderLibraryBindings.ensureInitialized();
+
   Logger.root.level = Level.ALL;
   Logger.root.onRecord.listen((record) {
     // ignore: avoid_print

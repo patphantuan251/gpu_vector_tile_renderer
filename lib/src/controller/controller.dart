@@ -133,7 +133,7 @@ class VectorTileLayerController with ChangeNotifier {
     }
 
     final zoom = camera.zoom;
-    final tileZoom = (zoom.round() - 1).clamp(0, double.infinity).toInt();
+    final tileZoom = (zoom.round() - 1.0).clamp(0, double.infinity).toInt();
 
     // Contains the map of now visible tiles with the containing sources
     final visibleTiles = <fm.TileCoordinates, List<Object>>{};
@@ -143,7 +143,7 @@ class VectorTileLayerController with ChangeNotifier {
       final sourceKey = entry.key;
       final source = style.sources[sourceKey]! as spec.SourceVector;
       final bounds = entry.value;
-      
+
       // todo: clean this up
       final zoomForSource = tileZoom.clamp(source.minzoom, source.maxzoom).toInt();
       final boundsAtZoom = bounds.atZoom(zoomForSource);
@@ -183,6 +183,15 @@ class VectorTileLayerController with ChangeNotifier {
     }
 
     _onTilesUpdated();
+  }
+
+  /// Called then a hot-reload is triggered.
+  void onReassemble() {
+    _logger.info('Reassembling');
+    for (final tile in _tiles.values) tile.dispose();
+    _tiles.clear();
+
+    onCameraChanged(_lastCamera!, _lastTileSize!);
   }
 
   /// Currently active tiles.

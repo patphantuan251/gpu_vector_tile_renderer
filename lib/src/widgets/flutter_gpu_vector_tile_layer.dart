@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gpu/gpu.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:gpu_vector_tile_renderer/_controller.dart';
 import 'package:gpu_vector_tile_renderer/_renderer.dart';
+import 'package:gpu_vector_tile_renderer/_shaders.dart';
 import 'package:gpu_vector_tile_renderer/src/debug/debug_painter.dart';
 
 class FlutterGpuVectorTileLayer extends StatefulWidget {
@@ -10,14 +10,14 @@ class FlutterGpuVectorTileLayer extends StatefulWidget {
     super.key,
     required this.styleProvider,
     this.tileSize = 256.0,
-    required this.shaderLibrary,
+    required this.shaderLibraryProvider,
     required this.createSingleTileLayerRenderer,
     this.enableRender = true,
     this.debug = false,
   });
 
   final StyleProviderFn styleProvider;
-  final ShaderLibrary shaderLibrary;
+  final ShaderLibraryProvider shaderLibraryProvider;
   final CreateSingleTileLayerRendererFn createSingleTileLayerRenderer;
   final double tileSize;
   final bool enableRender; // Temporary!
@@ -40,7 +40,7 @@ class FlutterGpuVectorTileLayerState extends State<FlutterGpuVectorTileLayer> wi
 
     _orchestrator = VectorTileLayerRenderOrchestrator(
       controller: _controller,
-      shaderLibrary: widget.shaderLibrary,
+      shaderLibraryProvider: widget.shaderLibraryProvider,
       createSingleTileLayerRenderer: widget.createSingleTileLayerRenderer,
     );
   }
@@ -48,7 +48,7 @@ class FlutterGpuVectorTileLayerState extends State<FlutterGpuVectorTileLayer> wi
   @override
   void reassemble() {
     super.reassemble();
-    _orchestrator.onReassemble();
+    _controller.onReassemble();
   }
 
   @override

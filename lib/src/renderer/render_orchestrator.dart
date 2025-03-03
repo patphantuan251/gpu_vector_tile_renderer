@@ -6,6 +6,7 @@ import 'package:flutter_gpu/gpu.dart' as gpu;
 import 'package:flutter_map/flutter_map.dart' as fm;
 import 'package:gpu_vector_tile_renderer/_controller.dart';
 import 'package:gpu_vector_tile_renderer/_renderer.dart';
+import 'package:gpu_vector_tile_renderer/_shaders.dart';
 import 'package:gpu_vector_tile_renderer/_spec.dart' as spec;
 import 'package:gpu_vector_tile_renderer/_vector_tile.dart' as vt;
 import 'package:gpu_vector_tile_renderer/src/isolates/isolates.dart';
@@ -14,7 +15,7 @@ import 'package:vector_math/vector_math.dart' as vm32;
 
 typedef CreateSingleTileLayerRendererFn =
     SingleTileLayerRenderer? Function(
-      gpu.ShaderLibrary shaderLibrary,
+      ShaderLibraryProvider shaderLibraryProvider,
       fm.TileCoordinates coordinates,
       TileContainer container,
       spec.Layer specLayer,
@@ -24,7 +25,7 @@ typedef CreateSingleTileLayerRendererFn =
 class VectorTileLayerRenderOrchestrator with ChangeNotifier {
   VectorTileLayerRenderOrchestrator({
     required this.controller,
-    required this.shaderLibrary,
+    required this.shaderLibraryProvider,
     required CreateSingleTileLayerRendererFn createSingleTileLayerRenderer,
   }) : _createSingleTileLayerRenderer = createSingleTileLayerRenderer {
     Isolates.instance.spawn();
@@ -37,8 +38,8 @@ class VectorTileLayerRenderOrchestrator with ChangeNotifier {
   /// The controller that this renderer is attached to.
   final VectorTileLayerController controller;
 
-  /// Shader library to use
-  final gpu.ShaderLibrary shaderLibrary;
+  /// Shader library provider to use
+  final ShaderLibraryProvider shaderLibraryProvider;
 
   /// The function that creates a single tile layer renderer. Should be created by `compile_style.dart` executable.
   final CreateSingleTileLayerRendererFn _createSingleTileLayerRenderer;
@@ -49,7 +50,7 @@ class VectorTileLayerRenderOrchestrator with ChangeNotifier {
     spec.Layer specLayer,
     vt.Layer vtLayer,
   ) {
-    return _createSingleTileLayerRenderer(shaderLibrary, coordinates, container, specLayer, vtLayer);
+    return _createSingleTileLayerRenderer(shaderLibraryProvider, coordinates, container, specLayer, vtLayer);
   }
 
   List<LayerRenderer>? _layers;
@@ -62,18 +63,6 @@ class VectorTileLayerRenderOrchestrator with ChangeNotifier {
 
     for (final layer in _layers!) {
       layer.prepare(PrepareContext(eval: spec.EvaluationContext.empty()));
-    }
-  }
-
-  void onReassemble() {
-    if (_layers == null) return;
-
-    for (final layer in _layers!) {
-      final result = layer.prepare(PrepareContext(eval: spec.EvaluationContext.empty()));
-
-      if (result is Future) {
-        result.then((_) => notifyListeners());
-      }
     }
   }
 
@@ -98,7 +87,7 @@ class VectorTileLayerRenderOrchestrator with ChangeNotifier {
             layer.prepare(
               PrepareContext(eval: spec.EvaluationContext.empty().copyWithZoom(camera.zoom.floorToDouble())),
             );
-          }, Priority.idle);
+          }, Priority.idle - 1);
         }
       }
     }

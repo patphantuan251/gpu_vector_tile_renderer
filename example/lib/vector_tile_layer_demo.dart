@@ -1,10 +1,12 @@
 import 'dart:convert';
 
-import 'package:example/compiled_style/layer_renderers.gen.dart';
+import 'package:example/compiled_style/maptiler-streets-v2.gen.dart'
+    as maptiler_streets_v2;
 import 'package:example/fixtures/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gpu/gpu.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:gpu_vector_tile_renderer/_shaders.dart';
 import 'package:gpu_vector_tile_renderer/gpu_vector_tile_renderer.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -20,6 +22,9 @@ class _DemoPageState extends State<VectorTileLayerDemo> {
   var _showVectorLayer = true;
   var _isDebug = false;
   late final _controller = MapController();
+  late final _shaderLibrary = HotReloadableShaderLibraryProvider(
+    'lib/compiled_style/${maptiler_streets_v2.shaderBundleName}',
+  );
 
   final _locations = {
     'Zero': (LatLng(0.0, 0.0), 0.0),
@@ -86,13 +91,11 @@ class _DemoPageState extends State<VectorTileLayerDemo> {
                 enableRender: _showVectorLayer,
                 debug: _isDebug,
                 styleProvider: jsonStyleProvider(
-                  jsonDecode(maptilerStreetsDarkStyle),
+                  jsonDecode(maptilerStreetsStyle),
                 ),
-                createSingleTileLayerRenderer: createSingleTileLayerRenderer,
-                shaderLibrary:
-                    ShaderLibrary.fromAsset(
-                      'build/shaderbundles/streets_dark.shaderbundle',
-                    )!,
+                createSingleTileLayerRenderer:
+                    maptiler_streets_v2.createSingleTileLayerRenderer,
+                shaderLibraryProvider: _shaderLibrary,
               ),
               if (_showRasterLayer)
                 Opacity(
@@ -123,7 +126,12 @@ class _DemoPageState extends State<VectorTileLayerDemo> {
               borderRadius: BorderRadius.circular(16.0),
               clipBehavior: Clip.antiAlias,
               child: ToggleButtons(
-                isSelected: [_showRasterLayer, _showVectorLayer, _isDebug, false],
+                isSelected: [
+                  _showRasterLayer,
+                  _showVectorLayer,
+                  _isDebug,
+                  false,
+                ],
                 direction: Axis.vertical,
                 onPressed: (index) {
                   if (index == 0) _showRasterLayer = !_showRasterLayer;

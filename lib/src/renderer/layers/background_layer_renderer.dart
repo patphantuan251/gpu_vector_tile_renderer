@@ -1,5 +1,3 @@
-import 'dart:ui' as ui;
-
 import 'package:flutter_gpu/gpu.dart' as gpu;
 import 'package:gpu_vector_tile_renderer/_renderer.dart';
 import 'package:gpu_vector_tile_renderer/_spec.dart' as spec;
@@ -43,7 +41,10 @@ abstract class $BackgroundLayerRenderer extends SingleTileLayerRenderer<spec.Lay
 
     final tileSize = context.getScaledTileSize(coordinates);
     final extent = vtLayer.extent.toDouble();
-    final tileLocalToWorld = Matrix4.identity()..translate(coordinates.x * tileSize, coordinates.y * tileSize);
+    final tileLocalToWorld =
+        Matrix4.identity()
+          ..translate(coordinates.x * tileSize, coordinates.y * tileSize)
+          ..scale(tileSize);
 
     setUniforms(
       context,
