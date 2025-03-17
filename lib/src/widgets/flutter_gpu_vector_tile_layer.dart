@@ -3,7 +3,6 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:gpu_vector_tile_renderer/_controller.dart';
 import 'package:gpu_vector_tile_renderer/_renderer.dart';
 import 'package:gpu_vector_tile_renderer/_shaders.dart';
-import 'package:gpu_vector_tile_renderer/src/debug/debug_painter.dart';
 
 class FlutterGpuVectorTileLayer extends StatefulWidget {
   const FlutterGpuVectorTileLayer({
@@ -13,7 +12,6 @@ class FlutterGpuVectorTileLayer extends StatefulWidget {
     required this.shaderLibraryProvider,
     required this.createSingleTileLayerRenderer,
     this.enableRender = true,
-    this.debug = false,
   });
 
   final StyleProviderFn styleProvider;
@@ -21,25 +19,24 @@ class FlutterGpuVectorTileLayer extends StatefulWidget {
   final CreateSingleTileLayerRendererFn createSingleTileLayerRenderer;
   final double tileSize;
   final bool enableRender; // Temporary!
-  final bool debug; // Temporary!
 
   @override
   State<FlutterGpuVectorTileLayer> createState() => FlutterGpuVectorTileLayerState();
 }
 
 class FlutterGpuVectorTileLayerState extends State<FlutterGpuVectorTileLayer> with TickerProviderStateMixin {
-  late final VectorTileLayerController _controller;
-  late final VectorTileLayerRenderOrchestrator _orchestrator;
+  late final VectorTileLayerController controller;
+  late final VectorTileLayerRenderOrchestrator orchestrator;
 
   @override
   void initState() {
     super.initState();
 
-    _controller = VectorTileLayerController(styleProvider: widget.styleProvider, tickerProvider: this);
-    _controller.load();
+    controller = VectorTileLayerController(styleProvider: widget.styleProvider, tickerProvider: this);
+    controller.load();
 
-    _orchestrator = VectorTileLayerRenderOrchestrator(
-      controller: _controller,
+    orchestrator = VectorTileLayerRenderOrchestrator(
+      controller: controller,
       shaderLibraryProvider: widget.shaderLibraryProvider,
       createSingleTileLayerRenderer: widget.createSingleTileLayerRenderer,
     );
@@ -48,13 +45,13 @@ class FlutterGpuVectorTileLayerState extends State<FlutterGpuVectorTileLayer> wi
   @override
   void reassemble() {
     super.reassemble();
-    _controller.onReassemble();
+    controller.onReassemble();
   }
 
   @override
   void dispose() {
-    _controller.dispose();
-    _orchestrator.dispose();
+    controller.dispose();
+    orchestrator.dispose();
 
     super.dispose();
   }
@@ -64,8 +61,8 @@ class FlutterGpuVectorTileLayerState extends State<FlutterGpuVectorTileLayer> wi
     super.didChangeDependencies();
 
     final camera = MapCamera.of(context);
-    _controller.onCameraChanged(camera, widget.tileSize);
-    _orchestrator.onCameraChanged(camera, widget.tileSize);
+    controller.onCameraChanged(camera, widget.tileSize);
+    orchestrator.onCameraChanged(camera, widget.tileSize);
   }
 
   @override
@@ -83,11 +80,9 @@ class FlutterGpuVectorTileLayerState extends State<FlutterGpuVectorTileLayer> wi
                 camera: camera,
                 pixelRatio: pixelRatio,
                 tileSize: widget.tileSize,
-                orchestrator: _orchestrator,
+                orchestrator: orchestrator,
               ),
             ),
-          if (widget.debug)
-            CustomPaint(painter: MapDebugPainter(camera: camera, controller: _controller, tileSize: widget.tileSize)),
         ],
       ),
     );

@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_gpu/gpu.dart' as gpu;
 import 'package:flutter_map/flutter_map.dart' as fm;
 import 'package:gpu_vector_tile_renderer/_controller.dart';
+import 'package:gpu_vector_tile_renderer/_debug.dart';
 import 'package:gpu_vector_tile_renderer/_renderer.dart';
 import 'package:gpu_vector_tile_renderer/_shaders.dart';
 import 'package:gpu_vector_tile_renderer/_spec.dart' as spec;
@@ -13,14 +14,13 @@ import 'package:gpu_vector_tile_renderer/src/isolates/isolates.dart';
 import 'package:gpu_vector_tile_renderer/src/utils/flutter_map/tile_scale_calculator.dart';
 import 'package:vector_math/vector_math.dart' as vm32;
 
-typedef CreateSingleTileLayerRendererFn =
-    SingleTileLayerRenderer? Function(
-      ShaderLibraryProvider shaderLibraryProvider,
-      fm.TileCoordinates coordinates,
-      TileContainer container,
-      spec.Layer specLayer,
-      vt.Layer vtLayer,
-    );
+typedef CreateSingleTileLayerRendererFn = SingleTileLayerRenderer? Function(
+  ShaderLibraryProvider shaderLibraryProvider,
+  fm.TileCoordinates coordinates,
+  TileContainer container,
+  spec.Layer specLayer,
+  vt.Layer vtLayer,
+);
 
 class VectorTileLayerRenderOrchestrator with ChangeNotifier {
   VectorTileLayerRenderOrchestrator({
@@ -33,6 +33,11 @@ class VectorTileLayerRenderOrchestrator with ChangeNotifier {
     controller.setRenderOrchestrator(this);
     controller.addListener(_onControllerChanged);
     controller.addTileUpdateListener(_onTilesChanged);
+    controller.debugAttachment.addListener(_onDebugAttachmentChanged);
+
+    SchedulerBinding.instance.addPersistentFrameCallback((_) {
+      _reportDebugInfo();
+    });
   }
 
   /// The controller that this renderer is attached to.
@@ -66,8 +71,22 @@ class VectorTileLayerRenderOrchestrator with ChangeNotifier {
     }
   }
 
+  void _onDebugAttachmentChanged() {
+    notifyListeners();
+  }
+
   void _onTilesChanged() {
     notifyListeners();
+  }
+
+  void _reportDebugInfo() {
+    if (_layers == null) return;
+
+    for (final layer in _layers!) {
+      final count =
+          controller.tiles.where((v) => v.isReadyToDisplay).map((v) => v.renderers[layer.specLayer.id]).nonNulls.length;
+      controller.debugAttachment.setLayerRendererCount(layer.specLayer.id, count);
+    }
   }
 
   fm.MapCamera? _lastCamera;
@@ -187,11 +206,27 @@ class VectorTileLayerRenderOrchestrator with ChangeNotifier {
 
       if (specLayer.minzoom != null && zoom < specLayer.minzoom!) continue;
       if (specLayer.maxzoom != null && zoom > specLayer.maxzoom!) continue;
+      if (controller.debugAttachment.layerState[layer.specLayer.id] == false) continue;
 
       layer.draw(renderContext);
     }
 
     commandBuffer.submit();
     return (_resolveTexture ?? _texture)!.asImage();
+  }
+
+  void debugDraw(
+    Canvas canvas,
+    Size size, {
+    required fm.MapCamera camera,
+    required double tileSize,
+  }) {
+    debugPaint(
+      canvas,
+      size,
+      controller: controller,
+      camera: camera,
+      tileSize: tileSize,
+    );
   }
 }

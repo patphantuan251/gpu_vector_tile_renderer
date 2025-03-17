@@ -48,6 +48,7 @@ class TiledLayerRenderer<T extends spec.Layer> extends LayerRenderer<T> {
   Future<void> prepare(PrepareContext context) async {
     final tiles = orchestrator.controller.tiles;
     final futures = <Future<void>>[];
+    var rendererCount = 0;
 
     for (final tile in tiles) {
       if (!tile.isReadyToDisplay) continue;
@@ -57,8 +58,11 @@ class TiledLayerRenderer<T extends spec.Layer> extends LayerRenderer<T> {
 
       final futureOr = renderer.prepare(context);
       if (futureOr is Future) futures.add(futureOr);
+
+      rendererCount++;
     }
 
+    orchestrator.controller.debugAttachment.setLayerRendererCount(specLayer.id, rendererCount);
     await futures.wait;
   }
 

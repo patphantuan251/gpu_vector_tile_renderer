@@ -16,7 +16,7 @@ Future<void> main() async {
 
   runApp(
     MaterialApp(
-      showPerformanceOverlay: true,
+      debugShowCheckedModeBanner: false,
       theme: ThemeData.from(
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.deepOrange,

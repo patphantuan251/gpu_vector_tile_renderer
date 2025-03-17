@@ -23,6 +23,8 @@ class RenderOrchestratorPainter extends CustomPainter {
     canvas.scale(1 / pixelRatio);
     canvas.drawImage(image, Offset.zero, Paint());
     canvas.scale(pixelRatio);
+
+    orchestrator.debugDraw(canvas, size, camera: camera, tileSize: tileSize);
   }
 
   @override

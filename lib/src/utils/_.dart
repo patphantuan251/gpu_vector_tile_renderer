@@ -1,6 +1,7 @@
 export 'filter_features.dart';
 export 'http_client.dart';
 export 'image_utils.dart';
+export 'iterable_utils.dart';
 export 'number_utils.dart';
 export 'offset_utils.dart';
 export 'tessellator.dart';

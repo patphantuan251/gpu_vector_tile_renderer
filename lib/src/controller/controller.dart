@@ -4,6 +4,7 @@ import 'package:flutter_map/flutter_map.dart' as fm;
 import 'package:gpu_vector_tile_renderer/_controller.dart';
 import 'package:gpu_vector_tile_renderer/_renderer.dart';
 import 'package:gpu_vector_tile_renderer/_spec.dart' as spec;
+import 'package:gpu_vector_tile_renderer/src/debug/debug_attachment.dart';
 import 'package:gpu_vector_tile_renderer/src/utils/flutter_map/tile_bounds/tile_bounds.dart';
 import 'package:gpu_vector_tile_renderer/src/utils/flutter_map/tile_range_calculator.dart';
 import 'package:logging/logging.dart';
@@ -17,7 +18,7 @@ class VectorTileLayerController with ChangeNotifier {
     this.sourceResolver = defaultSourceResolver,
     this.vectorTileResolver = defaultVectorTileResolver,
     this.spriteSourceResolver = defaultSpriteSourceResolver,
-  });
+  }) : debugAttachment = DebugAttachment();
 
   /// A provider for the style.
   final StyleProviderFn styleProvider;
@@ -44,6 +45,9 @@ class VectorTileLayerController with ChangeNotifier {
   VectorTileLayerRenderOrchestrator? _renderOrchestrator;
   VectorTileLayerRenderOrchestrator get renderOrchestrator => _renderOrchestrator!;
 
+  /// The debug attachment for this controller. This is used by the debug panel.
+  final DebugAttachment debugAttachment;
+
   void setRenderOrchestrator(VectorTileLayerRenderOrchestrator orchestrator) {
     _renderOrchestrator = orchestrator;
   }
@@ -63,6 +67,8 @@ class VectorTileLayerController with ChangeNotifier {
 
       _logger.info('Style loaded: ${style.name}, ${style.sources.length} sources, ${style.layers.length} layers');
       notifyListeners();
+
+      debugAttachment.setup(this);
 
       // Trigger camera changed to set the initial visible tiles
       if (_lastCamera != null) onCameraChanged(_lastCamera!, _lastTileSize!);
@@ -228,6 +234,7 @@ class VectorTileLayerController with ChangeNotifier {
     }
 
     _tileUpdateListeners.clear();
+    debugAttachment.dispose();
     super.dispose();
   }
 }

@@ -1,4 +1,5 @@
 export '_controller.dart';
+export '_debug.dart';
 export '_renderer.dart';
 export '_spec.dart';
 export '_style_compiler.dart';

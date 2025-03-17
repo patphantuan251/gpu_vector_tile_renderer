@@ -4,7 +4,6 @@ import 'package:example/compiled_style/maptiler-streets-v2.gen.dart'
     as maptiler_streets_v2;
 import 'package:example/fixtures/style.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gpu/gpu.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:gpu_vector_tile_renderer/_shaders.dart';
 import 'package:gpu_vector_tile_renderer/gpu_vector_tile_renderer.dart';
@@ -21,6 +20,7 @@ class _DemoPageState extends State<VectorTileLayerDemo> {
   var _showRasterLayer = false;
   var _showVectorLayer = true;
   var _isDebug = false;
+  final _layerKey = GlobalKey<FlutterGpuVectorTileLayerState>();
   late final _controller = MapController();
   late final _shaderLibrary = HotReloadableShaderLibraryProvider(
     'lib/compiled_style/${maptiler_streets_v2.shaderBundleName}',
@@ -73,82 +73,95 @@ class _DemoPageState extends State<VectorTileLayerDemo> {
     final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: AppBar(title: Text('Demo')),
-      body: Stack(
+      body: Row(
         children: [
-          FlutterMap(
-            mapController: _controller,
-            options: MapOptions(
-              backgroundColor: theme.colorScheme.surface,
-              interactionOptions: InteractionOptions(
-                flags: InteractiveFlag.all ^ InteractiveFlag.rotate,
-              ),
-              initialZoom: 0.0,
-              initialCenter: const LatLng(0.0, 0.0),
-            ),
-            children: [
-              FlutterGpuVectorTileLayer(
-                enableRender: _showVectorLayer,
-                debug: _isDebug,
-                styleProvider: jsonStyleProvider(
-                  jsonDecode(maptilerStreetsStyle),
-                ),
-                createSingleTileLayerRenderer:
-                    maptiler_streets_v2.createSingleTileLayerRenderer,
-                shaderLibraryProvider: _shaderLibrary,
-              ),
-              if (_showRasterLayer)
-                Opacity(
-                  opacity: 0.35,
-                  child: TileLayer(
-                    urlTemplate:
-                        'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                    userAgentPackageName: 'com.example.app',
-                    maxNativeZoom: 19,
-                    tileBuilder: (context, child, image) {
-                      return Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black, width: 0.0),
+          Expanded(
+            child: Stack(
+              children: [
+                FlutterMap(
+                  mapController: _controller,
+                  options: MapOptions(
+                    backgroundColor: theme.colorScheme.surface,
+                    interactionOptions: InteractionOptions(
+                      flags: InteractiveFlag.all ^ InteractiveFlag.rotate,
+                    ),
+                    initialZoom: 0.0,
+                    initialCenter: const LatLng(0.0, 0.0),
+                  ),
+                  children: [
+                    FlutterGpuVectorTileLayer(
+                      key: _layerKey,
+                      enableRender: _showVectorLayer,
+                      styleProvider: jsonStyleProvider(
+                        jsonDecode(maptilerStreetsStyle),
+                      ),
+                      createSingleTileLayerRenderer:
+                          maptiler_streets_v2.createSingleTileLayerRenderer,
+                      shaderLibraryProvider: _shaderLibrary,
+                    ),
+                    if (_showRasterLayer)
+                      Opacity(
+                        opacity: 0.35,
+                        child: TileLayer(
+                          urlTemplate:
+                              'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                          userAgentPackageName: 'com.example.app',
+                          maxNativeZoom: 19,
+                          tileBuilder: (context, child, image) {
+                            return Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.black,
+                                  width: 0.0,
+                                ),
+                              ),
+                              child: child,
+                            );
+                          },
                         ),
-                        child: child,
-                      );
-                    },
+                      ),
+                  ],
+                ),
+
+                Positioned(
+                  top: 120,
+                  left: 16,
+                  child: Material(
+                    color: theme.colorScheme.surface,
+                    borderRadius: BorderRadius.circular(16.0),
+                    clipBehavior: Clip.antiAlias,
+                    child: ToggleButtons(
+                      isSelected: [
+                        _showRasterLayer,
+                        _showVectorLayer,
+                        _isDebug,
+                        false,
+                      ],
+                      direction: Axis.vertical,
+                      onPressed: (index) {
+                        if (index == 0) _showRasterLayer = !_showRasterLayer;
+                        if (index == 1) _showVectorLayer = !_showVectorLayer;
+                        if (index == 2) _isDebug = !_isDebug;
+                        if (index == 3) _showJumpToLocation();
+                        setState(() {});
+                      },
+                      children: [
+                        Icon(Icons.image_rounded),
+                        Icon(Icons.map_rounded),
+                        Icon(Icons.bug_report_rounded),
+                        Icon(Icons.location_city_rounded),
+                      ],
+                    ),
                   ),
                 ),
-            ],
-          ),
-
-          Positioned(
-            top: 120,
-            left: 16,
-            child: Material(
-              color: theme.colorScheme.surface,
-              borderRadius: BorderRadius.circular(16.0),
-              clipBehavior: Clip.antiAlias,
-              child: ToggleButtons(
-                isSelected: [
-                  _showRasterLayer,
-                  _showVectorLayer,
-                  _isDebug,
-                  false,
-                ],
-                direction: Axis.vertical,
-                onPressed: (index) {
-                  if (index == 0) _showRasterLayer = !_showRasterLayer;
-                  if (index == 1) _showVectorLayer = !_showVectorLayer;
-                  if (index == 2) _isDebug = !_isDebug;
-                  if (index == 3) _showJumpToLocation();
-                  setState(() {});
-                },
-                children: [
-                  Icon(Icons.image_rounded),
-                  Icon(Icons.map_rounded),
-                  Icon(Icons.bug_report_rounded),
-                  Icon(Icons.location_city_rounded),
-                ],
-              ),
+              ],
             ),
           ),
+          if (_isDebug)
+            SizedBox(
+              width: 384.0,
+              child: FlutterGpuVectorTileLayerDebugPanel(layerKey: _layerKey),
+            ),
         ],
       ),
     );
